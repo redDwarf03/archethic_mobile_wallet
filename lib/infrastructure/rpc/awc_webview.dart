@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -29,8 +30,10 @@ class AWCWebview extends StatefulWidget {
   State<AWCWebview> createState() => _AWCWebviewState();
 }
 
-class _AWCWebviewState extends State<AWCWebview> {
-  AWCJsonRPCServer? peerServer;
+class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
+  AWCJsonRPCServer? _peerServer;
+  InAppWebViewController? _controller;
+  WebviewMessagePortStreamChannel? _channel;
 
   @override
   void initState() {
@@ -39,14 +42,26 @@ class _AWCWebviewState extends State<AWCWebview> {
         defaultTargetPlatform == TargetPlatform.android) {
       InAppWebViewController.setWebContentsDebuggingEnabled(true);
     }
+    WidgetsBinding.instance.addObserver(this);
 
     super.initState();
   }
 
   @override
   void dispose() {
-    peerServer?.close();
+    _peerServer?.close();
+    WidgetsBinding.instance.removeObserver(this);
+    AWCWebview._logger.info('AWC webview disposed.');
+
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _restoreMessageChannelRPC(_controller!);
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -59,7 +74,8 @@ class _AWCWebviewState extends State<AWCWebview> {
             resourceCustomSchemes: ['metamask', 'rainbow', 'trust'],
           ),
           onLoadStop: (controller, url) async {
-            await _initMessageChannelRPC(controller, url);
+            _controller = controller;
+            await _initMessageChannelRPC(controller);
           },
           onWebViewCreated: (controller) async {
             await controller.loadUrl(
@@ -85,9 +101,45 @@ class _AWCWebviewState extends State<AWCWebview> {
         ),
       );
 
+  Future<void> _restoreMessageChannelRPC(
+    InAppWebViewController controller,
+  ) async {
+    final isMessageChannelReady = await controller.evaluateJavascript(
+      source: "typeof awc !== 'undefined'",
+    );
+    if (!isMessageChannelReady || _channel == null) {
+      AWCWebview._logger.info('AWC never initialized. Abort restoration.');
+      return;
+    }
+
+    if (!await AWCWebview.isAWCSupported) {
+      AWCWebview._logger.info('AWC unsupported.');
+      return;
+    }
+
+    AWCWebview._logger.info('Restoring AWC.');
+    final port1 = await _restoreMessageChannelPorts(controller);
+
+    _channel?.port = port1;
+  }
+
+  Future<WebMessagePort> _restoreMessageChannelPorts(
+    InAppWebViewController controller,
+  ) async {
+    final webMessageChannel = await controller.createWebMessageChannel();
+    final port1 = webMessageChannel!.port1;
+    final port2 = webMessageChannel.port2;
+
+    // transfer port2 to the webpage to initialize the communication
+    await controller.postWebMessage(
+      message: WebMessage(data: 'restorePort', ports: [port2]),
+      targetOrigin: WebUri('*'),
+    );
+    return port1;
+  }
+
   Future<void> _initMessageChannelRPC(
     InAppWebViewController controller,
-    WebUri? uri,
   ) async {
     final isMessageChannelReady = await controller.evaluateJavascript(
       source: "typeof awc !== 'undefined'",
@@ -106,8 +158,10 @@ class _AWCWebviewState extends State<AWCWebview> {
     final port1 = await _initMessageChannelPorts(controller);
 
     final channel = WebviewMessagePortStreamChannel(port: port1);
-    peerServer = AWCJsonRPCServer(channel.cast<String>());
-    await peerServer?.listen();
+    final peerServer = AWCJsonRPCServer(channel.cast<String>());
+    _channel = channel;
+    _peerServer = peerServer;
+    await peerServer.listen();
   }
 
   Future<WebMessagePort> _initMessageChannelPorts(
@@ -115,6 +169,58 @@ class _AWCWebviewState extends State<AWCWebview> {
   ) async {
     await controller.evaluateJavascript(
       source: """
+class RestorableMessagePort {
+    #port;
+    #onmessage;
+    #onmessageerror;
+    #onclose;
+    set port(port) {
+        var previousPort = this.#port;
+        this.#port = port;
+        this.#port.onmessage = this.#onmessage;
+        this.#port.onmessageerror = this.#onmessageerror;
+        this.#port.onclose = this.#onclose;
+        if (previousPort) {
+            previousPort.close();
+        }
+    }
+
+    close() {
+        this.#port.close();
+    }
+
+    start() {
+        this.#port.start();
+    }
+
+    postMessage(message, transfer) {
+        this.#port.postMessage(message, transfer);
+    }
+
+    get onmessage() {
+        return this.#onmessage;
+    }
+    set onmessage(callback) {
+        this.#onmessage = callback;
+        this.#port.onmessage = callback;
+    }
+
+    get onmessageerror() {
+        return this.#onmessageerror;
+    }
+    set onmessageerror(callback) {
+        this.#onmessageerror = callback;
+        this.#port.onmessageerror = callback;
+    }
+
+    get onclose() {
+        return this.#onclose;
+    }
+    set onclose(callback) {
+        this.#onclose = callback;
+        this.#port.onclose = callback;
+    }
+}
 console.info("[AWC] Init webmessage");
 var onAWCReady = (awc) => {};
 var awcAvailable = true;
@@ -122,12 +228,25 @@ var awc;
 window.addEventListener('message', function(event) {
     if (event.data == 'capturePort') {
         if (event.ports[0] != null) {
-            awc = event.ports[0];
+            awc = new RestorableMessagePort();
+            awc.port = event.ports[0];
             console.info("[AWC] Init webmessage Done");
             if (onAWCReady !== undefined) {
               onAWCReady(awc);
             }
         }
+        return;
+    }
+    if (event.data == 'restorePort') {
+        if (event.ports[0] != null) {
+          if (!awc) {
+            console.error("[AWC] Port not available. Abort restoration.");
+            return;
+          }
+          awc.port = event.ports[0];
+          console.info("[AWC] Webmessage restoration Done");
+        }
+        return;
     }
 }, false);
 """,
@@ -148,25 +267,31 @@ window.addEventListener('message', function(event) {
 class WebviewMessagePortStreamChannel
     with StreamChannelMixin<String>
     implements StreamChannel<String> {
-  WebviewMessagePortStreamChannel({required this.port}) {
+  WebviewMessagePortStreamChannel({required IWebMessagePort port}) {
     logger.info('Wallet Init WebMessage PortStreamchannel');
 
-    port.setWebMessageCallback((message) {
-      if (message == null) return;
-      logger.info('Message received');
-      _in.add(message.data);
-    });
-
+    this.port = port;
     _out.stream.listen((event) {
-      port.postMessage(WebMessage(data: event));
-      logger.info('Response sent');
+      this.port.postMessage(WebMessage(data: event));
+      logger.info('Response sent ${jsonEncode(event)}');
     });
   }
-  static final logger = Logger('AWS-StreamChannel-Webview');
+  final logger = Logger('AWS-StreamChannel-Webview');
 
-  final IWebMessagePort port;
+  IWebMessagePort? _port;
   final _in = StreamController<String>(sync: true);
   final _out = StreamController<String>(sync: true);
+
+  IWebMessagePort get port => _port!;
+  set port(IWebMessagePort port) {
+    _port?.close();
+    _port = port;
+    port.setWebMessageCallback((message) {
+      if (message == null) return;
+      logger.info('Message received ${jsonEncode(message.data)}');
+      _in.add(message.data);
+    });
+  }
 
   @override
   StreamSink<String> get sink => _out.sink;
