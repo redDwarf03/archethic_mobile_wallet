@@ -37,7 +37,7 @@ class SettingsSheetWallet extends ConsumerWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => context.go(HomePage.routerPage),
+          onPressed: () => context.pop(),
         ),
       ),
       body: ClipRect(
