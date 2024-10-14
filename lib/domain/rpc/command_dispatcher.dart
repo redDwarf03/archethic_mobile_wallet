@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 
 /// [CommandDispatcher] is a [Command] queue.
 /// Queue can be consumed by many handlers. When a command
@@ -51,6 +52,8 @@ typedef CommandGuard<CommandDataT> = FutureOr<awc.Failure?> Function(
 );
 
 class CommandDispatcher {
+  final _logger = Logger('RPCCommandDispatcher');
+
   final _waitingCommands = Queue<Command>();
 
   // ignore: prefer_collection_literals
@@ -61,6 +64,7 @@ class CommandDispatcher {
 
   /// Clears all Handlers and Guards.
   void clear() {
+    _logger.finer('Clearing handlers and guards');
     _handlers.clear();
     _guards.clear();
   }
@@ -70,12 +74,16 @@ class CommandDispatcher {
   /// result is an [awc.Failure], then processing stops returning that failure.
   void addGuard(CommandGuard guard) {
     _guards.add(guard);
+    _logger.finer('Add guard ${guard.runtimeType}#${guard.hashCode}');
   }
 
   /// Add a [CommandHandler].
   void addHandler<CommandDataT, SuccessDataT>(
     CommandHandler<CommandDataT, SuccessDataT> commandHandler,
   ) {
+    _logger.finer(
+      'Add handler ${commandHandler.runtimeType}#${commandHandler.hashCode}',
+    );
     _handlers.add(commandHandler);
 
     if (_handlers.length == 1) {
@@ -93,6 +101,9 @@ class CommandDispatcher {
         command,
       ),
     );
+    _logger
+      ..finer('Add command ${command.toString}#${command.hashCode} added')
+      ..finer('Command queue length : ${_waitingCommands.length}');
     unawaited(_process());
 
     return completer.future;
@@ -127,6 +138,12 @@ class CommandDispatcher {
     final handler = _findHandler(command);
 
     if (handler == null) {
+      _logger
+        ..finer(
+          'Dropping command ${command.runtimeType}#${command.hashCode} : no handler found.',
+        )
+        ..finer('Command queue length : ${_waitingCommands.length}');
+
       command.completer.complete(
         const Result.failure(
           awc.Failure.unsupportedMethod,
@@ -134,19 +151,42 @@ class CommandDispatcher {
       );
       return;
     }
+    _logger
+      ..finer(
+        'Processing command ${command.runtimeType}#${command.hashCode} with handler ${handler.runtimeType}#${handler.hashCode}',
+      )
+      ..finer('Command queue length : ${_waitingCommands.length}');
 
     final guardFailure = await _guard(command.command);
     if (guardFailure != null) {
+      _logger
+        ..finer(
+          'Processing command ${command.runtimeType}#${command.hashCode} with handler ${handler.runtimeType}#${handler.hashCode}',
+        )
+        ..finer('Command queue length : ${_waitingCommands.length}');
+
       command.completer.complete(Result.failure(guardFailure));
       return;
     }
 
-    await handler
-        .handle(command.command)
-        .then(
-          command.completer.complete,
-          onError: command.completer.completeError,
-        )
-        .whenComplete(_process);
+    await handler.handle(command.command).then(
+      (value) {
+        _logger
+          ..finer(
+            'Command successfully completed ${command.runtimeType}#${command.hashCode} : $value',
+          )
+          ..finer('Command queue length : ${_waitingCommands.length}');
+
+        return command.completer.complete(value);
+      },
+      onError: (error) {
+        _logger
+          ..finer(
+            'Command failed ${command.runtimeType}#${command.hashCode} : $error',
+          )
+          ..finer('Command queue length : ${_waitingCommands.length}');
+        return command.completer.completeError(error);
+      },
+    ).whenComplete(_process);
   }
 }
