@@ -94,29 +94,23 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
       );
     } else {
       return SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: kToolbarHeight,
-          ),
-          child: FutureBuilder<bool>(
-            future: AWCWebview.isAWCSupported,
-            builder: (context, snapshot) {
-              final isAWCSupported = snapshot.data;
-              if (isAWCSupported == null) {
-                return const Center(child: LoadingListHeader());
-              }
+        child: FutureBuilder<bool>(
+          future: AWCWebview.isAWCSupported,
+          builder: (context, snapshot) {
+            final isAWCSupported = snapshot.data;
+            if (isAWCSupported == null) {
+              return const Center(child: LoadingListHeader());
+            }
 
-              if (!isAWCSupported) return const UnavailableFeatureWarning();
+            if (!isAWCSupported) return const UnavailableFeatureWarning();
 
-              if (aeSwapUrl != null) {
-                return AWCWebview(
-                  uri: Uri.parse(aeSwapUrl!),
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
+            if (aeSwapUrl != null) {
+              return AWCWebview(
+                uri: Uri.parse(aeSwapUrl!),
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
       );
     }

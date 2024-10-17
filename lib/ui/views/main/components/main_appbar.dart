@@ -14,6 +14,7 @@ import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart'
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -102,12 +103,22 @@ class _MainAppbarForWebView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SafeArea(
-      child: Row(
+    final localizations = AppLocalizations.of(context)!;
+    return SafeArea(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Positioned(
-            left: 12,
-            top: 12,
+          SizedBox(
+            height: kToolbarHeight,
+            child: Align(
+              child: Text(
+                localizations.aeBridgeHeader,
+                style: ArchethicThemeStyles.textStyleSize24W700Primary,
+              ).animate().fade(duration: const Duration(milliseconds: 300)),
+            ),
+          ),
+          const Positioned(
+            left: 5,
             child: _MenuButton(),
           ),
         ],
