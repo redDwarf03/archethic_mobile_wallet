@@ -16,8 +16,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DEXSheet extends ConsumerStatefulWidget {
-  const DEXSheet({
+class DAppSheet extends ConsumerStatefulWidget {
+  const DAppSheet({
     required this.dappKey,
     super.key,
   });
@@ -28,10 +28,10 @@ class DEXSheet extends ConsumerStatefulWidget {
   static const String routerPage = '/dex';
 
   @override
-  ConsumerState<DEXSheet> createState() => DEXSheetState();
+  ConsumerState<DAppSheet> createState() => DAppSheetState();
 }
 
-class DEXSheetState extends ConsumerState<DEXSheet> {
+class DAppSheetState extends ConsumerState<DAppSheet> {
   String? aeSwapUrl;
   @override
   void initState() {
@@ -96,8 +96,8 @@ class DEXSheetState extends ConsumerState<DEXSheet> {
       return SafeArea(
         top: false,
         child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).viewPadding.top + 12,
+          padding: const EdgeInsets.only(
+            top: kToolbarHeight,
           ),
           child: FutureBuilder<bool>(
             future: AWCWebview.isAWCSupported,
