@@ -468,7 +468,7 @@
     "transactionRawRawOption": "Raw",
     "transactionRawFormattedOption": "Formatted",
     "swapHeader": "Swap",
-    "aeBridgeHeader": "aeBridge",
+    "aeBridgeHeader": "Bridge",
     "aeSwapEarnHeader": "Earn UCO token",
     "price": "Price",
     "aeSwapLaunchMessage": "Please launch the aeSwap application to proceed. It will open in your default browser.",

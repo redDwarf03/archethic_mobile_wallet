@@ -448,7 +448,7 @@
     "transactionRawRawOption": "Brut",
     "transactionRawFormattedOption": "Formaté",
     "swapHeader": "Échanger",
-    "aeBridgeHeader": "aeBridge",
+    "aeBridgeHeader": "Bridge",
     "aeSwapEarnHeader": "Gagner des UCO",
     "price": "Prix",
     "aeSwapLaunchMessage": "Veuillez lancer l'application aeSwap pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
