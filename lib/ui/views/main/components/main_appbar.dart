@@ -31,6 +31,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
+    if (preferences.mainScreenCurrentPage == 4) {
+      return const _MainAppbarForWebView();
+    }
+
     return AppBar(
       flexibleSpace: ClipRRect(
         child: BackdropFilter(
@@ -44,17 +48,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       automaticallyImplyLeading: false,
-      leading: IconButton(
-        icon: const Icon(
-          Symbols.menu,
-          weight: IconSize.weightM,
-          opticalSize: IconSize.opticalSizeM,
-          grade: IconSize.gradeM,
-        ),
-        onPressed: () {
-          context.push(SettingsSheetWallet.routerPage);
-        },
-      ),
+      leading: const _MenuButton(),
       actions: [
         if (preferences.mainScreenCurrentPage ==
                 MainScreenTab.accountTab.index ||
@@ -99,4 +93,42 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: ArchethicTheme.text),
     );
   }
+}
+
+/// AppBar containing only the menu button.
+/// Useful for webview screens.
+class _MainAppbarForWebView extends ConsumerWidget {
+  const _MainAppbarForWebView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const SafeArea(
+      child: Row(
+        children: [
+          Positioned(
+            left: 12,
+            top: 12,
+            child: _MenuButton(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MenuButton extends ConsumerWidget {
+  const _MenuButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => IconButton(
+        icon: const Icon(
+          Symbols.menu,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+        ),
+        onPressed: () {
+          context.push(SettingsSheetWallet.routerPage);
+        },
+      );
 }
