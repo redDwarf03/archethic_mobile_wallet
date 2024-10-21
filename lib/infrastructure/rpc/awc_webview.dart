@@ -71,7 +71,7 @@ class _AWCWebviewState extends State<AWCWebview> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Wallet not installed')),
               );
-              return;
+              return null;
             }
             await launchUrl(request.url);
             return null;

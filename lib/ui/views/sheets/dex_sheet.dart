@@ -49,7 +49,7 @@ class DEXSheetState extends ConsumerState<DEXSheet> {
         );
 
         setState(() {
-          aeSwapUrl = dapp!.url;
+          aeSwapUrl = '${dapp!.url}?isEmbedded';
         });
       }
     });
@@ -94,27 +94,29 @@ class DEXSheetState extends ConsumerState<DEXSheet> {
       );
     } else {
       return SafeArea(
-        bottom: false,
-        child: FutureBuilder<bool>(
-          future: AWCWebview.isAWCSupported,
-          builder: (context, snapshot) {
-            final isAWCSupported = snapshot.data;
-            if (isAWCSupported == null) {
-              return const Center(child: LoadingListHeader());
-            }
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).viewPadding.top + 12,
+          ),
+          child: FutureBuilder<bool>(
+            future: AWCWebview.isAWCSupported,
+            builder: (context, snapshot) {
+              final isAWCSupported = snapshot.data;
+              if (isAWCSupported == null) {
+                return const Center(child: LoadingListHeader());
+              }
 
-            if (!isAWCSupported) return const UnavailableFeatureWarning();
+              if (!isAWCSupported) return const UnavailableFeatureWarning();
 
-            if (aeSwapUrl != null) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 48),
-                child: AWCWebview(
+              if (aeSwapUrl != null) {
+                return AWCWebview(
                   uri: Uri.parse(aeSwapUrl!),
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       );
     }
