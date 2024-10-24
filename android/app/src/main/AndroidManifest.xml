@@ -55,4 +55,15 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <queries>
+        <package android:name="io.metamask"/>
+        <package android:name="com.wallet.crypto.trustapp"/>
+        <package android:name="com.okinc.okex.gp"/>
+        <package android:name="com.binance.dev"/>
+        <package android:name="com.uniswap.mobile"/>
+        <package android:name="io.safepal.wallet"/>
+        <package android:name="me.rainbow"/>
+        <package android:name="exodusmovement.exodus"/>
+        <package android:name="io.gnosis.safe"/>
+    </queries>
 </manifest>
