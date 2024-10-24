@@ -43,8 +43,14 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>metamask</string>
-		<string>rainbow</string>
 		<string>trust</string>
+		<string>okex</string>
+		<string>bnc</string>
+		<string>uniswap</string>
+		<string>safepalwallet</string>
+		<string>rainbow</string>
+		<string>exodus</string>
+		<string>safe</string>
 	</array>
 	<key>NFCReaderUsageDescription</key>
 	<string>This app uses the NFC to read the tags.</string>
