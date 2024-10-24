@@ -10,6 +10,18 @@ import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const evmWalletsSchemes = [
+  'metamask',
+  'trust',
+  'okex',
+  'bnc',
+  'uniswap',
+  'safepalwallet',
+  'rainbow',
+  'exodus',
+  'safe',
+];
+
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
 
@@ -71,7 +83,6 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
           initialSettings: InAppWebViewSettings(
             isInspectable: kDebugMode,
             transparentBackground: true,
-            resourceCustomSchemes: ['metamask', 'rainbow', 'trust'],
           ),
           onLoadStop: (controller, url) async {
             _controller = controller;
@@ -82,15 +93,29 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
               urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
             );
           },
-          onLoadResourceWithCustomScheme: (controller, request) async {
-            if (!await canLaunchUrl(request.url)) {
+          shouldOverrideUrlLoading: (controller, navigationAction) async {
+            final uri = navigationAction.request.url;
+            if (uri == null) {
+              return NavigationActionPolicy.ALLOW;
+            }
+
+            final isAnEvmWalletDeeplink = evmWalletsSchemes.any(
+              (scheme) => uri.scheme.startsWith(scheme),
+            );
+
+            if (!isAnEvmWalletDeeplink) {
+              return NavigationActionPolicy.ALLOW;
+            }
+
+            if (!await canLaunchUrl(uri.uriValue)) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Wallet not installed')),
               );
-              return null;
+              return NavigationActionPolicy.CANCEL;
             }
-            await launchUrl(request.url);
-            return null;
+            await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+            return NavigationActionPolicy.CANCEL;
           },
           onReceivedServerTrustAuthRequest: (controller, challenge) async {
             // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
