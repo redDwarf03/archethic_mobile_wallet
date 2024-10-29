@@ -1,0 +1,5 @@
+Version 3.0.8
+
+- Add access to explorer from transactions tab
+- Remove the inability to take screenshots
+- Fix bugs
