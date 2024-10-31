@@ -338,7 +338,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                                 AutoSizeText(
                                                   minFontSize: 5,
                                                   wrapWords: false,
-                                                  '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                                                  '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
                                                   style:
                                                       AppTextStyles.bodyMedium(
                                                     context,
@@ -372,7 +372,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                             AutoSizeText(
                                               minFontSize: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 6)}',
+                                              '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 6)}',
                                               style: AppTextStyles.bodyMedium(
                                                 context,
                                               ),
@@ -407,7 +407,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                       AutoSizeText(
                                         minFontSize: 5,
                                         wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
+                                        '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
                                         style:
                                             AppTextStyles.bodyMedium(context),
                                       )
@@ -415,7 +415,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                       AutoSizeText(
                                         minFontSize: 5,
                                         wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
+                                        '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
                                         style:
                                             AppTextStyles.bodyMedium(context),
                                       ),
