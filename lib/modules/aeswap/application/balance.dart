@@ -109,8 +109,6 @@ Future<double> addressBalanceTotalFiat(
                     balanceToken.address!,
                   ).future,
                 );
-
-                print('>>>> estimateLPTokenInFiat $address $fiatValueToken');
               }
             } else {
               fiatValueToken = await ref.watch(
@@ -119,7 +117,6 @@ Future<double> addressBalanceTotalFiat(
                     ).future,
                   ) *
                   archethic.fromBigInt(balanceToken.amount);
-              print('>>>> estimateTokenInFiat $address $fiatValueToken');
             }
 
             total += fiatValueToken;
