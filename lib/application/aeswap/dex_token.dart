@@ -152,16 +152,17 @@ Future<double> _estimateLPTokenInFiat(
   final amounts = await ref.watch(
     DexTokensProviders.getRemoveAmounts(poolAddress, lpTokenAmount).future,
   );
+
   if (fiatValueToken1 > 0 && fiatValueToken2 > 0) {
     return amounts.token1 * fiatValueToken1 + amounts.token2 * fiatValueToken2;
   }
 
   if (fiatValueToken1 > 0 && fiatValueToken2 == 0) {
-    return (amounts.token1 + amounts.token2) * fiatValueToken1;
+    return (2 * amounts.token1) * fiatValueToken1;
   }
 
   if (fiatValueToken1 == 0 && fiatValueToken2 > 0) {
-    return (amounts.token1 + amounts.token2) * fiatValueToken2;
+    return (2 * amounts.token2) * fiatValueToken2;
   }
 
   return 0;
