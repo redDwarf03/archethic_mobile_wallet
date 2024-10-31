@@ -439,8 +439,8 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                               textAlign: TextAlign.end,
                             ),
                             loading: () => const SizedBox(
-                              width: 10,
-                              height: 10,
+                              width: 15,
+                              height: 5,
                               child: CircularProgressIndicator(
                                 strokeWidth: 0.5,
                               ),

@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/balance.repository.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -60,10 +61,11 @@ Future<double> addressBalanceTotalFiat(
 ) async {
   try {
     var total = 0.0;
-
     final balanceAsync = ref.watch(
       addressBalanceProvider(address),
     );
+    final poolsListRaw =
+        await ref.watch(DexPoolProviders.getPoolListRaw.future);
 
     // ignore: cascade_invocations
     await balanceAsync.when(
@@ -81,14 +83,46 @@ Future<double> addressBalanceTotalFiat(
               balanceToken.address != null &&
               balanceToken.amount != null &&
               balanceToken.amount! > 0) {
-            final fiatValueToken = await ref.watch(
-              DexTokensProviders.estimateTokenInFiat(balanceToken.address!)
-                  .future,
-            );
-            total +=
-                (Decimal.parse('${archethic.fromBigInt(balanceToken.amount)}') *
-                        Decimal.parse(fiatValueToken.toString()))
-                    .toDouble();
+            final isLPToken = poolsListRaw
+                .any((item) => item.lpTokenAddress == balanceToken.address);
+
+            var fiatValueToken = 0.0;
+            if (isLPToken) {
+              String? token1Address;
+              String? token2Address;
+              final poolRaw = poolsListRaw.firstWhereOrNull(
+                (item) => item.lpTokenAddress == balanceToken.address!,
+              );
+              if (poolRaw != null) {
+                token1Address = poolRaw.concatenatedTokensAddresses
+                    .split('/')[0]
+                    .toUpperCase();
+                token2Address = poolRaw.concatenatedTokensAddresses
+                    .split('/')[1]
+                    .toUpperCase();
+
+                fiatValueToken = await ref.watch(
+                  DexTokensProviders.estimateLPTokenInFiat(
+                    token1Address,
+                    token2Address,
+                    archethic.fromBigInt(balanceToken.amount).toDouble(),
+                    balanceToken.address!,
+                  ).future,
+                );
+
+                print('>>>> estimateLPTokenInFiat $address $fiatValueToken');
+              }
+            } else {
+              fiatValueToken = await ref.watch(
+                    DexTokensProviders.estimateTokenInFiat(
+                      balanceToken.address!,
+                    ).future,
+                  ) *
+                  archethic.fromBigInt(balanceToken.amount);
+              print('>>>> estimateTokenInFiat $address $fiatValueToken');
+            }
+
+            total += fiatValueToken;
           }
         }
       },
@@ -98,7 +132,7 @@ Future<double> addressBalanceTotalFiat(
 
     return total;
   } catch (e) {
-    throw Exception('Balance Total Fiat not retrieved');
+    throw Exception('Balance Total Fiat not retrieved: $e');
   }
 }
 
