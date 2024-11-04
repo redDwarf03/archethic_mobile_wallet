@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
+import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   AWCJsonRPCServer? _peerServer;
   InAppWebViewController? _controller;
   WebviewMessagePortStreamChannel? _channel;
+  bool _loaded = false;
+
+  final _fadeDuration = const Duration(milliseconds: 200);
 
   @override
   void initState() {
@@ -77,53 +81,75 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   }
 
   @override
-  Widget build(BuildContext context) => ColoredBox(
-        color: Colors.black,
-        child: InAppWebView(
-          initialSettings: InAppWebViewSettings(
-            isInspectable: kDebugMode,
-            transparentBackground: true,
+  Widget build(BuildContext context) => Stack(
+        children: [
+          AnimatedOpacity(
+            duration: _fadeDuration,
+            opacity: _loaded ? 1 : 0,
+            child: ColoredBox(
+              color: Colors.black,
+              child: InAppWebView(
+                initialSettings: InAppWebViewSettings(
+                  isInspectable: kDebugMode,
+                  transparentBackground: true,
+                ),
+                onLoadStop: (controller, url) async {
+                  _controller = controller;
+                  setState(() {
+                    _loaded = true;
+                  });
+                  await _initMessageChannelRPC(controller);
+                },
+                onWebViewCreated: (controller) async {
+                  await controller.loadUrl(
+                    urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
+                  );
+                },
+                shouldOverrideUrlLoading: (controller, navigationAction) async {
+                  final uri = navigationAction.request.url;
+                  if (uri == null) {
+                    return NavigationActionPolicy.ALLOW;
+                  }
+
+                  final isAnEvmWalletDeeplink = evmWalletsSchemes.any(
+                    (scheme) => uri.scheme.startsWith(scheme),
+                  );
+
+                  if (!isAnEvmWalletDeeplink) {
+                    return NavigationActionPolicy.ALLOW;
+                  }
+
+                  if (!await canLaunchUrl(uri.uriValue)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Wallet not installed')),
+                    );
+                    return NavigationActionPolicy.CANCEL;
+                  }
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+                  return NavigationActionPolicy.CANCEL;
+                },
+                onReceivedHttpError: (controller, request, errorResponse) {
+                  AWCWebview._logger.warning(
+                    'HTTP error: ${errorResponse.statusCode} ${request.url}',
+                  );
+                },
+                onReceivedServerTrustAuthRequest:
+                    (controller, challenge) async {
+                  // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
+                  return ServerTrustAuthResponse(
+                    action: ServerTrustAuthResponseAction.PROCEED,
+                  );
+                },
+              ),
+            ),
           ),
-          onLoadStop: (controller, url) async {
-            _controller = controller;
-            await _initMessageChannelRPC(controller);
-          },
-          onWebViewCreated: (controller) async {
-            await controller.loadUrl(
-              urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
-            );
-          },
-          shouldOverrideUrlLoading: (controller, navigationAction) async {
-            final uri = navigationAction.request.url;
-            if (uri == null) {
-              return NavigationActionPolicy.ALLOW;
-            }
-
-            final isAnEvmWalletDeeplink = evmWalletsSchemes.any(
-              (scheme) => uri.scheme.startsWith(scheme),
-            );
-
-            if (!isAnEvmWalletDeeplink) {
-              return NavigationActionPolicy.ALLOW;
-            }
-
-            if (!await canLaunchUrl(uri.uriValue)) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Wallet not installed')),
-              );
-              return NavigationActionPolicy.CANCEL;
-            }
-            await launchUrl(uri, mode: LaunchMode.externalApplication);
-
-            return NavigationActionPolicy.CANCEL;
-          },
-          onReceivedServerTrustAuthRequest: (controller, challenge) async {
-            // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
-            return ServerTrustAuthResponse(
-              action: ServerTrustAuthResponseAction.PROCEED,
-            );
-          },
-        ),
+          AnimatedOpacity(
+            duration: _fadeDuration,
+            opacity: _loaded ? 0 : 1,
+            child: const Center(child: LoadingListHeader()),
+          ),
+        ],
       );
 
   Future<void> _restoreMessageChannelRPC(
