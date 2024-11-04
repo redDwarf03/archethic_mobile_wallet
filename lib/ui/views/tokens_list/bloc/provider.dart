@@ -7,8 +7,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'provider.g.dart';
 
 @riverpod
-Future<List<AEToken>> _tokens(
-  _TokensRef ref, {
+Future<List<AEToken>> tokens(
+  TokensRef ref, {
   String searchCriteria = '',
   bool withVerified = true,
   bool withLPToken = true,
@@ -23,8 +23,7 @@ Future<List<AEToken>> _tokens(
         if (selectedAccount == null) return [];
 
         final tokensList = await ref.watch(
-          TokensListProvider(
-            selectedAccount.genesisAddress,
+          tokensFromUserBalanceProvider(
             withVerified: withVerified,
             withLPToken: withLPToken,
             withNotVerified: withNotVerified,
@@ -61,7 +60,3 @@ Future<List<AEToken>> _tokens(
         return sortedTokens;
       },
     );
-
-class TokensListFormProvider {
-  static const tokens = _tokensProvider;
-}

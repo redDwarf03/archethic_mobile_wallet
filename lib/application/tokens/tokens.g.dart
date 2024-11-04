@@ -6,7 +6,12 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+<<<<<<< HEAD
 String _$tokensListHash() => r'593e48ed9063457663e2e48b344aed4ca8bc7518';
+=======
+String _$tokensFromAddressesHash() =>
+    r'4cd16d00a6c3c466c3eefe8e60852b2791c7527b';
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,39 +34,31 @@ class _SystemHash {
   }
 }
 
-/// See also [tokensList].
-@ProviderFor(tokensList)
-const tokensListProvider = TokensListFamily();
+/// See also [tokensFromAddresses].
+@ProviderFor(tokensFromAddresses)
+const tokensFromAddressesProvider = TokensFromAddressesFamily();
 
-/// See also [tokensList].
-class TokensListFamily extends Family<AsyncValue<List<aedappfm.AEToken>>> {
-  /// See also [tokensList].
-  const TokensListFamily();
+/// See also [tokensFromAddresses].
+class TokensFromAddressesFamily
+    extends Family<AsyncValue<Map<String, archethic.Token>>> {
+  /// See also [tokensFromAddresses].
+  const TokensFromAddressesFamily();
 
-  /// See also [tokensList].
-  TokensListProvider call(
-    String userGenesisAddress, {
-    bool withVerified = true,
-    bool withLPToken = true,
-    bool withNotVerified = true,
-  }) {
-    return TokensListProvider(
-      userGenesisAddress,
-      withVerified: withVerified,
-      withLPToken: withLPToken,
-      withNotVerified: withNotVerified,
+  /// See also [tokensFromAddresses].
+  TokensFromAddressesProvider call(
+    List<String> addresses,
+  ) {
+    return TokensFromAddressesProvider(
+      addresses,
     );
   }
 
   @override
-  TokensListProvider getProviderOverride(
-    covariant TokensListProvider provider,
+  TokensFromAddressesProvider getProviderOverride(
+    covariant TokensFromAddressesProvider provider,
   ) {
     return call(
-      provider.userGenesisAddress,
-      withVerified: provider.withVerified,
-      withLPToken: provider.withLPToken,
-      withNotVerified: provider.withNotVerified,
+      provider.addresses,
     );
   }
 
@@ -77,112 +74,264 @@ class TokensListFamily extends Family<AsyncValue<List<aedappfm.AEToken>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'tokensListProvider';
+  String? get name => r'tokensFromAddressesProvider';
 }
 
-/// See also [tokensList].
-class TokensListProvider
-    extends AutoDisposeFutureProvider<List<aedappfm.AEToken>> {
-  /// See also [tokensList].
-  TokensListProvider(
-    String userGenesisAddress, {
-    bool withVerified = true,
-    bool withLPToken = true,
-    bool withNotVerified = true,
-  }) : this._internal(
-          (ref) => tokensList(
-            ref as TokensListRef,
-            userGenesisAddress,
-            withVerified: withVerified,
-            withLPToken: withLPToken,
-            withNotVerified: withNotVerified,
+/// See also [tokensFromAddresses].
+class TokensFromAddressesProvider
+    extends AutoDisposeFutureProvider<Map<String, archethic.Token>> {
+  /// See also [tokensFromAddresses].
+  TokensFromAddressesProvider(
+    List<String> addresses,
+  ) : this._internal(
+          (ref) => tokensFromAddresses(
+            ref as TokensFromAddressesRef,
+            addresses,
           ),
-          from: tokensListProvider,
-          name: r'tokensListProvider',
+          from: tokensFromAddressesProvider,
+          name: r'tokensFromAddressesProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$tokensListHash,
-          dependencies: TokensListFamily._dependencies,
+                  : _$tokensFromAddressesHash,
+          dependencies: TokensFromAddressesFamily._dependencies,
           allTransitiveDependencies:
-              TokensListFamily._allTransitiveDependencies,
-          userGenesisAddress: userGenesisAddress,
-          withVerified: withVerified,
-          withLPToken: withLPToken,
-          withNotVerified: withNotVerified,
+              TokensFromAddressesFamily._allTransitiveDependencies,
+          addresses: addresses,
         );
 
-  TokensListProvider._internal(
+  TokensFromAddressesProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.userGenesisAddress,
-    required this.withVerified,
-    required this.withLPToken,
-    required this.withNotVerified,
+    required this.addresses,
   }) : super.internal();
 
-  final String userGenesisAddress;
-  final bool withVerified;
-  final bool withLPToken;
-  final bool withNotVerified;
+  final List<String> addresses;
 
   @override
   Override overrideWith(
-    FutureOr<List<aedappfm.AEToken>> Function(TokensListRef provider) create,
+    FutureOr<Map<String, archethic.Token>> Function(
+            TokensFromAddressesRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: TokensListProvider._internal(
-        (ref) => create(ref as TokensListRef),
+      override: TokensFromAddressesProvider._internal(
+        (ref) => create(ref as TokensFromAddressesRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        userGenesisAddress: userGenesisAddress,
+        addresses: addresses,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Map<String, archethic.Token>>
+      createElement() {
+    return _TokensFromAddressesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TokensFromAddressesProvider && other.addresses == addresses;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, addresses.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin TokensFromAddressesRef
+    on AutoDisposeFutureProviderRef<Map<String, archethic.Token>> {
+  /// The parameter `addresses` of this provider.
+  List<String> get addresses;
+}
+
+class _TokensFromAddressesProviderElement
+    extends AutoDisposeFutureProviderElement<Map<String, archethic.Token>>
+    with TokensFromAddressesRef {
+  _TokensFromAddressesProviderElement(super.provider);
+
+  @override
+  List<String> get addresses =>
+      (origin as TokensFromAddressesProvider).addresses;
+}
+
+String _$tokensFromUserBalanceHash() =>
+    r'3a218ad12c5949939e3f275d32d1e1f27a2022cf';
+
+/// See also [tokensFromUserBalance].
+@ProviderFor(tokensFromUserBalance)
+const tokensFromUserBalanceProvider = TokensFromUserBalanceFamily();
+
+/// See also [tokensFromUserBalance].
+class TokensFromUserBalanceFamily
+    extends Family<AsyncValue<List<aedappfm.AEToken>>> {
+  /// See also [tokensFromUserBalance].
+  const TokensFromUserBalanceFamily();
+
+  /// See also [tokensFromUserBalance].
+  TokensFromUserBalanceProvider call({
+    bool withVerified = true,
+    bool withLPToken = true,
+    bool withNotVerified = true,
+    bool withCustomToken = true,
+  }) {
+    return TokensFromUserBalanceProvider(
+      withVerified: withVerified,
+      withLPToken: withLPToken,
+      withNotVerified: withNotVerified,
+      withCustomToken: withCustomToken,
+    );
+  }
+
+  @override
+  TokensFromUserBalanceProvider getProviderOverride(
+    covariant TokensFromUserBalanceProvider provider,
+  ) {
+    return call(
+      withVerified: provider.withVerified,
+      withLPToken: provider.withLPToken,
+      withNotVerified: provider.withNotVerified,
+      withCustomToken: provider.withCustomToken,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'tokensFromUserBalanceProvider';
+}
+
+/// See also [tokensFromUserBalance].
+class TokensFromUserBalanceProvider
+    extends AutoDisposeFutureProvider<List<aedappfm.AEToken>> {
+  /// See also [tokensFromUserBalance].
+  TokensFromUserBalanceProvider({
+    bool withVerified = true,
+    bool withLPToken = true,
+    bool withNotVerified = true,
+    bool withCustomToken = true,
+  }) : this._internal(
+          (ref) => tokensFromUserBalance(
+            ref as TokensFromUserBalanceRef,
+            withVerified: withVerified,
+            withLPToken: withLPToken,
+            withNotVerified: withNotVerified,
+            withCustomToken: withCustomToken,
+          ),
+          from: tokensFromUserBalanceProvider,
+          name: r'tokensFromUserBalanceProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$tokensFromUserBalanceHash,
+          dependencies: TokensFromUserBalanceFamily._dependencies,
+          allTransitiveDependencies:
+              TokensFromUserBalanceFamily._allTransitiveDependencies,
+          withVerified: withVerified,
+          withLPToken: withLPToken,
+          withNotVerified: withNotVerified,
+          withCustomToken: withCustomToken,
+        );
+
+  TokensFromUserBalanceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.withVerified,
+    required this.withLPToken,
+    required this.withNotVerified,
+    required this.withCustomToken,
+  }) : super.internal();
+
+  final bool withVerified;
+  final bool withLPToken;
+  final bool withNotVerified;
+  final bool withCustomToken;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<aedappfm.AEToken>> Function(TokensFromUserBalanceRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TokensFromUserBalanceProvider._internal(
+        (ref) => create(ref as TokensFromUserBalanceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
         withVerified: withVerified,
         withLPToken: withLPToken,
         withNotVerified: withNotVerified,
+        withCustomToken: withCustomToken,
       ),
     );
   }
 
   @override
   AutoDisposeFutureProviderElement<List<aedappfm.AEToken>> createElement() {
-    return _TokensListProviderElement(this);
+    return _TokensFromUserBalanceProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TokensListProvider &&
-        other.userGenesisAddress == userGenesisAddress &&
+    return other is TokensFromUserBalanceProvider &&
         other.withVerified == withVerified &&
         other.withLPToken == withLPToken &&
-        other.withNotVerified == withNotVerified;
+        other.withNotVerified == withNotVerified &&
+        other.withCustomToken == withCustomToken;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, userGenesisAddress.hashCode);
     hash = _SystemHash.combine(hash, withVerified.hashCode);
     hash = _SystemHash.combine(hash, withLPToken.hashCode);
     hash = _SystemHash.combine(hash, withNotVerified.hashCode);
+    hash = _SystemHash.combine(hash, withCustomToken.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
+<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
 
+=======
+mixin TokensFromUserBalanceRef
+    on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
   /// The parameter `withVerified` of this provider.
   bool get withVerified;
 
@@ -191,30 +340,48 @@ mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
 
   /// The parameter `withNotVerified` of this provider.
   bool get withNotVerified;
+
+  /// The parameter `withCustomToken` of this provider.
+  bool get withCustomToken;
 }
 
-class _TokensListProviderElement
+class _TokensFromUserBalanceProviderElement
     extends AutoDisposeFutureProviderElement<List<aedappfm.AEToken>>
-    with TokensListRef {
-  _TokensListProviderElement(super.provider);
+    with TokensFromUserBalanceRef {
+  _TokensFromUserBalanceProviderElement(super.provider);
 
   @override
-  String get userGenesisAddress =>
-      (origin as TokensListProvider).userGenesisAddress;
+  bool get withVerified =>
+      (origin as TokensFromUserBalanceProvider).withVerified;
   @override
-  bool get withVerified => (origin as TokensListProvider).withVerified;
+  bool get withLPToken => (origin as TokensFromUserBalanceProvider).withLPToken;
   @override
-  bool get withLPToken => (origin as TokensListProvider).withLPToken;
+  bool get withNotVerified =>
+      (origin as TokensFromUserBalanceProvider).withNotVerified;
   @override
-  bool get withNotVerified => (origin as TokensListProvider).withNotVerified;
+  bool get withCustomToken =>
+      (origin as TokensFromUserBalanceProvider).withCustomToken;
 }
 
+<<<<<<< HEAD
 String _$tokensTotalUSDHash() => r'a0f42e1ef21073d1ec7f627b48fde93b76205a7a';
+=======
+String _$tokensTotalUSDHash() => r'98ac96ba39ca5f3b227f4d114c7556532a4d24dd';
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)
-const tokensTotalUSDProvider = TokensTotalUSDFamily();
+final tokensTotalUSDProvider = AutoDisposeFutureProvider<double>.internal(
+  tokensTotalUSD,
+  name: r'tokensTotalUSDProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tokensTotalUSDHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
+<<<<<<< HEAD
 /// See also [tokensTotalUSD].
 class TokensTotalUSDFamily extends Family<AsyncValue<double>> {
   /// See also [tokensTotalUSD].
@@ -340,5 +507,8 @@ class _TokensTotalUSDProviderElement
   String get userGenesisAddress =>
       (origin as TokensTotalUSDProvider).userGenesisAddress;
 }
+=======
+typedef TokensTotalUSDRef = AutoDisposeFutureProviderRef<double>;
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

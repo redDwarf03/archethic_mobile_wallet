@@ -177,7 +177,11 @@ class _AddressBalanceProviderElement
 }
 
 String _$addressBalanceTotalFiatHash() =>
+<<<<<<< HEAD
     r'7a2802ee8f75deea0f6ed01238eaa91e54986faa';
+=======
+    r'39f9c8fc5cd22a8b4ae2c923013783f59c219326';
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 
 /// See also [addressBalanceTotalFiat].
 @ProviderFor(addressBalanceTotalFiat)

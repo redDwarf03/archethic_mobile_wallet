@@ -749,5 +749,15 @@
     "logsDesc": "If you encounter any problems, you can copy and send the information below to the Archethic support team.\nEnsure that no sensitive or private information that could affect the security of your funds is shared.",
     "logsCopied": "Logs copied",
     "getSomeHelp": "Get some help",
-    "rpcSignTransactionsProcessing": "Processing transactions signature request"
+    "rpcSignTransactionsProcessing": "Processing transactions signature request",
+    "customTokenAddTextFieldLabel": "Token address",
+    "customTokenAddTitle": "Add custom token",
+    "customTokenAddDesc": "You can add custom tokens to your wallet using their contract address. Once added, you can view the balance of these tokens and send them directly from your wallet.\nAt any time, you can remove a token’s display from the token detail screen.\nPlease note that adding tokens is specific to your current user account and this wallet instance, so these tokens will not be visible from other accounts or synchronized with your other wallet installations.",
+    "customTokenAddressAlreadyExistsInAccount": "You already have this token in your wallet.",
+    "customTokenAddressNotValid": "This address is not a valid token.",
+    "hideBtn": "Hide",
+    "hideTokenConfirmationTitle": "Hide this token in my wallet",
+    "hideTokenConfirmationDesc": "Are you sure you want to hide this token in your wallet?\nYou can display it again anytime by going to the Account tab and clicking '+ token'.",
+    "customTokenAddSelectionTokenTitle": "Select a token\nwith a balance in your account",
+    "customTokenAddBalance": "Your balance"
 }

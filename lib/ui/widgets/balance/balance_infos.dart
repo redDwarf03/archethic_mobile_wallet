@@ -61,9 +61,7 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
       children: [
         FutureBuilder<double>(
           future: ref.watch(
-            TokensTotalUSDProvider(
-              accountSelected.genesisAddress,
-            ).future,
+            tokensTotalUSDProvider.future,
           ),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

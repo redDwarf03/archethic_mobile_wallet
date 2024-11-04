@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensHash() => r'dfa67751dda19dc2e149611ed148260fc5f373c2';
+String _$tokensHash() => r'd2db0355eb2b61faa66737441a25e6049591c9f6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,23 +29,23 @@ class _SystemHash {
   }
 }
 
-/// See also [_tokens].
-@ProviderFor(_tokens)
-const _tokensProvider = _TokensFamily();
+/// See also [tokens].
+@ProviderFor(tokens)
+const tokensProvider = TokensFamily();
 
-/// See also [_tokens].
-class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
-  /// See also [_tokens].
-  const _TokensFamily();
+/// See also [tokens].
+class TokensFamily extends Family<AsyncValue<List<AEToken>>> {
+  /// See also [tokens].
+  const TokensFamily();
 
-  /// See also [_tokens].
-  _TokensProvider call({
+  /// See also [tokens].
+  TokensProvider call({
     String searchCriteria = '',
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
   }) {
-    return _TokensProvider(
+    return TokensProvider(
       searchCriteria: searchCriteria,
       withVerified: withVerified,
       withLPToken: withLPToken,
@@ -54,8 +54,8 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
   }
 
   @override
-  _TokensProvider getProviderOverride(
-    covariant _TokensProvider provider,
+  TokensProvider getProviderOverride(
+    covariant TokensProvider provider,
   ) {
     return call(
       searchCriteria: provider.searchCriteria,
@@ -77,40 +77,40 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_tokensProvider';
+  String? get name => r'tokensProvider';
 }
 
-/// See also [_tokens].
-class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
-  /// See also [_tokens].
-  _TokensProvider({
+/// See also [tokens].
+class TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
+  /// See also [tokens].
+  TokensProvider({
     String searchCriteria = '',
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
   }) : this._internal(
-          (ref) => _tokens(
-            ref as _TokensRef,
+          (ref) => tokens(
+            ref as TokensRef,
             searchCriteria: searchCriteria,
             withVerified: withVerified,
             withLPToken: withLPToken,
             withNotVerified: withNotVerified,
           ),
-          from: _tokensProvider,
-          name: r'_tokensProvider',
+          from: tokensProvider,
+          name: r'tokensProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$tokensHash,
-          dependencies: _TokensFamily._dependencies,
-          allTransitiveDependencies: _TokensFamily._allTransitiveDependencies,
+          dependencies: TokensFamily._dependencies,
+          allTransitiveDependencies: TokensFamily._allTransitiveDependencies,
           searchCriteria: searchCriteria,
           withVerified: withVerified,
           withLPToken: withLPToken,
           withNotVerified: withNotVerified,
         );
 
-  _TokensProvider._internal(
+  TokensProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -130,12 +130,12 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<AEToken>> Function(_TokensRef provider) create,
+    FutureOr<List<AEToken>> Function(TokensRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _TokensProvider._internal(
-        (ref) => create(ref as _TokensRef),
+      override: TokensProvider._internal(
+        (ref) => create(ref as TokensRef),
         from: from,
         name: null,
         dependencies: null,
@@ -156,7 +156,7 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 
   @override
   bool operator ==(Object other) {
-    return other is _TokensProvider &&
+    return other is TokensProvider &&
         other.searchCriteria == searchCriteria &&
         other.withVerified == withVerified &&
         other.withLPToken == withLPToken &&
@@ -175,9 +175,13 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   }
 }
 
+<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
+=======
+mixin TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
+>>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
   /// The parameter `searchCriteria` of this provider.
   String get searchCriteria;
 
@@ -192,17 +196,17 @@ mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
 }
 
 class _TokensProviderElement
-    extends AutoDisposeFutureProviderElement<List<AEToken>> with _TokensRef {
+    extends AutoDisposeFutureProviderElement<List<AEToken>> with TokensRef {
   _TokensProviderElement(super.provider);
 
   @override
-  String get searchCriteria => (origin as _TokensProvider).searchCriteria;
+  String get searchCriteria => (origin as TokensProvider).searchCriteria;
   @override
-  bool get withVerified => (origin as _TokensProvider).withVerified;
+  bool get withVerified => (origin as TokensProvider).withVerified;
   @override
-  bool get withLPToken => (origin as _TokensProvider).withLPToken;
+  bool get withLPToken => (origin as TokensProvider).withLPToken;
   @override
-  bool get withNotVerified => (origin as _TokensProvider).withNotVerified;
+  bool get withNotVerified => (origin as TokensProvider).withNotVerified;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

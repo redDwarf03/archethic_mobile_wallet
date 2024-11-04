@@ -729,5 +729,15 @@
     "logsDesc": "Si vous rencontrez des problèmes, vous pouvez copier et envoyer les informations ci-dessous à l'équipe support d'Archethic.\nVeillez à ce qu'aucune information sensible ou privée qui pourrait affecter la sécurité de vos fonds ne soit partagée.",
     "logsCopied": "Informations copiées",
     "getSomeHelp": "Contactez nous",
-    "rpcSignTransactionsProcessing": "Traitement de la demande de signature"
+    "rpcSignTransactionsProcessing": "Traitement de la demande de signature",
+    "customTokenAddTextFieldLabel": "Adresse du jeton",
+    "customTokenAddTitle": "Ajout de jeton personnalisé",
+    "customTokenAddDesc": "Vous pouvez ajouter des tokens personnalisés à votre portefeuille via leur adresse de contrat. Une fois ajoutés, vous pourrez consulter le solde de ces tokens et les envoyer directement depuis votre portefeuille.\nÀ tout moment, il est possible de retirer l'affichage d'un token depuis l'écran de détail du token.\nVeuillez noter que l'ajout de tokens est spécifique à votre compte utilisateur actuel et à cette instance de votre portefeuille, donc ces tokens ne seront pas visibles depuis d'autres comptes ni synchronisés avec vos autres installations du portefeuille.",
+    "customTokenAddressAlreadyExistsInAccount": "Vous avez déjà ce token dans votre wallet.",
+    "customTokenAddressNotValid": "Cette adresse ne correspond pas à un token.",
+    "hideBtn": "Masquer",
+    "hideTokenConfirmationTitle": "Masquer ce token dans mon portefeuille",
+    "hideTokenConfirmationDesc": "Êtes-vous sûr(e) de vouloir masquer ce token dans votre wallet ? Vous pourrez le réafficher à tout moment en accédant à l'onglet Compte et en cliquant sur '+ jeton'.",
+    "customTokenAddSelectionTokenTitle": "Sélectionner un token\navec un solde dans votre compte",
+    "customTokenAddBalance": "Votre solde"
 }
