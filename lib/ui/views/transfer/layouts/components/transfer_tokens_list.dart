@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_token_detail.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransferTokensList extends ConsumerStatefulWidget {
   const TransferTokensList({
+    this.withVerified = true,
+    this.withNotVerified = false,
+    this.withLPToken = false,
+    this.withCustomToken = true,
     super.key,
   });
+
+  final bool withVerified;
+  final bool withNotVerified;
+  final bool withLPToken;
+  final bool withCustomToken;
 
   @override
   ConsumerState<TransferTokensList> createState() => TransferTokensListState();
@@ -24,14 +32,12 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
     final tokensListAsync = ref.watch(
-      TokensListProvider(
-        selectedAccount!.genesisAddress,
+      tokensFromUserBalanceProvider(
+        withVerified: widget.withVerified,
+        withNotVerified: widget.withNotVerified,
+        withLPToken: widget.withLPToken,
+        withCustomToken: widget.withCustomToken,
       ),
     );
 

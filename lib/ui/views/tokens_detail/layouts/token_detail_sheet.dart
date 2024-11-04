@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/price_history/providers.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -9,6 +14,7 @@ import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_info.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_menu.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -117,6 +123,64 @@ class TokenDetailSheet extends ConsumerWidget
           context.pop();
         },
       ),
+      widgetRight: aeToken.isVerified
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(top: 13, right: 15),
+              child: InkWell(
+                child: Column(
+                  children: [
+                    const Icon(
+                      Symbols.hide_source,
+                      size: 20,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
+                    ),
+                    Text(
+                      localizations.hideBtn,
+                      style: AppTextStyles.bodySmall(context),
+                    ),
+                  ],
+                ),
+                onTap: () async {
+                  await AppDialogs.showConfirmDialog(
+                    context,
+                    ref,
+                    localizations.hideTokenConfirmationTitle,
+                    localizations.hideTokenConfirmationDesc,
+                    localizations.yes,
+                    () async {
+                      final accountSelected = ref.read(
+                        AccountProviders.accounts.select(
+                          (accounts) => accounts.valueOrNull?.selectedAccount,
+                        ),
+                      );
+                      if (accountSelected != null && aeToken.address != null) {
+                        await accountSelected
+                            .removeCustomTokenAddress(aeToken.address!);
+
+                        final poolListRaw = await ref
+                            .read(DexPoolProviders.getPoolListRaw.future);
+                        unawaited(
+                          (await ref
+                                  .read(AccountProviders.accounts.notifier)
+                                  .selectedAccountNotifier)
+                              ?.refreshBalance(),
+                        );
+                        unawaited(
+                          (await ref
+                                  .read(AccountProviders.accounts.notifier)
+                                  .selectedAccountNotifier)
+                              ?.refreshFungibleTokens(poolListRaw),
+                        );
+                      }
+                      context.pop();
+                    },
+                  );
+                },
+              ),
+            ),
     );
   }
 

@@ -1,9 +1,11 @@
 import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/views/tokens_list/bloc/provider.dart';
+import 'package:aewallet/ui/views/tokens_list/layouts/components/custom_token_add_btn.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/components/token_add_btn.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/components/token_detail.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,35 @@ class TokensListState extends ConsumerState<TokensList>
   @override
   bool get wantKeepAlive => true;
   String searchCriteria = '';
+  late FocusNode _focusNode;
+  double _searchFieldWidth = 150;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode
+      ..removeListener(_handleFocusChange)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _handleFocusChange() {
+    if (_focusNode.hasFocus) {
+      setState(() {
+        _searchFieldWidth = MediaQuery.of(context).size.width * 0.9;
+      });
+    } else {
+      setState(() {
+        _searchFieldWidth = 150;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,34 +63,43 @@ class TokensListState extends ConsumerState<TokensList>
 
     final tokens = ref
         .watch(
-          TokensListFormProvider.tokens(
+          tokensProvider(
             searchCriteria: searchCriteria,
+            withLPToken: false,
+            withNotVerified: false,
           ),
         )
         .valueOrNull;
     final localizations = AppLocalizations.of(context)!;
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Stack(
+          alignment: Alignment.centerLeft,
           children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.topCenter,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (FeatureFlags.tokenFungibleCreationFeature) TokenAddBtn(),
+                CustomTokenAddBtn(),
+              ],
+            ),
+            SizedBox(
+              height: 48,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: _searchFieldWidth,
                 child: TextFormField(
+                  focusNode: _focusNode,
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,
                     prefixIcon: Icon(
                       Symbols.search,
                       color: ArchethicTheme.text,
-                      size: 18,
+                      size: 20,
                       weight: IconSize.weightM,
                       opticalSize: IconSize.opticalSizeM,
                       grade: IconSize.gradeM,
-                    ),
-                    suffixIcon: const SizedBox(
-                      width: 26,
                     ),
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -67,7 +107,7 @@ class TokensListState extends ConsumerState<TokensList>
                       ),
                       borderSide: BorderSide.none,
                     ),
-                    hintStyle: ArchethicThemeStyles.textStyleSize12W100Primary,
+                    hintStyle: AppTextStyles.bodyMedium(context),
                     filled: true,
                     hintText: localizations.searchField,
                   ),
@@ -85,10 +125,12 @@ class TokensListState extends ConsumerState<TokensList>
                       },
                     );
                   },
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
                 ),
               ),
             ),
-            if (FeatureFlags.tokenFungibleCreationFeature) const TokenAddBtn(),
           ],
         ),
         if (tokens != null)

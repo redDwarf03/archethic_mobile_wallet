@@ -21,7 +21,7 @@ part 'account.g.dart';
 
 @HiveType(typeId: HiveTypeIds.account)
 
-/// Next field available : 15
+/// Next field available : 16
 class Account extends HiveObject with KeychainServiceMixin {
   Account({
     required this.name,
@@ -37,6 +37,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.nftInfosOffChainList,
     this.nftCategoryList,
     this.serviceType,
+    this.customTokenAddressList,
   });
 
   String get nameDisplayed => _getShortName(name);
@@ -69,6 +70,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     List<AccountToken>? accountNFTCollections,
     List<NftInfosOffChain>? nftInfosOffChainList,
     List<int>? nftCategoryList,
+    List<String>? customTokenAddressList,
   }) =>
       Account(
         name: name ?? this.name,
@@ -86,6 +88,8 @@ class Account extends HiveObject with KeychainServiceMixin {
             accountNFTCollections ?? this.accountNFTCollections,
         nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
         nftCategoryList: nftCategoryList ?? this.nftCategoryList,
+        customTokenAddressList:
+            customTokenAddressList ?? this.customTokenAddressList,
       );
 
   /// Account name - Primary Key
@@ -139,6 +143,10 @@ class Account extends HiveObject with KeychainServiceMixin {
   /// NFT Collections
   @HiveField(14)
   List<AccountToken>? accountNFTCollections;
+
+  /// Custom Token Addresses
+  @HiveField(15)
+  List<String>? customTokenAddressList;
 
   Future<void> updateLastAddress(
     AddressService addressService,
@@ -379,6 +387,23 @@ class Account extends HiveObject with KeychainServiceMixin {
   Future<void> clearRecentTransactionsFromCache() async {
     recentTransactions = [];
     await updateAccount();
+  }
+
+  Future<void> addCustomTokenAddress(String tokenAddress) async {
+    if (Address(address: tokenAddress).isValid() == false) return;
+    (customTokenAddressList ??= []).add(tokenAddress.toUpperCase());
+    await updateAccount();
+  }
+
+  Future<void> removeCustomTokenAddress(String tokenAddress) async {
+    if (Address(address: tokenAddress).isValid() == false) return;
+    (customTokenAddressList ??= []).remove(tokenAddress.toUpperCase());
+    await updateAccount();
+  }
+
+  bool checkCustomTokenAddress(String tokenAddress) {
+    if (Address(address: tokenAddress).isValid() == false) return false;
+    return (customTokenAddressList ?? []).contains(tokenAddress.toUpperCase());
   }
 }
 
