@@ -756,7 +756,7 @@
     "customTokenAddressAlreadyExistsInAccount": "You already have this token in your wallet.",
     "customTokenAddressNotValid": "This address is not a valid token.",
     "hideBtn": "Hide",
-    "hideTokenConfirmationTitle": "Hide this token in my wallet",
+    "hideTokenConfirmationTitle": "Hide this token?",
     "hideTokenConfirmationDesc": "Are you sure you want to hide this token in your wallet?\nYou can display it again anytime by going to the Account tab and clicking '+ token'.",
     "customTokenAddSelectionTokenTitle": "Select a token\nwith a balance in your account",
     "customTokenAddBalance": "Your balance"

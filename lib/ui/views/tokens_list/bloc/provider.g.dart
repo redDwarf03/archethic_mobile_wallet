@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensHash() => r'd2db0355eb2b61faa66737441a25e6049591c9f6';
+String _$tokensHash() => r'7d7863f8ea3451e67500a6aea50ee4fffa0305a4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -176,10 +176,15 @@ class TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
 =======
+=======
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 mixin TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
   /// The parameter `searchCriteria` of this provider.

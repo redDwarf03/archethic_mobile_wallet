@@ -10,8 +10,12 @@ part of 'tokens.dart';
 String _$tokensListHash() => r'593e48ed9063457663e2e48b344aed4ca8bc7518';
 =======
 String _$tokensFromAddressesHash() =>
+<<<<<<< HEAD
     r'4cd16d00a6c3c466c3eefe8e60852b2791c7527b';
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
+=======
+    r'dfc16b82d33ff918a59411a80e8a0d3719259f92';
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -152,6 +156,8 @@ class TokensFromAddressesProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin TokensFromAddressesRef
     on AutoDisposeFutureProviderRef<Map<String, archethic.Token>> {
   /// The parameter `addresses` of this provider.
@@ -169,7 +175,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'3a218ad12c5949939e3f275d32d1e1f27a2022cf';
+    r'935d3476bfdb54548c70492dede7f9c08a3a7338';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)
@@ -322,6 +328,7 @@ class TokensFromUserBalanceProvider
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
@@ -329,6 +336,10 @@ mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
   String get userGenesisAddress;
 
 =======
+=======
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 mixin TokensFromUserBalanceRef
     on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
@@ -364,10 +375,14 @@ class _TokensFromUserBalanceProviderElement
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 String _$tokensTotalUSDHash() => r'a0f42e1ef21073d1ec7f627b48fde93b76205a7a';
 =======
 String _$tokensTotalUSDHash() => r'98ac96ba39ca5f3b227f4d114c7556532a4d24dd';
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
+=======
+String _$tokensTotalUSDHash() => r'39ec8250b31cdf374fe272bd8b3077dd8efb6476';
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)
@@ -381,6 +396,7 @@ final tokensTotalUSDProvider = AutoDisposeFutureProvider<double>.internal(
   allTransitiveDependencies: null,
 );
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /// See also [tokensTotalUSD].
 class TokensTotalUSDFamily extends Family<AsyncValue<double>> {
@@ -508,6 +524,10 @@ class _TokensTotalUSDProviderElement
       (origin as TokensTotalUSDProvider).userGenesisAddress;
 }
 =======
+=======
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 typedef TokensTotalUSDRef = AutoDisposeFutureProviderRef<double>;
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 // ignore_for_file: type=lint
