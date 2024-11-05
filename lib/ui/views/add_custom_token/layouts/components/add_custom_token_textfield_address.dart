@@ -90,7 +90,7 @@ class _AddCustomTokenTextFieldAddressState
                             ),
                             autocorrect: false,
                             textAlignVertical: TextAlignVertical.center,
-                            maxLines: 2,
+                            maxLines: 3,
                             maxLength: 68,
                             controller: addressController,
                             onChanged: (text) async {
@@ -146,7 +146,7 @@ class _AddCustomTokenTextFieldAddressState
                                           ),
                                         ),
                                         const TransferTokensList(
-                                          withVerified: false,
+                                          withUCO: false,
                                           withLPToken: true,
                                           withNotVerified: true,
                                           withCustomToken: false,

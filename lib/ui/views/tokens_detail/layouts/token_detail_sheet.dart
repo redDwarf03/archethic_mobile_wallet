@@ -123,7 +123,7 @@ class TokenDetailSheet extends ConsumerWidget
           context.pop();
         },
       ),
-      widgetRight: aeToken.isVerified
+      widgetRight: aeToken.isUCO
           ? null
           : Padding(
               padding: const EdgeInsets.only(top: 13, right: 15),
