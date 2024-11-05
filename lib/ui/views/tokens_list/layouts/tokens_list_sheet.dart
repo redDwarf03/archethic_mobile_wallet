@@ -65,6 +65,7 @@ class TokensListState extends ConsumerState<TokensList>
         .watch(
           tokensProvider(
             searchCriteria: searchCriteria,
+            withVerified: false,
             withLPToken: false,
             withNotVerified: false,
           ),
