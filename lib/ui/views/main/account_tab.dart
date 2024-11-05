@@ -112,6 +112,7 @@ class AccountTab extends ConsumerWidget {
                                     ),
                                     const Icon(
                                       Symbols.content_copy,
+                                      color: Colors.white,
                                       weight: IconSize.weightM,
                                       opticalSize: IconSize.opticalSizeM,
                                       grade: IconSize.gradeM,

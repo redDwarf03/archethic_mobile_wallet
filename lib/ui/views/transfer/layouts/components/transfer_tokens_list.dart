@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransferTokensList extends ConsumerStatefulWidget {
   const TransferTokensList({
+    this.withUCO = true,
     this.withVerified = true,
     this.withNotVerified = false,
     this.withLPToken = false,
@@ -14,6 +15,7 @@ class TransferTokensList extends ConsumerStatefulWidget {
     super.key,
   });
 
+  final bool withUCO;
   final bool withVerified;
   final bool withNotVerified;
   final bool withLPToken;
@@ -34,6 +36,7 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
 
     final tokensListAsync = ref.watch(
       tokensFromUserBalanceProvider(
+        withUCO: widget.withUCO,
         withVerified: widget.withVerified,
         withNotVerified: widget.withNotVerified,
         withLPToken: widget.withLPToken,

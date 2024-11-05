@@ -40,9 +40,10 @@ Future<List<DexToken>> _tokensFromAccount(
     return const [];
   }
 
-  return ref
-      .watch(_dexTokenRepositoryProvider)
-      .getTokensFromAccount(accountSelected.genesisAddress);
+  return ref.watch(_dexTokenRepositoryProvider).getTokensFromAccount(
+        accountSelected.genesisAddress,
+        accountSelected.customTokenAddressList ?? [],
+      );
 }
 
 @riverpod

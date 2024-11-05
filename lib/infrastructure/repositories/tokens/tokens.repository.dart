@@ -64,6 +64,7 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     archethic.ApiService apiService,
     List<GetPoolListResponse> poolsListRaw,
     aedappfm.Environment environment, {
+    bool withUCO = true,
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
@@ -74,7 +75,7 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     if (balanceMap[userGenesisAddress] == null) {
       return tokensList;
     }
-    if (withVerified) {
+    if (withUCO) {
       final defUCOToken = await aedappfm.DefTokensRepositoryImpl()
           .getDefToken(environment, 'UCO');
       tokensList.add(
@@ -113,9 +114,13 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
         environment: environment,
       ).getVerifiedTokens();
 
-      for (final tokenBalance in balanceMap[userGenesisAddress]!.token) {
-        final token = tokenMap[tokenBalance.address];
-        if (token != null && token.type == 'fungible') {
+      final tokenBalances = balanceMap[userGenesisAddress]!.token;
+
+      for (final entry in tokenMap.entries) {
+        final key = entry.key;
+        final token = entry.value;
+
+        if (token.type == 'fungible') {
           var aeToken = await tokenModelToAETokenModel(
             token,
             verifiedTokens,
@@ -123,16 +128,24 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
             environment,
             apiService,
           );
+
+          final matchingBalances = tokenBalances.where(
+            (element) => element.address?.toUpperCase() == key.toUpperCase(),
+          );
+          final tokenBalanceAmount = matchingBalances.isNotEmpty
+              ? archethic.fromBigInt(matchingBalances.first.amount).toDouble()
+              : 0.0;
+
           aeToken = aeToken.copyWith(
-            balance: archethic.fromBigInt(tokenBalance.amount).toDouble(),
+            balance: tokenBalanceAmount,
           );
 
           if (aeToken.isVerified && withVerified ||
+              !aeToken.isVerified && withNotVerified ||
               aeToken.isLpToken && withLPToken ||
               withCustomToken &&
                   userTokenLocalAddresses
-                      .contains(aeToken.address!.toUpperCase()) ||
-              !aeToken.isVerified && withNotVerified) {
+                      .contains(aeToken.address!.toUpperCase())) {
             tokensList.add(aeToken);
           }
         }

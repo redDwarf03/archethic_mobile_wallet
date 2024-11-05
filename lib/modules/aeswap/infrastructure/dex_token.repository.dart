@@ -51,22 +51,16 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
   @override
   Future<List<DexToken>> getTokensFromAccount(
     String accountAddress,
+    List<String> userTokenLocalAddresses,
   ) async {
-    final balanceMap = await apiService.fetchBalance([accountAddress]);
-    final balance = balanceMap[accountAddress];
-    if (balance == null) {
-      return [];
-    }
     final dexTokens = <DexToken>[];
 
     final tokenAddressList = <String>[];
-    for (final token in balance.token) {
-      if (token.tokenId == 0) tokenAddressList.add(token.address!);
+    for (final tokenAddress in userTokenLocalAddresses) {
+      tokenAddressList.add(tokenAddress);
     }
 
-    final dexTokenUCO = DexToken.uco(
-      balance: archethic.fromBigInt(balance.uco).toDouble(),
-    );
+    final dexTokenUCO = DexToken.uco();
     dexTokens.add(dexTokenUCO);
 
     final tokenMap = await apiService.getToken(
@@ -105,16 +99,7 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
 
       final _token = value.copyWith(address: key);
 
-      var balanceAmount = 0.0;
-      for (final tokenBalance in balance.token) {
-        if (tokenBalance.address!.toUpperCase() ==
-            _token.address!.toUpperCase()) {
-          balanceAmount = archethic.fromBigInt(tokenBalance.amount).toDouble();
-          break;
-        }
-      }
-
-      var dexToken = tokenSDKToModel(_token, balanceAmount);
+      var dexToken = tokenSDKToModel(_token, 0);
 
       if (token1Address != null && token2Address != null) {
         dexToken = dexToken.copyWith(

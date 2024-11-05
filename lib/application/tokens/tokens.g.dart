@@ -175,7 +175,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'935d3476bfdb54548c70492dede7f9c08a3a7338';
+    r'00dbb0c3c334cf38533f0e7d50ba90a95f24803e';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)
@@ -189,12 +189,14 @@ class TokensFromUserBalanceFamily
 
   /// See also [tokensFromUserBalance].
   TokensFromUserBalanceProvider call({
+    bool withUCO = true,
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
     bool withCustomToken = true,
   }) {
     return TokensFromUserBalanceProvider(
+      withUCO: withUCO,
       withVerified: withVerified,
       withLPToken: withLPToken,
       withNotVerified: withNotVerified,
@@ -207,6 +209,7 @@ class TokensFromUserBalanceFamily
     covariant TokensFromUserBalanceProvider provider,
   ) {
     return call(
+      withUCO: provider.withUCO,
       withVerified: provider.withVerified,
       withLPToken: provider.withLPToken,
       withNotVerified: provider.withNotVerified,
@@ -234,6 +237,7 @@ class TokensFromUserBalanceProvider
     extends AutoDisposeFutureProvider<List<aedappfm.AEToken>> {
   /// See also [tokensFromUserBalance].
   TokensFromUserBalanceProvider({
+    bool withUCO = true,
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
@@ -241,6 +245,7 @@ class TokensFromUserBalanceProvider
   }) : this._internal(
           (ref) => tokensFromUserBalance(
             ref as TokensFromUserBalanceRef,
+            withUCO: withUCO,
             withVerified: withVerified,
             withLPToken: withLPToken,
             withNotVerified: withNotVerified,
@@ -255,6 +260,7 @@ class TokensFromUserBalanceProvider
           dependencies: TokensFromUserBalanceFamily._dependencies,
           allTransitiveDependencies:
               TokensFromUserBalanceFamily._allTransitiveDependencies,
+          withUCO: withUCO,
           withVerified: withVerified,
           withLPToken: withLPToken,
           withNotVerified: withNotVerified,
@@ -268,12 +274,14 @@ class TokensFromUserBalanceProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
+    required this.withUCO,
     required this.withVerified,
     required this.withLPToken,
     required this.withNotVerified,
     required this.withCustomToken,
   }) : super.internal();
 
+  final bool withUCO;
   final bool withVerified;
   final bool withLPToken;
   final bool withNotVerified;
@@ -293,6 +301,7 @@ class TokensFromUserBalanceProvider
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
+        withUCO: withUCO,
         withVerified: withVerified,
         withLPToken: withLPToken,
         withNotVerified: withNotVerified,
@@ -309,6 +318,7 @@ class TokensFromUserBalanceProvider
   @override
   bool operator ==(Object other) {
     return other is TokensFromUserBalanceProvider &&
+        other.withUCO == withUCO &&
         other.withVerified == withVerified &&
         other.withLPToken == withLPToken &&
         other.withNotVerified == withNotVerified &&
@@ -318,6 +328,7 @@ class TokensFromUserBalanceProvider
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, withUCO.hashCode);
     hash = _SystemHash.combine(hash, withVerified.hashCode);
     hash = _SystemHash.combine(hash, withLPToken.hashCode);
     hash = _SystemHash.combine(hash, withNotVerified.hashCode);
@@ -342,7 +353,13 @@ mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
 >>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 mixin TokensFromUserBalanceRef
     on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
+<<<<<<< HEAD
 >>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
+=======
+  /// The parameter `withUCO` of this provider.
+  bool get withUCO;
+
+>>>>>>> c07b6392 (fix: :bug: Bugs fixing)
   /// The parameter `withVerified` of this provider.
   bool get withVerified;
 
@@ -361,6 +378,8 @@ class _TokensFromUserBalanceProviderElement
     with TokensFromUserBalanceRef {
   _TokensFromUserBalanceProviderElement(super.provider);
 
+  @override
+  bool get withUCO => (origin as TokensFromUserBalanceProvider).withUCO;
   @override
   bool get withVerified =>
       (origin as TokensFromUserBalanceProvider).withVerified;

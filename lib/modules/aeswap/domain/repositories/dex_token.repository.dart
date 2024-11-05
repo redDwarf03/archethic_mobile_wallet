@@ -10,6 +10,7 @@ abstract class DexTokenRepository {
 
   Future<List<DexToken>> getTokensFromAccount(
     String accountAddress,
+    List<String> userTokenLocalAddresses,
   );
 
   Future<List<DexToken>> getLocalTokensDescriptions(
