@@ -7,9 +7,11 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/util/processing_indicator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const slippage = 1.01;
@@ -22,7 +24,12 @@ class SignTransactionsCommandHandler extends CommandHandler {
           canHandle: (command) =>
               command is RPCCommand<awc.SignTransactionRequest>,
           handle: (command) async {
+            final localizations = AppLocalizations.of(context)!;
             command as RPCCommand<awc.SignTransactionRequest>;
+
+            CommandHandlerLoadingSnackbar(
+              message: localizations.rpcSignTransactionsProcessing,
+            ).show(context);
 
             final signedTransactionList = <awc.SignTransactionsResultDetail>[];
             final serviceName = command.data.serviceName;
@@ -84,6 +91,8 @@ class SignTransactionsCommandHandler extends CommandHandler {
               addresses.add(signedTransaction.address?.address);
             }
 
+            CommandHandlerLoadingSnackbar.hide(context);
+
             await WindowUtil().showFirst();
 
             final confirmation = await showDialog<bool>(
@@ -108,6 +117,10 @@ class SignTransactionsCommandHandler extends CommandHandler {
                 awc.Failure.userRejected,
               );
             }
+
+            CommandHandlerLoadingSnackbar(
+              message: localizations.rpcSignTransactionsProcessing,
+            ).show(context);
 
             for (final rpcSignTransactionCommandData
                 in command.data.transactions) {
@@ -138,6 +151,8 @@ class SignTransactionsCommandHandler extends CommandHandler {
               signedTransactionList.add(rpcSignTransactionResultDetailData);
               index++;
             }
+
+            CommandHandlerLoadingSnackbar.hide(context);
 
             return Result.success(
               awc.SignTransactionsResult(signedTxs: signedTransactionList),
