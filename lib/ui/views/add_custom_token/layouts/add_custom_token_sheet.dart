@@ -122,25 +122,26 @@ class AddCustomTokenSheet extends ConsumerWidget {
                     final result = await ref
                         .read(addCustomTokenFormNotifierProvider.notifier)
                         .addCustomToken(ref, localizations);
-                    if (result) {
-                      final poolListRaw = await ref
-                          .read(DexPoolProviders.getPoolListRaw.future);
 
-                      unawaited(
-                        (await ref
-                                .read(AccountProviders.accounts.notifier)
-                                .selectedAccountNotifier)
-                            ?.refreshBalance(),
-                      );
-                      unawaited(
-                        (await ref
-                                .read(AccountProviders.accounts.notifier)
-                                .selectedAccountNotifier)
-                            ?.refreshFungibleTokens(poolListRaw),
-                      );
+                    if (!result) return;
 
-                      context.pop();
-                    }
+                    final poolListRaw =
+                        await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+                    unawaited(
+                      (await ref
+                              .read(AccountProviders.accounts.notifier)
+                              .selectedAccountNotifier)
+                          ?.refreshBalance(),
+                    );
+                    unawaited(
+                      (await ref
+                              .read(AccountProviders.accounts.notifier)
+                              .selectedAccountNotifier)
+                          ?.refreshFungibleTokens(poolListRaw),
+                    );
+
+                    context.pop();
                   },
                 ),
               ],
