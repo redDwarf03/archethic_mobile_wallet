@@ -46,6 +46,8 @@ class DBHelper {
     }
 
     Hive
+      ..ignoreTypeId(HiveTypeIds.notificationsSetup)
+      ..ignoreTypeId(HiveTypeIds.tokenCollection)
       ..registerAdapter(ContactAdapter())
       ..registerAdapter(HiveAppWalletDTOAdapter())
       ..registerAdapter(AccountBalanceAdapter())
