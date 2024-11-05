@@ -43,7 +43,7 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
           ).future,
         );
         final poolsListRaw =
-            await ref.watch(DexPoolProviders.getPoolListRaw.future);
+            await ref.read(DexPoolProviders.getPoolListRaw.future);
 
         final apiService = ref.read(apiServiceProvider);
         final verifiedTokens = await ref
