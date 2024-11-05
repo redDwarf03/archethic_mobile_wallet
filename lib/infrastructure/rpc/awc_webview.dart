@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -11,17 +12,57 @@ import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const evmWalletsSchemes = [
-  'metamask',
-  'trust',
-  'okex',
-  'bnc',
-  'uniswap',
-  'safepalwallet',
-  'rainbow',
-  'exodus',
-  'safe',
-];
+enum EVMWallet {
+  metamask(
+    name: 'Metamask',
+    scheme: 'metamask',
+  ),
+  trust(
+    name: 'Trust',
+    scheme: 'trust',
+  ),
+  okex(
+    name: 'Okex',
+    scheme: 'okex',
+  ),
+  bnc(
+    name: 'BNC',
+    scheme: 'bnc',
+  ),
+  uniswap(
+    name: 'Uniswap',
+    scheme: 'uniswap',
+  ),
+  safePalWallet(
+    name: 'SafepalWallet',
+    scheme: 'safepalwallet',
+  ),
+  rainbow(
+    name: 'Rainbow',
+    scheme: 'rainbow',
+  ),
+  exodus(
+    name: 'Exodus',
+    scheme: 'exodus',
+  ),
+  safe(
+    name: 'Safe',
+    scheme: 'safe',
+  );
+
+  const EVMWallet({
+    required this.name,
+    required this.scheme,
+  });
+
+  static EVMWallet? fromScheme(String scheme) =>
+      EVMWallet.values.firstWhereOrNull(
+        (evmWallet) => evmWallet.scheme == scheme,
+      );
+
+  final String name;
+  final String scheme;
+}
 
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
@@ -76,6 +117,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _restoreMessageChannelRPC(_controller!);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
     super.didChangeAppLifecycleState(state);
   }
@@ -111,21 +153,37 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                     return NavigationActionPolicy.ALLOW;
                   }
 
-                  final isAnEvmWalletDeeplink = evmWalletsSchemes.any(
-                    (scheme) => uri.scheme.startsWith(scheme),
+                  final matchingEvmWallet = EVMWallet.fromScheme(
+                    uri.scheme,
                   );
 
-                  if (!isAnEvmWalletDeeplink) {
+                  if (matchingEvmWallet == null) {
                     return NavigationActionPolicy.ALLOW;
                   }
 
                   if (!await canLaunchUrl(uri.uriValue)) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Wallet not installed')),
+                      SnackBar(
+                        content: Text(
+                          'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
+                        ),
+                      ),
                     );
                     return NavigationActionPolicy.CANCEL;
                   }
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Opening wallet ${matchingEvmWallet.name}',
+                      ), // TODO(Chralu): internationalize this
+                      duration: const Duration(days: 1),
+                    ),
+                  );
+
+                  unawaited(
+                    launchUrl(uri, mode: LaunchMode.externalApplication),
+                  );
 
                   return NavigationActionPolicy.CANCEL;
                 },
