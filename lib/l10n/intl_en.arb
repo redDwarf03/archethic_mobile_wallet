@@ -746,5 +746,6 @@
     "logsDialogTitle": "Logs",
     "logsDesc": "If you encounter any problems, you can copy and send the information below to the Archethic support team.\nEnsure that no sensitive or private information that could affect the security of your funds is shared.",
     "logsCopied": "Logs copied",
-    "getSomeHelp": "Get some help"
+    "getSomeHelp": "Get some help",
+    "rpcSignTransactionsProcessing": "Processing transactions signature request"
 }

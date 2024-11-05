@@ -726,5 +726,6 @@
     "logsDialogTitle": "Journal",
     "logsDesc": "Si vous rencontrez des problèmes, vous pouvez copier et envoyer les informations ci-dessous à l'équipe support d'Archethic.\nVeillez à ce qu'aucune information sensible ou privée qui pourrait affecter la sécurité de vos fonds ne soit partagée.",
     "logsCopied": "Informations copiées",
-    "getSomeHelp": "Contactez nous"
+    "getSomeHelp": "Contactez nous",
+    "rpcSignTransactionsProcessing": "Traitement de la demande de signature"
 }
