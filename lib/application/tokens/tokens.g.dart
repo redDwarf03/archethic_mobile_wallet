@@ -395,6 +395,7 @@ class _TokensFromUserBalanceProviderElement
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 String _$tokensTotalUSDHash() => r'a0f42e1ef21073d1ec7f627b48fde93b76205a7a';
 =======
 String _$tokensTotalUSDHash() => r'98ac96ba39ca5f3b227f4d114c7556532a4d24dd';
@@ -402,6 +403,9 @@ String _$tokensTotalUSDHash() => r'98ac96ba39ca5f3b227f4d114c7556532a4d24dd';
 =======
 String _$tokensTotalUSDHash() => r'39ec8250b31cdf374fe272bd8b3077dd8efb6476';
 >>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
+=======
+String _$tokensTotalUSDHash() => r'f3e1d13475c67a72664e0fdb557b296f134fc9ad';
+>>>>>>> d4305dd0 (fix: :bug: Bug fixing)
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)
