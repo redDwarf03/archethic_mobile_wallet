@@ -7,6 +7,7 @@ part of 'tokens.dart';
 // **************************************************************************
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 String _$tokensListHash() => r'593e48ed9063457663e2e48b344aed4ca8bc7518';
 =======
 String _$tokensFromAddressesHash() =>
@@ -16,6 +17,29 @@ String _$tokensFromAddressesHash() =>
 =======
     r'dfc16b82d33ff918a59411a80e8a0d3719259f92';
 >>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
+=======
+String _$tokensRepositoryImplHash() =>
+    r'6d0639fff11793ccb691c0bdb8aa86b99078ee47';
+
+/// See also [tokensRepositoryImpl].
+@ProviderFor(tokensRepositoryImpl)
+final tokensRepositoryImplProvider =
+    AutoDisposeProvider<TokensRepositoryImpl>.internal(
+  tokensRepositoryImpl,
+  name: r'tokensRepositoryImplProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tokensRepositoryImplHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TokensRepositoryImplRef = AutoDisposeProviderRef<TokensRepositoryImpl>;
+String _$tokensFromAddressesHash() =>
+    r'3eb854cf86092bf7599a28a546924b3a2eb3bf14';
+>>>>>>> d48d1eb3 (chore: :recycle: Use provider to use TokensRepositoryImpl)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -175,7 +199,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'00dbb0c3c334cf38533f0e7d50ba90a95f24803e';
+    r'8541eb1a96eca49d68d5e757fb375a953c7176c7';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)
