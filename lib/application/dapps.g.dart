@@ -24,7 +24,11 @@ final _dAppsRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
+<<<<<<< HEAD
 String _$getDAppHash() => r'e708424d60dbef17da84a12ed02a67dd493a28a2';
+=======
+String _$getDAppHash() => r'70f3139f239d37e2aaf093b1007b668aeab29d90';
+>>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -736,7 +736,7 @@
     "customTokenAddressAlreadyExistsInAccount": "Vous avez déjà ce token dans votre wallet.",
     "customTokenAddressNotValid": "Cette adresse ne correspond pas à un token.",
     "hideBtn": "Masquer",
-    "hideTokenConfirmationTitle": "Masquer ce token dans mon portefeuille",
+    "hideTokenConfirmationTitle": "Masquer ce token ?",
     "hideTokenConfirmationDesc": "Êtes-vous sûr(e) de vouloir masquer ce token dans votre wallet ? Vous pourrez le réafficher à tout moment en accédant à l'onglet Compte et en cliquant sur '+ jeton'.",
     "customTokenAddSelectionTokenTitle": "Sélectionner un token\navec un solde dans votre compte",
     "customTokenAddBalance": "Votre solde"
