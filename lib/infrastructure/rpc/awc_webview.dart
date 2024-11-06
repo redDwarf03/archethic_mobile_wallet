@@ -90,8 +90,6 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   WebviewMessagePortStreamChannel? _channel;
   bool _loaded = false;
 
-  final _fadeDuration = const Duration(milliseconds: 200);
-
   @override
   void initState() {
     if (kDebugMode &&
@@ -116,7 +114,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _restoreMessageChannelRPC(_controller!);
+      unawaited(_restoreMessageChannelRPC(_controller!));
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
     super.didChangeAppLifecycleState(state);
@@ -125,8 +123,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          AnimatedOpacity(
-            duration: _fadeDuration,
+          Opacity(
             opacity: _loaded ? 1 : 0,
             child: ColoredBox(
               color: Colors.black,
@@ -202,11 +199,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
               ),
             ),
           ),
-          AnimatedOpacity(
-            duration: _fadeDuration,
-            opacity: _loaded ? 0 : 1,
-            child: const Center(child: LoadingListHeader()),
-          ),
+          if (!_loaded) const Center(child: LoadingListHeader()),
         ],
       );
 
