@@ -46,7 +46,9 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
         );
 
         setState(() {
-          aeSwapUrl = '${dapp!.url}?isEmbedded';
+          // aeSwapUrl = 'https://bridge.testnet.archethic.net?isEmbedded';
+          aeSwapUrl = 'http://192.168.1.22:8081?isEmbedded';
+          // aeSwapUrl = '${dapp!.url}?isEmbedded';
         });
       }
     });
@@ -93,15 +95,15 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
             if (isAWCSupported == null) {
               return const Center(child: LoadingListHeader());
             }
+            if (aeSwapUrl == null) {
+              return const Center(child: LoadingListHeader());
+            }
 
             if (!isAWCSupported) return const UnavailableFeatureWarning();
 
-            if (aeSwapUrl != null) {
-              return AWCWebview(
-                uri: Uri.parse(aeSwapUrl!),
-              );
-            }
-            return const SizedBox.shrink();
+            return AWCWebview(
+              uri: Uri.parse(aeSwapUrl!),
+            );
           },
         ),
       );
