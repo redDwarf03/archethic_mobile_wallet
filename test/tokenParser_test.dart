@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:aewallet/domain/models/token_parser.dart';
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
@@ -5,18 +6,24 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-class MockTokensRepositoryImpl extends Mock implements TokensRepositoryImpl {}
-
-class MockDefTokensRepositoryImpl extends Mock
-    implements aedappfm.DefTokensRepositoryImpl {}
-
-class MockApiService extends Mock implements archethic.ApiService {}
+@GenerateNiceMocks(
+  [
+    MockSpec<aedappfm.DefTokensRepositoryImpl>(),
+    MockSpec<archethic.ApiService>(),
+    MockSpec<TokensRepositoryImpl>(),
+  ],
+)
+import 'tokenParser_test.mocks.dart';
 
 class _TokenParserImpl with TokenParser {}
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('TokenParser - tokenModelToAETokenModel', () {
     late TokenParser tokenParser;
     late MockTokensRepositoryImpl mockTokensRepository;
@@ -25,6 +32,7 @@ void main() {
     late aedappfm.Environment environment;
 
     setUp(() {
+      Hive.init('${Directory.current.path}/test/tmp_data');
       mockTokensRepository = MockTokensRepositoryImpl();
       mockDefTokensRepository = MockDefTokensRepositoryImpl();
       mockApiService = MockApiService();
@@ -246,16 +254,14 @@ void main() {
       ];
 
       final addresses = [
-        'UCO',
-        '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF'
+        '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
       ];
 
       when(
         mockTokensRepository.getTokensFromAddresses(addresses, mockApiService),
       ).thenAnswer(
         (_) async => {
-          'UCO': const archethic.Token(symbol: 'UCO'),
-          '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF':
+          '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4':
               const archethic.Token(symbol: 'aeETH'),
         },
       );
