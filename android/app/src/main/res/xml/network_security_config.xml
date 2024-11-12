@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/isrg_root_x1" />
+            <certificates src="@raw/isrg_root_x2" />
+            <certificates src="@raw/e5" />
+            <certificates src="@raw/e6" />
+            <certificates src="@raw/e7" />
+            <certificates src="@raw/e8" />
+            <certificates src="@raw/e9" />
+            <certificates src="@raw/r10" />
+            <certificates src="@raw/r11" />
+            <certificates src="@raw/r12" />
+            <certificates src="@raw/r13" />
+            <certificates src="@raw/r14" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
