@@ -203,13 +203,6 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                       'HTTP error: ${errorResponse.statusCode} ${request.url}',
                     );
                   },
-                  onReceivedServerTrustAuthRequest:
-                      (controller, challenge) async {
-                    // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
-                    return ServerTrustAuthResponse(
-                      action: ServerTrustAuthResponseAction.PROCEED,
-                    );
-                  },
                 ),
               ),
             ),
