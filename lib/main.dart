@@ -88,16 +88,30 @@ Future<void> main() async {
     });
   }
 
+  // Fix LetsEncrypt root certificate for Android<7.1
   if (UniversalPlatform.isAndroid) {
-    // Fix LetsEncrypt root certificate for Android<7.1
-    final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
-    SecurityContext.defaultContext.setTrustedCertificatesBytes(
-      x1cert.buffer.asUint8List(),
-    );
-    final r3cert = await rootBundle.load('assets/ssl/r3.pem');
-    SecurityContext.defaultContext.setTrustedCertificatesBytes(
-      r3cert.buffer.asUint8List(),
-    );
+    // WARNING ! Any change here must be repercuted to
+    // the Android `xml/network_security_config.xml` file
+    final certificates = [
+      'assets/ssl/isrg-root-x1.pem',
+      'assets/ssl/isrg-root-x2.pem',
+      'assets/ssl/r10.pem',
+      'assets/ssl/r11.pem',
+      'assets/ssl/r12.pem',
+      'assets/ssl/r13.pem',
+      'assets/ssl/r14.pem',
+      'assets/ssl/e5.pem',
+      'assets/ssl/e6.pem',
+      'assets/ssl/e7.pem',
+      'assets/ssl/e8.pem',
+      'assets/ssl/e9.pem',
+    ];
+    for (final certPath in certificates) {
+      final cert = await rootBundle.load(certPath);
+      SecurityContext.defaultContext.setTrustedCertificatesBytes(
+        cert.buffer.asUint8List(),
+      );
+    }
   }
 
   // Run app
