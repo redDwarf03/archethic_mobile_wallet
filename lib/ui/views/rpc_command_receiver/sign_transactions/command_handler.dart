@@ -29,6 +29,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             CommandHandlerLoadingSnackbar(
               message: localizations.rpcSignTransactionsProcessing,
+              context: context,
             ).show(context);
 
             final signedTransactionList = <awc.SignTransactionsResultDetail>[];
@@ -120,6 +121,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             CommandHandlerLoadingSnackbar(
               message: localizations.rpcSignTransactionsProcessing,
+              context: context,
             ).show(context);
 
             for (final rpcSignTransactionCommandData
