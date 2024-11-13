@@ -1,19 +1,31 @@
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class CommandHandlerLoadingSnackbar extends SnackBar {
-  CommandHandlerLoadingSnackbar({super.key, required String message})
-      : super(
+  CommandHandlerLoadingSnackbar({
+    super.key,
+    required BuildContext context,
+    required String message,
+  }) : super(
           duration: const Duration(days: 1),
           behavior: SnackBarBehavior.floating,
           content: Row(
             children: [
-              const CircularProgressIndicator(
-                strokeWidth: 2,
+              const SizedBox(
+                width: 10,
+                height: 10,
+                child: CircularProgressIndicator(
+                  strokeWidth: 1,
+                ),
               ),
               const SizedBox(
-                width: 21,
+                width: 10,
               ),
-              Text(message),
+              Text(
+                message,
+                style: AppTextStyles.bodySmall(context)
+                    .copyWith(color: Colors.black),
+              ),
             ],
           ),
         );
