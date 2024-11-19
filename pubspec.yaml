@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.9+591
+version: 3.0.10+592
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -310,7 +310,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 3.9.591.0
+  msix_version: 3.010.592.0
   icons_background_color: "#000000"
   languages: en-us
   store: true
