@@ -134,76 +134,72 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
         children: [
           Opacity(
             opacity: _loaded ? 1 : 0,
-            child: ColoredBox(
-              color: Colors.black,
-              child: Focus(
-                autofocus: true,
-                focusNode: _focusNode,
-                child: InAppWebView(
-                  initialSettings: InAppWebViewSettings(
-                    isInspectable: kDebugMode,
-                    transparentBackground: true,
-                  ),
-                  onLoadStop: (controller, url) async {
-                    _controller = controller;
-                    setState(() {
-                      _loaded = true;
-                    });
-                    await _initMessageChannelRPC(controller);
-                    _maintainWebviewFocus(controller);
-                  },
-                  onWebViewCreated: (controller) async {
-                    await controller.loadUrl(
-                      urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
-                    );
-                  },
-                  shouldOverrideUrlLoading:
-                      (controller, navigationAction) async {
-                    final uri = navigationAction.request.url;
-                    if (uri == null) {
-                      return NavigationActionPolicy.ALLOW;
-                    }
+            child: Focus(
+              autofocus: true,
+              focusNode: _focusNode,
+              child: InAppWebView(
+                initialSettings: InAppWebViewSettings(
+                  isInspectable: kDebugMode,
+                  transparentBackground: true,
+                ),
+                onLoadStop: (controller, _) async {
+                  _controller = controller;
+                  await _initMessageChannelRPC(controller);
+                  await _maintainWebviewFocus(controller);
+                  setState(() {
+                    _loaded = true;
+                  });
+                },
+                onWebViewCreated: (controller) async {
+                  await controller.loadUrl(
+                    urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
+                  );
+                },
+                shouldOverrideUrlLoading: (controller, navigationAction) async {
+                  final uri = navigationAction.request.url;
+                  if (uri == null) {
+                    return NavigationActionPolicy.ALLOW;
+                  }
 
-                    final matchingEvmWallet = EVMWallet.fromScheme(
-                      uri.scheme,
-                    );
+                  final matchingEvmWallet = EVMWallet.fromScheme(
+                    uri.scheme,
+                  );
 
-                    if (matchingEvmWallet == null) {
-                      return NavigationActionPolicy.ALLOW;
-                    }
+                  if (matchingEvmWallet == null) {
+                    return NavigationActionPolicy.ALLOW;
+                  }
 
-                    if (!await canLaunchUrl(uri.uriValue)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
-                          ),
-                        ),
-                      );
-                      return NavigationActionPolicy.CANCEL;
-                    }
-
+                  if (!await canLaunchUrl(uri.uriValue)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Opening wallet ${matchingEvmWallet.name}',
-                        ), // TODO(Chralu): internationalize this
-                        duration: const Duration(days: 1),
+                          'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
+                        ),
                       ),
                     );
-
-                    unawaited(
-                      launchUrl(uri, mode: LaunchMode.externalApplication),
-                    );
-
                     return NavigationActionPolicy.CANCEL;
-                  },
-                  onReceivedHttpError: (controller, request, errorResponse) {
-                    AWCWebview._logger.warning(
-                      'HTTP error: ${errorResponse.statusCode} ${request.url}',
-                    );
-                  },
-                ),
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Opening wallet ${matchingEvmWallet.name}',
+                      ), // TODO(Chralu): internationalize this
+                      duration: const Duration(days: 1),
+                    ),
+                  );
+
+                  unawaited(
+                    launchUrl(uri, mode: LaunchMode.externalApplication),
+                  );
+
+                  return NavigationActionPolicy.CANCEL;
+                },
+                onReceivedHttpError: (controller, request, errorResponse) {
+                  AWCWebview._logger.warning(
+                    'HTTP error: ${errorResponse.statusCode} ${request.url}',
+                  );
+                },
               ),
             ),
           ),
@@ -233,20 +229,20 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     _channel?.port = port1;
   }
 
-  void _maintainWebviewFocus(
+  Future<void> _maintainWebviewFocus(
     InAppWebViewController controller,
-  ) {
-    controller
-      ..addJavaScriptHandler(
-        handlerName: 'focusLost',
-        callback: (event) {
-          _requestFocus();
-        },
-      )
-      ..evaluateJavascript(
-        source:
-            "onblur = (event) => { window.flutter_inappwebview.callHandler('focusLost'); }",
-      );
+  ) async {
+    controller.addJavaScriptHandler(
+      handlerName: 'focusLost',
+      callback: (event) {
+        _requestFocus();
+      },
+    );
+
+    await controller.evaluateJavascript(
+      source:
+          "onblur = (event) => { window.flutter_inappwebview.callHandler('focusLost'); }",
+    );
   }
 
   Future<WebMessagePort> _restoreMessageChannelPorts(
@@ -287,7 +283,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     final peerServer = AWCJsonRPCServer(channel.cast<String>());
     _channel = channel;
     _peerServer = peerServer;
-    await peerServer.listen();
+    unawaited(peerServer.listen());
   }
 
   Future<WebMessagePort> _initMessageChannelPorts(
