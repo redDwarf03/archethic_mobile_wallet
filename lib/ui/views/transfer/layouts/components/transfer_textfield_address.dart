@@ -66,6 +66,11 @@ class _TransferTextFieldAddressState
         ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final apiService = ref.watch(apiServiceProvider);
+
+    if (sendAddressController.text.isNotEmpty) {
+      _updateAdressTextController();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,7 +135,6 @@ class _TransferTextFieldAddressState
                                     maxLines: null,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      UpperCaseTextFormatter(),
                                       LengthLimitingTextInputFormatter(
                                         transfer.recipient.maybeWhen(
                                           address: (_) => 68,
