@@ -17,6 +17,7 @@ import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -127,4 +128,13 @@ abstract class AccountProviders {
   static final sortedAccounts = _sortedAccountsProvider;
   static final accountRepository = _accountRepositoryProvider;
   static const getAccountNFTFiltered = _getAccountNFTFilteredProvider;
+
+  static Future<void> reset(Ref ref) async {
+    ref
+      ..invalidate(accountsRepository)
+      ..invalidate(accountExists)
+      ..invalidate(account)
+      ..invalidate(accountRepository)
+      ..invalidate(getAccountNFTFiltered);
+  }
 }

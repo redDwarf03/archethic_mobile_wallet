@@ -173,7 +173,7 @@ class _AddressBalanceProviderElement
 }
 
 String _$addressBalanceTotalFiatHash() =>
-    r'd7370caaba864330dfe4886c3e6e4bf8d13d3f15';
+    r'39f9c8fc5cd22a8b4ae2c923013783f59c219326';
 
 /// See also [addressBalanceTotalFiat].
 @ProviderFor(addressBalanceTotalFiat)
