@@ -126,41 +126,32 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     }
 
     if (UniversalPlatform.isDesktopOrWeb) {
-      return Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  ArchethicScrollbar(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 10,
-                        bottom: 80,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .aeBridgeLaunchMessage,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.dAppLaunchMessage,
               ),
-            ),
+              SizedBox(
+                height: 55,
+                child: AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  AppLocalizations.of(context)!.dAppLaunchButton,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('LaunchApplication'),
+                  onPressed: dappUrl != null
+                      ? () async {
+                          await launchUrl(Uri.parse(dappUrl!));
+                        }
+                      : null,
+                  disabled: dappUrl == null,
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 55,

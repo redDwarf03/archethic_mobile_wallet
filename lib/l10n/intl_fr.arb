@@ -459,6 +459,8 @@
     "price": "Prix",
     "aeBridgeLaunchMessage": "Veuillez lancer l'application aeBridge pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
     "aeBridgeLaunchButton": "Lancer aeBridge",
+    "dAppLaunchMessage": "L'application n'est pas disponible directement sur cette plateforme. Veuillez lancer l'application via un navigateur pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
+    "dAppLaunchButton": "Lancer la dApp",
     "receiveHeader": "Recevoir des actifs sur Archethic",
     "receiveCopy": "Cliquez pour copier l'adresse",
     "earnValueLbl": "Gagner",
