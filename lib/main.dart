@@ -29,6 +29,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:aewallet/ui/widgets/dialogs/logs_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
+import 'package:aewallet/util/device_info.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -54,6 +55,7 @@ Future<void> main() async {
   await DBHelper.setupDatabase();
   await DBHelperModuleAESwap.setupDatabase();
   await setupServiceLocator();
+  await DeviceInfo.init();
 
   if (UniversalPlatform.isDesktop) {
     await windowManager.ensureInitialized();

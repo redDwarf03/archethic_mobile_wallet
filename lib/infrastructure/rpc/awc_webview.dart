@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
+import 'package:aewallet/util/device_info.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -69,7 +70,16 @@ class AWCWebview extends StatefulWidget {
 
   static final _logger = Logger('AWCWebview');
 
-  static bool get isAvailable => UniversalPlatform.isMobile;
+  static bool get isAvailable {
+    if (!UniversalPlatform.isMobile) return false;
+
+    final deviceInfo = DeviceInfo.state;
+
+    return deviceInfo.maybeMap(
+      orElse: () => true,
+      android: (androidInfo) => androidInfo.version >= 29,
+    );
+  }
 
   final Uri uri;
 

@@ -430,6 +430,8 @@
     "burnAddressLbl": "Adresse de destruction",
     "webChannelIncompatibilityWarning": "Système non compatible",
     "webChannelIncompatibilityWarningDesc": "Votre système ne supporte pas les MessageChannels.",
+    "androidWebViewIncompatibilityWarning": "Système non compatible",
+    "androidWebViewIncompatibilityWarningDesc": "Les DApps web embarquées sont disponibles à partir de Android 10",
     "transactionRaw": "Transaction",
     "transactionRawCode": "Code",
     "transactionRawContent": "Contenu",
