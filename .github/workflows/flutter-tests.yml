@@ -3,7 +3,7 @@ name: Flutter Test
 on:
   push:
     branches:
-      - '*'
+      - "*"
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.24.5'
+          flutter-version: "3.24.4"
 
       - name: Install dependencies
         run: flutter pub get
