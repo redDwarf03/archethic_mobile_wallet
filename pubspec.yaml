@@ -105,9 +105,6 @@ dependencies:
   # A flutter implementation of React hooks. It adds a new kind of widget with enhanced code reuse
   flutter_hooks: ^0.20.0
 
-  # A WebView
-  flutter_inappwebview: ^6.0.0
-
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.10.0
 
@@ -269,21 +266,6 @@ dependencies:
 
   # Yubico dart library for Dart/Flutter
   yubidart: ^2.0.0
-
-# Configuration added to make the webview work with Android and ios 18 - start
-dependency_overrides:
-  flutter_inappwebview_ios:
-    git:
-      url: https://github.com/andychucs/flutter_inappwebview.git
-      ref: 27fd339172572fe1b16cdcdae235b2a88f432e3c
-      path: flutter_inappwebview_ios
-  flutter_inappwebview_macos:
-    git:
-      url: https://github.com/andychucs/flutter_inappwebview.git
-      ref: 27fd339172572fe1b16cdcdae235b2a88f432e3c
-      path: flutter_inappwebview_macos
-  webview_flutter_android: 3.16.1
-# Configuration added to make the webview work with Android and ios 18 - end
 
 dev_dependencies:
   build_runner: ^2.4.6

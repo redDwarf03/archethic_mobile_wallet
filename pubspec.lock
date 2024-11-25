@@ -627,64 +627,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.5"
-  flutter_inappwebview:
-    dependency: "direct main"
-    description:
-      name: flutter_inappwebview
-      sha256: "3e9a443a18ecef966fb930c3a76ca5ab6a7aafc0c7b5e14a4a850cf107b09959"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0"
-  flutter_inappwebview_android:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview_android
-      sha256: "62557c15a5c2db5d195cb3892aab74fcaec266d7b86d59a6f0027abd672cddba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.3"
-  flutter_inappwebview_internal_annotations:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview_internal_annotations
-      sha256: "5f80fd30e208ddded7dbbcd0d569e7995f9f63d45ea3f548d8dd4c0b473fb4c8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
-  flutter_inappwebview_ios:
-    dependency: "direct overridden"
-    description:
-      path: flutter_inappwebview_ios
-      ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
-      resolved-ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
-      url: "https://github.com/andychucs/flutter_inappwebview.git"
-    source: git
-    version: "1.0.14"
-  flutter_inappwebview_macos:
-    dependency: "direct overridden"
-    description:
-      path: flutter_inappwebview_macos
-      ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
-      resolved-ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
-      url: "https://github.com/andychucs/flutter_inappwebview.git"
-    source: git
-    version: "1.0.11"
-  flutter_inappwebview_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview_platform_interface
-      sha256: cf5323e194096b6ede7a1ca808c3e0a078e4b33cc3f6338977d75b4024ba2500
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0+1"
-  flutter_inappwebview_web:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview_web
-      sha256: d8c680abfb6fec71609a700199635d38a744df0febd5544c5a020bd73de8ee07
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.8"
   flutter_jailbreak_detection:
     dependency: "direct main"
     description:
@@ -2162,13 +2104,13 @@ packages:
     source: hosted
     version: "4.10.0"
   webview_flutter_android:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: dad3313c9ead95517bb1cae5e1c9d20ba83729d5a59e5e83c0a2d66203f27f91
+      sha256: "285cedfd9441267f6cca8843458620b5fda1af75b04f5818d0441acda5d7df19"
       url: "https://pub.dev"
     source: hosted
-    version: "3.16.1"
+    version: "4.1.0"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
