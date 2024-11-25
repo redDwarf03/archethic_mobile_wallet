@@ -32,6 +32,8 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
   String? aeSwapUrl;
   @override
   void initState() {
+    if (!DAppSheet.isAvailable) return;
+
     Future.delayed(Duration.zero, () async {
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
@@ -55,6 +57,8 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     if (UniversalPlatform.isDesktopOrWeb) {
       return SafeArea(
         child: Padding(
@@ -84,27 +88,41 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
           ),
         ),
       );
-    } else {
+    }
+
+    if (!DAppSheet.isAvailable) {
       return SafeArea(
-        child: FutureBuilder<bool>(
-          future: AWCWebview.isAWCSupported,
-          builder: (context, snapshot) {
-            final isAWCSupported = snapshot.data;
-            if (isAWCSupported == null) {
-              return const Center(child: LoadingListHeader());
-            }
-            if (aeSwapUrl == null) {
-              return const Center(child: LoadingListHeader());
-            }
-
-            if (!isAWCSupported) return const UnavailableFeatureWarning();
-
-            return AWCWebview(
-              uri: Uri.parse(aeSwapUrl!),
-            );
-          },
+        child: UnavailableFeatureWarning(
+          title: localizations.androidWebViewIncompatibilityWarning,
+          description: localizations.androidWebViewIncompatibilityWarningDesc,
         ),
       );
     }
+
+    return SafeArea(
+      child: FutureBuilder<bool>(
+        future: AWCWebview.isAWCSupported,
+        builder: (context, snapshot) {
+          final isAWCSupported = snapshot.data;
+          if (isAWCSupported == null) {
+            return const Center(child: LoadingListHeader());
+          }
+          if (aeSwapUrl == null) {
+            return const Center(child: LoadingListHeader());
+          }
+
+          if (!isAWCSupported) {
+            return UnavailableFeatureWarning(
+              title: localizations.webChannelIncompatibilityWarning,
+              description: localizations.webChannelIncompatibilityWarningDesc,
+            );
+          }
+
+          return AWCWebview(
+            uri: Uri.parse(aeSwapUrl!),
+          );
+        },
+      ),
+    );
   }
 }
