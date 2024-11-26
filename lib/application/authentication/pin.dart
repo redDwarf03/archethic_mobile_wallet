@@ -30,8 +30,7 @@ class _PinAuthenticationNotifier extends _$PinAuthenticationNotifier {
   Future<AuthenticationResult> decodeWithPin(
     PinCredentials pin,
   ) async {
-    final lState = state.value;
-    if (lState == null) return const AuthenticationResult.notSetup();
+    final lState = await future;
 
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,

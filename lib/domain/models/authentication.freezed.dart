@@ -846,3 +846,165 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
   _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$YubikeyOTPSettings {
+  String get clientId => throw _privateConstructorUsedError;
+  String get clientApiKey => throw _privateConstructorUsedError;
+
+  /// Create a copy of YubikeyOTPSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $YubikeyOTPSettingsCopyWith<YubikeyOTPSettings> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $YubikeyOTPSettingsCopyWith<$Res> {
+  factory $YubikeyOTPSettingsCopyWith(
+          YubikeyOTPSettings value, $Res Function(YubikeyOTPSettings) then) =
+      _$YubikeyOTPSettingsCopyWithImpl<$Res, YubikeyOTPSettings>;
+  @useResult
+  $Res call({String clientId, String clientApiKey});
+}
+
+/// @nodoc
+class _$YubikeyOTPSettingsCopyWithImpl<$Res, $Val extends YubikeyOTPSettings>
+    implements $YubikeyOTPSettingsCopyWith<$Res> {
+  _$YubikeyOTPSettingsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of YubikeyOTPSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? clientId = null,
+    Object? clientApiKey = null,
+  }) {
+    return _then(_value.copyWith(
+      clientId: null == clientId
+          ? _value.clientId
+          : clientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      clientApiKey: null == clientApiKey
+          ? _value.clientApiKey
+          : clientApiKey // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$YubikeyOTPSettingsImplCopyWith<$Res>
+    implements $YubikeyOTPSettingsCopyWith<$Res> {
+  factory _$$YubikeyOTPSettingsImplCopyWith(_$YubikeyOTPSettingsImpl value,
+          $Res Function(_$YubikeyOTPSettingsImpl) then) =
+      __$$YubikeyOTPSettingsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String clientId, String clientApiKey});
+}
+
+/// @nodoc
+class __$$YubikeyOTPSettingsImplCopyWithImpl<$Res>
+    extends _$YubikeyOTPSettingsCopyWithImpl<$Res, _$YubikeyOTPSettingsImpl>
+    implements _$$YubikeyOTPSettingsImplCopyWith<$Res> {
+  __$$YubikeyOTPSettingsImplCopyWithImpl(_$YubikeyOTPSettingsImpl _value,
+      $Res Function(_$YubikeyOTPSettingsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of YubikeyOTPSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? clientId = null,
+    Object? clientApiKey = null,
+  }) {
+    return _then(_$YubikeyOTPSettingsImpl(
+      clientId: null == clientId
+          ? _value.clientId
+          : clientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      clientApiKey: null == clientApiKey
+          ? _value.clientApiKey
+          : clientApiKey // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$YubikeyOTPSettingsImpl extends _YubikeyOTPSettings
+    with DiagnosticableTreeMixin {
+  const _$YubikeyOTPSettingsImpl(
+      {required this.clientId, required this.clientApiKey})
+      : super._();
+
+  @override
+  final String clientId;
+  @override
+  final String clientApiKey;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'YubikeyOTPSettings(clientId: $clientId, clientApiKey: $clientApiKey)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'YubikeyOTPSettings'))
+      ..add(DiagnosticsProperty('clientId', clientId))
+      ..add(DiagnosticsProperty('clientApiKey', clientApiKey));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$YubikeyOTPSettingsImpl &&
+            (identical(other.clientId, clientId) ||
+                other.clientId == clientId) &&
+            (identical(other.clientApiKey, clientApiKey) ||
+                other.clientApiKey == clientApiKey));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, clientId, clientApiKey);
+
+  /// Create a copy of YubikeyOTPSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$YubikeyOTPSettingsImplCopyWith<_$YubikeyOTPSettingsImpl> get copyWith =>
+      __$$YubikeyOTPSettingsImplCopyWithImpl<_$YubikeyOTPSettingsImpl>(
+          this, _$identity);
+}
+
+abstract class _YubikeyOTPSettings extends YubikeyOTPSettings {
+  const factory _YubikeyOTPSettings(
+      {required final String clientId,
+      required final String clientApiKey}) = _$YubikeyOTPSettingsImpl;
+  const _YubikeyOTPSettings._() : super._();
+
+  @override
+  String get clientId;
+  @override
+  String get clientApiKey;
+
+  /// Create a copy of YubikeyOTPSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$YubikeyOTPSettingsImplCopyWith<_$YubikeyOTPSettingsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -46,3 +46,12 @@ class AuthenticationSettings with _$AuthenticationSettings {
         : PrivacyMaskOption.disabled,
   );
 }
+
+@freezed
+class YubikeyOTPSettings with _$YubikeyOTPSettings {
+  const factory YubikeyOTPSettings({
+    required String clientId,
+    required String clientApiKey,
+  }) = _YubikeyOTPSettings;
+  const YubikeyOTPSettings._();
+}
