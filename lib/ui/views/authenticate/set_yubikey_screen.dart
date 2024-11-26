@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -339,6 +340,10 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
     final auth = await YubikeyAuthScreenOverlay(
       canNavigateBack: true,
       challenge: widget.challenge,
+      settings: YubikeyOTPSettings(
+        clientId: clientId,
+        clientApiKey: clientApiKey,
+      ),
     ).show(
       context,
     );

@@ -31,12 +31,14 @@ class YubikeyAuthScreenOverlay extends AuthScreenOverlay {
   YubikeyAuthScreenOverlay({
     required bool canNavigateBack,
     required Uint8List challenge,
+    YubikeyOTPSettings? settings,
   }) : super(
           name: 'YubikeyScreenOverlay',
           widgetBuilder: (context, onDone) => _YubikeyScreen(
             canNavigateBack: canNavigateBack,
             challenge: challenge,
             onDone: onDone,
+            settings: settings,
           ),
         );
 }
@@ -46,11 +48,13 @@ class _YubikeyScreen extends ConsumerStatefulWidget {
     required this.canNavigateBack,
     required this.challenge,
     required this.onDone,
+    this.settings,
   });
 
   final void Function(Uint8List? result) onDone;
   final bool canNavigateBack;
   final Uint8List challenge;
+  final YubikeyOTPSettings? settings;
 
   @override
   ConsumerState<_YubikeyScreen> createState() => _YubikeyScreenState();
@@ -108,7 +112,8 @@ class _YubikeyScreenState extends ConsumerState<_YubikeyScreen>
           AuthenticationProviders.yubikeyAuthentication.notifier,
         )
         .authenticateWithYubikey(
-          YubikeyCredentials(otp: otp, challenge: Uint8List(2)),
+          YubikeyCredentials(otp: otp, challenge: widget.challenge),
+          settings: widget.settings,
         );
 
     final localizations = AppLocalizations.of(context)!;

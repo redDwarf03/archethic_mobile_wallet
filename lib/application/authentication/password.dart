@@ -30,8 +30,7 @@ class _PasswordAuthenticationNotifier extends _$PasswordAuthenticationNotifier {
   Future<AuthenticationResult> authenticateWithPassword(
     PasswordCredentials password,
   ) async {
-    final lState = state.value;
-    if (lState == null) return const AuthenticationResult.notSetup();
+    final lState = await future;
 
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,

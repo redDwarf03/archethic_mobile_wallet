@@ -28,16 +28,17 @@ class _YubikeyAuthenticationNotifier extends _$YubikeyAuthenticationNotifier {
   }
 
   Future<AuthenticationResult> authenticateWithYubikey(
-    YubikeyCredentials otp,
-  ) async {
-    final lState = state.value;
-    if (lState == null) return const AuthenticationResult.notSetup();
+    YubikeyCredentials otp, {
+    YubikeyOTPSettings? settings,
+  }) async {
+    final lState = await future;
 
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
     final authenticationResult = await AuthenticateWithYubikey(
       repository: authenticationRepository,
+      settings: settings,
     ).run(otp);
 
     authenticationResult.maybeMap(
