@@ -1,5 +1,6 @@
 package net.archethic.archethic_wallet
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-import io.flutter.embedding.android.FlutterActivity
-
-class MainActivity: FlutterActivity()
+// FlutterFragmentActivity inheritance reuqired by `local_auth` flutter plugin.
+// See https://pub.dev/packages/local_auth#android-integration
+class MainActivity: FlutterFragmentActivity()
