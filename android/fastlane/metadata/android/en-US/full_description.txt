@@ -1,3 +1,0 @@
-The app is mainly a non-custodial cryptocurrency hot wallet that enables you to safely manage assets on Layer 1 Archethic blockchain.
-This wallet includes the features of send and receive UCO token, fungible tokens and NFTs instantly to and from anyone.
-No signup or KYC needed, users just control their services and access keychain, protected by different secure access methods like PIN Code, Password, YubiKey like devices and Biometrics.

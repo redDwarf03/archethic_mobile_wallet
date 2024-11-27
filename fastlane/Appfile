@@ -1,0 +1,7 @@
+app_identifier("tech.archethic.wallet") # The bundle identifier of your app
+
+itc_team_id("125534791") # App Store Connect Team ID
+team_id("2QGGN9QQKR") # Developer Portal Team ID
+
+json_key_file("./android/secret/ae-wallet-c8d742e33023.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("net.archethic.archethic_wallet") # e.g. com.krausefx.app

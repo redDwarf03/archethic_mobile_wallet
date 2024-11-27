@@ -1,6 +1,6 @@
 def version_info()
   return @version_info ||= flutter_version(
-    pubspec_location: '../pubspec.yaml'
+    pubspec_location: './pubspec.yaml'
   )
 end
 
@@ -14,13 +14,12 @@ end
 
 
 def flutter_build(format)
-  Dir.chdir '.' do
+  version_info # Reads the `version_info` before changing directory.
+  Dir.chdir '..' do
     sh('flutter', 'clean')
     sh('flutter', 'packages', 'get')
     sh(
-      "flutter build #{format} --obfuscate --split-debug-info=build/sym/#{format} --build-name=#{
-        version_name
-      } --build-number=#{version_code.to_s} "
+      "flutter build #{format} --obfuscate --split-debug-info=build/sym/#{format} --build-name=#{version_name} --build-number=#{version_code.to_s}"
     )
   end
 end
@@ -38,5 +37,8 @@ def apple_build(platform)
   flutter_build(platform)
   gym(
     scheme: "Runner",
+    workspace: "./#{platform}/Runner.xcworkspace",
+    build_path: "./build/#{platform}/archive/",
+    output_directory: "./build/#{platform}/output/"
   )
 end
