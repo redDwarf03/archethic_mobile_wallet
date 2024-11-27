@@ -89,6 +89,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   InAppWebViewController? _controller;
   WebviewMessagePortStreamChannel? _channel;
   bool _loaded = false;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
@@ -97,6 +98,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
         defaultTargetPlatform == TargetPlatform.android) {
       InAppWebViewController.setWebContentsDebuggingEnabled(true);
     }
+    _focusNode = FocusNode();
     WidgetsBinding.instance.addObserver(this);
 
     super.initState();
@@ -105,6 +107,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   @override
   void dispose() {
     _peerServer?.close();
+    _focusNode.dispose();
     WidgetsBinding.instance.removeObserver(this);
     AWCWebview._logger.info('AWC webview disposed.');
 
@@ -115,9 +118,15 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       unawaited(_restoreMessageChannelRPC(_controller!));
+      _maintainWebviewFocus(_controller!);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
     super.didChangeAppLifecycleState(state);
+  }
+
+  void _requestFocus() {
+    if (!_focusNode.hasFocus) _focusNode.requestFocus();
+    _controller?.requestFocus();
   }
 
   @override
@@ -127,75 +136,81 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
             opacity: _loaded ? 1 : 0,
             child: ColoredBox(
               color: Colors.black,
-              child: InAppWebView(
-                initialSettings: InAppWebViewSettings(
-                  isInspectable: kDebugMode,
-                  transparentBackground: true,
-                ),
-                onLoadStop: (controller, url) async {
-                  _controller = controller;
-                  setState(() {
-                    _loaded = true;
-                  });
-                  await _initMessageChannelRPC(controller);
-                },
-                onWebViewCreated: (controller) async {
-                  await controller.loadUrl(
-                    urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
-                  );
-                },
-                shouldOverrideUrlLoading: (controller, navigationAction) async {
-                  final uri = navigationAction.request.url;
-                  if (uri == null) {
-                    return NavigationActionPolicy.ALLOW;
-                  }
+              child: Focus(
+                autofocus: true,
+                focusNode: _focusNode,
+                child: InAppWebView(
+                  initialSettings: InAppWebViewSettings(
+                    isInspectable: kDebugMode,
+                    transparentBackground: true,
+                  ),
+                  onLoadStop: (controller, url) async {
+                    _controller = controller;
+                    setState(() {
+                      _loaded = true;
+                    });
+                    await _initMessageChannelRPC(controller);
+                    _maintainWebviewFocus(controller);
+                  },
+                  onWebViewCreated: (controller) async {
+                    await controller.loadUrl(
+                      urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
+                    );
+                  },
+                  shouldOverrideUrlLoading:
+                      (controller, navigationAction) async {
+                    final uri = navigationAction.request.url;
+                    if (uri == null) {
+                      return NavigationActionPolicy.ALLOW;
+                    }
 
-                  final matchingEvmWallet = EVMWallet.fromScheme(
-                    uri.scheme,
-                  );
+                    final matchingEvmWallet = EVMWallet.fromScheme(
+                      uri.scheme,
+                    );
 
-                  if (matchingEvmWallet == null) {
-                    return NavigationActionPolicy.ALLOW;
-                  }
+                    if (matchingEvmWallet == null) {
+                      return NavigationActionPolicy.ALLOW;
+                    }
 
-                  if (!await canLaunchUrl(uri.uriValue)) {
+                    if (!await canLaunchUrl(uri.uriValue)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
+                          ),
+                        ),
+                      );
+                      return NavigationActionPolicy.CANCEL;
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
-                        ),
+                          'Opening wallet ${matchingEvmWallet.name}',
+                        ), // TODO(Chralu): internationalize this
+                        duration: const Duration(days: 1),
                       ),
                     );
+
+                    unawaited(
+                      launchUrl(uri, mode: LaunchMode.externalApplication),
+                    );
+
                     return NavigationActionPolicy.CANCEL;
-                  }
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Opening wallet ${matchingEvmWallet.name}',
-                      ), // TODO(Chralu): internationalize this
-                      duration: const Duration(days: 1),
-                    ),
-                  );
-
-                  unawaited(
-                    launchUrl(uri, mode: LaunchMode.externalApplication),
-                  );
-
-                  return NavigationActionPolicy.CANCEL;
-                },
-                onReceivedHttpError: (controller, request, errorResponse) {
-                  AWCWebview._logger.warning(
-                    'HTTP error: ${errorResponse.statusCode} ${request.url}',
-                  );
-                },
-                onReceivedServerTrustAuthRequest:
-                    (controller, challenge) async {
-                  // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
-                  return ServerTrustAuthResponse(
-                    action: ServerTrustAuthResponseAction.PROCEED,
-                  );
-                },
+                  },
+                  onReceivedHttpError: (controller, request, errorResponse) {
+                    AWCWebview._logger.warning(
+                      'HTTP error: ${errorResponse.statusCode} ${request.url}',
+                    );
+                  },
+                  onReceivedServerTrustAuthRequest:
+                      (controller, challenge) async {
+                    // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
+                    return ServerTrustAuthResponse(
+                      action: ServerTrustAuthResponseAction.PROCEED,
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -223,6 +238,22 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     final port1 = await _restoreMessageChannelPorts(controller);
 
     _channel?.port = port1;
+  }
+
+  void _maintainWebviewFocus(
+    InAppWebViewController controller,
+  ) {
+    controller
+      ..addJavaScriptHandler(
+        handlerName: 'focusLost',
+        callback: (event) {
+          _requestFocus();
+        },
+      )
+      ..evaluateJavascript(
+        source:
+            "onblur = (event) => { window.flutter_inappwebview.callHandler('focusLost'); }",
+      );
   }
 
   Future<WebMessagePort> _restoreMessageChannelPorts(

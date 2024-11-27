@@ -46,9 +46,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
         );
 
         setState(() {
-          // aeSwapUrl = 'https://bridge.testnet.archethic.net?isEmbedded';
-          aeSwapUrl = 'http://192.168.1.22:8081?isEmbedded';
-          // aeSwapUrl = '${dapp!.url}?isEmbedded';
+          aeSwapUrl = '${dapp!.url}?isEmbedded';
         });
       }
     });

@@ -65,26 +65,29 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      name: archethic_dapp_framework_flutter
-      sha256: "8b2d67eb30c92e85b54883ac0e86fa0e96d0a6a886e8967a0d12203a6c7c9f80"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.4"
+      path: "."
+      ref: upgrade_web_socket
+      resolved-ref: "85b213ea35218561314596204aa5ea9f3f1b520b"
+      url: "https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git"
+    source: git
+    version: "3.2.2"
   archethic_lib_dart:
     dependency: transitive
     description:
-      name: archethic_lib_dart
-      sha256: "741e01c105feea9e49da15ee8742fa1a831bcdb371adb623b49516034520ee1c"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: upgrade_graqhql
+      resolved-ref: "16787df19d2d1de77c9b1a3f02cb7b7cd982dd18"
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
     version: "4.0.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:
-      name: archethic_wallet_client
-      sha256: "692f87f11d4515e9fb8d74b37a2d7da01674f1f9fc95b487b835fb647538a2a6"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: upgrade_web_dependency
+      resolved-ref: f057a849b350e498b100c289f7f1c52e14c66752
+      url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
+    source: git
     version: "2.1.5"
   archive:
     dependency: transitive
@@ -627,6 +630,77 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.5"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      path: flutter_inappwebview
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "6.2.0-beta.1"
+  flutter_inappwebview_android:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_android
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "1.2.0-beta.1"
+  flutter_inappwebview_internal_annotations:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview_internal_annotations
+      sha256: "787171d43f8af67864740b6f04166c13190aa74a1468a1f1f1e9ee5b90c359cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
+  flutter_inappwebview_ios:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_ios
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "1.2.0-beta.1"
+  flutter_inappwebview_macos:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_macos
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "1.2.0-beta.1"
+  flutter_inappwebview_platform_interface:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_platform_interface
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "1.4.0-beta.1"
+  flutter_inappwebview_web:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_web
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "1.2.0-beta.1"
+  flutter_inappwebview_windows:
+    dependency: transitive
+    description:
+      path: flutter_inappwebview_windows
+      ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      resolved-ref: "9e55a043fc6a22b68156a394a8512030353bf81c"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview"
+    source: git
+    version: "0.7.0-beta.1"
   flutter_jailbreak_detection:
     dependency: "direct main"
     description:
@@ -901,11 +975,12 @@ packages:
   graphql:
     dependency: transitive
     description:
-      name: graphql
-      sha256: d066e53446166c12537458386b507f7426f2b8801ebafc184576aab3cbc64d56
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0-beta.7"
+      path: "packages/graphql"
+      ref: hagen00-upgrade-packages
+      resolved-ref: cd7fe08c63226a1287219b4f81f6b8c67b79af79
+      url: "https://github.com/hagen00/graphql-flutter.git"
+    source: git
+    version: "5.2.0-beta.9"
   graphs:
     dependency: transitive
     description:
@@ -1494,10 +1569,10 @@ packages:
     dependency: transitive
     description:
       name: phoenix_socket
-      sha256: "2d56ffde59875673bffdabd1f709307ab34b317bd868402e3d3a61c23c333b1b"
+      sha256: "6f1a355177eb1bf61b388407cf18f200fdf06bc5c1d9d05ac87cdd8a27d3ddd6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4"
+    version: "0.7.6"
   photo_view:
     dependency: transitive
     description:
@@ -2055,6 +2130,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_detector:
+    dependency: "direct main"
+    description:
+      name: visibility_detector
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+2"
   vm_service:
     dependency: transitive
     description:
@@ -2083,18 +2166,26 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
+      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "1.1.0"
+  web_socket:
+    dependency: transitive
+    description:
+      name: web_socket
+      sha256: "3c12d96c0c9a4eec095246debcea7b86c0324f22df69893d538fcc6f1b8cce83"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   web_socket_channel:
     dependency: "direct main"
     description:
       name: web_socket_channel
-      sha256: "58c6666b342a38816b2e7e50ed0f1e261959630becd4c879c4f26bfa14aa5a42"
+      sha256: "9f187088ed104edd8662ca07af4b124465893caf063ba29758f97af57e61da8f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "3.0.1"
   webview_flutter:
     dependency: "direct main"
     description:
