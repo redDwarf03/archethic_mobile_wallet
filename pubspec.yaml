@@ -292,7 +292,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 3.011.593.0
+  msix_version: 3.11.593.0
   icons_background_color: "#000000"
   languages: en-us
   store: true
