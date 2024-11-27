@@ -30,8 +30,8 @@ dependencies:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
   #    ref: 40-add-a-description-for-each-tx-to-sign-to-explain-the-goal-of-the-tx
-  #archethic_wallet_client:
-  #  path: ../archethic-wallet-client-dart
+  # archethic_wallet_client:
+  #   path: ../../packages/archethic-wallet-client-dart
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
@@ -73,7 +73,9 @@ dependencies:
   decimal: ^3.0.2
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
-  deeplink_rpc: ^1.0.6
+  deeplink_rpc: ^1.1.0
+  # deeplink_rpc:
+  #   path: ../../packages/lib-deeplink-rpc
 
   # A new flutter package to display notifications on top of the screen, full customizable with built-in themes
   elegant_notification: ^2.1.0
