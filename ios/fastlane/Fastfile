@@ -13,52 +13,24 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+import '../../fastlane/Utils'
+
 default_platform(:ios)
 
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "ios")
-    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
-    upload_to_app_store
+    apple_build("ios")
+    upload_to_app_store(
+      build_number: version_code
+    )
   end
 
   desc "Push a new release build to TestFlight"
   lane :beta do
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "ios")
-    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
-    upload_to_testflight
-    end
-end
-
-
-def getVersionInfo()
-  version_info = flutter_version(
-    pubspec_location: '../pubspec.yaml'
-  )
-end
-
-def getVersionCode(version_info)
-  return version_info['version_code']
-end
-
-def getVersionName(version_info)
-  return version_info['version_name']
-end
-
-
-def flutter_build(versionName,number,format)
-  Dir.chdir '.' do
-    sh('flutter', 'packages', 'get')
-    sh('flutter', 'clean')
-    sh(
-      "flutter build #{format} --obfuscate --split-debug-info=build/sym/#{format} --build-name=#{
-        versionName
-        } --build-number=#{number.to_s} "
+    apple_build("ios")
+    upload_to_testflight(
+      build_number: version_code
     )
   end
 end
