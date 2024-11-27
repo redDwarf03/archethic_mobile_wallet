@@ -615,7 +615,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.archethic.wallet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Archethic Wallet Mac";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "match AppStore tech.archethic.wallet macos";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

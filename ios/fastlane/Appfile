@@ -1,0 +1,4 @@
+app_identifier("tech.archethic.wallet") # The bundle identifier of your app
+
+itc_team_id("125534791") # App Store Connect Team ID
+team_id("2QGGN9QQKR") # Developer Portal Team ID

@@ -1,0 +1,42 @@
+def version_info()
+  return @version_info ||= flutter_version(
+    pubspec_location: '../pubspec.yaml'
+  )
+end
+
+def version_code()
+  return version_info['version_code']
+end
+
+def version_name()
+  return version_info['version_name']
+end
+
+
+def flutter_build(format)
+  Dir.chdir '.' do
+    sh('flutter', 'clean')
+    sh('flutter', 'packages', 'get')
+    sh(
+      "flutter build #{format} --obfuscate --split-debug-info=build/sym/#{format} --build-name=#{
+        version_name
+      } --build-number=#{version_code.to_s} "
+    )
+  end
+end
+
+def apple_build(platform)
+  app_store_connect_api_key(
+    key_id: "C5VD3WY7M4",
+    issuer_id: "3220bf27-0f18-4c03-92a8-84627d3c9e81",
+    key_content: ENV['APPSTORE_CONNECT_KEY'],
+    duration: 1200, # optional (maximum 1200)
+    in_house: false # optional but may be required if using match/sigh
+  )
+
+  match
+  flutter_build(platform)
+  gym(
+    scheme: "Runner",
+  )
+end

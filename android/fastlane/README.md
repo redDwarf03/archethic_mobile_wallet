@@ -13,23 +13,31 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-## Mac
+## Android
 
-### mac release
-
-```sh
-[bundle exec] fastlane mac release
-```
-
-Push a new release build to the App Store
-
-### mac beta
+### android release
 
 ```sh
-[bundle exec] fastlane mac beta
+[bundle exec] fastlane android release
 ```
 
-Push a new release build to TestFlight
+Publish to GooglePlay
+
+### android beta
+
+```sh
+[bundle exec] fastlane android beta
+```
+
+Publish to GooglePlay Beta
+
+### android alpha
+
+```sh
+[bundle exec] fastlane android alpha
+```
+
+Publish to GooglePlay Alpha
 
 ----
 
