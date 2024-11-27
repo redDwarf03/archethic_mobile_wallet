@@ -30,6 +30,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>aewallet</string>
+				<string>aebridge</string>
 			</array>
 		</dict>
 	</array>
@@ -41,6 +42,12 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>metamask</string>
+		<string>rainbow</string>
+		<string>trust</string>
+	</array>
 	<key>NFCReaderUsageDescription</key>
 	<string>This app uses the NFC to read the tags.</string>
 	<key>NSAppTransportSecurity</key>
