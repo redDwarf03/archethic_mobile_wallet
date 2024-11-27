@@ -46,7 +46,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
         );
 
         setState(() {
-          aeSwapUrl = '${dapp!.url}?isEmbedded';
+          aeSwapUrl = dapp!.url;
         });
       }
     });
