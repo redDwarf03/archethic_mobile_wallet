@@ -179,7 +179,9 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                     return NavigationActionPolicy.CANCEL;
                   }
 
-                  if (navigationAction.request.method == 'GET' &&
+                  if ((navigationAction.navigationType == null ||
+                          navigationAction.navigationType ==
+                              NavigationType.LINK_ACTIVATED) &&
                       (uri.scheme != widget.uri.scheme ||
                           uri.host != widget.uri.host)) {
                     await _openThirdPartyWebsite(uri);
