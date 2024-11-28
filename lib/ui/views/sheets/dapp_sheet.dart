@@ -7,6 +7,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -29,10 +30,11 @@ class DAppSheet extends ConsumerStatefulWidget {
 }
 
 class DAppSheetState extends ConsumerState<DAppSheet> {
-  String? aeSwapUrl;
+  String? aeBridgeUrl;
   @override
   void initState() {
-    if (!DAppSheet.isAvailable) return;
+    var dappKey = widget.dappKey;
+    if (!DAppSheet.isAvailable) dappKey = '${dappKey}Ext';
 
     Future.delayed(Duration.zero, () async {
       final networkSettings = ref.watch(
@@ -43,12 +45,11 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
       DApp? dapp;
       if (connectivityStatusProvider == ConnectivityStatus.isConnected) {
         dapp = await ref.read(
-          DAppsProviders.getDApp(networkSettings.network, widget.dappKey)
-              .future,
+          DAppsProviders.getDApp(networkSettings.network, dappKey).future,
         );
 
         setState(() {
-          aeSwapUrl = dapp!.url;
+          aeBridgeUrl = dapp!.url;
         });
       }
     });
@@ -60,33 +61,64 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
     final localizations = AppLocalizations.of(context)!;
 
     if (UniversalPlatform.isDesktopOrWeb) {
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.aeSwapLaunchMessage,
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  ArchethicScrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 10,
+                        bottom: 80,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .aeBridgeLaunchMessage,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 55,
-                child: AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  AppLocalizations.of(context)!.aeSwapLaunchButton,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('LaunchApplication'),
-                  onPressed: aeSwapUrl != null
-                      ? () async {
-                          await launchUrl(Uri.parse(aeSwapUrl!));
-                        }
-                      : null,
-                  disabled: aeSwapUrl == null,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+              ),
+              child: Row(
+                children: [
+                  AppButtonTinyConnectivity(
+                    AppLocalizations.of(context)!.aeBridgeLaunchButton,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('LaunchApplication'),
+                    onPressed: () async {
+                      await launchUrl(Uri.parse(aeBridgeUrl!));
+                    },
+                    disabled: aeBridgeUrl == null,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       );
     }
 
@@ -107,7 +139,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
           if (isAWCSupported == null) {
             return const Center(child: LoadingListHeader());
           }
-          if (aeSwapUrl == null) {
+          if (aeBridgeUrl == null) {
             return const Center(child: LoadingListHeader());
           }
 
@@ -119,7 +151,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
           }
 
           return AWCWebview(
-            uri: Uri.parse(aeSwapUrl!),
+            uri: Uri.parse(aeBridgeUrl!),
           );
         },
       ),
