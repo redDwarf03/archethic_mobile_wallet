@@ -174,36 +174,17 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                   final matchingEvmWallet = EVMWallet.fromScheme(
                     uri.scheme,
                   );
-
-                  if (matchingEvmWallet == null) {
-                    return NavigationActionPolicy.ALLOW;
-                  }
-
-                  if (!await canLaunchUrl(uri.uriValue)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Wallet ${matchingEvmWallet.name} not installed', // TODO(Chralu): internationalize this
-                        ),
-                      ),
-                    );
+                  if (matchingEvmWallet != null) {
+                    await _openEvmWallet(uri, matchingEvmWallet);
                     return NavigationActionPolicy.CANCEL;
                   }
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Opening wallet ${matchingEvmWallet.name}',
-                      ), // TODO(Chralu): internationalize this
-                      duration: const Duration(days: 1),
-                    ),
-                  );
-
-                  unawaited(
-                    launchUrl(uri, mode: LaunchMode.externalApplication),
-                  );
-
-                  return NavigationActionPolicy.CANCEL;
+                  if (uri.scheme != widget.uri.scheme ||
+                      uri.host != widget.uri.host) {
+                    await _openThirdPartyWebsite(uri);
+                    return NavigationActionPolicy.CANCEL;
+                  }
+                  return NavigationActionPolicy.ALLOW;
                 },
                 onReceivedHttpError: (controller, request, errorResponse) {
                   AWCWebview._logger.warning(
@@ -216,6 +197,36 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
           if (!_loaded) const Center(child: LoadingListHeader()),
         ],
       );
+
+  Future<bool> _openThirdPartyWebsite(WebUri uri) async {
+    return launchUrl(uri.uriValue, mode: LaunchMode.externalApplication);
+  }
+
+  Future<void> _openEvmWallet(WebUri uri, EVMWallet evmWallet) async {
+    if (!await canLaunchUrl(uri.uriValue)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Wallet ${evmWallet.name} not installed', // TODO(Chralu): internationalize this
+          ),
+        ),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Opening wallet ${evmWallet.name}',
+        ), // TODO(Chralu): internationalize this
+        duration: const Duration(days: 1),
+      ),
+    );
+
+    unawaited(
+      launchUrl(uri, mode: LaunchMode.externalApplication),
+    );
+  }
 
   Future<void> _restoreMessageChannelRPC(
     InAppWebViewController controller,
