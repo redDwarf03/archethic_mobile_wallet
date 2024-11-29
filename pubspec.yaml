@@ -347,6 +347,7 @@ flutter:
     - lib/model/json-schemas/nft/archethic.json
     - lib/domain/repositories/tokens/verified_tokens.json
     - lib/domain/repositories/dapps/dapps.json
+    - lib/domain/repositories/feature_flags/feature_flags.json
     - lib/modules/aeswap/domain/repositories/common_bases.json
     - lib/modules/aeswap/domain/repositories/config.json
     - lib/modules/aeswap/domain/repositories/blockchains_list.json

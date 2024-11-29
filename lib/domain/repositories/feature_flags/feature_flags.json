@@ -1,0 +1,15 @@
+{
+    "applications": [
+        {
+            "applicationCode": "aeWallet",
+            "features": {
+                "ios": {
+                    "bridge": true
+                },
+                "android": {
+                    "bridge": true
+                }
+            }
+        }
+    ]
+}

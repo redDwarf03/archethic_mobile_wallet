@@ -1,9 +1,11 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/dapps.dart';
+import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/sheets/bridge_sheet_feature_flag_false.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
@@ -31,15 +33,29 @@ class DAppSheet extends ConsumerStatefulWidget {
 
 class DAppSheetState extends ConsumerState<DAppSheet> {
   String? aeBridgeUrl;
+  bool? featureFlags;
+  static const applicationCode = 'aeWallet';
+  static const featureCode = 'bridge';
+
   @override
   void initState() {
-    var dappKey = widget.dappKey;
-    if (!DAppSheet.isAvailable) dappKey = '${dappKey}Ext';
-
     Future.delayed(Duration.zero, () async {
+      var dappKey = widget.dappKey;
+
+      if (!DAppSheet.isAvailable) dappKey = '${dappKey}Ext';
+
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
       );
+
+      final bridgeFlag = await ref.watch(
+        getFeatureFlagProvider(
+          networkSettings.network,
+          applicationCode,
+          featureCode,
+        ).future,
+      );
+      if (bridgeFlag == null || bridgeFlag == false) dappKey = '${dappKey}Ext';
 
       final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
       DApp? dapp;
@@ -49,6 +65,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
         );
 
         setState(() {
+          featureFlags = bridgeFlag;
           aeBridgeUrl = dapp!.url;
         });
       }
@@ -59,6 +76,10 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    if (featureFlags != null && featureFlags == false) {
+      return const BridgeSheetFeatureFlagFalse();
+    }
 
     if (UniversalPlatform.isDesktopOrWeb) {
       return Stack(
