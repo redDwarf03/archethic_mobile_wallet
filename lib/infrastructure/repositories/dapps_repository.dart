@@ -47,7 +47,6 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
     AvailableNetworks network,
     ApiService apiService,
   ) async {
-    final dApps = await _getDAppsLocal();
     switch (network) {
       // aeWallet-DApps-Conf service
       case AvailableNetworks.archethicTestNet:
@@ -61,6 +60,7 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
           apiService,
         );
       case AvailableNetworks.archethicDevNet:
+        final dApps = await _getDAppsLocal();
         return dApps;
     }
   }
