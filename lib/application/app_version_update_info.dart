@@ -2,19 +2,20 @@
 
 import 'package:aewallet/domain/models/app_version_info.dart';
 import 'package:aewallet/infrastructure/repositories/app_version_update_info.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_version_update_info.g.dart';
 
 @Riverpod(keepAlive: true)
 AppVersionInfoRepository _appVersionInfoRepository(
-  _AppVersionInfoRepositoryRef ref,
+  Ref ref,
 ) =>
     AppVersionInfoRepository();
 
 @Riverpod(keepAlive: true)
 Future<AppVersionInfo> _getAppVersionInfo(
-  _GetAppVersionInfoRef ref,
+  Ref ref,
 ) async {
   final appVersionInfo =
       await ref.watch(_appVersionInfoRepositoryProvider).getAppVersionInfo();

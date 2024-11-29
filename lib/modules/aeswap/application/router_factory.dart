@@ -15,12 +15,13 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router_factory.g.dart';
 
 @riverpod
-RouterFactory routerFactory(RouterFactoryRef ref, String address) {
+RouterFactory routerFactory(Ref ref, String address) {
   return RouterFactory(
     address,
     ref.watch(apiServiceProvider),

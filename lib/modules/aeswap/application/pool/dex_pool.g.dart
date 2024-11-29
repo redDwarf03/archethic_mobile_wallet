@@ -6,7 +6,7 @@ part of 'dex_pool.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dexPoolRepositoryHash() => r'19a28c9c1e1148a3f30d204804476ec668a9bd4d';
+String _$dexPoolRepositoryHash() => r'04682a17d0cf6dd9e8e3381f313c5dca5d20cdd0';
 
 /// See also [_dexPoolRepository].
 @ProviderFor(_dexPoolRepository)
@@ -21,8 +21,10 @@ final _dexPoolRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _DexPoolRepositoryRef = AutoDisposeProviderRef<DexPoolRepository>;
-String _$getRatioHash() => r'abba9ea31dce22d923c8af35737879a5579b0c56';
+String _$getRatioHash() => r'6c180032d6dc0ddcd33e949d2e0cf9632d11ca9c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -169,6 +171,8 @@ class _GetRatioProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetRatioRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `poolGenesisAddress` of this provider.
   String get poolGenesisAddress;
@@ -189,7 +193,7 @@ class _GetRatioProviderElement extends AutoDisposeFutureProviderElement<double>
 }
 
 String _$estimatePoolTVLInFiatHash() =>
-    r'9a46f5b8ba0d90df97c91c5a03a374285f14af92';
+    r'94e173608d7feedaf12a04cc902323af50d975f1';
 
 /// See also [_estimatePoolTVLInFiat].
 @ProviderFor(_estimatePoolTVLInFiat)
@@ -304,6 +308,8 @@ class _EstimatePoolTVLInFiatProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _EstimatePoolTVLInFiatRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `pool` of this provider.
   DexPool? get pool;
@@ -318,7 +324,7 @@ class _EstimatePoolTVLInFiatProviderElement
   DexPool? get pool => (origin as _EstimatePoolTVLInFiatProvider).pool;
 }
 
-String _$estimateStatsHash() => r'a0fb35ad4f6b53b2dc0f67b945aa786f3d39c045';
+String _$estimateStatsHash() => r'3cf6a7bb2b134dc8ab9e22d6b6c5268b2414b7b4';
 
 /// See also [_estimateStats].
 @ProviderFor(_estimateStats)
@@ -434,6 +440,8 @@ class _EstimateStatsProvider extends AutoDisposeFutureProvider<DexPoolStats> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _EstimateStatsRef on AutoDisposeFutureProviderRef<DexPoolStats> {
   /// The parameter `dexPoolAddress` of this provider.
   String get dexPoolAddress;
@@ -449,7 +457,7 @@ class _EstimateStatsProviderElement
       (origin as _EstimateStatsProvider).dexPoolAddress;
 }
 
-String _$poolHash() => r'794627a3fa9b7d229a734d915f35b44ec3f4d38f';
+String _$poolHash() => r'37012e7faeb6dc6b03374b4823435e242b185a5b';
 
 /// See also [_pool].
 @ProviderFor(_pool)
@@ -561,6 +569,8 @@ class _PoolProvider extends AutoDisposeFutureProvider<DexPool?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _PoolRef on AutoDisposeFutureProviderRef<DexPool?> {
   /// The parameter `poolAddress` of this provider.
   String get poolAddress;
@@ -574,7 +584,7 @@ class _PoolProviderElement extends AutoDisposeFutureProviderElement<DexPool?>
   String get poolAddress => (origin as _PoolProvider).poolAddress;
 }
 
-String _$poolInfosHash() => r'959b5c94a262735edb28b9258327cf188463a058';
+String _$poolInfosHash() => r'a7bbb294f23c8cdd5f99cf0c89f32c56364d3633';
 
 /// See also [_poolInfos].
 @ProviderFor(_poolInfos)
@@ -689,6 +699,8 @@ class _PoolInfosProvider extends AutoDisposeFutureProvider<DexPoolInfos> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _PoolInfosRef on AutoDisposeFutureProviderRef<DexPoolInfos> {
   /// The parameter `poolAddress` of this provider.
   String get poolAddress;
@@ -702,7 +714,7 @@ class _PoolInfosProviderElement
   String get poolAddress => (origin as _PoolInfosProvider).poolAddress;
 }
 
-String _$getPoolListHash() => r'3881d1241b20770c97d84a25fed256f1cda91fc5';
+String _$getPoolListHash() => r'c105fb2e6011358c360513fc7ad1d65ee2ef7520';
 
 /// See also [_getPoolList].
 @ProviderFor(_getPoolList)
@@ -715,8 +727,10 @@ final _getPoolListProvider = AutoDisposeFutureProvider<List<DexPool>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetPoolListRef = AutoDisposeFutureProviderRef<List<DexPool>>;
-String _$getPoolListRawHash() => r'5219064c0f133e3d53abf33ca151424b1cc62be8';
+String _$getPoolListRawHash() => r'5f3ed33dea82dd4ab23aa13b5862f4eb2987804f';
 
 /// See also [_getPoolListRaw].
 @ProviderFor(_getPoolListRaw)
@@ -731,10 +745,12 @@ final _getPoolListRawProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetPoolListRawRef
     = AutoDisposeFutureProviderRef<List<GetPoolListResponse>>;
 String _$getPoolListForSearchHash() =>
-    r'02ca24d5dcfd684c97e91f994e58210a1f326693';
+    r'551f5a5513556631d0b5a9454cb9d128fd58bf13';
 
 /// See also [_getPoolListForSearch].
 @ProviderFor(_getPoolListForSearch)
@@ -861,6 +877,8 @@ class _GetPoolListForSearchProvider extends AutoDisposeProvider<List<DexPool>> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetPoolListForSearchRef on AutoDisposeProviderRef<List<DexPool>> {
   /// The parameter `searchText` of this provider.
   String get searchText;
@@ -881,7 +899,7 @@ class _GetPoolListForSearchProviderElement
       (origin as _GetPoolListForSearchProvider).poolList;
 }
 
-String _$getPoolTxListHash() => r'21276612997dfc24fdbb6ff6045bad49a4b95300';
+String _$getPoolTxListHash() => r'7ea87f8baff442f09d90df6ecf6bd47be33bc4d5';
 
 /// See also [_getPoolTxList].
 @ProviderFor(_getPoolTxList)
@@ -1009,6 +1027,8 @@ class _GetPoolTxListProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetPoolTxListRef on AutoDisposeFutureProviderRef<List<DexPoolTx>> {
   /// The parameter `pool` of this provider.
   DexPool get pool;
@@ -1161,6 +1181,8 @@ class _PoolFavoriteNotifierProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _PoolFavoriteNotifierRef on AutoDisposeAsyncNotifierProviderRef<bool> {
   /// The parameter `poolAddress` of this provider.
   String get poolAddress;
@@ -1176,4 +1198,4 @@ class _PoolFavoriteNotifierProviderElement
       (origin as _PoolFavoriteNotifierProvider).poolAddress;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

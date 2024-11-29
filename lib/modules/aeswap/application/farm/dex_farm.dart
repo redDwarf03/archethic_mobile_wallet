@@ -10,14 +10,14 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_farm.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_farm.repository.dart';
 import 'package:collection/collection.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_farm.g.dart';
 part 'dex_farm_list.dart';
 
 @riverpod
-DexFarmRepositoryImpl _dexFarmRepository(_DexFarmRepositoryRef ref) =>
-    DexFarmRepositoryImpl(
+DexFarmRepositoryImpl _dexFarmRepository(Ref ref) => DexFarmRepositoryImpl(
       apiService: ref.watch(apiServiceProvider),
       verifiedTokensRepository: ref.watch(
         verifiedTokensRepositoryProvider,
@@ -26,7 +26,7 @@ DexFarmRepositoryImpl _dexFarmRepository(_DexFarmRepositoryRef ref) =>
 
 @riverpod
 Future<DexFarm?> _getFarmInfos(
-  _GetFarmInfosRef ref,
+  Ref ref,
   String farmGenesisAddress,
   String poolAddress, {
   DexFarm? dexFarmInput,

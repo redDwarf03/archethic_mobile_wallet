@@ -6,7 +6,7 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensListHash() => r'592d79722bc09485e5c8747441ca8ffe63d34502';
+String _$tokensListHash() => r'593e48ed9063457663e2e48b344aed4ca8bc7518';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -177,6 +177,8 @@ class TokensListProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
@@ -207,7 +209,7 @@ class _TokensListProviderElement
   bool get withNotVerified => (origin as TokensListProvider).withNotVerified;
 }
 
-String _$tokensTotalUSDHash() => r'534a6eab109c87563637c9e871b87910ca2e51aa';
+String _$tokensTotalUSDHash() => r'a0f42e1ef21073d1ec7f627b48fde93b76205a7a';
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)
@@ -323,6 +325,8 @@ class TokensTotalUSDProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin TokensTotalUSDRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
@@ -337,4 +341,4 @@ class _TokensTotalUSDProviderElement
       (origin as TokensTotalUSDProvider).userGenesisAddress;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

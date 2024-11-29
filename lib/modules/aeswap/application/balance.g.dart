@@ -6,7 +6,7 @@ part of 'balance.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userBalanceHash() => r'a25cf954acd90262212a4514facb265630130ef3';
+String _$userBalanceHash() => r'7a04c8bb2538d5b19c2329ab18a06f5d4471f44b';
 
 /// See also [userBalance].
 @ProviderFor(userBalance)
@@ -20,8 +20,10 @@ final userBalanceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef UserBalanceRef = AutoDisposeFutureProviderRef<archethic.Balance>;
-String _$addressBalanceHash() => r'bd82de0cb548e90afad6edcf01840fb4548008e6';
+String _$addressBalanceHash() => r'539f643f4df29c6cf01a5db0fccba4090bff7df0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -158,6 +160,8 @@ class AddressBalanceProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin AddressBalanceRef on AutoDisposeFutureProviderRef<archethic.Balance> {
   /// The parameter `address` of this provider.
   String get address;
@@ -173,7 +177,7 @@ class _AddressBalanceProviderElement
 }
 
 String _$addressBalanceTotalFiatHash() =>
-    r'39f9c8fc5cd22a8b4ae2c923013783f59c219326';
+    r'7a2802ee8f75deea0f6ed01238eaa91e54986faa';
 
 /// See also [addressBalanceTotalFiat].
 @ProviderFor(addressBalanceTotalFiat)
@@ -289,6 +293,8 @@ class AddressBalanceTotalFiatProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin AddressBalanceTotalFiatRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `address` of this provider.
   String get address;
@@ -303,7 +309,7 @@ class _AddressBalanceTotalFiatProviderElement
   String get address => (origin as AddressBalanceTotalFiatProvider).address;
 }
 
-String _$getBalanceHash() => r'434260970828b87135c5630cca11ea79edadc8aa';
+String _$getBalanceHash() => r'0a21d8dfa9e95ef0de7ec53d0c7134675b3fce4e';
 
 /// See also [getBalance].
 @ProviderFor(getBalance)
@@ -418,6 +424,8 @@ class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetBalanceRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `tokenAddress` of this provider.
   String get tokenAddress;
@@ -431,4 +439,4 @@ class _GetBalanceProviderElement
   String get tokenAddress => (origin as GetBalanceProvider).tokenAddress;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

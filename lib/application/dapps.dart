@@ -2,19 +2,20 @@ import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/repositories/dapps_repository.dart';
 import 'package:aewallet/model/available_networks.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dapps.g.dart';
 
 @riverpod
 DAppsRepositoryImpl _dAppsRepository(
-  _DAppsRepositoryRef ref,
+  Ref ref,
 ) =>
     DAppsRepositoryImpl();
 
 @riverpod
 Future<DApp?> _getDApp(
-  _GetDAppRef ref,
+  Ref ref,
   AvailableNetworks network,
   String code,
 ) async {
@@ -24,7 +25,7 @@ Future<DApp?> _getDApp(
 
 @riverpod
 Future<List<DApp>> _getDAppsFromNetwork(
-  _GetDAppsFromNetworkRef ref,
+  Ref ref,
   AvailableNetworks network,
 ) async {
   final apiService = ref.watch(apiServiceProvider);

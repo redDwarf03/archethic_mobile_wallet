@@ -6,7 +6,7 @@ part of 'dapps.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dAppsRepositoryHash() => r'0f9c6e173ce536626d593b1fb106e557a89a6a73';
+String _$dAppsRepositoryHash() => r'6de8e91d80ef070475a657e77ea3f07fa5d9f543';
 
 /// See also [_dAppsRepository].
 @ProviderFor(_dAppsRepository)
@@ -21,8 +21,10 @@ final _dAppsRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
-String _$getDAppHash() => r'6bab3f96fab16d9989efb24fb4bb35a0644e8984';
+String _$getDAppHash() => r'70f3139f239d37e2aaf093b1007b668aeab29d90';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -169,6 +171,8 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetDAppRef on AutoDisposeFutureProviderRef<DApp?> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
@@ -188,7 +192,7 @@ class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
 }
 
 String _$getDAppsFromNetworkHash() =>
-    r'8c7c760516c9dd278b63b8cc3529132368dc9d9e';
+    r'0b6c8824ab7d57c392d448753b5139840976372b';
 
 /// See also [_getDAppsFromNetwork].
 @ProviderFor(_getDAppsFromNetwork)
@@ -304,6 +308,8 @@ class _GetDAppsFromNetworkProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetDAppsFromNetworkRef on AutoDisposeFutureProviderRef<List<DApp>> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
@@ -319,4 +325,4 @@ class _GetDAppsFromNetworkProviderElement
       (origin as _GetDAppsFromNetworkProvider).network;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

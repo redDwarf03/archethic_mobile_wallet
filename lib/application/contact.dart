@@ -15,12 +15,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'contact.g.dart';
 
 @riverpod
-ContactRepository _contactRepository(_ContactRepositoryRef ref) =>
-    ContactRepository();
+ContactRepository _contactRepository(Ref ref) => ContactRepository();
 
 @riverpod
 Future<List<Contact>> _fetchContacts(
-  _FetchContactsRef ref, {
+  Ref ref, {
   String search = '',
 }) async {
   if (search.isEmpty) {
@@ -33,7 +32,7 @@ Future<List<Contact>> _fetchContacts(
 }
 
 @riverpod
-Future<Contact?> _getSelectedContact(_GetSelectedContactRef ref) async {
+Future<Contact?> _getSelectedContact(Ref ref) async {
   final selectedAccount =
       await ref.watch(AccountProviders.accounts.future).selectedAccount;
   if (selectedAccount == null) {
@@ -49,7 +48,7 @@ Future<Contact?> _getSelectedContact(_GetSelectedContactRef ref) async {
 
 @riverpod
 Future<Contact?> _getContactWithName(
-  _GetContactWithNameRef ref,
+  Ref ref,
   String contactName,
 ) async {
   final searchedContact = await ref
@@ -62,7 +61,7 @@ Future<Contact?> _getContactWithName(
 
 @riverpod
 Future<Contact?> _getContactWithAddress(
-  _GetContactWithAddressRef ref,
+  Ref ref,
   String address,
 ) async {
   final searchedContact =
@@ -75,7 +74,7 @@ Future<Contact?> _getContactWithAddress(
 
 @riverpod
 Future<Contact?> _getContactWithPublicKey(
-  _GetContactWithPublicKeyRef ref,
+  Ref ref,
   String publicKey,
 ) async {
   try {
@@ -92,7 +91,7 @@ Future<Contact?> _getContactWithPublicKey(
 
 @riverpod
 Future<Contact?> _getContactWithGenesisPublicKey(
-  _GetContactWithGenesisPublicKeyRef ref,
+  Ref ref,
   String genesisPublicKey,
 ) async {
   try {
@@ -107,7 +106,7 @@ Future<Contact?> _getContactWithGenesisPublicKey(
 
 @riverpod
 Future<void> _saveContact(
-  _SaveContactRef ref, {
+  Ref ref, {
   Contact? contact,
 }) async {
   if (contact == null) {
@@ -119,7 +118,7 @@ Future<void> _saveContact(
 
 @riverpod
 Future<void> _deleteContact(
-  _DeleteContactRef ref, {
+  Ref ref, {
   Contact? contact,
 }) async {
   if (contact == null) {
@@ -131,7 +130,7 @@ Future<void> _deleteContact(
 
 @riverpod
 Future<bool> _isContactExistsWithName(
-  _IsContactExistsWithNameRef ref, {
+  Ref ref, {
   String? contactName,
 }) async {
   if (contactName == null) {
@@ -144,7 +143,7 @@ Future<bool> _isContactExistsWithName(
 
 @riverpod
 Future<bool> _isContactExistsWithAddress(
-  _IsContactExistsWithAddressRef ref, {
+  Ref ref, {
   String? address,
 }) async {
   if (address == null) {
@@ -158,7 +157,7 @@ Future<bool> _isContactExistsWithAddress(
 
 @riverpod
 Future<AccountBalance> _getBalance(
-  _GetBalanceRef ref, {
+  Ref ref, {
   String? address,
 }) async {
   if (address == null) {

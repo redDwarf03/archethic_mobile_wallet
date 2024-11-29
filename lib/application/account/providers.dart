@@ -26,11 +26,10 @@ part 'accounts_notifier.dart';
 part 'providers.g.dart';
 
 @riverpod
-AccountRepository _accountRepository(_AccountRepositoryRef ref) =>
-    AccountRepository();
+AccountRepository _accountRepository(Ref ref) => AccountRepository();
 
 @riverpod
-Future<List<Account>> _sortedAccounts(_SortedAccountsRef ref) async {
+Future<List<Account>> _sortedAccounts(Ref ref) async {
   final accounts = await ref.watch(
     AccountProviders.accounts.future,
   );
@@ -43,7 +42,7 @@ Future<List<Account>> _sortedAccounts(_SortedAccountsRef ref) async {
 
 @riverpod
 List<AccountToken> _getAccountNFTFiltered(
-  _GetAccountNFTFilteredRef ref,
+  Ref ref,
   Account account, {
   bool? favorite,
 }) {
@@ -107,7 +106,7 @@ class AccountRepository {
 
 @Riverpod(keepAlive: true)
 AccountLocalRepositoryInterface _accountsRepository(
-  _AccountsRepositoryRef ref,
+  Ref ref,
 ) =>
     AccountLocalRepository();
 

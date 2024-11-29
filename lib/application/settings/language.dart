@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'language.g.dart';
 
 @Riverpod(keepAlive: true)
-AvailableLanguage _selectedLanguage(_SelectedLanguageRef ref) => ref.watch(
+AvailableLanguage _selectedLanguage(Ref ref) => ref.watch(
       SettingsProviders.settings.select(
         (settings) => settings.language,
       ),
@@ -18,7 +18,7 @@ AvailableLanguage _selectedLanguage(_SelectedLanguageRef ref) => ref.watch(
 /// If LanguageSetting is set to LanguageSetting.systemDefault, returns defaultLocale
 /// Otherwise returns selected locale.
 @Riverpod(keepAlive: true)
-Locale _selectedLocale(_SelectedLocaleRef ref) {
+Locale _selectedLocale(Ref ref) {
   final languageSetting = ref.watch(_selectedLanguageProvider);
   final defaultLocale = ref.watch(_defaultLocaleProvider);
 
@@ -26,7 +26,7 @@ Locale _selectedLocale(_SelectedLocaleRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-List<Locale> _availableLocales(_AvailableLocalesRef ref) {
+List<Locale> _availableLocales(Ref ref) {
   return const <Locale>[
     Locale('en'),
     Locale('fr'),

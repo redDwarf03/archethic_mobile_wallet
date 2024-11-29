@@ -6,7 +6,7 @@ part of 'language.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedLanguageHash() => r'c63fc0ebfcfac294c5aad3f7132338ffb10ab0f1';
+String _$selectedLanguageHash() => r'f187e4fe41b13952e1ec59295b7a438b1f86ee71';
 
 /// See also [_selectedLanguage].
 @ProviderFor(_selectedLanguage)
@@ -20,8 +20,10 @@ final _selectedLanguageProvider = Provider<AvailableLanguage>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _SelectedLanguageRef = ProviderRef<AvailableLanguage>;
-String _$selectedLocaleHash() => r'b1fa4f810786d439212304efb93e2e420b1d1993';
+String _$selectedLocaleHash() => r'cd39d1d02ad50242a3fd8cb89c8e67d571795f99';
 
 /// Resolves the selected locale
 ///
@@ -40,8 +42,10 @@ final _selectedLocaleProvider = Provider<Locale>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _SelectedLocaleRef = ProviderRef<Locale>;
-String _$availableLocalesHash() => r'6410cb4632cd07d7908474099e9c859a83fc02a8';
+String _$availableLocalesHash() => r'be343aad531be1c04d5681af703a15a549c19235';
 
 /// See also [_availableLocales].
 @ProviderFor(_availableLocales)
@@ -55,6 +59,8 @@ final _availableLocalesProvider = Provider<List<Locale>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _AvailableLocalesRef = ProviderRef<List<Locale>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

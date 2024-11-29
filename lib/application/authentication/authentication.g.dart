@@ -7,7 +7,7 @@ part of 'authentication.dart';
 // **************************************************************************
 
 String _$authenticationRepositoryHash() =>
-    r'b630377593d057ef93c30f51effb5524980151b1';
+    r'f75d369f73fe4563b4a0f284c4aad3fcecb9cc6d';
 
 /// See also [_authenticationRepository].
 @ProviderFor(_authenticationRepository)
@@ -22,10 +22,12 @@ final _authenticationRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _AuthenticationRepositoryRef
     = ProviderRef<AuthenticationRepositoryInterface>;
 String _$isLockCountdownRunningHash() =>
-    r'163c697c12971cf530cd89420c054b1408c2314f';
+    r'18aea73b8dd6244daa11329f5483cdc31f61df50';
 
 /// See also [_isLockCountdownRunning].
 @ProviderFor(_isLockCountdownRunning)
@@ -39,8 +41,10 @@ final _isLockCountdownRunningProvider = FutureProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _IsLockCountdownRunningRef = FutureProviderRef<bool>;
-String _$lockCountdownHash() => r'd68cdb54ca24255c83a97738a64b623887a940cf';
+String _$lockCountdownHash() => r'2997dd1966cb92c9e6137a178b1325a524034993';
 
 /// See also [_lockCountdown].
 @ProviderFor(_lockCountdown)
@@ -54,8 +58,10 @@ final _lockCountdownProvider = StreamProvider<Duration>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _LockCountdownRef = StreamProviderRef<Duration>;
-String _$vaultLockedHash() => r'874d9cd95389e04cda4578dfbf1889615c135ce0';
+String _$vaultLockedHash() => r'e578f8e35561e505d4b8d5343eb96d1c21d73b60';
 
 /// See also [_vaultLocked].
 @ProviderFor(_vaultLocked)
@@ -68,8 +74,10 @@ final _vaultLockedProvider = Provider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _VaultLockedRef = ProviderRef<bool>;
-String _$lockDateHash() => r'80287a1f5d08aa1f8d17ed20d7536488898589fc';
+String _$lockDateHash() => r'a7fa23f38446e0f56795145d07ffa3714c1f03f4';
 
 /// See also [_lockDate].
 @ProviderFor(_lockDate)
@@ -82,6 +90,8 @@ final _lockDateProvider = FutureProvider<DateTime?>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _LockDateRef = FutureProviderRef<DateTime?>;
 String _$lastInteractionDateNotifierHash() =>
     r'fdd8f1f1e47205aaf7128fa16ff9045fb92af836';
@@ -172,7 +182,7 @@ final _authenticationSettingsNotifierProvider = NotifierProvider<
 
 typedef _$AuthenticationSettingsNotifier = Notifier<AuthenticationSettings>;
 String _$yubikeyAuthenticationNotifierHash() =>
-    r'447a9823bd245f81c8a2da69e07564a10ea96d0f';
+    r'64597049cb0d54833b7488d27d43ab7080fba825';
 
 /// See also [_YubikeyAuthenticationNotifier].
 @ProviderFor(_YubikeyAuthenticationNotifier)
@@ -190,4 +200,4 @@ final _yubikeyAuthenticationNotifierProvider = AutoDisposeAsyncNotifierProvider<
 typedef _$YubikeyAuthenticationNotifier
     = AutoDisposeAsyncNotifier<YubikeyAuthenticationState>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

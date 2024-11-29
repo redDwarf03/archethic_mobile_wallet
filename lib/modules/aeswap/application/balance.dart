@@ -7,12 +7,13 @@ import 'package:aewallet/modules/aeswap/infrastructure/balance.repository.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:collection/collection.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'balance.g.dart';
 
 @riverpod
-Future<archethic.Balance> userBalance(UserBalanceRef ref) async {
+Future<archethic.Balance> userBalance(Ref ref) async {
   final apiService = ref.watch(apiServiceProvider);
   final selectedAccount = await ref
       .watch(
@@ -37,7 +38,7 @@ Future<archethic.Balance> userBalance(UserBalanceRef ref) async {
 
 @riverpod
 Future<archethic.Balance> addressBalance(
-  AddressBalanceRef ref,
+  Ref ref,
   String address,
 ) async {
   final apiService = ref.watch(apiServiceProvider);
@@ -56,7 +57,7 @@ Future<archethic.Balance> addressBalance(
 
 @riverpod
 Future<double> addressBalanceTotalFiat(
-  AddressBalanceTotalFiatRef ref,
+  Ref ref,
   String address,
 ) async {
   try {
@@ -135,7 +136,7 @@ Future<double> addressBalanceTotalFiat(
 
 @riverpod
 Future<double> getBalance(
-  GetBalanceRef ref,
+  Ref ref,
   String tokenAddress,
 ) async {
   final userBalance = await ref.watch(userBalanceProvider.future);

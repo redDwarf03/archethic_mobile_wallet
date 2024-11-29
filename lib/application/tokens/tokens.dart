@@ -7,13 +7,14 @@ import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'tokens.g.dart';
 
 @riverpod
 Future<List<aedappfm.AEToken>> tokensList(
-  TokensListRef ref,
+  Ref ref,
   String userGenesisAddress, {
   bool withVerified = true,
   bool withLPToken = true,
@@ -37,7 +38,7 @@ Future<List<aedappfm.AEToken>> tokensList(
 
 @riverpod
 Future<double> tokensTotalUSD(
-  TokensTotalUSDRef ref,
+  Ref ref,
   String userGenesisAddress,
 ) async {
   var total = 0.0;

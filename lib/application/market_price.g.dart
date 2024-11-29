@@ -7,7 +7,7 @@ part of 'market_price.dart';
 // **************************************************************************
 
 String _$remoteRepositoriesHash() =>
-    r'fe4eb85b07ba092daadcdded9e7e30b5e1572c81';
+    r'eeaffe7671b95883cedbbde55fc48eb3d51ab6c3';
 
 /// See also [_remoteRepositories].
 @ProviderFor(_remoteRepositories)
@@ -22,8 +22,10 @@ final _remoteRepositoriesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
-String _$localRepositoryHash() => r'7efe0044701d7e08d9349e6a071111974c3fcf94';
+String _$localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
 
 /// See also [_localRepository].
 @ProviderFor(_localRepository)
@@ -38,9 +40,11 @@ final _localRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
 String _$currencyMarketPriceHash() =>
-    r'fd4595b0fe9ecd55c69c348e0063210fbf1b8044';
+    r'287c2e8e5baa424dadd7e608e4b9e2f41aa14646';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -176,6 +180,8 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _CurrencyMarketPriceRef on FutureProviderRef<MarketPrice> {
   /// The parameter `currency` of this provider.
   AvailableCurrencyEnum get currency;
@@ -191,7 +197,7 @@ class _CurrencyMarketPriceProviderElement
 }
 
 String _$selectedCurrencyMarketPriceHash() =>
-    r'0b97fa52351428767bf0cfa8a0fda11a58cc0519';
+    r'69f0af143b31a1721384a52e02f83754d998c655';
 
 /// See also [_selectedCurrencyMarketPrice].
 @ProviderFor(_selectedCurrencyMarketPrice)
@@ -206,9 +212,11 @@ final _selectedCurrencyMarketPriceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
 String _$convertedToSelectedCurrencyHash() =>
-    r'0914ae92d570d894e9d964b736d753f3a2bfe8fc';
+    r'214c277af4fe7cb04b5ab79e76a0b8ec55635265';
 
 /// See also [_convertedToSelectedCurrency].
 @ProviderFor(_convertedToSelectedCurrency)
@@ -326,6 +334,8 @@ class _ConvertedToSelectedCurrencyProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _ConvertedToSelectedCurrencyRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `nativeAmount` of this provider.
   double get nativeAmount;
@@ -341,4 +351,4 @@ class _ConvertedToSelectedCurrencyProviderElement
       (origin as _ConvertedToSelectedCurrencyProvider).nativeAmount;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

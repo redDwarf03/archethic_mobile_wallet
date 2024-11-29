@@ -22,7 +22,7 @@ part 'providers.g.dart';
 /// Add Watch here for any provider you want to init when app is displayed.
 /// Those providers will be kept alive during application lifetime.
 @riverpod
-Future<void> homePage(HomePageRef ref) async {
+Future<void> homePage(Ref ref) async {
   ref
     ..onCancel(() {
       ref

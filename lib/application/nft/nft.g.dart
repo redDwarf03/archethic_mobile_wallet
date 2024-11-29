@@ -6,7 +6,7 @@ part of 'nft.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nftRepositoryHash() => r'32d486b353f1e969e4c4163e61aeabc4bba32263';
+String _$nftRepositoryHash() => r'7b2f6d7271498bc5d93d7db83bc26b92c051a1a1';
 
 /// See also [_nftRepository].
 @ProviderFor(_nftRepository)
@@ -20,8 +20,10 @@ final _nftRepositoryProvider = AutoDisposeProvider<NFTRepositoryImpl>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepositoryImpl>;
-String _$getNFTInfoHash() => r'c379be27793c79ade8c79d1f47354adafe1e2f47';
+String _$getNFTInfoHash() => r'09d7716d3ee032057bb6912c612747c3802d3e46';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -169,6 +171,8 @@ class _GetNFTInfoProvider extends AutoDisposeFutureProvider<TokenInformation?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetNFTInfoRef on AutoDisposeFutureProviderRef<TokenInformation?> {
   /// The parameter `address` of this provider.
   String get address;
@@ -189,7 +193,7 @@ class _GetNFTInfoProviderElement
       (origin as _GetNFTInfoProvider).keychainServiceKeyPair;
 }
 
-String _$isAccountOwnerHash() => r'fef1394b8518f15d6a4bc12ee68f188e7e387461';
+String _$isAccountOwnerHash() => r'cbb63a8d814dfc596d6831ba3043312a15e6a486';
 
 /// See also [_isAccountOwner].
 @ProviderFor(_isAccountOwner)
@@ -327,6 +331,8 @@ class _IsAccountOwnerProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _IsAccountOwnerRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `accountAddress` of this provider.
   String get accountAddress;
@@ -351,7 +357,7 @@ class _IsAccountOwnerProviderElement
   String get tokenId => (origin as _IsAccountOwnerProvider).tokenId;
 }
 
-String _$getNFTListHash() => r'bd8c595eaf5883ec7e267eee8d52c4a9c762ef22';
+String _$getNFTListHash() => r'3ac47e3302e3d2570f1e394b991ef01996f30af0';
 
 /// See also [_getNFTList].
 @ProviderFor(_getNFTList)
@@ -494,6 +500,8 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetNFTListRef
     on AutoDisposeFutureProviderRef<(List<AccountToken>, List<AccountToken>)> {
   /// The parameter `address` of this provider.
@@ -519,4 +527,4 @@ class _GetNFTListProviderElement extends AutoDisposeFutureProviderElement<
       (origin as _GetNFTListProvider).keychainSecuredInfos;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

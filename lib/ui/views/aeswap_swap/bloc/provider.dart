@@ -20,12 +20,13 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
 @riverpod
-Future<double> tokenToSwapBalance(TokenToSwapBalanceRef ref) async {
+Future<double> tokenToSwapBalance(Ref ref) async {
   final token =
       ref.watch(swapFormNotifierProvider.select((state) => state.tokenToSwap));
   if (token == null) return 0;
@@ -38,7 +39,7 @@ Future<double> tokenToSwapBalance(TokenToSwapBalanceRef ref) async {
 }
 
 @riverpod
-Future<double> tokenSwappedBalance(TokenSwappedBalanceRef ref) async {
+Future<double> tokenSwappedBalance(Ref ref) async {
   final token =
       ref.watch(swapFormNotifierProvider.select((state) => state.tokenSwapped));
   if (token == null) return 0;

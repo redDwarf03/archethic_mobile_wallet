@@ -67,7 +67,7 @@ class _LastInteractionDateNotifier extends _$LastInteractionDateNotifier {
 }
 
 @Riverpod(keepAlive: true)
-bool _vaultLocked(_VaultLockedRef ref) {
+bool _vaultLocked(Ref ref) {
   Vault.instance().isLocked.addListener(ref.invalidateSelf);
   ref.onDispose(
     () {
@@ -78,7 +78,7 @@ bool _vaultLocked(_VaultLockedRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-Future<DateTime?> _lockDate(_LockDateRef ref) async {
+Future<DateTime?> _lockDate(Ref ref) async {
   final lastInteractionDate = await ref.watch(
     _lastInteractionDateNotifierProvider.future,
   );
