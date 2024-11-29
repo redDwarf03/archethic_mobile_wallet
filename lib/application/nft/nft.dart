@@ -5,16 +5,17 @@ import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'nft.g.dart';
 
 @riverpod
-NFTRepositoryImpl _nftRepository(_NftRepositoryRef ref) => NFTRepositoryImpl();
+NFTRepositoryImpl _nftRepository(Ref ref) => NFTRepositoryImpl();
 
 @riverpod
 Future<TokenInformation?> _getNFTInfo(
-  _GetNFTInfoRef ref,
+  Ref ref,
   String address,
   KeychainServiceKeyPair keychainServiceKeyPair,
 ) async {
@@ -26,7 +27,7 @@ Future<TokenInformation?> _getNFTInfo(
 
 @riverpod
 Future<bool> _isAccountOwner(
-  _IsAccountOwnerRef ref,
+  Ref ref,
   String accountAddress,
   String tokenAddress,
   String tokenId,
@@ -42,7 +43,7 @@ Future<bool> _isAccountOwner(
 
 @riverpod
 Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
-  _GetNFTListRef ref,
+  Ref ref,
   String address,
   String nameAccount,
   KeychainSecuredInfos keychainSecuredInfos,

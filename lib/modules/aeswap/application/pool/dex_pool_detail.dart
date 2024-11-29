@@ -3,7 +3,7 @@ part of 'dex_pool.dart';
 
 @riverpod
 Future<DexPool?> _pool(
-  _PoolRef ref,
+  Ref ref,
   String poolAddress,
 ) async {
   final dexPoolRepository = ref.watch(_dexPoolRepositoryProvider);
@@ -33,7 +33,7 @@ Future<DexPool?> _pool(
 
 @riverpod
 Future<DexPoolInfos> _poolInfos(
-  _PoolInfosRef ref,
+  Ref ref,
   String poolAddress,
 ) async {
   final apiService = ref.watch(apiServiceProvider);

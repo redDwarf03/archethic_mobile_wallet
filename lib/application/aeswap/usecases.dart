@@ -11,13 +11,14 @@ import 'package:aewallet/domain/usecases/aeswap/swap.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/withdraw_farm_lock.usecase.dart';
 import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'usecases.g.dart';
 
 @riverpod
 AddLiquidityCase addLiquidityCase(
-  AddLiquidityCaseRef ref,
+  Ref ref,
 ) =>
     AddLiquidityCase(
       apiService: ref.watch(apiServiceProvider),
@@ -39,7 +40,7 @@ AddLiquidityCase addLiquidityCase(
 
 @riverpod
 ClaimFarmLockCase claimFarmLockCase(
-  ClaimFarmLockCaseRef ref,
+  Ref ref,
 ) =>
     ClaimFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -61,7 +62,7 @@ ClaimFarmLockCase claimFarmLockCase(
 
 @riverpod
 DepositFarmLockCase depositFarmLockCase(
-  DepositFarmLockCaseRef ref,
+  Ref ref,
 ) =>
     DepositFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -83,7 +84,7 @@ DepositFarmLockCase depositFarmLockCase(
 
 @riverpod
 LevelUpFarmLockCase levelUpFarmLockCase(
-  LevelUpFarmLockCaseRef ref,
+  Ref ref,
 ) =>
     LevelUpFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -105,7 +106,7 @@ LevelUpFarmLockCase levelUpFarmLockCase(
 
 @riverpod
 RemoveLiquidityCase removeLiquidityCase(
-  RemoveLiquidityCaseRef ref,
+  Ref ref,
 ) =>
     RemoveLiquidityCase(
       apiService: ref.watch(apiServiceProvider),
@@ -127,7 +128,7 @@ RemoveLiquidityCase removeLiquidityCase(
 
 @riverpod
 SwapCase swapCase(
-  SwapCaseRef ref,
+  Ref ref,
 ) =>
     SwapCase(
       apiService: ref.watch(apiServiceProvider),
@@ -149,7 +150,7 @@ SwapCase swapCase(
 
 @riverpod
 WithdrawFarmLockCase withdrawFarmLockCase(
-  WithdrawFarmLockCaseRef ref,
+  Ref ref,
 ) =>
     WithdrawFarmLockCase(
       apiService: ref.watch(apiServiceProvider),

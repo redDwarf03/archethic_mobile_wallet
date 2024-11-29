@@ -3,7 +3,7 @@ part of 'dex_pool.dart';
 
 @riverpod
 Future<List<DexPoolTx>> _getPoolTxList(
-  _GetPoolTxListRef ref,
+  Ref ref,
   DexPool pool,
   String lastTransactionAddress,
 ) async {

@@ -7,7 +7,7 @@ part of 'recovery_phrase_saved.dart';
 // **************************************************************************
 
 String _$isRecoveryPhraseSavedHash() =>
-    r'941528e20a4522370988b1366c321610c5963878';
+    r'0d549cc4793fe8049d553c65bb217f995339a543';
 
 /// See also [_isRecoveryPhraseSaved].
 @ProviderFor(_isRecoveryPhraseSaved)
@@ -21,9 +21,11 @@ final _isRecoveryPhraseSavedProvider = AutoDisposeFutureProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _IsRecoveryPhraseSavedRef = AutoDisposeFutureProviderRef<bool>;
 String _$setRecoveryPhraseSavedHash() =>
-    r'1c267ec2935a27aeb38833497600deecd0e6a114';
+    r'c8d03b6a8319a0f577c7c5f730f3bae42f5125f1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -159,6 +161,8 @@ class _SetRecoveryPhraseSavedProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _SetRecoveryPhraseSavedRef on AutoDisposeFutureProviderRef<void> {
   /// The parameter `value` of this provider.
   bool get value;
@@ -173,4 +177,4 @@ class _SetRecoveryPhraseSavedProviderElement
   bool get value => (origin as _SetRecoveryPhraseSavedProvider).value;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

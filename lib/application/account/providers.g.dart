@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$accountRepositoryHash() => r'afe2ee1ebe77e5b3ff7bc7e5d6941b52c0712395';
+String _$accountRepositoryHash() => r'c090bc9246c833916cb2cdc6f5e3302ae2bf7a09';
 
 /// See also [_accountRepository].
 @ProviderFor(_accountRepository)
@@ -21,8 +21,10 @@ final _accountRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _AccountRepositoryRef = AutoDisposeProviderRef<AccountRepository>;
-String _$sortedAccountsHash() => r'5bdc20f92e21ee900619360af880fd64f96e9317';
+String _$sortedAccountsHash() => r'674a7885782a2142ff970e85183ea43e6b9ca20b';
 
 /// See also [_sortedAccounts].
 @ProviderFor(_sortedAccounts)
@@ -37,9 +39,11 @@ final _sortedAccountsProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
 String _$getAccountNFTFilteredHash() =>
-    r'305083dcbd8a2b948a762c0e4fc2a392ea7e767f';
+    r'73fe7ac31e9add825086e35ef9722a312a702ce0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -188,6 +192,8 @@ class _GetAccountNFTFilteredProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetAccountNFTFilteredRef on AutoDisposeProviderRef<List<AccountToken>> {
   /// The parameter `account` of this provider.
   Account get account;
@@ -208,7 +214,7 @@ class _GetAccountNFTFilteredProviderElement
 }
 
 String _$accountsRepositoryHash() =>
-    r'0ac516c221ac09e193165a915f4addef8c124030';
+    r'c58a4ccb730ce4cd829b208c00d0b0a49d6bceee';
 
 /// See also [_accountsRepository].
 @ProviderFor(_accountsRepository)
@@ -223,6 +229,8 @@ final _accountsRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _AccountsRepositoryRef = ProviderRef<AccountLocalRepositoryInterface>;
 String _$accountExistsNotifierHash() =>
     r'c2ffdcd9d52b517fbb67c33972047a984928a056';
@@ -356,6 +364,8 @@ class _AccountExistsNotifierProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _AccountExistsNotifierRef on AutoDisposeAsyncNotifierProviderRef<bool> {
   /// The parameter `accountName` of this provider.
   String get accountName;
@@ -500,6 +510,8 @@ class _AccountNotifierProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _AccountNotifierRef on AsyncNotifierProviderRef<Account?> {
   /// The parameter `accountName` of this provider.
   String get accountName;
@@ -531,4 +543,4 @@ final _accountsNotifierProvider =
 
 typedef _$AccountsNotifier = AsyncNotifier<List<Account>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

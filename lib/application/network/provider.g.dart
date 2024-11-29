@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$networkLinkHash() => r'a1ad177b35a24e339a2202520047ef4199644dc4';
+String _$networkLinkHash() => r'1dc389164e6dd1fadbfc555b54db260a0032c45a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -142,6 +142,8 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _NetworkLinkRef on AutoDisposeProviderRef<String> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
@@ -155,7 +157,7 @@ class _NetworkLinkProviderElement extends AutoDisposeProviderElement<String>
   AvailableNetworks get network => (origin as _NetworkLinkProvider).network;
 }
 
-String _$networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
+String _$networkNodesHash() => r'b73184d08e3a705b6f8c9a5085a2b0adf202ab84';
 
 /// See also [_networkNodes].
 @ProviderFor(_networkNodes)
@@ -270,6 +272,8 @@ class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _NetworkNodesRef on AutoDisposeFutureProviderRef<List<Node>> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
@@ -283,7 +287,7 @@ class _NetworkNodesProviderElement
   AvailableNetworks get network => (origin as _NetworkNodesProvider).network;
 }
 
-String _$isReservedNodeUriHash() => r'b9e48b3a7ea0ad17d8278e989e17ba9e3d57980a';
+String _$isReservedNodeUriHash() => r'a069da95adf0e5f07c485b10a98bf1bf3ae08108';
 
 /// See also [_isReservedNodeUri].
 @ProviderFor(_isReservedNodeUri)
@@ -398,6 +402,8 @@ class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _IsReservedNodeUriRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `uri` of this provider.
   Uri get uri;
@@ -411,4 +417,4 @@ class _IsReservedNodeUriProviderElement
   Uri get uri => (origin as _IsReservedNodeUriProvider).uri;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

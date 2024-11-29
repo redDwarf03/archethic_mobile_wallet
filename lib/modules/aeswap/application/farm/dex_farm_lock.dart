@@ -9,13 +9,14 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_user_infos.d
 import 'package:aewallet/modules/aeswap/infrastructure/dex_farm_lock.repository.dart';
 import 'package:collection/collection.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_farm_lock.g.dart';
 
 @riverpod
 DexFarmLockRepositoryImpl _dexFarmLockRepository(
-  _DexFarmLockRepositoryRef ref,
+  Ref ref,
 ) =>
     DexFarmLockRepositoryImpl(
       apiService: ref.watch(apiServiceProvider),
@@ -24,7 +25,7 @@ DexFarmLockRepositoryImpl _dexFarmLockRepository(
 
 @riverpod
 Future<DexFarmLock?> _getFarmLockInfos(
-  _GetFarmLockInfosRef ref,
+  Ref ref,
   String farmGenesisAddress,
   String poolAddress, {
   DexFarmLock? dexFarmLockInput,

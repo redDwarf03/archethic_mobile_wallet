@@ -1,13 +1,14 @@
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'verified_tokens.g.dart';
 
 @riverpod
 aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
-  VerifiedTokensRepositoryRef ref,
+  Ref ref,
 ) {
   final environment = ref.read(environmentProvider);
   return ref.watch(
@@ -16,7 +17,7 @@ aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
 }
 
 @riverpod
-Future<bool> isVerifiedToken(IsVerifiedTokenRef ref, String address) async {
+Future<bool> isVerifiedToken(Ref ref, String address) async {
   final environment = ref.read(environmentProvider);
   return ref.watch(
     aedappfm.VerifiedTokensProviders.isVerifiedToken(
@@ -28,7 +29,7 @@ Future<bool> isVerifiedToken(IsVerifiedTokenRef ref, String address) async {
 
 @riverpod
 Future<List<String>> verifiedTokens(
-  VerifiedTokensRef ref,
+  Ref ref,
 ) async {
   final environment = ref.read(environmentProvider);
 

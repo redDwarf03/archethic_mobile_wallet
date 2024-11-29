@@ -3,7 +3,7 @@ part of 'dex_pool.dart';
 
 @riverpod
 Future<double> _getRatio(
-  _GetRatioRef ref,
+  Ref ref,
   String poolGenesisAddress,
   DexToken token,
 ) async {
@@ -28,7 +28,7 @@ Future<double> _getRatio(
 
 @riverpod
 Future<double> _estimatePoolTVLInFiat(
-  _EstimatePoolTVLInFiatRef ref,
+  Ref ref,
   DexPool? pool,
 ) async {
   if (pool == null) return 0;
@@ -62,7 +62,7 @@ Future<double> _estimatePoolTVLInFiat(
 
 @riverpod
 Future<DexPoolStats> _estimateStats(
-  _EstimateStatsRef ref,
+  Ref ref,
   String dexPoolAddress,
 ) async {
   final apiService = ref.watch(apiServiceProvider);

@@ -8,13 +8,14 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
 @riverpod
 FarmLockFormBalances farmLockFormBalances(
-  FarmLockFormBalancesRef ref,
+  Ref ref,
 ) {
   final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
@@ -34,7 +35,7 @@ FarmLockFormBalances farmLockFormBalances(
 
 @riverpod
 Future<FarmLockFormSummary> farmLockFormSummary(
-  FarmLockFormSummaryRef ref,
+  Ref ref,
 ) async {
   final farmLock = await ref.watch(farmLockFormFarmLockProvider.future);
 
@@ -83,7 +84,7 @@ Future<FarmLockFormSummary> farmLockFormSummary(
 }
 
 @riverpod
-Future<DexPool?> farmLockFormPool(FarmLockFormPoolRef ref) async {
+Future<DexPool?> farmLockFormPool(Ref ref) async {
   final environment = ref.watch(environmentProvider);
   return await ref.watch(
     DexPoolProviders.getPool(
@@ -94,7 +95,7 @@ Future<DexPool?> farmLockFormPool(FarmLockFormPoolRef ref) async {
 
 @riverpod
 Future<DexFarmLock?> farmLockFormFarmLock(
-  FarmLockFormFarmLockRef ref,
+  Ref ref,
 ) async {
   final environment = ref.watch(environmentProvider);
 

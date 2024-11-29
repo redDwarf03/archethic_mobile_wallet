@@ -22,6 +22,7 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_pool.g.dart';
@@ -33,7 +34,7 @@ part 'dex_pool_tx_list.dart';
 
 @riverpod
 DexPoolRepository _dexPoolRepository(
-  _DexPoolRepositoryRef ref,
+  Ref ref,
 ) =>
     DexPoolRepositoryImpl(
       apiService: ref.watch(apiServiceProvider),

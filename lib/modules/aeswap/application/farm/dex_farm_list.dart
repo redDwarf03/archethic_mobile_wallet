@@ -3,7 +3,7 @@ part of 'dex_farm.dart';
 
 @riverpod
 Future<List<DexFarm>> _getFarmList(
-  _GetFarmListRef ref,
+  Ref ref,
 ) async {
   final environment = ref.watch(environmentProvider);
   final dexConf = await ref

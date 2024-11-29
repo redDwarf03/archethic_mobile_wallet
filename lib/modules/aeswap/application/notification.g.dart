@@ -7,7 +7,7 @@ part of 'notification.dart';
 // **************************************************************************
 
 String _$notificationServiceHash() =>
-    r'728b1d31d97ecf4ad047994bd3ecc6585486e472';
+    r'86e50a30e76d8f4d4d85b478777d496886e1dd92';
 
 /// See also [_notificationService].
 @ProviderFor(_notificationService)
@@ -22,9 +22,11 @@ final _notificationServiceProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _NotificationServiceRef = AutoDisposeProviderRef<
     ns.TaskNotificationService<DexNotification, Failure>>;
-String _$runningTasksHash() => r'0c6a1bbceddf6f3df5513c70ccca8852d28d690f';
+String _$runningTasksHash() => r'bc545b56694b2bbdf049a349d825cdd4ab51f141';
 
 /// See also [_runningTasks].
 @ProviderFor(_runningTasks)
@@ -38,9 +40,11 @@ final _runningTasksProvider = AutoDisposeStreamProvider<
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _RunningTasksRef
     = AutoDisposeStreamProviderRef<Iterable<ns.Task<DexNotification, Failure>>>;
-String _$doneTasksHash() => r'b373730ca692fb673204369de57a51320a6d6dc4';
+String _$doneTasksHash() => r'85456401cc2aee1dfd2ba086f227226691320cf6';
 
 /// See also [_doneTasks].
 @ProviderFor(_doneTasks)
@@ -54,7 +58,9 @@ final _doneTasksProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _DoneTasksRef
     = AutoDisposeStreamProviderRef<ns.Task<DexNotification, Failure>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

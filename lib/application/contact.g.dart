@@ -6,7 +6,7 @@ part of 'contact.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$contactRepositoryHash() => r'cf712b6cccb80060dda6cf8b5e0115332d394211';
+String _$contactRepositoryHash() => r'9607001f4c2c00c7d1b270803182d9f0a31b2554';
 
 /// See also [_contactRepository].
 @ProviderFor(_contactRepository)
@@ -21,8 +21,10 @@ final _contactRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
-String _$fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
+String _$fetchContactsHash() => r'71fcbf6530b61c573cad051f104b49aaac0e6861';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -158,6 +160,8 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _FetchContactsRef on AutoDisposeFutureProviderRef<List<Contact>> {
   /// The parameter `search` of this provider.
   String get search;
@@ -173,7 +177,7 @@ class _FetchContactsProviderElement
 }
 
 String _$getSelectedContactHash() =>
-    r'1a0fe773035ecddb9e442a8a704f072f4dcca8ff';
+    r'bbf655d7266f9446ec246c8c9873cce82bd04c16';
 
 /// See also [_getSelectedContact].
 @ProviderFor(_getSelectedContact)
@@ -188,9 +192,11 @@ final _getSelectedContactProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact?>;
 String _$getContactWithNameHash() =>
-    r'e42c9606f79b6b6396b453ee26e7af18ae358470';
+    r'afe398dfeb748aa4f5ccd1306ef17c1ed19eddd7';
 
 /// See also [_getContactWithName].
 @ProviderFor(_getContactWithName)
@@ -306,6 +312,8 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `contactName` of this provider.
   String get contactName;
@@ -321,7 +329,7 @@ class _GetContactWithNameProviderElement
 }
 
 String _$getContactWithAddressHash() =>
-    r'5287403a44fecf7f4fbc3a6a0a4cc067070d78d5';
+    r'3e9bfbb47fc4a35c8227b1c9b65e5a7a561e154d';
 
 /// See also [_getContactWithAddress].
 @ProviderFor(_getContactWithAddress)
@@ -437,6 +445,8 @@ class _GetContactWithAddressProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetContactWithAddressRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `address` of this provider.
   String get address;
@@ -452,7 +462,7 @@ class _GetContactWithAddressProviderElement
 }
 
 String _$getContactWithPublicKeyHash() =>
-    r'651135f8f6f3bb80494850d3e95cafa08b343890';
+    r'4af923d478c93dd4e3cbbc84acc1513792e837d3';
 
 /// See also [_getContactWithPublicKey].
 @ProviderFor(_getContactWithPublicKey)
@@ -569,6 +579,8 @@ class _GetContactWithPublicKeyProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetContactWithPublicKeyRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `publicKey` of this provider.
   String get publicKey;
@@ -585,7 +597,7 @@ class _GetContactWithPublicKeyProviderElement
 }
 
 String _$getContactWithGenesisPublicKeyHash() =>
-    r'ba5b98ca4aea9d1f0bcab19a0ba1b455fea93b63';
+    r'990704043eecf6c887e715c05da86445865daeeb';
 
 /// See also [_getContactWithGenesisPublicKey].
 @ProviderFor(_getContactWithGenesisPublicKey)
@@ -705,6 +717,8 @@ class _GetContactWithGenesisPublicKeyProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetContactWithGenesisPublicKeyRef
     on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `genesisPublicKey` of this provider.
@@ -721,7 +735,7 @@ class _GetContactWithGenesisPublicKeyProviderElement
       (origin as _GetContactWithGenesisPublicKeyProvider).genesisPublicKey;
 }
 
-String _$saveContactHash() => r'500ec532811a1325390328679f4c63b1ac77b9fa';
+String _$saveContactHash() => r'29b7b152e83b9b6d1555c73a7a9505d0eb6231b6';
 
 /// See also [_saveContact].
 @ProviderFor(_saveContact)
@@ -836,6 +850,8 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _SaveContactRef on AutoDisposeFutureProviderRef<void> {
   /// The parameter `contact` of this provider.
   Contact? get contact;
@@ -849,7 +865,7 @@ class _SaveContactProviderElement extends AutoDisposeFutureProviderElement<void>
   Contact? get contact => (origin as _SaveContactProvider).contact;
 }
 
-String _$deleteContactHash() => r'd839e40ae2247446d3ea771b3193579baacd8f1d';
+String _$deleteContactHash() => r'08d6c8504ca606547d07cfdc867d54195dfc2fd8';
 
 /// See also [_deleteContact].
 @ProviderFor(_deleteContact)
@@ -964,6 +980,8 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _DeleteContactRef on AutoDisposeFutureProviderRef<void> {
   /// The parameter `contact` of this provider.
   Contact? get contact;
@@ -978,7 +996,7 @@ class _DeleteContactProviderElement
 }
 
 String _$isContactExistsWithNameHash() =>
-    r'b18c734decf17f6100eb45137e53610775b90d10';
+    r'893285e74484a43ede3429969f8d73620da997cc';
 
 /// See also [_isContactExistsWithName].
 @ProviderFor(_isContactExistsWithName)
@@ -1094,6 +1112,8 @@ class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _IsContactExistsWithNameRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `contactName` of this provider.
   String? get contactName;
@@ -1110,7 +1130,7 @@ class _IsContactExistsWithNameProviderElement
 }
 
 String _$isContactExistsWithAddressHash() =>
-    r'a8e9166d665314454ad8b48bf7a02c6978d0947d';
+    r'67e5d691f2ab3ddb7a1241d8ae8251203bd835b8';
 
 /// See also [_isContactExistsWithAddress].
 @ProviderFor(_isContactExistsWithAddress)
@@ -1227,6 +1247,8 @@ class _IsContactExistsWithAddressProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _IsContactExistsWithAddressRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `address` of this provider.
   String? get address;
@@ -1242,7 +1264,7 @@ class _IsContactExistsWithAddressProviderElement
       (origin as _IsContactExistsWithAddressProvider).address;
 }
 
-String _$getBalanceHash() => r'0abe8363d715114562677c7b761f752f9b0c420b';
+String _$getBalanceHash() => r'38c80fca819850dfafb6da0f1d8aa5a71c8c6036';
 
 /// See also [_getBalance].
 @ProviderFor(_getBalance)
@@ -1357,6 +1379,8 @@ class _GetBalanceProvider extends AutoDisposeFutureProvider<AccountBalance> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetBalanceRef on AutoDisposeFutureProviderRef<AccountBalance> {
   /// The parameter `address` of this provider.
   String? get address;
@@ -1371,4 +1395,4 @@ class _GetBalanceProviderElement
   String? get address => (origin as _GetBalanceProvider).address;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

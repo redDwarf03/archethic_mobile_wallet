@@ -3,26 +3,27 @@ import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_blockchain.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/dex_blockchain.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_blockchain.repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_blockchain.g.dart';
 
 @riverpod
 Future<List<DexBlockchain>> _getBlockchainsListConf(
-  _GetBlockchainsListConfRef ref,
+  Ref ref,
 ) async {
   return ref.watch(_dexBlockchainsRepositoryProvider).getBlockchainsListConf();
 }
 
 @riverpod
 DexBlockchainsRepository _dexBlockchainsRepository(
-  _DexBlockchainsRepositoryRef ref,
+  Ref ref,
 ) =>
     DexBlockchainsRepositoryImpl();
 
 @riverpod
 Future<List<DexBlockchain>> _getBlockchainsList(
-  _GetBlockchainsListRef ref,
+  Ref ref,
 ) async {
   final blockchainsList =
       await ref.watch(_getBlockchainsListConfProvider.future);
@@ -33,7 +34,7 @@ Future<List<DexBlockchain>> _getBlockchainsList(
 
 @riverpod
 Future<DexBlockchain?> _currentBlockchain(
-  _CurrentBlockchainRef ref,
+  Ref ref,
 ) async {
   final blockchainsList = await ref.watch(_getBlockchainsListProvider.future);
 

@@ -17,7 +17,7 @@ MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
 
 @Riverpod(keepAlive: true)
 Future<List<PriceHistoryValue>?> _priceHistory(
-  _PriceHistoryRef ref, {
+  Ref ref, {
   int? ucid,
 }) async {
   if (ucid == null || ucid == 0) return null;

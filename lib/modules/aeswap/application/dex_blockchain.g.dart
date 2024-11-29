@@ -7,7 +7,7 @@ part of 'dex_blockchain.dart';
 // **************************************************************************
 
 String _$getBlockchainsListConfHash() =>
-    r'aa40a923c255a19e7035f7ad0c1dd746bfabbdbd';
+    r'10f965fd00bdfb4128dfcd39142111efd8ccab69';
 
 /// See also [_getBlockchainsListConf].
 @ProviderFor(_getBlockchainsListConf)
@@ -22,10 +22,12 @@ final _getBlockchainsListConfProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetBlockchainsListConfRef
     = AutoDisposeFutureProviderRef<List<DexBlockchain>>;
 String _$dexBlockchainsRepositoryHash() =>
-    r'3a5adcf0e2f9fba36a78732fdd83e32878ef57b0';
+    r'13b9f14e0384b3d6a3604162869718294f21aeb3';
 
 /// See also [_dexBlockchainsRepository].
 @ProviderFor(_dexBlockchainsRepository)
@@ -40,10 +42,12 @@ final _dexBlockchainsRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _DexBlockchainsRepositoryRef
     = AutoDisposeProviderRef<DexBlockchainsRepository>;
 String _$getBlockchainsListHash() =>
-    r'19e2e03e74ca1ee8474c18e432ab54bd33a7e57b';
+    r'9178fc28fede88644a561705fe6c8142d757765d';
 
 /// See also [_getBlockchainsList].
 @ProviderFor(_getBlockchainsList)
@@ -58,9 +62,11 @@ final _getBlockchainsListProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetBlockchainsListRef
     = AutoDisposeFutureProviderRef<List<DexBlockchain>>;
-String _$currentBlockchainHash() => r'4d6383b837b8fbd1ce34d17df402c87a964ace28';
+String _$currentBlockchainHash() => r'6bff45b597f0d9f1cb7d1636ee484ded87840cfa';
 
 /// See also [_currentBlockchain].
 @ProviderFor(_currentBlockchain)
@@ -75,6 +81,8 @@ final _currentBlockchainProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _CurrentBlockchainRef = AutoDisposeFutureProviderRef<DexBlockchain?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

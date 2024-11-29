@@ -20,6 +20,8 @@ final _repositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _RepositoryRef = ProviderRef<CoinPriceHistoryRepositoryInterface>;
 String _$intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
 
@@ -35,8 +37,10 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String _$priceHistoryHash() => r'ed6259dfbadfde618b9331c188227cbd57a2687a';
+String _$priceHistoryHash() => r'fc773f43bff37f0bb74da866458cb32727ee4cc3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -173,6 +177,8 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>?> {
   /// The parameter `ucid` of this provider.
   int? get ucid;
@@ -187,4 +193,4 @@ class _PriceHistoryProviderElement
   int? get ucid => (origin as _PriceHistoryProvider).ucid;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

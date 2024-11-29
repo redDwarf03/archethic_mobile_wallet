@@ -9,17 +9,18 @@ import 'package:aewallet/modules/aeswap/util/riverpod.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_token.g.dart';
 
 @riverpod
-DexTokenRepositoryImpl _dexTokenRepository(_DexTokenRepositoryRef ref) =>
+DexTokenRepositoryImpl _dexTokenRepository(Ref ref) =>
     DexTokenRepositoryImpl(apiService: ref.watch(apiServiceProvider));
 
 @riverpod
 Future<DexToken?> _getTokenFromAddress(
-  _GetTokenFromAddressRef ref,
+  Ref ref,
   address,
 ) async {
   final environment = ref.read(environmentProvider);
@@ -28,7 +29,7 @@ Future<DexToken?> _getTokenFromAddress(
 
 @riverpod
 Future<List<DexToken>> _tokensFromAccount(
-  _TokensFromAccountRef ref,
+  Ref ref,
 ) async {
   final accountSelected = ref.watch(
     AccountProviders.accounts.select(
@@ -46,7 +47,7 @@ Future<List<DexToken>> _tokensFromAccount(
 
 @riverpod
 Future<List<DexToken>> _dexTokenBases(
-  _DexTokenBasesRef ref,
+  Ref ref,
 ) async {
   final repository = ref.watch(_dexTokenRepositoryProvider);
   final environment = ref.read(environmentProvider);
@@ -55,7 +56,7 @@ Future<List<DexToken>> _dexTokenBases(
 
 @riverpod
 Future<DexToken?> _dexTokenBase(
-  _DexTokenBaseRef ref,
+  Ref ref,
   String address,
 ) async {
   final dexTokens = await ref.watch(_dexTokenBasesProvider.future);
@@ -66,7 +67,7 @@ Future<DexToken?> _dexTokenBase(
 
 @riverpod
 Future<String?> _getTokenIcon(
-  _GetTokenIconRef ref,
+  Ref ref,
   address,
 ) async {
   final tokenDescription =
@@ -78,7 +79,7 @@ Future<String?> _getTokenIcon(
 // TODO(reddwarf03): Doublon with ae_token.dart in aedappfm (ae_token is perhaps obsolete now)
 @riverpod
 Future<double> _estimateTokenInFiat(
-  _EstimateTokenInFiatRef ref,
+  Ref ref,
   String tokenAddress,
 ) async {
   if (tokenAddress.isUCO) {
@@ -102,7 +103,7 @@ Future<double> _estimateTokenInFiat(
 /// if `lpTokenAmount` hasn't changed.
 @riverpod
 Future<({double token1, double token2})> _getRemoveAmounts(
-  _GetRemoveAmountsRef ref,
+  Ref ref,
   String poolAddress,
   double lpTokenAmount,
 ) async {
@@ -127,7 +128,7 @@ Future<({double token1, double token2})> _getRemoveAmounts(
 
 @riverpod
 Future<double> _estimateLPTokenInFiat(
-  _EstimateLPTokenInFiatRef ref,
+  Ref ref,
   String token1Address,
   String token2Address,
   double lpTokenAmount,

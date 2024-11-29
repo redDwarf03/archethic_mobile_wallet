@@ -2,13 +2,14 @@ import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dex_lp_token_fiat_value.g.dart';
 
 @riverpod
 String dexLPTokenFiatValue(
-  DexLPTokenFiatValueRef ref,
+  Ref ref,
   DexToken token1,
   DexToken token2,
   double lpTokenAmount,

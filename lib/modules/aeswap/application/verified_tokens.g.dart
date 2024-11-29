@@ -7,7 +7,7 @@ part of 'verified_tokens.dart';
 // **************************************************************************
 
 String _$verifiedTokensRepositoryHash() =>
-    r'3cfc14e9cb80f4e8d2c078de8b5144a013a44849';
+    r'87cd08d554cb240790fefc10ca3f0352c29b4593';
 
 /// See also [verifiedTokensRepository].
 @ProviderFor(verifiedTokensRepository)
@@ -22,9 +22,11 @@ final verifiedTokensRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef VerifiedTokensRepositoryRef
     = AutoDisposeProviderRef<aedappfm.VerifiedTokensRepositoryInterface>;
-String _$isVerifiedTokenHash() => r'53a1c3bdd11100e8b07de1dd74e1241a3a61e3f7';
+String _$isVerifiedTokenHash() => r'118764e45f8449516bb60a2e9b698f87bc9a08a8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -160,6 +162,8 @@ class IsVerifiedTokenProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin IsVerifiedTokenRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `address` of this provider.
   String get address;
@@ -173,7 +177,7 @@ class _IsVerifiedTokenProviderElement
   String get address => (origin as IsVerifiedTokenProvider).address;
 }
 
-String _$verifiedTokensHash() => r'5f601c8e32c97ba916313e4b32868c4a94f51aa2';
+String _$verifiedTokensHash() => r'a8b89d7d28e089abbb7a5194795c143fe9a79e4e';
 
 /// See also [verifiedTokens].
 @ProviderFor(verifiedTokens)
@@ -187,6 +191,8 @@ final verifiedTokensProvider = AutoDisposeFutureProvider<List<String>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef VerifiedTokensRef = AutoDisposeFutureProviderRef<List<String>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$farmLockFormBalancesHash() =>
-    r'bbd18dc776dcc43ad936f080545ecf1091ac75dc';
+    r'fb2f0cc81c3cb95b70818df93f755de8c37ef08e';
 
 /// See also [farmLockFormBalances].
 @ProviderFor(farmLockFormBalances)
@@ -22,9 +22,11 @@ final farmLockFormBalancesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FarmLockFormBalancesRef = AutoDisposeProviderRef<FarmLockFormBalances>;
 String _$farmLockFormSummaryHash() =>
-    r'f5359ee35f4d8d547d2c3e668c198b56f9e33f3c';
+    r'8d4ddfc89be73acd34ecfebe9029f77fd3b9d020';
 
 /// See also [farmLockFormSummary].
 @ProviderFor(farmLockFormSummary)
@@ -39,9 +41,11 @@ final farmLockFormSummaryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FarmLockFormSummaryRef
     = AutoDisposeFutureProviderRef<FarmLockFormSummary>;
-String _$farmLockFormPoolHash() => r'ab4d182d99d343b14b9cfa747ff1d3a47ced7654';
+String _$farmLockFormPoolHash() => r'9cbfafab85fb823111172f8c398b35e3f5fe8f7a';
 
 /// See also [farmLockFormPool].
 @ProviderFor(farmLockFormPool)
@@ -55,9 +59,11 @@ final farmLockFormPoolProvider = AutoDisposeFutureProvider<DexPool?>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FarmLockFormPoolRef = AutoDisposeFutureProviderRef<DexPool?>;
 String _$farmLockFormFarmLockHash() =>
-    r'5f2c9e34e3c3f174861dd6e5886d902b13a9ac57';
+    r'9ebdbce4dd07863ef6c5ebe7b9b9e0afdb7ace17';
 
 /// See also [farmLockFormFarmLock].
 @ProviderFor(farmLockFormFarmLock)
@@ -72,6 +78,8 @@ final farmLockFormFarmLockProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FarmLockFormFarmLockRef = AutoDisposeFutureProviderRef<DexFarmLock?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -6,7 +6,7 @@ part of 'address_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addressServiceHash() => r'44f361dfd7b524eae515ffdb993236924b2aa7c8';
+String _$addressServiceHash() => r'bc17692213a3b9a5576f80ab845926a9cb458f2b';
 
 /// See also [addressService].
 @ProviderFor(addressService)
@@ -20,6 +20,8 @@ final addressServiceProvider = AutoDisposeProvider<AddressService>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef AddressServiceRef = AutoDisposeProviderRef<AddressService>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

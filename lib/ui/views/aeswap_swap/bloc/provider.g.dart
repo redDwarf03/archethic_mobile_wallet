@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$tokenToSwapBalanceHash() =>
-    r'523dcd8fdb8c9e77f45a9faea0fa820b097ddbcf';
+    r'bccf3c5e98349e8913541b698fa28fb222930b0f';
 
 /// See also [tokenToSwapBalance].
 @ProviderFor(tokenToSwapBalance)
@@ -21,9 +21,11 @@ final tokenToSwapBalanceProvider = AutoDisposeFutureProvider<double>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef TokenToSwapBalanceRef = AutoDisposeFutureProviderRef<double>;
 String _$tokenSwappedBalanceHash() =>
-    r'ae1c4ca36bd6d0a50780e89f4179aba17c9736c1';
+    r'e354a0802ab9ebace34ecd1703041dd58defffb7';
 
 /// See also [tokenSwappedBalance].
 @ProviderFor(tokenSwappedBalance)
@@ -37,6 +39,8 @@ final tokenSwappedBalanceProvider = AutoDisposeFutureProvider<double>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef TokenSwappedBalanceRef = AutoDisposeFutureProviderRef<double>;
 String _$swapFormNotifierHash() => r'40cbafe8ef97e62afe196e6c565baea18d19f2a9';
 
@@ -55,4 +59,4 @@ final swapFormNotifierProvider =
 
 typedef _$SwapFormNotifier = AutoDisposeNotifier<SwapFormState>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

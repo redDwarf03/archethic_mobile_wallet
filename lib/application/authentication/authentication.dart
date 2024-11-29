@@ -26,7 +26,7 @@ part 'yubikey.dart';
 
 @Riverpod(keepAlive: true)
 AuthenticationRepositoryInterface _authenticationRepository(
-  _AuthenticationRepositoryRef ref,
+  Ref ref,
 ) {
   if (kIsWeb) return AuthenticationRepositoryWeb();
   return AuthenticationRepositoryNonWeb();
@@ -34,7 +34,7 @@ AuthenticationRepositoryInterface _authenticationRepository(
 
 @Riverpod(keepAlive: true)
 Future<bool> _isLockCountdownRunning(
-  _IsLockCountdownRunningRef ref,
+  Ref ref,
 ) async {
   final lockCountDownDuration = await ref.watch(_lockCountdownProvider.future);
   return lockCountDownDuration.inSeconds > 1;
@@ -42,7 +42,7 @@ Future<bool> _isLockCountdownRunning(
 
 @Riverpod(keepAlive: true)
 Stream<Duration> _lockCountdown(
-  _LockCountdownRef ref,
+  Ref ref,
 ) async* {
   final lockDate = await ref
       .watch(

@@ -7,7 +7,7 @@ part of 'dex_lp_token_fiat_value.dart';
 // **************************************************************************
 
 String _$dexLPTokenFiatValueHash() =>
-    r'c557267e4bfd7def7897e977db8a2644e7252d70';
+    r'9d5ef30cb6961d62f12bf67bbf35e54763d4cbae';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -188,6 +188,8 @@ class DexLPTokenFiatValueProvider extends AutoDisposeProvider<String> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin DexLPTokenFiatValueRef on AutoDisposeProviderRef<String> {
   /// The parameter `token1` of this provider.
   DexToken get token1;
@@ -223,4 +225,4 @@ class _DexLPTokenFiatValueProviderElement
       (origin as DexLPTokenFiatValueProvider).withParenthesis;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

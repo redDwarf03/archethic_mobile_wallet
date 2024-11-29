@@ -133,7 +133,7 @@ class LocalDataMigration {
 }
 
 @riverpod
-List<LocalDataMigration> _migrations(_MigrationsRef ref) => [
+List<LocalDataMigration> _migrations(Ref ref) => [
       migration_437,
       migration_512,
       migration_526,

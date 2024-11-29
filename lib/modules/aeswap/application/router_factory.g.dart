@@ -6,7 +6,7 @@ part of 'router_factory.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerFactoryHash() => r'aa33ca7cfdf5b4af52add7bba12c89122c185103';
+String _$routerFactoryHash() => r'5185ab0b0622385bedbf868f984167123db6697c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -142,6 +142,8 @@ class RouterFactoryProvider extends AutoDisposeProvider<RouterFactory> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin RouterFactoryRef on AutoDisposeProviderRef<RouterFactory> {
   /// The parameter `address` of this provider.
   String get address;
@@ -155,4 +157,4 @@ class _RouterFactoryProviderElement
   String get address => (origin as RouterFactoryProvider).address;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

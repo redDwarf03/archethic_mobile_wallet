@@ -7,7 +7,7 @@ part of 'transaction_repository.dart';
 // **************************************************************************
 
 String _$archethicTransactionRepositoryHash() =>
-    r'71cb48b7b655e1e0ad04ce44b2a275c6a477c6ee';
+    r'b9d7e47b2e99de71d11e642991d47d51004aa838';
 
 /// See also [archethicTransactionRepository].
 @ProviderFor(archethicTransactionRepository)
@@ -22,7 +22,9 @@ final archethicTransactionRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ArchethicTransactionRepositoryRef
     = AutoDisposeProviderRef<ArchethicTransactionRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

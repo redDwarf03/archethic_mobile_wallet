@@ -2,13 +2,14 @@
 
 import 'package:aewallet/model/available_networks.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
 @riverpod
 String _networkLink(
-  _NetworkLinkRef ref, {
+  Ref ref, {
   required AvailableNetworks network,
 }) {
   final networkSetting = NetworksSetting(
@@ -23,7 +24,7 @@ String _networkLink(
 
 @riverpod
 Future<List<Node>> _networkNodes(
-  _NetworkNodesRef ref, {
+  Ref ref, {
   required AvailableNetworks network,
 }) async {
   final link = ref.read(
@@ -41,7 +42,7 @@ Future<List<Node>> _networkNodes(
 
 @riverpod
 Future<bool> _isReservedNodeUri(
-  _IsReservedNodeUriRef ref, {
+  Ref ref, {
   required Uri uri,
 }) async {
   // Check if default uri is used

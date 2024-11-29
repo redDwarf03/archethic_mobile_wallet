@@ -97,7 +97,7 @@ class SignTransactionConfirmationFormNotifier
 @riverpod
 UseCase<SendTransactionCommand,
     Result<TransactionConfirmation, TransactionError>> _sendTransactionUseCase(
-  _SendTransactionUseCaseRef ref,
+  Ref ref,
 ) =>
     SendTransactionUseCase(
       wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,

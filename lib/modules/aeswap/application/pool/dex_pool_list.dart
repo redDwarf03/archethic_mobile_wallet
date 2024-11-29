@@ -3,7 +3,7 @@ part of 'dex_pool.dart';
 
 @riverpod
 Future<List<DexPool>> _getPoolList(
-  _GetPoolListRef ref,
+  Ref ref,
 ) async {
   final environment = ref.watch(environmentProvider);
   log('environment ${environment.endpoint}', name: '_getPoolList');
@@ -57,7 +57,7 @@ Future<List<DexPool>> _getPoolList(
 
 @riverpod
 Future<List<GetPoolListResponse>> _getPoolListRaw(
-  _GetPoolListRawRef ref,
+  Ref ref,
 ) async {
   final environment = ref.watch(environmentProvider);
   final dexConf = await ref.watch(DexConfigProviders.dexConfig.future);
@@ -81,7 +81,7 @@ Future<List<GetPoolListResponse>> _getPoolListRaw(
 
 @riverpod
 List<DexPool> _getPoolListForSearch(
-  _GetPoolListForSearchRef ref,
+  Ref ref,
   String searchText,
   List<DexPool> poolList,
 ) {

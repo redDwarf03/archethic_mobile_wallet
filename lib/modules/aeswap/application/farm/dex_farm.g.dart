@@ -6,7 +6,7 @@ part of 'dex_farm.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dexFarmRepositoryHash() => r'cb6f41fd164a062827be80fc63f8bff475a11bbc';
+String _$dexFarmRepositoryHash() => r'fec3aeb4f1c23a29ea656868c59f125c160581fb';
 
 /// See also [_dexFarmRepository].
 @ProviderFor(_dexFarmRepository)
@@ -21,8 +21,10 @@ final _dexFarmRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _DexFarmRepositoryRef = AutoDisposeProviderRef<DexFarmRepositoryImpl>;
-String _$getFarmInfosHash() => r'f89ac956beb4f04eb3ed388e834e661ce1034f6f';
+String _$getFarmInfosHash() => r'e895abbf94c6c9192df55d478e523362b4fc9072';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -181,6 +183,8 @@ class _GetFarmInfosProvider extends AutoDisposeFutureProvider<DexFarm?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin _GetFarmInfosRef on AutoDisposeFutureProviderRef<DexFarm?> {
   /// The parameter `farmGenesisAddress` of this provider.
   String get farmGenesisAddress;
@@ -205,7 +209,7 @@ class _GetFarmInfosProviderElement
   DexFarm? get dexFarmInput => (origin as _GetFarmInfosProvider).dexFarmInput;
 }
 
-String _$getFarmListHash() => r'5f5834a83f222901188948e8057e814313fdc30b';
+String _$getFarmListHash() => r'beeee317150777f92f74e0d1acb1418950579ab9';
 
 /// See also [_getFarmList].
 @ProviderFor(_getFarmList)
@@ -218,6 +222,8 @@ final _getFarmListProvider = AutoDisposeFutureProvider<List<DexFarm>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _GetFarmListRef = AutoDisposeFutureProviderRef<List<DexFarm>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
