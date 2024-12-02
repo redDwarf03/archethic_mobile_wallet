@@ -24,7 +24,7 @@ final _dAppsRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
-String _$getDAppHash() => r'70f3139f239d37e2aaf093b1007b668aeab29d90';
+String _$getDAppHash() => r'e708424d60dbef17da84a12ed02a67dd493a28a2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -58,11 +58,9 @@ class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
 
   /// See also [_getDApp].
   _GetDAppProvider call(
-    AvailableNetworks network,
     String code,
   ) {
     return _GetDAppProvider(
-      network,
       code,
     );
   }
@@ -72,7 +70,6 @@ class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
     covariant _GetDAppProvider provider,
   ) {
     return call(
-      provider.network,
       provider.code,
     );
   }
@@ -96,12 +93,10 @@ class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
 class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
   /// See also [_getDApp].
   _GetDAppProvider(
-    AvailableNetworks network,
     String code,
   ) : this._internal(
           (ref) => _getDApp(
             ref as _GetDAppRef,
-            network,
             code,
           ),
           from: _getDAppProvider,
@@ -112,7 +107,6 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
                   : _$getDAppHash,
           dependencies: _GetDAppFamily._dependencies,
           allTransitiveDependencies: _GetDAppFamily._allTransitiveDependencies,
-          network: network,
           code: code,
         );
 
@@ -123,11 +117,9 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.network,
     required this.code,
   }) : super.internal();
 
-  final AvailableNetworks network;
   final String code;
 
   @override
@@ -143,7 +135,6 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        network: network,
         code: code,
       ),
     );
@@ -156,15 +147,12 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
 
   @override
   bool operator ==(Object other) {
-    return other is _GetDAppProvider &&
-        other.network == network &&
-        other.code == code;
+    return other is _GetDAppProvider && other.code == code;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, network.hashCode);
     hash = _SystemHash.combine(hash, code.hashCode);
 
     return _SystemHash.finish(hash);
@@ -174,9 +162,6 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin _GetDAppRef on AutoDisposeFutureProviderRef<DApp?> {
-  /// The parameter `network` of this provider.
-  AvailableNetworks get network;
-
   /// The parameter `code` of this provider.
   String get code;
 }
@@ -185,8 +170,6 @@ class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
     with _GetDAppRef {
   _GetDAppProviderElement(super.provider);
 
-  @override
-  AvailableNetworks get network => (origin as _GetDAppProvider).network;
   @override
   String get code => (origin as _GetDAppProvider).code;
 }

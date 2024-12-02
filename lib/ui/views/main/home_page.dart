@@ -159,8 +159,8 @@ class _HomePageState extends ConsumerState<HomePage>
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: const [
-          Stack(
+        children: [
+          const Stack(
             alignment: Alignment.topCenter,
             children: [
               AccountTab(),
@@ -170,9 +170,9 @@ class _HomePageState extends ConsumerState<HomePage>
               ),
             ],
           ),
-          TransactionsTab(),
-          SwapTab(),
-          EarnTab(),
+          const TransactionsTab(),
+          const SwapTab(),
+          const EarnTab(),
           DAppSheet(dappKey: 'aeBridge'),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/repositories/dapps_repository.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -16,11 +17,15 @@ DAppsRepositoryImpl _dAppsRepository(
 @riverpod
 Future<DApp?> _getDApp(
   Ref ref,
-  AvailableNetworks network,
   String code,
 ) async {
   final apiService = ref.watch(apiServiceProvider);
-  return ref.watch(_dAppsRepositoryProvider).getDApp(network, code, apiService);
+  final networkSettings = ref.watch(
+    SettingsProviders.settings.select((settings) => settings.network),
+  );
+  return ref
+      .watch(_dAppsRepositoryProvider)
+      .getDApp(networkSettings.network, code, apiService);
 }
 
 @riverpod

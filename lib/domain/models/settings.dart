@@ -7,7 +7,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'settings.freezed.dart';
 
-enum MainScreenTab { accountTab, transactionTab, swapTab, earnTab, bridgeTab }
+enum MainScreenTab {
+  accountTab,
+  transactionTab,
+  swapTab,
+  earnTab,
+  bridgeTab,
+}
 
 @freezed
 class Settings with _$Settings {
@@ -42,4 +48,8 @@ class Settings with _$Settings {
       );
 
   const Settings._();
+
+  MainScreenTab get mainScreenTab => MainScreenTab.values.firstWhere(
+        (value) => value.index == mainScreenCurrentPage,
+      );
 }
