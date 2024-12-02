@@ -11,10 +11,10 @@ import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refre
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
+import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,11 +30,87 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    if (preferences.mainScreenCurrentPage == 4) {
-      return const _MainAppbarForWebView();
-    }
+    final tab = preferences.mainScreenTab;
+
+    return switch (tab) {
+      MainScreenTab.accountTab => _MainAppBar(
+          key: const Key('account'),
+          actions: [
+            _BalanceVisibilityButton(preferences: preferences),
+          ],
+          title: const MainAppBarAccount(),
+        ),
+      MainScreenTab.transactionTab => _MainAppBar(
+          key: const Key('transaction'),
+          actions: [
+            _BalanceVisibilityButton(preferences: preferences),
+          ],
+          title: const MainAppBarTransactions(),
+        ),
+      MainScreenTab.swapTab => _MainAppBar(
+          key: const Key('swap'),
+          actions: const [
+            SwapTokenIconRefresh(),
+          ],
+          title: MainAppBarBasic(header: localizations.swapHeader),
+        ),
+      MainScreenTab.earnTab => _MainAppBar(
+          key: const Key('earn'),
+          actions: const [],
+          title: MainAppBarBasic(header: localizations.aeSwapEarnHeader),
+        ),
+      MainScreenTab.bridgeTab => _MainAppBar(
+          key: const Key('bridge'),
+          actions: [
+            DAppSheetIconRefresh(dappKey: 'aeBridge'),
+          ],
+          title: MainAppBarBasic(
+            header: localizations.aeBridgeHeader,
+          ),
+        ),
+    };
+  }
+}
+
+class _BalanceVisibilityButton extends ConsumerWidget {
+  const _BalanceVisibilityButton({
+    required this.preferences,
+  });
+
+  final Settings preferences;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      icon: Icon(
+        preferences.showBalances ? Symbols.visibility : Symbols.visibility_off,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
+      ),
+      onPressed: () async {
+        final preferencesNotifier =
+            ref.read(SettingsProviders.settings.notifier);
+        await preferencesNotifier.setShowBalances(!preferences.showBalances);
+      },
+    );
+  }
+}
+
+class _MainAppBar extends ConsumerWidget {
+  const _MainAppBar({
+    super.key,
+    required this.actions,
+    required this.title,
+  });
+
+  final List<Widget> actions;
+  final Widget title;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return AppBar(
       flexibleSpace: ClipRRect(
@@ -51,78 +127,15 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: const _MenuButton(),
       actions: [
-        if (preferences.mainScreenCurrentPage ==
-                MainScreenTab.accountTab.index ||
-            preferences.mainScreenCurrentPage ==
-                MainScreenTab.transactionTab.index)
-          IconButton(
-            icon: Icon(
-              preferences.showBalances
-                  ? Symbols.visibility
-                  : Symbols.visibility_off,
-              weight: IconSize.weightM,
-              opticalSize: IconSize.opticalSizeM,
-              grade: IconSize.gradeM,
-            ),
-            onPressed: () async {
-              final preferencesNotifier =
-                  ref.read(SettingsProviders.settings.notifier);
-              await preferencesNotifier
-                  .setShowBalances(!preferences.showBalances);
-            },
-          )
-        else if (preferences.mainScreenCurrentPage ==
-            MainScreenTab.swapTab.index)
-          const SwapTokenIconRefresh(),
+        ...actions,
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning(),
       ],
-      title: preferences.mainScreenCurrentPage == MainScreenTab.accountTab.index
-          ? const MainAppBarAccount()
-          : preferences.mainScreenCurrentPage ==
-                  MainScreenTab.transactionTab.index
-              ? const MainAppBarTransactions()
-              : preferences.mainScreenCurrentPage == MainScreenTab.swapTab.index
-                  ? MainAppBarBasic(header: localizations.swapHeader)
-                  : preferences.mainScreenCurrentPage ==
-                          MainScreenTab.earnTab.index
-                      ? MainAppBarBasic(header: localizations.aeSwapEarnHeader)
-                      : MainAppBarBasic(header: localizations.aeBridgeHeader),
+      title: title,
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
       iconTheme: IconThemeData(color: ArchethicTheme.text),
-    );
-  }
-}
-
-/// AppBar containing only the menu button.
-/// Useful for webview screens.
-class _MainAppbarForWebView extends ConsumerWidget {
-  const _MainAppbarForWebView();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    return SafeArea(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            height: kToolbarHeight,
-            child: Align(
-              child: Text(
-                localizations.aeBridgeHeader,
-                style: ArchethicThemeStyles.textStyleSize24W700Primary,
-              ).animate().fade(duration: const Duration(milliseconds: 300)),
-            ),
-          ),
-          const Positioned(
-            left: 5,
-            child: _MenuButton(),
-          ),
-        ],
-      ),
     );
   }
 }

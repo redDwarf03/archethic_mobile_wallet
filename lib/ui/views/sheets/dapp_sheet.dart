@@ -11,13 +11,57 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+class DAppSheetIconRefresh extends ConsumerWidget {
+  factory DAppSheetIconRefresh({required String dappKey}) =>
+      DAppSheetIconRefresh._(
+        dappKey: dappKey,
+        key: Key(dappKey),
+      );
+  const DAppSheetIconRefresh._({
+    required this.dappKey,
+    super.key,
+  });
+
+  final String dappKey;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      icon: const Icon(
+        aedappfm.Iconsax.refresh,
+        size: 16,
+        color: Colors.white,
+      ),
+      onPressed: () async {
+        final dapp = await ref.read(
+          DAppsProviders.getDApp(dappKey).future,
+        );
+        if (dapp == null) return;
+        final webviewController =
+            AWCWebviewControllers.find(Uri.parse(dapp.url));
+        if (webviewController == null) return;
+
+        if (await webviewController.isLoading()) return;
+        await webviewController.reload();
+      },
+    );
+  }
+}
+
 class DAppSheet extends ConsumerStatefulWidget {
-  const DAppSheet({
+  factory DAppSheet({required String dappKey}) => DAppSheet._(
+        dappKey: dappKey,
+        key: Key(dappKey),
+      );
+
+  const DAppSheet._({
     required this.dappKey,
     super.key,
   });
@@ -31,11 +75,15 @@ class DAppSheet extends ConsumerStatefulWidget {
   ConsumerState<DAppSheet> createState() => DAppSheetState();
 }
 
-class DAppSheetState extends ConsumerState<DAppSheet> {
+class DAppSheetState extends ConsumerState<DAppSheet>
+    with AutomaticKeepAliveClientMixin {
   String? aeBridgeUrl;
   bool? featureFlags;
   static const applicationCode = 'aeWallet';
   static const featureCode = 'bridge';
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -61,7 +109,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
       DApp? dapp;
       if (connectivityStatusProvider == ConnectivityStatus.isConnected) {
         dapp = await ref.read(
-          DAppsProviders.getDApp(networkSettings.network, dappKey).future,
+          DAppsProviders.getDApp(dappKey).future,
         );
 
         setState(() {
@@ -75,6 +123,7 @@ class DAppSheetState extends ConsumerState<DAppSheet> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final localizations = AppLocalizations.of(context)!;
 
     if (featureFlags != null && featureFlags == false) {

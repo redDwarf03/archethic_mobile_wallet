@@ -65,6 +65,35 @@ enum EVMWallet {
   final String scheme;
 }
 
+/// Keeps track of all alive WebviewControllers
+class AWCWebviewControllers {
+  const AWCWebviewControllers._();
+
+  static final _logger = Logger('AWCWebviewControllers');
+  static final _controllers = <Uri, InAppWebViewController>{};
+
+  static InAppWebViewController? find(Uri uri) => _controllers[uri];
+
+  static void register(Uri uri, InAppWebViewController controller) {
+    final alreadyRegisteredController = find(uri);
+    if (alreadyRegisteredController != null &&
+        controller == alreadyRegisteredController) {
+      return;
+    }
+    dispose(uri);
+    _controllers[uri] = controller;
+    _logger.info('Registered controller for $uri');
+  }
+
+  static void dispose(Uri uri) {
+    final controller = find(uri);
+    if (controller == null) return;
+    controller.dispose();
+    _controllers.remove(uri);
+    _logger.info('Disposed controller for $uri');
+  }
+}
+
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
 
@@ -96,10 +125,12 @@ class AWCWebview extends StatefulWidget {
 
 class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   AWCJsonRPCServer? _peerServer;
-  InAppWebViewController? _controller;
   WebviewMessagePortStreamChannel? _channel;
   bool _loaded = false;
   late final FocusNode _focusNode;
+
+  InAppWebViewController? get _controller =>
+      AWCWebviewControllers.find(widget.uri);
 
   @override
   void initState() {
@@ -119,6 +150,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     _peerServer?.close();
     _focusNode.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    AWCWebviewControllers.dispose(widget.uri);
     AWCWebview._logger.info('AWC webview disposed.');
 
     super.dispose();
@@ -153,7 +185,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                   transparentBackground: true,
                 ),
                 onLoadStop: (controller, _) async {
-                  _controller = controller;
+                  AWCWebviewControllers.register(widget.uri, controller);
                   await _initMessageChannelRPC(controller);
                   await _maintainWebviewFocus(controller);
                   setState(() {

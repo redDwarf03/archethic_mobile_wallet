@@ -105,9 +105,11 @@ Future<void> homePage(Ref ref) async {
 
 final mainTabControllerProvider =
     StateNotifierProvider.autoDispose<TabControllerNotifier, TabController?>(
-        (ref) {
-  return TabControllerNotifier();
-});
+  (ref) {
+    return TabControllerNotifier();
+  },
+  name: 'TabControllerNotifier',
+);
 
 class TabControllerNotifier extends StateNotifier<TabController?> {
   TabControllerNotifier() : super(null);
