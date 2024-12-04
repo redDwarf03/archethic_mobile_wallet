@@ -31,7 +31,7 @@ Archethic Wallet has implemented the following features:
 - UCO and certified tokens Price chart
 
 ## Application Initial Screen
-<img src="fastlane/metadata/android/en-US/wallet_hot 1.png?v=20241009" width="300"/>
+<img src="README_wallet.png?v=20241009" width="300"/>
 
 ## How to install Archethic Wallet
 
