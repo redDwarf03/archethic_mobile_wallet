@@ -26,7 +26,7 @@ final _featureFlagsRepositoryProvider =
 // ignore: unused_element
 typedef _FeatureFlagsRepositoryRef
     = AutoDisposeProviderRef<FeatureFlagsRepositoryImpl>;
-String _$getFeatureFlagHash() => r'47b824545e1ef90d87487954d7b1ca8568c93cda';
+String _$getFeatureFlagHash() => r'3d889fb9e466efd3e438678c4202e674acaf884a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -60,12 +60,10 @@ class GetFeatureFlagFamily extends Family<AsyncValue<bool?>> {
 
   /// See also [getFeatureFlag].
   GetFeatureFlagProvider call(
-    AvailableNetworks network,
     String applicationCode,
     String featureCode,
   ) {
     return GetFeatureFlagProvider(
-      network,
       applicationCode,
       featureCode,
     );
@@ -76,7 +74,6 @@ class GetFeatureFlagFamily extends Family<AsyncValue<bool?>> {
     covariant GetFeatureFlagProvider provider,
   ) {
     return call(
-      provider.network,
       provider.applicationCode,
       provider.featureCode,
     );
@@ -101,13 +98,11 @@ class GetFeatureFlagFamily extends Family<AsyncValue<bool?>> {
 class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
   /// See also [getFeatureFlag].
   GetFeatureFlagProvider(
-    AvailableNetworks network,
     String applicationCode,
     String featureCode,
   ) : this._internal(
           (ref) => getFeatureFlag(
             ref as GetFeatureFlagRef,
-            network,
             applicationCode,
             featureCode,
           ),
@@ -120,7 +115,6 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
           dependencies: GetFeatureFlagFamily._dependencies,
           allTransitiveDependencies:
               GetFeatureFlagFamily._allTransitiveDependencies,
-          network: network,
           applicationCode: applicationCode,
           featureCode: featureCode,
         );
@@ -132,12 +126,10 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.network,
     required this.applicationCode,
     required this.featureCode,
   }) : super.internal();
 
-  final AvailableNetworks network;
   final String applicationCode;
   final String featureCode;
 
@@ -154,7 +146,6 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        network: network,
         applicationCode: applicationCode,
         featureCode: featureCode,
       ),
@@ -169,7 +160,6 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
   @override
   bool operator ==(Object other) {
     return other is GetFeatureFlagProvider &&
-        other.network == network &&
         other.applicationCode == applicationCode &&
         other.featureCode == featureCode;
   }
@@ -177,7 +167,6 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, network.hashCode);
     hash = _SystemHash.combine(hash, applicationCode.hashCode);
     hash = _SystemHash.combine(hash, featureCode.hashCode);
 
@@ -188,9 +177,6 @@ class GetFeatureFlagProvider extends AutoDisposeFutureProvider<bool?> {
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin GetFeatureFlagRef on AutoDisposeFutureProviderRef<bool?> {
-  /// The parameter `network` of this provider.
-  AvailableNetworks get network;
-
   /// The parameter `applicationCode` of this provider.
   String get applicationCode;
 
@@ -202,8 +188,6 @@ class _GetFeatureFlagProviderElement
     extends AutoDisposeFutureProviderElement<bool?> with GetFeatureFlagRef {
   _GetFeatureFlagProviderElement(super.provider);
 
-  @override
-  AvailableNetworks get network => (origin as GetFeatureFlagProvider).network;
   @override
   String get applicationCode =>
       (origin as GetFeatureFlagProvider).applicationCode;

@@ -1,7 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/application/feature_flags.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -9,7 +8,6 @@ import 'package:aewallet/ui/views/sheets/bridge_sheet_feature_flag_false.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -19,17 +17,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DAppSheetIconRefresh extends ConsumerWidget {
-  factory DAppSheetIconRefresh({required String dappKey}) =>
+  factory DAppSheetIconRefresh({
+    required String dappKey,
+    String? featureCode,
+  }) =>
       DAppSheetIconRefresh._(
         dappKey: dappKey,
+        featureCode: featureCode,
         key: Key(dappKey),
       );
   const DAppSheetIconRefresh._({
     required this.dappKey,
+    this.featureCode,
     super.key,
   });
 
   final String dappKey;
+  final String? featureCode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +45,7 @@ class DAppSheetIconRefresh extends ConsumerWidget {
       ),
       onPressed: () async {
         final dapp = await ref.read(
-          DAppsProviders.getDApp(dappKey).future,
+          getDAppProvider(dappKey).future,
         );
         if (dapp == null) return;
         final webviewController =
@@ -56,20 +60,26 @@ class DAppSheetIconRefresh extends ConsumerWidget {
 }
 
 class DAppSheet extends ConsumerStatefulWidget {
-  factory DAppSheet({required String dappKey}) => DAppSheet._(
+  factory DAppSheet({
+    required String dappKey,
+    String? featureCode,
+  }) =>
+      DAppSheet._(
         dappKey: dappKey,
+        featureCode: featureCode,
         key: Key(dappKey),
       );
 
   const DAppSheet._({
     required this.dappKey,
+    this.featureCode,
     super.key,
   });
 
   final String dappKey;
+  final String? featureCode;
 
   static bool get isAvailable => AWCWebview.isAvailable;
-  static const String routerPage = '/dex';
 
   @override
   ConsumerState<DAppSheet> createState() => DAppSheetState();
@@ -78,6 +88,8 @@ class DAppSheet extends ConsumerStatefulWidget {
 class DAppSheetState extends ConsumerState<DAppSheet>
     with AutomaticKeepAliveClientMixin {
   String? dappUrl;
+  bool? featureFlags;
+  static const applicationCode = 'aeWallet';
 
   @override
   bool get wantKeepAlive => true;
@@ -87,26 +99,28 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     Future.delayed(Duration.zero, () async {
       var dappKey = widget.dappKey;
 
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-
-      final bridgeFlag = await ref.watch(
-        getFeatureFlagProvider(
-          networkSettings.network,
-          applicationCode,
-          featureCode,
-        ).future,
-      );
-      if (bridgeFlag == null || bridgeFlag == false || !DAppSheet.isAvailable) {
-        dappKey = '${dappKey}Ext';
+      if (widget.featureCode != null) {
+        final _featureFlag = await ref.watch(
+          getFeatureFlagProvider(
+            applicationCode,
+            widget.featureCode!,
+          ).future,
+        );
+        if (_featureFlag == null ||
+            _featureFlag == false ||
+            !DAppSheet.isAvailable) {
+          dappKey = '${dappKey}Ext';
+        }
+        setState(() {
+          featureFlags = _featureFlag;
+        });
       }
 
       final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
       DApp? dapp;
       if (connectivityStatusProvider == ConnectivityStatus.isConnected) {
         dapp = await ref.read(
-          DAppsProviders.getDApp(dappKey).future,
+          getDAppProvider(dappKey).future,
         );
         setState(() {
           dappUrl = dapp!.url;
@@ -121,51 +135,73 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     super.build(context);
     final localizations = AppLocalizations.of(context)!;
 
-    if (featureFlags != null && featureFlags == false) {
+    if (widget.featureCode == 'bridge' &&
+        featureFlags != null &&
+        featureFlags == false) {
       return const BridgeSheetFeatureFlagFalse();
     }
 
     if (UniversalPlatform.isDesktopOrWeb) {
-
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.dAppLaunchMessage,
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  aedappfm.ArchethicScrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 10,
+                        bottom: 80,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.featureCode == 'bridge'
+                                      ? AppLocalizations.of(context)!
+                                          .aeBridgeLaunchMessage
+                                      : AppLocalizations.of(context)!
+                                          .dAppLaunchMessage,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 55,
-                child: AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  AppLocalizations.of(context)!.dAppLaunchButton,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('LaunchApplication'),
-                  onPressed: dappUrl != null
-                      ? () async {
-                          await launchUrl(Uri.parse(dappUrl!));
-                        }
-                      : null,
-                  disabled: dappUrl == null,
-                ),
-              ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 55,
-            child: AppButtonTiny(
-              AppButtonTinyType.primary,
-              AppLocalizations.of(context)!.aeSwapLaunchButton,
-              Dimens.buttonBottomDimens,
-              key: const Key('LaunchApplication'),
-              onPressed: dappUrl != null
-                  ? () async {
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+              ),
+              child: Row(
+                children: [
+                  AppButtonTinyConnectivity(
+                    widget.featureCode == 'bridge'
+                        ? AppLocalizations.of(context)!.aeBridgeLaunchButton
+                        : AppLocalizations.of(context)!.dAppLaunchButton,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('LaunchApplication'),
+                    onPressed: () async {
                       await launchUrl(Uri.parse(dappUrl!));
-                    }
-                  : null,
-              disabled: dappUrl == null,
+                    },
+                    disabled: dappUrl == null,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -186,10 +222,7 @@ class DAppSheetState extends ConsumerState<DAppSheet>
         future: AWCWebview.isAWCSupported,
         builder: (context, snapshot) {
           final isAWCSupported = snapshot.data;
-          if (isAWCSupported == null) {
-            return const Center(child: LoadingListHeader());
-          }
-          if (dappUrl == null) {
+          if (isAWCSupported == null || dappUrl == null) {
             return const Center(child: LoadingListHeader());
           }
 

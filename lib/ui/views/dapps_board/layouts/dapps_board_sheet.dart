@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/dapps.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -52,11 +51,7 @@ class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final networkSettings = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.network),
-    );
-    final dAppsFromNetwork =
-        ref.watch(getDAppsFromNetworkProvider(networkSettings.network));
+    final dAppsFromNetwork = ref.watch(getDAppsFromNetworkProvider);
 
     return dAppsFromNetwork.when(
       data: (dApps) {

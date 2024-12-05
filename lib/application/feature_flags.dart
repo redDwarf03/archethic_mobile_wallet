@@ -1,6 +1,6 @@
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/repositories/feature_flags_repository.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,13 +16,15 @@ FeatureFlagsRepositoryImpl _featureFlagsRepository(
 @riverpod
 Future<bool?> getFeatureFlag(
   Ref ref,
-  AvailableNetworks network,
   String applicationCode,
   String featureCode,
 ) async {
   final apiService = ref.watch(apiServiceProvider);
+  final networkSettings = ref.watch(
+    SettingsProviders.settings.select((settings) => settings.network),
+  );
   return ref.watch(_featureFlagsRepositoryProvider).getFeatureFlag(
-        network,
+        networkSettings.network,
         apiService,
         applicationCode,
         featureCode,
