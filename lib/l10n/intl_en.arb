@@ -477,6 +477,8 @@
     "aeBridgeHeader": "Bridge",
     "aeSwapEarnHeader": "Earn UCO token",
     "price": "Price",
+    "aeBridgeLaunchMessage": "Please launch the aeBridge application to proceed. It will open in your default browser.",
+    "aeBridgeLaunchButton": "Launch aeBridge",
     "dAppLaunchMessage": "The application is not available directly on this platform. Please launch the application via a browser to continue. It will open in your default browser.",
     "dAppLaunchButton": "Launch the dApp",
     "receiveHeader": "Receive assets on Archethic",
