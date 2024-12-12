@@ -76,7 +76,7 @@ packages:
     description:
       path: "."
       ref: upgrade_graqhql
-      resolved-ref: "16787df19d2d1de77c9b1a3f02cb7b7cd982dd18"
+      resolved-ref: "9b2f293359595cf498d4c33074327d93233486dd"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "4.0.0"
@@ -85,7 +85,7 @@ packages:
     description:
       path: "."
       ref: upgrade_web_dependency
-      resolved-ref: f057a849b350e498b100c289f7f1c52e14c66752
+      resolved-ref: "06695f10182fee57868ae59bfb3d3d2fa4759ce9"
       url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
     source: git
     version: "2.1.5"
@@ -970,7 +970,7 @@ packages:
     description:
       path: "packages/graphql"
       ref: hagen00-upgrade-packages
-      resolved-ref: "29b994bd61b704514a34a6c22f85510d73f46337"
+      resolved-ref: "3d4ef96def5234adcd5c41af281c84a8a6ed7850"
       url: "https://github.com/hagen00/graphql-flutter.git"
     source: git
     version: "5.2.0-beta.9"
