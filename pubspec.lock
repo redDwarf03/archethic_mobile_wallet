@@ -65,30 +65,27 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: upgrade_web_socket
-      resolved-ref: "85b213ea35218561314596204aa5ea9f3f1b520b"
-      url: "https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git"
-    source: git
-    version: "3.2.2"
+      name: archethic_dapp_framework_flutter
+      sha256: dc9954b16cd36544345a1ea606e0054ebeb6b83853efb15a241eca6508e00b3e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.5"
   archethic_lib_dart:
     dependency: transitive
     description:
-      path: "."
-      ref: upgrade_graqhql
-      resolved-ref: "9b2f293359595cf498d4c33074327d93233486dd"
-      url: "https://github.com/archethic-foundation/libdart.git"
-    source: git
-    version: "4.0.0"
+      name: archethic_lib_dart
+      sha256: "9200c8b49322c01e765ecd44cca97658a0436767abb76cbeda5f742d23d0e61e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   archethic_wallet_client:
     dependency: "direct main"
     description:
-      path: "."
-      ref: upgrade_web_dependency
-      resolved-ref: "06695f10182fee57868ae59bfb3d3d2fa4759ce9"
-      url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
-    source: git
-    version: "2.1.5"
+      name: archethic_wallet_client
+      sha256: "69463fe1716b365b17623745fadc7e8ca37135c0bbd908e88fb9d68b05030a85"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.7"
   archive:
     dependency: transitive
     description:
@@ -968,12 +965,11 @@ packages:
   graphql:
     dependency: transitive
     description:
-      path: "packages/graphql"
-      ref: hagen00-upgrade-packages
-      resolved-ref: "3d4ef96def5234adcd5c41af281c84a8a6ed7850"
-      url: "https://github.com/hagen00/graphql-flutter.git"
-    source: git
-    version: "5.2.0-beta.9"
+      name: graphql
+      sha256: c715080993c8481087ce77b7929224222551823769fb150f5816f9bbbee9e589
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0-beta.10"
   graphs:
     dependency: transitive
     description:
@@ -2268,5 +2264,5 @@ packages:
     source: hosted
     version: "2.0.0"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.3 <4.0.0"
   flutter: ">=3.24.3"
