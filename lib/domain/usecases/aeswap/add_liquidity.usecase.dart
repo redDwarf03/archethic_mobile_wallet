@@ -95,67 +95,59 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
 
       liquidityAddNotifier.setTransactionAddLiquidity(transationSignedRaw);
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.addLiquidity,
-          )) {
-            sender.close();
-
-            liquidityAddNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setLiquidityAddOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.addLiquidity(
-                txAddress: transationSignedRaw.address!.address,
-              ),
-            );
-
-            final amount = await aedappfm.PeriodicFuture.periodic<double>(
-              () => getAmountFromTxInput(
-                transationSignedRaw.address!.address!,
-                lpToken.address,
-                apiService,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (amount) => amount > 0,
-              timeout: const Duration(minutes: 1),
-            );
-
-            liquidityAddNotifier.setFinalAmount(amount);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.addLiquidity(
-                txAddress: transationSignedRaw.address!.address,
-                lpToken: lpToken,
-                amount: amount,
-              ),
-            );
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          liquidityAddNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setLiquidityAddOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.addLiquidity,
       );
+
+      if (confirmation == null) return;
+      liquidityAddNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setLiquidityAddOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.addLiquidity(
+          txAddress: transationSignedRaw.address!.address,
+        ),
+      );
+
+      final amount = await aedappfm.PeriodicFuture.periodic<double>(
+        () => getAmountFromTxInput(
+          transationSignedRaw.address!.address!,
+          lpToken.address,
+          apiService,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (amount) => amount > 0,
+        timeout: const Duration(minutes: 1),
+      );
+
+      liquidityAddNotifier.setFinalAmount(amount);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.addLiquidity(
+          txAddress: transationSignedRaw.address!.address,
+          lpToken: lpToken,
+          amount: amount,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      liquidityAddNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setLiquidityAddOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
     } catch (e) {
       liquidityAddNotifier
         ..setResumeProcess(false)

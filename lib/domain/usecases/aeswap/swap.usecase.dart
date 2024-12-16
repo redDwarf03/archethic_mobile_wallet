@@ -126,70 +126,63 @@ class SwapCase with aedappfm.TransactionMixin {
 
       swapNotifier.setRecoveryTransactionSwap(transationSignedRaw);
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.swap,
-          )) {
-            sender.close();
-
-            swapNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setSwapOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.swap(
-                txAddress: transationSignedRaw.address!.address,
-                tokenSwapped: tokenSwapped,
-              ),
-            );
-
-            final amount = await aedappfm.PeriodicFuture.periodic<double>(
-              () => getAmountFromTxInput(
-                transationSignedRaw.address!.address!,
-                tokenSwapped.address,
-                apiService,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (amount) => amount > 0,
-              timeout: const Duration(minutes: 1),
-            );
-
-            swapNotifier.setFinalAmount(amount);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.swap(
-                txAddress: transationSignedRaw.address!.address,
-                tokenSwapped: tokenSwapped,
-                amountSwapped: amount,
-              ),
-            );
-            onDone();
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          swapNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setSwapOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-          onDone();
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.swap,
       );
+
+      if (confirmation == null) return;
+
+      swapNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setSwapOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.swap(
+          txAddress: transationSignedRaw.address!.address,
+          tokenSwapped: tokenSwapped,
+        ),
+      );
+
+      final amount = await aedappfm.PeriodicFuture.periodic<double>(
+        () => getAmountFromTxInput(
+          transationSignedRaw.address!.address!,
+          tokenSwapped.address,
+          apiService,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (amount) => amount > 0,
+        timeout: const Duration(minutes: 1),
+      );
+
+      swapNotifier.setFinalAmount(amount);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.swap(
+          txAddress: transationSignedRaw.address!.address,
+          tokenSwapped: tokenSwapped,
+          amountSwapped: amount,
+        ),
+      );
+      onDone();
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      swapNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setSwapOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
+      onDone();
     } catch (e) {
       swapNotifier
         ..setResumeProcess(false)

@@ -96,99 +96,89 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
       liquidityRemoveNotifier
           .setTransactionRemoveLiquidity(transationSignedRaw);
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.removeLiquidity,
-          )) {
-            sender.close();
-
-            liquidityRemoveNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setLiquidityRemoveOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.removeLiquidity(
-                txAddress: transationSignedRaw.address!.address,
-              ),
-            );
-
-            final amounts =
-                await aedappfm.PeriodicFuture.periodic<List<double>>(
-              () => Future.wait([
-                getAmountFromTxInput(
-                  transationSignedRaw.address!.address!,
-                  token1.address,
-                  apiService,
-                ),
-                getAmountFromTxInput(
-                  transationSignedRaw.address!.address!,
-                  token2.address,
-                  apiService,
-                ),
-                getAmountFromTx(
-                  apiService,
-                  transationSignedRaw.address!.address!,
-                  false,
-                  '00000000000000000000000000000000000000000000000000000000000000000000',
-                ),
-              ]),
-              sleepDuration: const Duration(seconds: 3),
-              until: (amounts) {
-                final amountToken1 = amounts[0];
-                final amountToken2 = amounts[1];
-                final amountLPToken = amounts[2];
-                return amountToken1 > 0 &&
-                    amountToken2 > 0 &&
-                    amountLPToken > 0;
-              },
-              timeout: const Duration(minutes: 1),
-            );
-
-            final amountToken1 = amounts[0];
-            final amountToken2 = amounts[1];
-            final amountLPToken = amounts[2];
-
-            liquidityRemoveNotifier
-              ..setFinalAmountToken1(amountToken1)
-              ..setFinalAmountToken2(amountToken2)
-              ..setFinalAmountLPToken(amountLPToken);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.removeLiquidity(
-                txAddress: transationSignedRaw.address!.address,
-                token1: token1,
-                token2: token2,
-                lpToken: lpToken,
-                amountToken1: amountToken1,
-                amountToken2: amountToken2,
-                amountLPToken: amountLPToken,
-              ),
-            );
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          liquidityRemoveNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setLiquidityRemoveOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.removeLiquidity,
       );
+
+      if (confirmation == null) return;
+
+      liquidityRemoveNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setLiquidityRemoveOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.removeLiquidity(
+          txAddress: transationSignedRaw.address!.address,
+        ),
+      );
+
+      final amounts = await aedappfm.PeriodicFuture.periodic<List<double>>(
+        () => Future.wait([
+          getAmountFromTxInput(
+            transationSignedRaw.address!.address!,
+            token1.address,
+            apiService,
+          ),
+          getAmountFromTxInput(
+            transationSignedRaw.address!.address!,
+            token2.address,
+            apiService,
+          ),
+          getAmountFromTx(
+            apiService,
+            transationSignedRaw.address!.address!,
+            false,
+            '00000000000000000000000000000000000000000000000000000000000000000000',
+          ),
+        ]),
+        sleepDuration: const Duration(seconds: 3),
+        until: (amounts) {
+          final amountToken1 = amounts[0];
+          final amountToken2 = amounts[1];
+          final amountLPToken = amounts[2];
+          return amountToken1 > 0 && amountToken2 > 0 && amountLPToken > 0;
+        },
+        timeout: const Duration(minutes: 1),
+      );
+
+      final amountToken1 = amounts[0];
+      final amountToken2 = amounts[1];
+      final amountLPToken = amounts[2];
+
+      liquidityRemoveNotifier
+        ..setFinalAmountToken1(amountToken1)
+        ..setFinalAmountToken2(amountToken2)
+        ..setFinalAmountLPToken(amountLPToken);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.removeLiquidity(
+          txAddress: transationSignedRaw.address!.address,
+          token1: token1,
+          token2: token2,
+          lpToken: lpToken,
+          amountToken1: amountToken1,
+          amountToken2: amountToken2,
+          amountLPToken: amountLPToken,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      liquidityRemoveNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setLiquidityRemoveOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
     } catch (e) {
       liquidityRemoveNotifier
         ..setResumeProcess(false)

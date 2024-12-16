@@ -251,7 +251,7 @@ class AppService {
           nbTrf++;
         }
         if (nbTrf == 0) {
-          for (final contractRecipient in transaction.data!.actionRecipients) {
+          for (final contractRecipient in transaction.data!.recipients) {
             final recentTransaction = RecentTransaction()
               ..address = transaction.address!.address
               ..typeTx = RecentTransaction.transferOutput

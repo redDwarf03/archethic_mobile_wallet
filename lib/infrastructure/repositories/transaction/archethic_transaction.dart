@@ -271,56 +271,39 @@ class ArchethicTransactionRepository
   }
 
   @override
-  Future<void> send({
+  Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
-    required TransactionConfirmationHandler onConfirmation,
-    required TransactionErrorHandler onError,
-  }) async {
-    final transactionSender = archethic.ArchethicTransactionSender(
-      phoenixHttpEndpoint: phoenixHttpEndpoint,
-      websocketEndpoint: websocketEndpoint,
-      apiService: apiService,
-    );
-
-    await transactionSender.send(
-      timeout: timeout,
-      transaction: await _buildTransaction(transaction),
-      onConfirmation: (transactionConfirmation) => onConfirmation(
-        transactionSender,
-        transactionConfirmation,
-      ),
-      onError: (error) => onError(
-        transactionSender,
-        error,
-      ),
-    );
-  }
+    double? targetRatio,
+    TransactionConfirmationHandler? onConfirmation,
+  }) async =>
+      sendSignedRaw(
+        transaction: await _buildTransaction(transaction),
+        timeout: timeout,
+        targetRatio: targetRatio,
+        onConfirmation: onConfirmation,
+      );
 
   @override
-  Future<void> sendSignedRaw({
-    required archethic.Transaction transactionSignedRaw,
+  Future<archethic.TransactionConfirmation?> sendSignedRaw({
+    required archethic.Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
-    required TransactionConfirmationHandler onConfirmation,
-    required TransactionErrorHandler onError,
-  }) async {
-    final transactionSender = archethic.ArchethicTransactionSender(
-      phoenixHttpEndpoint: phoenixHttpEndpoint,
-      websocketEndpoint: websocketEndpoint,
-      apiService: apiService,
-    );
-
-    await transactionSender.send(
-      timeout: timeout,
-      transaction: transactionSignedRaw,
-      onConfirmation: (transactionConfirmation) => onConfirmation(
-        transactionSender,
-        transactionConfirmation,
-      ),
-      onError: (error) => onError(
-        transactionSender,
-        error,
-      ),
-    );
-  }
+    double? targetRatio,
+    TransactionConfirmationHandler? onConfirmation,
+  }) =>
+      archethic.ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
+        timeout: timeout,
+        isEnoughConfirmations: targetRatio == null
+            ? (confirmation) => confirmation.isFullyConfirmed
+            : (confirmation) =>
+                archethic.TransactionConfirmation.isEnoughConfirmations(
+                  confirmation.nbConfirmations,
+                  confirmation.maxConfirmations,
+                  targetRatio,
+                ),
+        transaction: transaction,
+        onConfirmation: onConfirmation,
+      );
 }

@@ -7,6 +7,7 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/ui/util/transaction_send_event_error_localization.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
@@ -107,86 +108,30 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       seed: state.seed,
     );
 
-    await transactionRepository.send(
-      transaction: transaction,
-      onConfirmation: (sender, confirmation) async {
-        if (archethic.TransactionConfirmation.isEnoughConfirmations(
-          confirmation.nbConfirmations,
-          confirmation.maxConfirmations,
-          TransactionValidationRatios.addAccount,
-        )) {
-          sender.close();
-          EventTaxiImpl.singleton().fire(
-            TransactionSendEvent(
-              transactionType: TransactionSendEventType.keychain,
-              response: 'ok',
-              nbConfirmations: confirmation.nbConfirmations,
-              transactionAddress: confirmation.transactionAddress,
-              maxConfirmations: confirmation.maxConfirmations,
-            ),
-          );
-        }
-      },
-      onError: (sender, error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.noConnection,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          consensusNotReached: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.consensusNotReached,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          timeout: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.transactionTimeOut,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          invalidConfirmation: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                nbConfirmations: 0,
-                maxConfirmations: 0,
-                response: 'ko',
-              ),
-            );
-          },
-          other: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.genericError,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          orElse: () {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: '',
-                nbConfirmations: 0,
-              ),
-            );
-          },
+    try {
+      final confirmation = await transactionRepository.send(
+        transaction: transaction,
+        targetRatio: TransactionValidationRatios.addAccount,
+      );
+      if (confirmation != null) {
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
+            transactionType: TransactionSendEventType.keychain,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            transactionAddress: confirmation.transactionAddress,
+            maxConfirmations: confirmation.maxConfirmations,
+          ),
         );
-      },
-    );
+      }
+    } on archethic.TransactionError catch (error) {
+      EventTaxiImpl.singleton().fire(
+        error.localizedEvent(
+          localizations,
+          TransactionSendEventType.keychain,
+        ),
+      );
+    }
   }
 
   Future<void> removeAccount(BuildContext context, String account) async {
@@ -202,86 +147,30 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       seed: state.seed,
     );
 
-    await transactionRepository.send(
-      transaction: transaction,
-      onConfirmation: (sender, confirmation) async {
-        if (archethic.TransactionConfirmation.isEnoughConfirmations(
-          confirmation.nbConfirmations,
-          confirmation.maxConfirmations,
-          TransactionValidationRatios.addAccount,
-        )) {
-          sender.close();
-          EventTaxiImpl.singleton().fire(
-            TransactionSendEvent(
-              transactionType: TransactionSendEventType.keychain,
-              response: 'ok',
-              nbConfirmations: confirmation.nbConfirmations,
-              transactionAddress: confirmation.transactionAddress,
-              maxConfirmations: confirmation.maxConfirmations,
-            ),
-          );
-        }
-      },
-      onError: (sender, error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.noConnection,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          consensusNotReached: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.consensusNotReached,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          timeout: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.transactionTimeOut,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          invalidConfirmation: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                nbConfirmations: 0,
-                maxConfirmations: 0,
-                response: 'ko',
-              ),
-            );
-          },
-          other: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: localizations.genericError,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          orElse: () {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.keychain,
-                response: '',
-                nbConfirmations: 0,
-              ),
-            );
-          },
+    try {
+      final confirmation = await transactionRepository.send(
+        transaction: transaction,
+        targetRatio: TransactionValidationRatios.addAccount,
+      );
+      if (confirmation != null) {
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
+            transactionType: TransactionSendEventType.keychain,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            transactionAddress: confirmation.transactionAddress,
+            maxConfirmations: confirmation.maxConfirmations,
+          ),
         );
-      },
-    );
+      }
+    } on archethic.TransactionError catch (error) {
+      EventTaxiImpl.singleton().fire(
+        error.localizedEvent(
+          localizations,
+          TransactionSendEventType.keychain,
+        ),
+      );
+    }
   }
 }
 
