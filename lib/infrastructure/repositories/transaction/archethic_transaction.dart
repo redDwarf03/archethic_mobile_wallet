@@ -274,13 +274,11 @@ class ArchethicTransactionRepository
   Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
-    double? targetRatio,
     TransactionConfirmationHandler? onConfirmation,
   }) async =>
       sendSignedRaw(
         transaction: await _buildTransaction(transaction),
         timeout: timeout,
-        targetRatio: targetRatio,
         onConfirmation: onConfirmation,
       );
 
@@ -288,21 +286,12 @@ class ArchethicTransactionRepository
   Future<archethic.TransactionConfirmation?> sendSignedRaw({
     required archethic.Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
-    double? targetRatio,
     TransactionConfirmationHandler? onConfirmation,
   }) =>
       archethic.ArchethicTransactionSender(
         apiService: apiService,
       ).send(
         timeout: timeout,
-        isEnoughConfirmations: targetRatio == null
-            ? (confirmation) => confirmation.isFullyConfirmed
-            : (confirmation) =>
-                archethic.TransactionConfirmation.isEnoughConfirmations(
-                  confirmation.nbConfirmations,
-                  confirmation.maxConfirmations,
-                  targetRatio,
-                ),
         transaction: transaction,
         onConfirmation: onConfirmation,
       );

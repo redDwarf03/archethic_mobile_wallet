@@ -8,7 +8,6 @@ import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/util/transaction_send_event_error_localization.dart';
@@ -292,7 +291,6 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     try {
       final confirmation = await transactionRepository.send(
         transaction: transaction,
-        targetRatio: TransactionValidationRatios.addFungibleToken,
       );
 
       if (confirmation == null) return;

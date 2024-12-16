@@ -13,7 +13,6 @@ import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/token_property.dart';
 import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -787,7 +786,6 @@ class NftCreationFormNotifier
     try {
       final confirmation = await transactionRepository.send(
         transaction: transaction,
-        targetRatio: TransactionValidationRatios.addNFT,
       );
 
       if (confirmation == null) return;

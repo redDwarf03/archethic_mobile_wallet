@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
@@ -100,7 +99,6 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
 
       final confirmation = await transactionRepository.sendSignedRaw(
         transaction: transationSignedRaw,
-        targetRatio: TransactionValidationRatios.withdrawFarmLock,
       );
       if (confirmation == null) return;
 

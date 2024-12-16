@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
@@ -128,7 +127,6 @@ class SwapCase with aedappfm.TransactionMixin {
 
       final confirmation = await transactionRepository.sendSignedRaw(
         transaction: transationSignedRaw,
-        targetRatio: TransactionValidationRatios.swap,
       );
 
       if (confirmation == null) return;
