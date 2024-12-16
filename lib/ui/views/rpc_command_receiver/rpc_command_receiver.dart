@@ -6,6 +6,8 @@ import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/rpc/browser_extension_aws.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/decrypt_payload/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/encrypt_payload/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_accounts/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_current_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_endpoint/command_handler.dart';
@@ -101,6 +103,12 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
       )
       ..addHandler(
         SignPayloadsCommandHandler(context: context, ref: ref),
+      )
+      ..addHandler(
+        EncryptPayloadsCommandHandler(ref: ref),
+      )
+      ..addHandler(
+        DecryptPayloadsCommandHandler(context: context, ref: ref),
       );
   }
 

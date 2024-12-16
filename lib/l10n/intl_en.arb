@@ -270,6 +270,8 @@
     "signXTransactionsCommandReceivedNotification": "The %1 application wants you to sign %2 transactions.\nWould you like to confirm this action with the %3 account?\n\nOnce signed, transaction processing fees are estimated at",
     "sign1PayloadCommandReceivedNotification": "The %1 application wants you to sign 1 payload.\nWould you like to confirm this action with the %2 account?\n\nThis action does not require any fees.",
     "signXPayloadsCommandReceivedNotification": "The %1 application wants you to sign %2 payloads.\nWould you like to confirm this action with the %3 account?\n\nThis action does not require any fees.",
+    "decrypt1PayloadCommandReceivedNotification": "The %1 application wants you to decrypt 1 payload.\nWould you like to confirm this action with the %2 account?\n\nThis action does not require any fees.",
+    "decryptXPayloadsCommandReceivedNotification": "The %1 application wants you to decrypt %2 payloads.\nWould you like to confirm this action with the %3 account?\n\nThis action does not require any fees.",
     "payload": "Payload",
     "hexadecimalFormat": "Hexadecimal Format",
     "searchField": "Search...",
