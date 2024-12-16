@@ -98,97 +98,88 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
       farmLockWithdrawNotifier
           .setTransactionWithdrawFarmLock(transationSignedRaw);
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.withdrawFarmLock,
-          )) {
-            sender.close();
-
-            farmLockWithdrawNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setFarmLockWithdrawOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.withdrawFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-                rewardToken: rewardToken,
-                isFarmClose: isFarmClose,
-              ),
-            );
-
-            await aedappfm.PeriodicFuture.periodic<bool>(
-              () => isSCCallExecuted(
-                apiService,
-                farmGenesisAddress,
-                transationSignedRaw.address!.address!,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (depositOk) => depositOk == true,
-              timeout: const Duration(minutes: 1),
-            );
-
-            final amounts =
-                await aedappfm.PeriodicFuture.periodic<List<double>>(
-              () => Future.wait([
-                getAmountFromTxInput(
-                  transationSignedRaw.address!.address!,
-                  rewardToken.address,
-                  apiService,
-                ),
-                getAmountFromTxInput(
-                  transationSignedRaw.address!.address!,
-                  lpTokenAddress,
-                  apiService,
-                ),
-              ]),
-              sleepDuration: const Duration(seconds: 3),
-              until: (amounts) {
-                return amounts[1] > 0;
-              },
-              timeout: const Duration(minutes: 1),
-            );
-
-            final amountReward = amounts[0];
-            final amountWithdraw = amounts[1];
-
-            farmLockWithdrawNotifier
-              ..setFinalAmountReward(amountReward)
-              ..setFinalAmountWithdraw(amountWithdraw);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.withdrawFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-                amountReward: amountReward,
-                amountWithdraw: amountWithdraw,
-                rewardToken: rewardToken,
-                isFarmClose: isFarmClose,
-              ),
-            );
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          farmLockWithdrawNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setFarmLockWithdrawOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.withdrawFarmLock,
       );
+      if (confirmation == null) return;
+
+      farmLockWithdrawNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockWithdrawOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.withdrawFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+          rewardToken: rewardToken,
+          isFarmClose: isFarmClose,
+        ),
+      );
+
+      await aedappfm.PeriodicFuture.periodic<bool>(
+        () => isSCCallExecuted(
+          apiService,
+          farmGenesisAddress,
+          transationSignedRaw.address!.address!,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (depositOk) => depositOk == true,
+        timeout: const Duration(minutes: 1),
+      );
+
+      final amounts = await aedappfm.PeriodicFuture.periodic<List<double>>(
+        () => Future.wait([
+          getAmountFromTxInput(
+            transationSignedRaw.address!.address!,
+            rewardToken.address,
+            apiService,
+          ),
+          getAmountFromTxInput(
+            transationSignedRaw.address!.address!,
+            lpTokenAddress,
+            apiService,
+          ),
+        ]),
+        sleepDuration: const Duration(seconds: 3),
+        until: (amounts) {
+          return amounts[1] > 0;
+        },
+        timeout: const Duration(minutes: 1),
+      );
+
+      final amountReward = amounts[0];
+      final amountWithdraw = amounts[1];
+
+      farmLockWithdrawNotifier
+        ..setFinalAmountReward(amountReward)
+        ..setFinalAmountWithdraw(amountWithdraw);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.withdrawFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+          amountReward: amountReward,
+          amountWithdraw: amountWithdraw,
+          rewardToken: rewardToken,
+          isFarmClose: isFarmClose,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      farmLockWithdrawNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockWithdrawOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
     } catch (e) {
       farmLockWithdrawNotifier
         ..setResumeProcess(false)

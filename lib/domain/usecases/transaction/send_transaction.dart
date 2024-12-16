@@ -129,12 +129,6 @@ class SendTransactionUseCase
       );
     }
 
-    final transactionSender = ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: apiService,
-    );
-
     final transaction = await command.toArchethicTransaction(
       wallet: wallet,
       apiService: apiService,
@@ -147,8 +141,9 @@ class SendTransactionUseCase
     }
 
     try {
-      // ignore: cascade_invocations
-      await transactionSender.send(
+      await ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
         transaction: transaction,
         onConfirmation: (confirmation) async {
           onProgress?.call(
@@ -167,12 +162,12 @@ class SendTransactionUseCase
 
           _logger.info('Confirmation received : $confirmation');
         },
-        onError: (error) async {
-          _logger.severe('Transaction error received', error);
-          _fail(error);
-        },
       );
+    } on TransactionError catch (error) {
+      _logger.severe('Transaction error received', error);
+      _fail(error);
     } catch (e) {
+      _logger.severe('Transaction error received', e);
       _fail(const TransactionError.other());
     }
 

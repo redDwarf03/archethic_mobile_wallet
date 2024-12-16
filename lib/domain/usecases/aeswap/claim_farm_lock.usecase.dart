@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
@@ -91,78 +92,70 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
         transationSignedRaw,
       );
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.claimFarmLock,
-          )) {
-            sender.close();
-
-            farmClaimLockNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setFarmLockClaimOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.claimFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-              ),
-            );
-
-            await aedappfm.PeriodicFuture.periodic<bool>(
-              () => isSCCallExecuted(
-                apiService,
-                farmGenesisAddress,
-                transationSignedRaw.address!.address!,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (depositOk) => depositOk == true,
-              timeout: const Duration(minutes: 1),
-            );
-
-            final amount = await aedappfm.PeriodicFuture.periodic<double>(
-              () => getAmountFromTxInput(
-                transationSignedRaw.address!.address!,
-                rewardToken.address,
-                apiService,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (amount) => amount > 0,
-              timeout: const Duration(minutes: 1),
-            );
-
-            farmClaimLockNotifier.setFinalAmount(amount);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.claimFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-                amount: amount,
-                rewardToken: rewardToken,
-              ),
-            );
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          farmClaimLockNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setFarmLockClaimOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.claimFarmLock,
       );
+
+      if (confirmation == null) return;
+      farmClaimLockNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockClaimOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.claimFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+        ),
+      );
+
+      await aedappfm.PeriodicFuture.periodic<bool>(
+        () => isSCCallExecuted(
+          apiService,
+          farmGenesisAddress,
+          transationSignedRaw.address!.address!,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (depositOk) => depositOk == true,
+        timeout: const Duration(minutes: 1),
+      );
+
+      final amount = await aedappfm.PeriodicFuture.periodic<double>(
+        () => getAmountFromTxInput(
+          transationSignedRaw.address!.address!,
+          rewardToken.address,
+          apiService,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (amount) => amount > 0,
+        timeout: const Duration(minutes: 1),
+      );
+
+      farmClaimLockNotifier.setFinalAmount(amount);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.claimFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+          amount: amount,
+          rewardToken: rewardToken,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      farmClaimLockNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockClaimOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
     } catch (e) {
       farmClaimLockNotifier
         ..setResumeProcess(false)

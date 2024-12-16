@@ -9,11 +9,9 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 typedef TransactionConfirmationHandler = Future<void> Function(
-  archethic.TransactionSenderInterface sender,
   archethic.TransactionConfirmation confirmation,
 );
 typedef TransactionErrorHandler = Future<void> Function(
-  archethic.TransactionSenderInterface sender,
   archethic.TransactionError error,
 );
 
@@ -22,11 +20,18 @@ abstract class TransactionRemoteRepositoryInterface {
 
   Future<Result<double, Failure>> calculateFees(Transaction transaction);
 
-  Future<void> send({
+  Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
-    required TransactionConfirmationHandler onConfirmation,
-    required TransactionErrorHandler onError,
+    double? targetRatio,
+    TransactionConfirmationHandler? onConfirmation,
+  });
+
+  Future<archethic.TransactionConfirmation?> sendSignedRaw({
+    required archethic.Transaction transaction,
+    Duration timeout = const Duration(seconds: 10),
+    double? targetRatio,
+    TransactionConfirmationHandler? onConfirmation,
   });
 
   Future<archethic.Transaction> buildTransactionRaw(
@@ -35,13 +40,6 @@ abstract class TransactionRemoteRepositoryInterface {
     String transactionLastAddress,
     String serviceName,
   );
-
-  Future<void> sendSignedRaw({
-    required archethic.Transaction transactionSignedRaw,
-    Duration timeout = const Duration(seconds: 10),
-    required TransactionConfirmationHandler onConfirmation,
-    required TransactionErrorHandler onError,
-  });
 
   Future<String?> getLastTransactionAddress({
     required String genesisAddress,

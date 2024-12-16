@@ -262,7 +262,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                   .toList(),
             ),
           ),
-        if (transactionData.actionRecipients.isNotEmpty)
+        if (transactionData.recipients.isNotEmpty)
           ListTile(
             title: SelectableText(
               localizations.transactionRawSmartContractCalls,
@@ -270,7 +270,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: transactionData.actionRecipients
+              children: transactionData.recipients
                   .map(
                     (actionRecipient) => Padding(
                       padding: const EdgeInsets.only(left: 16),

@@ -14,8 +14,8 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
-
 import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/ui/util/transaction_send_event_error_localization.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -812,113 +812,45 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case null:
         break;
     }
-
-    await transferRepository.send(
-      transaction: transaction,
-      onConfirmation: (sender, confirmation) async {
-        if (archethic.TransactionConfirmation.isEnoughConfirmations(
-          confirmation.nbConfirmations,
-          confirmation.maxConfirmations,
-          TransactionValidationRatios.transfer,
-        )) {
-          sender.close();
+    try {
+      final confirmation = await transferRepository.send(
+        transaction: transaction,
+        targetRatio: TransactionValidationRatios.transfer,
+      );
+      if (confirmation == null) return;
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
+          transactionType: TransactionSendEventType.transfer,
+          response: 'ok',
+          nbConfirmations: confirmation.nbConfirmations,
+          transactionAddress: confirmation.transactionAddress,
+          maxConfirmations: confirmation.maxConfirmations,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      error.maybeMap(
+        insufficientFunds: (error) {
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.transfer,
-              response: 'ok',
-              nbConfirmations: confirmation.nbConfirmations,
-              transactionAddress: confirmation.transactionAddress,
-              maxConfirmations: confirmation.maxConfirmations,
+              response: localizations.insufficientBalance.replaceAll(
+                '%1',
+                state.symbol(context),
+              ),
+              nbConfirmations: 0,
             ),
           );
-        }
-      },
-      onError: (sender, error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: localizations.noConnection,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          consensusNotReached: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: localizations.consensusNotReached,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          timeout: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: localizations.transactionTimeOut,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          invalidConfirmation: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                nbConfirmations: 0,
-                maxConfirmations: 0,
-                response: 'ko',
-              ),
-            );
-          },
-          insufficientFunds: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: localizations.insufficientBalance.replaceAll(
-                  '%1',
-                  state.symbol(context),
-                ),
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          rpcError: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: localizations.rpcError
-                    .replaceFirst('%1', error.code.toString())
-                    .replaceFirst(
-                      '%2',
-                      '${error.message} ${error.data ?? ''}',
-                    ),
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          other: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: '${localizations.genericError})',
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          orElse: () {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: '',
-                nbConfirmations: 0,
-              ),
-            );
-          },
-        );
-      },
-    );
+        },
+        orElse: () {
+          EventTaxiImpl.singleton().fire(
+            error.localizedEvent(
+              localizations,
+              TransactionSendEventType.transfer,
+            ),
+          );
+        },
+      );
+    }
   }
 }
 

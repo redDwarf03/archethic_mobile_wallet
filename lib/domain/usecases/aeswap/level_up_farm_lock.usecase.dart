@@ -99,70 +99,62 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
 
       farmLevelUpNotifier.setTransactionFarmLockLevelUp(transationSignedRaw);
 
-      await transactionRepository.sendSignedRaw(
-        transactionSignedRaw: transationSignedRaw,
-        onConfirmation: (sender, confirmation) async {
-          if (archethic.TransactionConfirmation.isEnoughConfirmations(
-            confirmation.nbConfirmations,
-            confirmation.maxConfirmations,
-            TransactionValidationRatios.levelUpFarmLock,
-          )) {
-            sender.close();
-
-            farmLevelUpNotifier
-              ..setResumeProcess(false)
-              ..setProcessInProgress(false)
-              ..setFarmLockLevelUpOk(true);
-
-            notificationService.start(
-              operationId,
-              DexNotification.levelUpFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-                farmAddress: farmAddress,
-                isUCO: isUCO,
-              ),
-            );
-
-            await aedappfm.PeriodicFuture.periodic<bool>(
-              () => isSCCallExecuted(
-                apiService,
-                farmAddress,
-                transationSignedRaw.address!.address!,
-              ),
-              sleepDuration: const Duration(seconds: 3),
-              until: (depositOk) => depositOk == true,
-              timeout: const Duration(minutes: 1),
-            );
-
-            farmLevelUpNotifier.setFinalAmount(amount);
-
-            notificationService.succeed(
-              operationId,
-              DexNotification.levelUpFarmLock(
-                txAddress: transationSignedRaw.address!.address,
-                amount: amount,
-                farmAddress: farmAddress,
-                isUCO: isUCO,
-              ),
-            );
-          }
-        },
-        onError: (sender, error) async {
-          notificationService.failed(
-            operationId,
-            aedappfm.Failure.fromError(error.messageLabel),
-          );
-          farmLevelUpNotifier
-            ..setResumeProcess(false)
-            ..setProcessInProgress(false)
-            ..setFarmLockLevelUpOk(false)
-            ..setFailure(
-              aedappfm.Failure.other(
-                cause: error.messageLabel.capitalize(),
-              ),
-            );
-        },
+      final confirmation = await transactionRepository.sendSignedRaw(
+        transaction: transationSignedRaw,
+        targetRatio: TransactionValidationRatios.levelUpFarmLock,
       );
+
+      if (confirmation == null) return;
+      farmLevelUpNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockLevelUpOk(true);
+
+      notificationService.start(
+        operationId,
+        DexNotification.levelUpFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+          farmAddress: farmAddress,
+          isUCO: isUCO,
+        ),
+      );
+
+      await aedappfm.PeriodicFuture.periodic<bool>(
+        () => isSCCallExecuted(
+          apiService,
+          farmAddress,
+          transationSignedRaw.address!.address!,
+        ),
+        sleepDuration: const Duration(seconds: 3),
+        until: (depositOk) => depositOk == true,
+        timeout: const Duration(minutes: 1),
+      );
+
+      farmLevelUpNotifier.setFinalAmount(amount);
+
+      notificationService.succeed(
+        operationId,
+        DexNotification.levelUpFarmLock(
+          txAddress: transationSignedRaw.address!.address,
+          amount: amount,
+          farmAddress: farmAddress,
+          isUCO: isUCO,
+        ),
+      );
+    } on archethic.TransactionError catch (error) {
+      notificationService.failed(
+        operationId,
+        aedappfm.Failure.fromError(error.messageLabel),
+      );
+      farmLevelUpNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockLevelUpOk(false)
+        ..setFailure(
+          aedappfm.Failure.other(
+            cause: error.messageLabel.capitalize(),
+          ),
+        );
     } catch (e) {
       farmLevelUpNotifier
         ..setResumeProcess(false)

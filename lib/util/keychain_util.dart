@@ -47,42 +47,35 @@ class KeychainUtil with KeychainServiceMixin {
       blockchainTxVersion,
     );
 
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: apiService,
-    );
-
     _logger.info('>>> Create access <<< ${accessKeychainTx.address}');
-    await transactionSender.send(
-      transaction: accessKeychainTx,
-      onConfirmation: (event) async {
-        if (TransactionConfirmation.isEnoughConfirmations(
+    try {
+      final confirmation = await ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
+        transaction: accessKeychainTx,
+        isEnoughConfirmations: (event) =>
+            TransactionConfirmation.isEnoughConfirmations(
           event.nbConfirmations,
           event.maxConfirmations,
           TransactionValidationRatios.createKeychainAccess,
-        )) {
-          transactionSender.close();
-          onConfirmation(
-            event,
-            transactionSender,
-            TransactionSendEventType.keychainAccess,
-            params: <String, Object>{
-              'keychainAddress': keychainAddress,
-              'keychain': keychain,
-            },
-          );
-        }
-      },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychainAccess,
-        );
-      },
-    );
+        ),
+      );
+
+      if (confirmation == null) return;
+      onConfirmation(
+        confirmation,
+        TransactionSendEventType.keychainAccess,
+        params: <String, Object>{
+          'keychainAddress': keychainAddress,
+          'keychain': keychain,
+        },
+      );
+    } on TransactionError catch (error) {
+      onError(
+        error,
+        TransactionSendEventType.keychainAccess,
+      );
+    }
   }
 
   Future<void> createKeyChain(
@@ -125,44 +118,37 @@ class KeychainUtil with KeychainServiceMixin {
       derivationPath: kDerivationPath,
     );
 
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: apiService,
-    );
-
     _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
-    await transactionSender.send(
-      transaction: keychainTransaction,
-      onConfirmation: (event) async {
-        if (TransactionConfirmation.isEnoughConfirmations(
+    try {
+      final confirmation = await ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
+        transaction: keychainTransaction,
+        isEnoughConfirmations: (event) =>
+            TransactionConfirmation.isEnoughConfirmations(
           event.nbConfirmations,
           event.maxConfirmations,
           TransactionValidationRatios.createKeychain,
-        )) {
-          transactionSender.close();
-          onConfirmation(
-            event,
-            transactionSender,
-            TransactionSendEventType.keychain,
-            params: <String, Object>{
-              'keychainAddress':
-                  keychainTransaction.address!.address!.toUpperCase(),
-              'originPrivateKey': originPrivateKey,
-              'keychain': keychain,
-            },
-          );
-        }
-      },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychain,
-        );
-      },
-    );
+        ),
+      );
+
+      if (confirmation == null) return;
+      onConfirmation(
+        confirmation,
+        TransactionSendEventType.keychain,
+        params: <String, Object>{
+          'keychainAddress':
+              keychainTransaction.address!.address!.toUpperCase(),
+          'originPrivateKey': originPrivateKey,
+          'keychain': keychain,
+        },
+      );
+    } on TransactionError catch (error) {
+      onError(
+        error,
+        TransactionSendEventType.keychain,
+      );
+    }
   }
 
   Future<void> removeService(
@@ -180,42 +166,35 @@ class KeychainUtil with KeychainServiceMixin {
       apiService: apiService,
     );
 
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: apiService,
-    );
-
-    await transactionSender.send(
-      transaction: transaction,
-      onConfirmation: (event) async {
-        if (TransactionConfirmation.isEnoughConfirmations(
+    try {
+      final confirmation = await ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
+        transaction: transaction,
+        isEnoughConfirmations: (event) =>
+            TransactionConfirmation.isEnoughConfirmations(
           event.nbConfirmations,
           event.maxConfirmations,
           TransactionValidationRatios.createKeychain,
-        )) {
-          transactionSender.close();
-          onConfirmation(
-            event,
-            transactionSender,
-            TransactionSendEventType.keychain,
-            params: <String, Object>{
-              'keychainAddress': transaction.address!.address!.toUpperCase(),
-              'originPrivateKey': originPrivateKey,
-              'keychain': keychain,
-            },
-          );
-        }
-      },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychain,
-        );
-      },
-    );
+        ),
+      );
+
+      if (confirmation == null) return;
+      onConfirmation(
+        confirmation,
+        TransactionSendEventType.keychain,
+        params: <String, Object>{
+          'keychainAddress': transaction.address!.address!.toUpperCase(),
+          'originPrivateKey': originPrivateKey,
+          'keychain': keychain,
+        },
+      );
+    } on TransactionError catch (error) {
+      onError(
+        error,
+        TransactionSendEventType.keychain,
+      );
+    }
   }
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
@@ -381,7 +360,6 @@ class KeychainUtil with KeychainServiceMixin {
 
   void onConfirmation(
     TransactionConfirmation confirmation,
-    TransactionSenderInterface transactionSender,
     TransactionSendEventType transactionSendEventType, {
     Map<String, Object>? params,
   }) {
@@ -398,7 +376,6 @@ class KeychainUtil with KeychainServiceMixin {
 
   void onError(
     TransactionError error,
-    TransactionSenderInterface transactionSender,
     TransactionSendEventType transactionSendEventType, {
     Map<String, Object>? params,
   }) {
