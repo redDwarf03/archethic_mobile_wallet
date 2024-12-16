@@ -175,18 +175,9 @@ class TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
-=======
-=======
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 mixin TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
   /// The parameter `searchCriteria` of this provider.
   String get searchCriteria;
 

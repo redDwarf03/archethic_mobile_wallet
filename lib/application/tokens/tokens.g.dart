@@ -6,18 +6,6 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-String _$tokensListHash() => r'593e48ed9063457663e2e48b344aed4ca8bc7518';
-=======
-String _$tokensFromAddressesHash() =>
-<<<<<<< HEAD
-    r'4cd16d00a6c3c466c3eefe8e60852b2791c7527b';
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
-=======
-    r'dfc16b82d33ff918a59411a80e8a0d3719259f92';
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
-=======
 String _$tokensRepositoryImplHash() =>
     r'6d0639fff11793ccb691c0bdb8aa86b99078ee47';
 
@@ -39,7 +27,6 @@ final tokensRepositoryImplProvider =
 typedef TokensRepositoryImplRef = AutoDisposeProviderRef<TokensRepositoryImpl>;
 String _$tokensFromAddressesHash() =>
     r'3eb854cf86092bf7599a28a546924b3a2eb3bf14';
->>>>>>> d48d1eb3 (chore: :recycle: Use provider to use TokensRepositoryImpl)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -362,28 +349,13 @@ class TokensFromUserBalanceProvider
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
-  /// The parameter `userGenesisAddress` of this provider.
-  String get userGenesisAddress;
-
-=======
-=======
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 mixin TokensFromUserBalanceRef
     on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
-<<<<<<< HEAD
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
-=======
   /// The parameter `withUCO` of this provider.
   bool get withUCO;
 
->>>>>>> c07b6392 (fix: :bug: Bugs fixing)
   /// The parameter `withVerified` of this provider.
   bool get withVerified;
 
@@ -417,23 +389,7 @@ class _TokensFromUserBalanceProviderElement
       (origin as TokensFromUserBalanceProvider).withCustomToken;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-String _$tokensTotalUSDHash() => r'a0f42e1ef21073d1ec7f627b48fde93b76205a7a';
-=======
-String _$tokensTotalUSDHash() => r'98ac96ba39ca5f3b227f4d114c7556532a4d24dd';
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
-=======
-String _$tokensTotalUSDHash() => r'39ec8250b31cdf374fe272bd8b3077dd8efb6476';
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
-=======
-String _$tokensTotalUSDHash() => r'f3e1d13475c67a72664e0fdb557b296f134fc9ad';
->>>>>>> d4305dd0 (fix: :bug: Bug fixing)
-=======
 String _$tokensTotalUSDHash() => r'4cd1d9dfe1e4a3c828254a2be2461ee032318cc0';
->>>>>>> 4d0cd1d9 (chore: :recycle: Use constants)
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)
@@ -447,139 +403,8 @@ final tokensTotalUSDProvider = AutoDisposeFutureProvider<double>.internal(
   allTransitiveDependencies: null,
 );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/// See also [tokensTotalUSD].
-class TokensTotalUSDFamily extends Family<AsyncValue<double>> {
-  /// See also [tokensTotalUSD].
-  const TokensTotalUSDFamily();
-
-  /// See also [tokensTotalUSD].
-  TokensTotalUSDProvider call(
-    String userGenesisAddress,
-  ) {
-    return TokensTotalUSDProvider(
-      userGenesisAddress,
-    );
-  }
-
-  @override
-  TokensTotalUSDProvider getProviderOverride(
-    covariant TokensTotalUSDProvider provider,
-  ) {
-    return call(
-      provider.userGenesisAddress,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'tokensTotalUSDProvider';
-}
-
-/// See also [tokensTotalUSD].
-class TokensTotalUSDProvider extends AutoDisposeFutureProvider<double> {
-  /// See also [tokensTotalUSD].
-  TokensTotalUSDProvider(
-    String userGenesisAddress,
-  ) : this._internal(
-          (ref) => tokensTotalUSD(
-            ref as TokensTotalUSDRef,
-            userGenesisAddress,
-          ),
-          from: tokensTotalUSDProvider,
-          name: r'tokensTotalUSDProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$tokensTotalUSDHash,
-          dependencies: TokensTotalUSDFamily._dependencies,
-          allTransitiveDependencies:
-              TokensTotalUSDFamily._allTransitiveDependencies,
-          userGenesisAddress: userGenesisAddress,
-        );
-
-  TokensTotalUSDProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.userGenesisAddress,
-  }) : super.internal();
-
-  final String userGenesisAddress;
-
-  @override
-  Override overrideWith(
-    FutureOr<double> Function(TokensTotalUSDRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: TokensTotalUSDProvider._internal(
-        (ref) => create(ref as TokensTotalUSDRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        userGenesisAddress: userGenesisAddress,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<double> createElement() {
-    return _TokensTotalUSDProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is TokensTotalUSDProvider &&
-        other.userGenesisAddress == userGenesisAddress;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, userGenesisAddress.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TokensTotalUSDRef on AutoDisposeFutureProviderRef<double> {
-  /// The parameter `userGenesisAddress` of this provider.
-  String get userGenesisAddress;
-}
-
-class _TokensTotalUSDProviderElement
-    extends AutoDisposeFutureProviderElement<double> with TokensTotalUSDRef {
-  _TokensTotalUSDProviderElement(super.provider);
-
-  @override
-  String get userGenesisAddress =>
-      (origin as TokensTotalUSDProvider).userGenesisAddress;
-}
-=======
-=======
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 typedef TokensTotalUSDRef = AutoDisposeFutureProviderRef<double>;
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
