@@ -30,6 +30,8 @@ void main() {
     late MockDefTokensRepositoryImpl mockDefTokensRepository;
     late MockApiService mockApiService;
     late aedappfm.Environment environment;
+    late List<String> verifiedTokens;
+    late List<GetPoolListResponse> poolsListRaw;
 
     setUp(() {
       Hive.init('${Directory.current.path}/test/tmp_data');
@@ -38,111 +40,12 @@ void main() {
       mockApiService = MockApiService();
       environment = aedappfm.Environment.testnet;
       tokenParser = _TokenParserImpl();
-    });
 
-    test('Convert UCO to AEToken', () async {
-      final token = archethic.Token(
-        address: 'UCO',
-        symbol: 'UCO',
-        supply: archethic.toBigInt(1000000),
-      );
-      final verifiedTokens = [
+      verifiedTokens = [
         '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
         '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
       ];
-      final poolsListRaw = <GetPoolListResponse>[
-        const GetPoolListResponse(
-          concatenatedTokensAddresses:
-              '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4/UCO',
-          address:
-              '0000818EF23676779DAE1C97072BB99A3E0DD1C31BAD3787422798DBE3F777F74A43',
-          lpTokenAddress:
-              '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF',
-        ),
-        const GetPoolListResponse(
-          concatenatedTokensAddresses:
-              'UCO/0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-          address:
-              '0000DD19DD796959B72998536F67814DCCABE156FF647E0E63E43395203908963767',
-          lpTokenAddress:
-              '0000A4CAB2362A97002EE0A6DD2013BEC3AF02C4D8C392712CFBC38F3E4809B9314C',
-        ),
-      ];
-
-      when(mockDefTokensRepository.getDefToken(environment, 'UCO'))
-          .thenAnswer((_) async {
-        return const aedappfm.AEToken(
-          address: 'UCO',
-          name: 'Universal Coin',
-          symbol: 'UCO',
-          ucid: 6887,
-          icon: 'Archethic.svg',
-        );
-      });
-
-      when(
-        mockDefTokensRepository.getDefToken(
-          environment,
-          '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-        ),
-      ).thenAnswer(
-        (_) async => const aedappfm.AEToken(
-          address:
-              '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-          name: 'Wrapped Ether',
-          symbol: 'aeETH',
-          ucid: 1027,
-          icon: 'Ethereum.svg',
-        ),
-      );
-
-      when(
-        mockDefTokensRepository.getDefToken(
-          environment,
-          '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-        ),
-      ).thenAnswer(
-        (_) async => const aedappfm.AEToken(
-          address:
-              '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-          name: 'Wrapped BNB',
-          symbol: 'aeBNB',
-          ucid: 1839,
-          icon: 'BNB.svg',
-        ),
-      );
-
-      final result = await tokenParser.tokenModelToAETokenModel(
-        token,
-        verifiedTokens,
-        poolsListRaw,
-        environment,
-        mockApiService,
-      );
-
-      expect(result.name, 'Universal Coin');
-      expect(result.address, 'UCO');
-      expect(result.symbol, 'UCO');
-      expect(result.isLpToken, false);
-      expect(result.isVerified, false);
-      expect(result.isUCO, true);
-      expect(result.ucid, 6887);
-      expect(result.lpTokenPair, isNull);
-    });
-
-    test('Convert token to AEToken', () async {
-      final token = archethic.Token(
-        address:
-            '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-        symbol: 'aeETH',
-        type: 'fungible',
-        supply: archethic.toBigInt(1000000),
-      );
-      final verifiedTokens = [
-        '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-        '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-      ];
-      final poolsListRaw = <GetPoolListResponse>[
+      poolsListRaw = <GetPoolListResponse>[
         const GetPoolListResponse(
           concatenatedTokensAddresses:
               '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4/UCO',
@@ -202,6 +105,14 @@ void main() {
           icon: 'BNB.svg',
         ),
       );
+    });
+
+    test('Convert UCO to AEToken', () async {
+      final token = archethic.Token(
+        address: 'UCO',
+        symbol: 'UCO',
+        supply: archethic.toBigInt(1000000),
+      );
 
       final result = await tokenParser.tokenModelToAETokenModel(
         token,
@@ -209,6 +120,37 @@ void main() {
         poolsListRaw,
         environment,
         mockApiService,
+        mockDefTokensRepository,
+        mockTokensRepository,
+      );
+
+      expect(result.name, 'Universal Coin');
+      expect(result.address, 'UCO');
+      expect(result.symbol, 'UCO');
+      expect(result.isLpToken, false);
+      expect(result.isVerified, false);
+      expect(result.isUCO, true);
+      expect(result.ucid, 6887);
+      expect(result.lpTokenPair, isNull);
+    });
+
+    test('Convert token to AEToken', () async {
+      final token = archethic.Token(
+        address:
+            '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
+        symbol: 'aeETH',
+        type: 'fungible',
+        supply: archethic.toBigInt(1000000),
+      );
+
+      final result = await tokenParser.tokenModelToAETokenModel(
+        token,
+        verifiedTokens,
+        poolsListRaw,
+        environment,
+        mockApiService,
+        mockDefTokensRepository,
+        mockTokensRepository,
       );
 
       expect(result.name, 'Wrapped Ether');
@@ -230,97 +172,47 @@ void main() {
             '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF',
         supply: archethic.toBigInt(500000),
       );
-      final verifiedTokens = [
-        '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-        '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-      ];
-      final poolsListRaw = <GetPoolListResponse>[
-        const GetPoolListResponse(
-          concatenatedTokensAddresses:
-              '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4/UCO',
-          address:
-              '0000818EF23676779DAE1C97072BB99A3E0DD1C31BAD3787422798DBE3F777F74A43',
-          lpTokenAddress:
-              '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF',
-        ),
-        const GetPoolListResponse(
-          concatenatedTokensAddresses:
-              'UCO/0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-          address:
-              '0000DD19DD796959B72998536F67814DCCABE156FF647E0E63E43395203908963767',
-          lpTokenAddress:
-              '0000A4CAB2362A97002EE0A6DD2013BEC3AF02C4D8C392712CFBC38F3E4809B9314C',
-        ),
-      ];
-
-      final addresses = [
-        '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-      ];
-
       when(
-        mockTokensRepository.getTokensFromAddresses(addresses, mockApiService),
+        mockTokensRepository.getTokensFromAddresses(
+          argThat(
+            equals([
+              '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
+            ]),
+          ),
+          any,
+        ),
       ).thenAnswer(
         (_) async => {
           '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4':
               const archethic.Token(symbol: 'aeETH'),
         },
       );
-      when(mockDefTokensRepository.getDefToken(environment, 'UCO')).thenAnswer(
-        (_) async => const aedappfm.AEToken(
-          address: 'UCO',
-          name: 'Universal Coin',
-          symbol: 'UCO',
-          ucid: 6887,
-          icon: 'Archethic.svg',
-        ),
-      );
-
-      when(
-        mockDefTokensRepository.getDefToken(
-          environment,
-          '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-        ),
-      ).thenAnswer(
-        (_) async => const aedappfm.AEToken(
-          address:
-              '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
-          name: 'Wrapped Ether',
-          symbol: 'aeETH',
-          ucid: 1027,
-          icon: 'Ethereum.svg',
-        ),
-      );
-
-      when(
-        mockDefTokensRepository.getDefToken(
-          environment,
-          '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-        ),
-      ).thenAnswer(
-        (_) async => const aedappfm.AEToken(
-          address:
-              '0000288BF6F0E12457B125DC54D2DFA4EB010BE3073CF02E10FB79B696180F55B827',
-          name: 'Wrapped BNB',
-          symbol: 'aeBNB',
-          ucid: 1839,
-          icon: 'BNB.svg',
-        ),
-      );
-
       final result = await tokenParser.tokenModelToAETokenModel(
         token,
         verifiedTokens,
         poolsListRaw,
         environment,
         mockApiService,
+        mockDefTokensRepository,
+        mockTokensRepository,
       );
 
-      expect(result.symbol, 'aeETH');
+      expect(result.symbol, 'LP Token');
+      expect(
+        result.address,
+        '00006394EF24DFDC6FDFC3642FDC83827591A485704BB997221C0B9F313A468BDEAF',
+      );
+      expect(result.supply, 500000);
       expect(result.isLpToken, true);
       expect(result.isVerified, false);
       expect(result.isUCO, false);
       expect(result.ucid, isNull);
       expect(result.lpTokenPair, isNotNull);
+      expect(
+        result.lpTokenPair!.token1.address,
+        '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
+      );
+      expect(result.lpTokenPair!.token2.address, 'UCO');
     });
   });
 }

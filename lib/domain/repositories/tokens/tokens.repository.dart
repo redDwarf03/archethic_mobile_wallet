@@ -1,3 +1,4 @@
+import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -14,7 +15,9 @@ abstract class TokensRepository {
     List<String> userTokenLocalAddresses,
     archethic.ApiService apiService,
     List<GetPoolListResponse> poolsListRaw,
-    aedappfm.Environment environment, {
+    aedappfm.Environment environment,
+    aedappfm.DefTokensRepositoryImpl defTokensRepositoryImpl,
+    TokensRepositoryImpl tokensRepositoryImpl, {
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,

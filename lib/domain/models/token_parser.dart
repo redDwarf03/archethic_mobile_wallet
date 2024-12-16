@@ -13,6 +13,8 @@ mixin TokenParser {
     List<GetPoolListResponse> poolsListRaw,
     aedappfm.Environment environment,
     archethic.ApiService apiService,
+    aedappfm.DefTokensRepositoryImpl defTokensRepository,
+    TokensRepositoryImpl tokensRepository,
   ) async {
     String? pairSymbolToken1;
     String? pairSymbolToken2;
@@ -42,8 +44,7 @@ mixin TokenParser {
           tokenSymbolSearch.add(token2Address);
         }
 
-        final tokensSymbolMap =
-            await TokensRepositoryImpl().getTokensFromAddresses(
+        final tokensSymbolMap = await tokensRepository.getTokensFromAddresses(
           tokenSymbolSearch,
           apiService,
         );
@@ -54,12 +55,12 @@ mixin TokenParser {
             ? tokensSymbolMap[token2Address]!.symbol
             : kUCOAddress;
 
-        final futureToken1 = aedappfm.DefTokensRepositoryImpl().getDefToken(
+        final futureToken1 = defTokensRepository.getDefToken(
           environment,
           token1Address,
         );
 
-        final futureToken2 = aedappfm.DefTokensRepositoryImpl().getDefToken(
+        final futureToken2 = defTokensRepository.getDefToken(
           environment,
           token2Address,
         );
@@ -71,8 +72,10 @@ mixin TokenParser {
       }
     }
 
-    final defToken = await aedappfm.DefTokensRepositoryImpl()
-        .getDefToken(environment, token.address!.toUpperCase());
+    final defToken = await defTokensRepository.getDefToken(
+      environment,
+      token.address!.toUpperCase(),
+    );
 
     return aedappfm.AEToken(
       name: defToken?.name ?? '',

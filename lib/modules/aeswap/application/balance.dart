@@ -73,7 +73,8 @@ Future<double> addressBalanceTotalFiat(
       data: (balance) async {
         if (balance.uco > 0) {
           final fiatValueUCO = await ref.watch(
-              DexTokensProviders.estimateTokenInFiat(kUCOAddress).future);
+            DexTokensProviders.estimateTokenInFiat(kUCOAddress).future,
+          );
           total = (Decimal.parse('${archethic.fromBigInt(balance.uco)}') *
                   Decimal.parse(fiatValueUCO.toString()))
               .toDouble();

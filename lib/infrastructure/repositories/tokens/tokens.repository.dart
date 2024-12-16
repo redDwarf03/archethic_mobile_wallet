@@ -64,7 +64,9 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     List<String> userTokenLocalAddresses,
     archethic.ApiService apiService,
     List<GetPoolListResponse> poolsListRaw,
-    aedappfm.Environment environment, {
+    aedappfm.Environment environment,
+    aedappfm.DefTokensRepositoryImpl defTokensRepositoryImpl,
+    TokensRepositoryImpl tokensRepositoryImpl, {
     bool withUCO = true,
     bool withVerified = true,
     bool withLPToken = true,
@@ -77,8 +79,8 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
       return tokensList;
     }
     if (withUCO) {
-      final defUCOToken = await aedappfm.DefTokensRepositoryImpl()
-          .getDefToken(environment, kUCOAddress);
+      final defUCOToken =
+          await defTokensRepositoryImpl.getDefToken(environment, kUCOAddress);
       tokensList.add(
         aedappfm.ucoToken.copyWith(
           name: defUCOToken?.name ?? '',
@@ -128,6 +130,8 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
             poolsListRaw,
             environment,
             apiService,
+            defTokensRepositoryImpl,
+            tokensRepositoryImpl,
           );
 
           final matchingBalances = tokenBalances.where(

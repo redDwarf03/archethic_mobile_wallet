@@ -50,6 +50,9 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
             .read(verifiedTokensRepositoryProvider)
             .getVerifiedTokens();
         final environment = ref.read(environmentProvider);
+        final tokensRepositoryImpl = ref.read(tokensRepositoryImplProvider);
+        final defTokensRepositoryImpl =
+            ref.read(aedappfm.defTokensRepositoryImplProvider);
 
         final aeToken = await tokenModelToAETokenModel(
           tokenResult[tokenAddress]!,
@@ -57,6 +60,8 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
           poolsListRaw,
           environment,
           apiService,
+          defTokensRepositoryImpl,
+          tokensRepositoryImpl,
         );
 
         setToken(aeToken);

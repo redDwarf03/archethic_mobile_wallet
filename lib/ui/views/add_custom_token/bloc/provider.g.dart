@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$addCustomTokenFormNotifierHash() =>
-    r'371269f8e2baa6caddf2e73f9b0269bbdc1199e8';
+    r'292d4b87e13f34c2c640f0dd81ad60ac7eaada44';
 
 /// See also [AddCustomTokenFormNotifier].
 @ProviderFor(AddCustomTokenFormNotifier)
