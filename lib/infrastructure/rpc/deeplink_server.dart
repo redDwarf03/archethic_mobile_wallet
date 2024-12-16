@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/decrypt_payloads/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/encrypt_payloads/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
@@ -122,6 +124,24 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
         route: const DeeplinkRpcRoute('sign_payload'),
         handle: (request) => _handle(
           RPCSignPayloadsCommandHandler(),
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('encrypt_payload'),
+        handle: (request) => _handle(
+          RPCEncryptPayloadsCommandHandler(),
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('decrypt_payload'),
+        handle: (request) => _handle(
+          RPCDecryptPayloadsCommandHandler(),
           request,
         ),
       ),

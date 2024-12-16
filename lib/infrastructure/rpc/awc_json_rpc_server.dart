@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/decrypt_payloads/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/encrypt_payloads/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
@@ -92,6 +94,14 @@ class AWCJsonRPCServer {
       ..registerMethod(
         'signPayloads',
         (params) => _handle(RPCSignPayloadsCommandHandler(), params),
+      )
+      ..registerMethod(
+        'encryptPayloads',
+        (params) => _handle(RPCEncryptPayloadsCommandHandler(), params),
+      )
+      ..registerMethod(
+        'decryptPayloads',
+        (params) => _handle(RPCDecryptPayloadsCommandHandler(), params),
       );
   }
 
