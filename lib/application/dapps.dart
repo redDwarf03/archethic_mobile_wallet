@@ -17,7 +17,6 @@ DAppsRepositoryImpl _dAppsRepository(
 @riverpod
 Future<DApp?> _getDApp(
   Ref ref,
-  AvailableNetworks network,
   String code,
 ) async {
   final apiService = ref.watch(apiServiceProvider);

@@ -789,15 +789,7 @@ class _GetRemoveAmountsProviderElement
 }
 
 String _$estimateLPTokenInFiatHash() =>
-<<<<<<< HEAD
-<<<<<<< HEAD
     r'117d1b9fae927eca34724ab59d026abeaf3a6393';
-=======
-    r'4da34defbb60f367688c57c66b713d474f680f72';
->>>>>>> 0fc830d6 (feat: :sparkles: Add Custom tokens management)
-=======
-    r'117d1b9fae927eca34724ab59d026abeaf3a6393';
->>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
 
 /// See also [_estimateLPTokenInFiat].
 @ProviderFor(_estimateLPTokenInFiat)
