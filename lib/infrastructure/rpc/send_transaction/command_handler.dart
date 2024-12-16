@@ -10,18 +10,24 @@ class RPCSendTransactionCommandHandler extends RPCCommandHandler<
 
   @override
   RPCCommand<awc.SendTransactionRequest> commandToModel(awc.Request dto) {
-    if ((dto.payload['data'] as Map<String, dynamic>)
-        .containsKey('recipients')) {
-      dto.payload['data']['actionRecipients'] =
-          dto.payload['data']['recipients'];
-      (dto.payload['data'] as Map<String, dynamic>).remove('recipients');
-    }
+    const _handledTypes = {
+      'keychain',
+      'transfer',
+      'token',
+      'contract',
+    };
+    final type = dto.payload['type'];
+
+    assert(
+      _handledTypes.contains(type),
+      'SendTransaction only supports transactions of types $_handledTypes',
+    );
 
     return RPCCommand(
       origin: dto.origin.toModel,
       data: awc.SendTransactionRequest(
         data: archethic.Data.fromJson(dto.payload['data']),
-        type: dto.payload['type'],
+        type: type,
         version: dto.version,
         generateEncryptedSeedSC: dto.payload['generateEncryptedSeedSC'],
       ),
