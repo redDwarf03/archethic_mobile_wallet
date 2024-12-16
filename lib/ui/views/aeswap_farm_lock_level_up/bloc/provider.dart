@@ -3,6 +3,7 @@ import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -26,7 +27,7 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
   Future<void> initBalances() async {
     final lpTokenBalance = await ref.read(
       getBalanceProvider(
-        state.pool!.lpToken.isUCO ? 'UCO' : state.pool!.lpToken.address,
+        state.pool!.lpToken.isUCO ? kUCOAddress : state.pool!.lpToken.address,
       ).future,
     );
     state = state.copyWith(lpTokenBalance: lpTokenBalance);

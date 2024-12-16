@@ -4,6 +4,7 @@ import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -278,7 +279,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                                           .lpTokenPair!
                                                           .token1
                                                           .isUCO
-                                                      ? 'UCO'
+                                                      ? kUCOAddress
                                                       : widget
                                                           .aeToken
                                                           .lpTokenPair!
@@ -315,7 +316,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                                           .lpTokenPair!
                                                           .token2
                                                           .isUCO
-                                                      ? 'UCO'
+                                                      ? kUCOAddress
                                                       : widget
                                                           .aeToken
                                                           .lpTokenPair!

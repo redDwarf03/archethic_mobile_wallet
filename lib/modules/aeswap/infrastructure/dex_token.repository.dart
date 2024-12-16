@@ -33,7 +33,8 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
         [address],
         request: 'name, symbol, type',
       );
-      if (tokenMap[address] != null && tokenMap[address]!.type == 'fungible') {
+      if (tokenMap[address] != null &&
+          tokenMap[address]!.type == tokenFungibleType) {
         token = tokenSDKToModel(tokenMap[address]!, 0);
         token = token.copyWith(address: address);
         await tokensListDatasource.setToken(

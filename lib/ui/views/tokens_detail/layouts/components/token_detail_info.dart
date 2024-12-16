@@ -1,5 +1,6 @@
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -84,7 +85,7 @@ class TokenDetailInfo extends ConsumerWidget {
                   padding: const EdgeInsets.only(left: 5),
                   child: VerifiedTokenIcon(
                     address: aeToken.lpTokenPair!.token1.isUCO
-                        ? 'UCO'
+                        ? kUCOAddress
                         : aeToken.lpTokenPair!.token1.address!,
                   ),
                 ),
@@ -131,7 +132,7 @@ class TokenDetailInfo extends ConsumerWidget {
                   padding: const EdgeInsets.only(left: 5),
                   child: VerifiedTokenIcon(
                     address: aeToken.lpTokenPair!.token2.isUCO
-                        ? 'UCO'
+                        ? kUCOAddress
                         : aeToken.lpTokenPair!.token2.address!,
                   ),
                 ),

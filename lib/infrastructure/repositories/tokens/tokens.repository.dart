@@ -2,6 +2,7 @@ import 'package:aewallet/domain/models/token_parser.dart';
 import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -47,7 +48,7 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     final getTokens = await Future.wait(futures);
     for (final Map<String, archethic.Token> getToken in getTokens) {
       getToken.forEach((key, value) async {
-        if (value.type == 'fungible') {
+        if (value.type == tokenFungibleType) {
           value = value.copyWith(address: key);
           await tokensListDatasource.setToken(value.toHive());
         }
@@ -77,7 +78,7 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     }
     if (withUCO) {
       final defUCOToken = await aedappfm.DefTokensRepositoryImpl()
-          .getDefToken(environment, 'UCO');
+          .getDefToken(environment, kUCOAddress);
       tokensList.add(
         aedappfm.ucoToken.copyWith(
           name: defUCOToken?.name ?? '',

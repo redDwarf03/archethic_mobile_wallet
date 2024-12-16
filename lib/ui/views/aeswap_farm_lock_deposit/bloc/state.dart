@@ -2,6 +2,7 @@
 
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -37,5 +38,5 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
   bool get isControlsOk => failure == null && amount > 0;
 
   String? get lpTokenAddress =>
-      pool?.lpToken.isUCO == true ? 'UCO' : pool?.lpToken.address;
+      pool?.lpToken.isUCO == true ? kUCOAddress : pool?.lpToken.address;
 }

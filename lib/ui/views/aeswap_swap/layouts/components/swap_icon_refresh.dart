@@ -1,3 +1,4 @@
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
@@ -53,7 +54,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
 
         if (swap.tokenToSwap != null && swap.tokenSwapped != null) {
           await swapNotifier.calculateSwapInfos(
-            swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address,
+            swap.tokenToSwap!.isUCO ? kUCOAddress : swap.tokenToSwap!.address,
             swap.tokenToSwapAmount,
             true,
           );

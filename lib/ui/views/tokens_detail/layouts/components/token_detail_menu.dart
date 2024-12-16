@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
@@ -129,7 +130,7 @@ class TokenDetailMenu extends ConsumerWidget {
                     icon: aedappfm.Iconsax.arrange_circle_2,
                     onTap: () async {
                       final params = {
-                        'from': aeToken.isUCO ? 'UCO' : aeToken.address,
+                        'from': aeToken.isUCO ? kUCOAddress : aeToken.address,
                       };
 
                       ref.read(swapParametersProvider.notifier).state = params;

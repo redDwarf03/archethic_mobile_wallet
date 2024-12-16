@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
@@ -108,7 +109,7 @@ class FarmLockClaimConfirmInfos extends ConsumerWidget {
                 future: ref.watch(
                   getBalanceProvider(
                     farmLockClaim.rewardToken!.isUCO
-                        ? 'UCO'
+                        ? kUCOAddress
                         : farmLockClaim.rewardToken!.address,
                   ).future,
                 ),

@@ -15,6 +15,7 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -753,7 +754,7 @@ class AppService {
       String? pairSymbolToken2;
       String? token1Address;
       String? token2Address;
-      if (token != null && token.type == 'fungible') {
+      if (token != null && token.type == tokenFungibleType) {
         var pairSymbolToken = '';
         token1Address = null;
         token2Address = null;
@@ -772,12 +773,12 @@ class AppService {
           final tokensSymbolMap = await getToken(
             tokenSymbolSearch,
           );
-          pairSymbolToken1 = token1Address != 'UCO'
+          pairSymbolToken1 = token1Address != kUCOAddress
               ? tokensSymbolMap[token1Address]!.symbol!
-              : 'UCO';
-          pairSymbolToken2 = token2Address != 'UCO'
+              : kUCOAddress;
+          pairSymbolToken2 = token2Address != kUCOAddress
               ? tokensSymbolMap[token2Address]!.symbol!
-              : 'UCO';
+              : kUCOAddress;
 
           pairSymbolToken = '$pairSymbolToken1/$pairSymbolToken2';
         }

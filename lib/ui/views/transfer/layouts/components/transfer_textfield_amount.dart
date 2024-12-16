@@ -244,7 +244,7 @@ class _TransferTextFieldAmountState
                   ),
                   VerifiedTokenIcon(
                     address: transfer.aeToken!.isUCO
-                        ? 'UCO'
+                        ? kUCOAddress
                         : transfer.aeToken!.address!,
                   ),
                 ],

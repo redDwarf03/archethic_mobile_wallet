@@ -42,7 +42,7 @@ final tokenSwappedBalanceProvider = AutoDisposeFutureProvider<double>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef TokenSwappedBalanceRef = AutoDisposeFutureProviderRef<double>;
-String _$swapFormNotifierHash() => r'40cbafe8ef97e62afe196e6c565baea18d19f2a9';
+String _$swapFormNotifierHash() => r'ac434094b894b4e632fa4ae94e14c96c5efa7c11';
 
 /// See also [SwapFormNotifier].
 @ProviderFor(SwapFormNotifier)
