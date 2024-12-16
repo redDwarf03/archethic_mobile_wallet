@@ -177,13 +177,13 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     );
     final balanceToken1 = await ref.read(
       getBalanceProvider(
-        state.token1!.isUCO ? 'UCO' : state.token1!.address,
+        state.token1!.isUCO ? kUCOAddress : state.token1!.address,
       ).future,
     );
     state = state.copyWith(token1Balance: balanceToken1);
     final balanceToken2 = await ref.read(
       getBalanceProvider(
-        state.token2!.isUCO ? 'UCO' : state.token2!.address,
+        state.token2!.isUCO ? kUCOAddress : state.token2!.address,
       ).future,
     );
     state = state.copyWith(

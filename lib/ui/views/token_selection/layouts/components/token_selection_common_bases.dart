@@ -115,7 +115,7 @@ class _TokenSelector extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 2),
                   child: VerifiedTokenIcon(
-                    address: token.isUCO ? 'UCO' : token.address,
+                    address: token.isUCO ? kUCOAddress : token.address,
                     iconSize: 12,
                   ),
                 ),

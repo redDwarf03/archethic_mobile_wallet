@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
@@ -210,7 +211,7 @@ class FarmLockDepositConfirmSheetState
             Text(
               AmountFormatters.standardSmallValue(
                 farmLockDeposit.feesEstimatedUCO,
-                'UCO',
+                kUCOAddress,
                 decimal: 3,
               ),
               style: AppTextStyles.bodyMedium(context),

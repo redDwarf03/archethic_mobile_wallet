@@ -107,16 +107,17 @@ class SingleTokenState extends State<SingleToken>
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: VerifiedTokenIcon(
-                address: widget.token.isUCO ? 'UCO' : widget.token.address,
+                address:
+                    widget.token.isUCO ? kUCOAddress : widget.token.address,
                 iconSize: 12,
               ),
             ),
           if (widget.token.isLpToken && widget.token.lpTokenPair != null)
             Tooltip(
               message:
-                  '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? 'UCO' : widget.token.lpTokenPair!.token1.symbol}/${widget.token.lpTokenPair!.token2.isUCO ? 'UCO' : widget.token.lpTokenPair!.token2.symbol}',
+                  '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? kUCOAddress : widget.token.lpTokenPair!.token1.symbol}/${widget.token.lpTokenPair!.token2.isUCO ? kUCOAddress : widget.token.lpTokenPair!.token2.symbol}',
               child: Text(
-                '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? 'UCO' : widget.token.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.token.lpTokenPair!.token2.isUCO ? 'UCO' : widget.token.lpTokenPair!.token2.symbol.reduceSymbol()}',
+                '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? kUCOAddress : widget.token.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.token.lpTokenPair!.token2.isUCO ? kUCOAddress : widget.token.lpTokenPair!.token2.symbol.reduceSymbol()}',
                 style: AppTextStyles.bodyLarge(context),
               ),
             ),

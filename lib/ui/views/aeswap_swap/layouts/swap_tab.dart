@@ -46,7 +46,7 @@ class SwapTabState extends ConsumerState<SwapTab> {
 
           if (params['from'] != null) {
             DexToken? _tokenToSwap;
-            if (params['from'] != 'UCO') {
+            if (params['from'] != kUCOAddress) {
               _tokenToSwap = await ref.read(
                 DexTokensProviders.getTokenFromAddress(params['from']).future,
               );
@@ -62,7 +62,7 @@ class SwapTabState extends ConsumerState<SwapTab> {
 
           if (params['to'] != null) {
             DexToken? _tokenSwapped;
-            if (params['to'] != 'UCO') {
+            if (params['to'] != kUCOAddress) {
               _tokenSwapped = await ref.read(
                 DexTokensProviders.getTokenFromAddress(params['to']).future,
               );

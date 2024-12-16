@@ -1,4 +1,5 @@
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -34,10 +35,10 @@ mixin TokenParser {
             poolRaw.concatenatedTokensAddresses.split('/')[0].toUpperCase();
         token2Address =
             poolRaw.concatenatedTokensAddresses.split('/')[1].toUpperCase();
-        if (token1Address != 'UCO') {
+        if (token1Address != kUCOAddress) {
           tokenSymbolSearch.add(token1Address);
         }
-        if (token2Address != 'UCO') {
+        if (token2Address != kUCOAddress) {
           tokenSymbolSearch.add(token2Address);
         }
 
@@ -46,12 +47,12 @@ mixin TokenParser {
           tokenSymbolSearch,
           apiService,
         );
-        pairSymbolToken1 = token1Address != 'UCO'
+        pairSymbolToken1 = token1Address != kUCOAddress
             ? tokensSymbolMap[token1Address]!.symbol
-            : 'UCO';
-        pairSymbolToken2 = token2Address != 'UCO'
+            : kUCOAddress;
+        pairSymbolToken2 = token2Address != kUCOAddress
             ? tokensSymbolMap[token2Address]!.symbol
-            : 'UCO';
+            : kUCOAddress;
 
         final futureToken1 = aedappfm.DefTokensRepositoryImpl().getDefToken(
           environment,

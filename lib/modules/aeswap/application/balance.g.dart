@@ -179,6 +179,7 @@ class _AddressBalanceProviderElement
 String _$addressBalanceTotalFiatHash() =>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     r'7a2802ee8f75deea0f6ed01238eaa91e54986faa';
 =======
     r'39f9c8fc5cd22a8b4ae2c923013783f59c219326';
@@ -186,6 +187,9 @@ String _$addressBalanceTotalFiatHash() =>
 =======
     r'7a2802ee8f75deea0f6ed01238eaa91e54986faa';
 >>>>>>> 97bbb94a (chore: :arrow_up: Upgrade riverpod)
+=======
+    r'b5193d8603fbd36ea7e7f676a624a0137ad43fde';
+>>>>>>> 4d0cd1d9 (chore: :recycle: Use constants)
 
 /// See also [addressBalanceTotalFiat].
 @ProviderFor(addressBalanceTotalFiat)

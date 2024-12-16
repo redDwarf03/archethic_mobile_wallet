@@ -176,7 +176,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
                             children: [
                               DexTokenIcon(
                                 tokenAddress: liquidityAdd.token1!.address.isUCO
-                                    ? 'UCO'
+                                    ? kUCOAddress
                                     : liquidityAdd.token1!.address,
                               ),
                               Padding(
@@ -223,7 +223,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
                             children: [
                               DexTokenIcon(
                                 tokenAddress: liquidityAdd.token2!.address.isUCO
-                                    ? 'UCO'
+                                    ? kUCOAddress
                                     : liquidityAdd.token2!.address,
                               ),
                               Padding(

@@ -28,7 +28,7 @@ class DexToken with _$DexToken {
       DexToken(
         name: 'Universal Coin',
         symbol: 'UCO',
-        address: 'UCO',
+        address: kUCOAddress,
         icon: 'Archethic.svg',
         isVerified: true,
         balance: balance ?? 0,
@@ -44,8 +44,15 @@ class DexToken with _$DexToken {
 }
 
 const kUCOAddress = 'UCO';
+const tokenFungibleType = 'fungible';
+const tokenNonFungibleType = 'non-fungible';
 
 extension DexTokenAddressExtension on String {
   bool get isUCO => this == kUCOAddress;
   bool get isNotUCO => !isUCO;
+}
+
+extension TokenExtension on String {
+  bool get isFungible => this == tokenFungibleType;
+  bool get isNonFungible => this == tokenNonFungibleType;
 }
