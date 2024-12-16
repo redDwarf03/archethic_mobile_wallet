@@ -120,15 +120,6 @@ class SendTransactionUseCase
   }) async {
     final _logger = Logger('SendTransactionUseCase');
 
-    final operationCompleter =
-        Completer<Result<TransactionConfirmation, TransactionError>>();
-
-    void _fail(TransactionError error) {
-      operationCompleter.complete(
-        Result.failure(error),
-      );
-    }
-
     final transaction = await command.toArchethicTransaction(
       wallet: wallet,
       apiService: apiService,
@@ -141,7 +132,7 @@ class SendTransactionUseCase
     }
 
     try {
-      await ArchethicTransactionSender(
+      final confirmation = await ArchethicTransactionSender(
         apiService: apiService,
       ).send(
         transaction: transaction,
@@ -152,25 +143,22 @@ class SendTransactionUseCase
               progress: confirmation.nbConfirmations,
             ),
           );
-          if (confirmation.isFullyConfirmed) {
-            _logger.info('Final confirmation received : $confirmation');
-            operationCompleter.complete(
-              Result.success(confirmation),
-            );
-            return;
-          }
 
           _logger.info('Confirmation received : $confirmation');
         },
       );
+      if (confirmation == null) {
+        return const Result.failure(TransactionError.userRejected());
+      }
+
+      _logger.info('Final confirmation received : $confirmation');
+      return Result.success(confirmation);
     } on TransactionError catch (error) {
       _logger.severe('Transaction error received', error);
-      _fail(error);
+      return Result.failure(error);
     } catch (e) {
       _logger.severe('Transaction error received', e);
-      _fail(const TransactionError.other());
+      return const Result.failure(TransactionError.other());
     }
-
-    return operationCompleter.future;
   }
 }
