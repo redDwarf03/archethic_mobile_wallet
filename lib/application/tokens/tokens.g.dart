@@ -199,7 +199,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'8541eb1a96eca49d68d5e757fb375a953c7176c7';
+    r'65295bf500c0c6e9682ed073e1e342a741289f05';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)

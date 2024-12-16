@@ -850,7 +850,9 @@ class MockTokensRepositoryImpl extends _i1.Mock
     List<String>? userTokenLocalAddresses,
     _i12.ApiService? apiService,
     List<_i24.GetPoolListResponse>? poolsListRaw,
-    _i11.Environment? environment, {
+    _i11.Environment? environment,
+    _i9.DefTokensRepositoryImpl? defTokensRepositoryImpl,
+    _i23.TokensRepositoryImpl? tokensRepositoryImpl, {
     bool? withUCO = true,
     bool? withVerified = true,
     bool? withLPToken = true,
@@ -866,6 +868,8 @@ class MockTokensRepositoryImpl extends _i1.Mock
             apiService,
             poolsListRaw,
             environment,
+            defTokensRepositoryImpl,
+            tokensRepositoryImpl,
           ],
           {
             #withUCO: withUCO,
@@ -887,6 +891,8 @@ class MockTokensRepositoryImpl extends _i1.Mock
     List<_i24.GetPoolListResponse>? poolsListRaw,
     _i11.Environment? environment,
     _i12.ApiService? apiService,
+    _i9.DefTokensRepositoryImpl? defTokensRepository,
+    _i23.TokensRepositoryImpl? tokensRepository,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -897,6 +903,8 @@ class MockTokensRepositoryImpl extends _i1.Mock
             poolsListRaw,
             environment,
             apiService,
+            defTokensRepository,
+            tokensRepository,
           ],
         ),
         returnValue: _i10.Future<_i8.AEToken>.value(_FakeAEToken_7(
@@ -909,6 +917,8 @@ class MockTokensRepositoryImpl extends _i1.Mock
               poolsListRaw,
               environment,
               apiService,
+              defTokensRepository,
+              tokensRepository,
             ],
           ),
         )),
@@ -923,6 +933,8 @@ class MockTokensRepositoryImpl extends _i1.Mock
               poolsListRaw,
               environment,
               apiService,
+              defTokensRepository,
+              tokensRepository,
             ],
           ),
         )),
