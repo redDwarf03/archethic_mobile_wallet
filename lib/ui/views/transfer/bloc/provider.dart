@@ -9,7 +9,6 @@ import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -815,7 +814,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     try {
       final confirmation = await transferRepository.send(
         transaction: transaction,
-        targetRatio: TransactionValidationRatios.transfer,
       );
       if (confirmation == null) return;
       EventTaxiImpl.singleton().fire(

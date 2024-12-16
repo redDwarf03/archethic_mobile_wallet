@@ -5,7 +5,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
@@ -53,12 +52,6 @@ class KeychainUtil with KeychainServiceMixin {
         apiService: apiService,
       ).send(
         transaction: accessKeychainTx,
-        isEnoughConfirmations: (event) =>
-            TransactionConfirmation.isEnoughConfirmations(
-          event.nbConfirmations,
-          event.maxConfirmations,
-          TransactionValidationRatios.createKeychainAccess,
-        ),
       );
 
       if (confirmation == null) return;
@@ -124,12 +117,6 @@ class KeychainUtil with KeychainServiceMixin {
         apiService: apiService,
       ).send(
         transaction: keychainTransaction,
-        isEnoughConfirmations: (event) =>
-            TransactionConfirmation.isEnoughConfirmations(
-          event.nbConfirmations,
-          event.maxConfirmations,
-          TransactionValidationRatios.createKeychain,
-        ),
       );
 
       if (confirmation == null) return;
@@ -171,12 +158,6 @@ class KeychainUtil with KeychainServiceMixin {
         apiService: apiService,
       ).send(
         transaction: transaction,
-        isEnoughConfirmations: (event) =>
-            TransactionConfirmation.isEnoughConfirmations(
-          event.nbConfirmations,
-          event.maxConfirmations,
-          TransactionValidationRatios.createKeychain,
-        ),
       );
 
       if (confirmation == null) return;
