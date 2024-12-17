@@ -269,7 +269,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
 
   @override
   _i10.Future<Map<String, String>> getTransactionContent(
-          Map<String, String>? addresses) =>
+          List<String>? addresses) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionContent,
