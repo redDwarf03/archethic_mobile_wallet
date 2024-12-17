@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_user_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
