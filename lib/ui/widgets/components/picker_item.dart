@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,6 @@ class PickerItem<T> {
   String? subLabel;
 }
 
-// TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
 class PickerWidget<T> extends ConsumerStatefulWidget {
   PickerWidget({
     super.key,
@@ -57,10 +57,10 @@ class PickerWidget<T> extends ConsumerStatefulWidget {
   final bool scrollable;
 
   @override
-  ConsumerState<PickerWidget> createState() => _PickerWidgetState();
+  ConsumerState<PickerWidget<T>> createState() => _PickerWidgetState();
 }
 
-class _PickerWidgetState extends ConsumerState<PickerWidget> {
+class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
   late List<int> selectedIndexes;
 
   @override
@@ -84,19 +84,21 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
           if (widget.pickerItems[index].displayed) {
             return InkWell(
               onTap: () async {
-                if (widget.pickerItems[index].enabled) {
-                  if (widget.multipleSelectionsAllowed == false) {
-                    selectedIndexes.clear();
-                  }
-                  // If the user taps again on a previous selection, we will unselect it to him
-                  if (selectedIndexes.contains(index)) {
+                if (!widget.pickerItems[index].enabled) return;
+                if (widget.multipleSelectionsAllowed == false) {
+                  selectedIndexes.clear();
+                }
+                // If the user taps again on a previous selection, we will unselect it to him
+                if (selectedIndexes.contains(index)) {
+                  setState(() {
                     selectedIndexes.remove(index);
-                    widget.onUnselected?.call(widget.pickerItems[index]);
-                  } else {
+                  });
+                  widget.onUnselected?.call(widget.pickerItems[index]);
+                } else {
+                  setState(() {
                     selectedIndexes.add(index);
-                    widget.onSelected?.call(widget.pickerItems[index]);
-                  }
-                  setState(() {});
+                  });
+                  widget.onSelected?.call(widget.pickerItems[index]);
                 }
               },
               key: pickerItem.key,

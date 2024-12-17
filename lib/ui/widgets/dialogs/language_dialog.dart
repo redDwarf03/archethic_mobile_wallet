@@ -16,36 +16,34 @@ class LanguageDialog {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (final value in AvailableLanguage.values) {
-      if (value == AvailableLanguage.systemDefault) continue;
-      pickerItemsList.add(
-        PickerItem(
-          LanguageSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true,
-        ),
-      );
-    }
+    final pickerItemsList = AvailableLanguage.values
+        .map(
+          (value) => PickerItem(
+            LanguageSetting(value).getDisplayName(context),
+            null,
+            null,
+            null,
+            value,
+            true,
+          ),
+        )
+        .toList();
 
     return showDialog<AvailableLanguage>(
       barrierDismissible: false,
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
-        final selectedLanguage = ref.read(LanguageProviders.selectedLanguage);
+        final selectedLanguage = ref.watch(LanguageProviders.selectedLanguage);
         return aedappfm.PopupTemplate(
           popupContent: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndexes: [selectedLanguage.index - 1],
-              onSelected: (value) {
-                ref
+              selectedIndexes: [selectedLanguage.index],
+              onSelected: (value) async {
+                await ref
                     .read(SettingsProviders.settings.notifier)
-                    .selectLanguage(value.value as AvailableLanguage);
+                    .selectLanguage(value.value);
                 context.pop(value.value);
               },
             ),
