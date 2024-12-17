@@ -21,86 +21,78 @@ part 'providers.g.dart';
 ///
 /// Add Watch here for any provider you want to init when app is displayed.
 /// Those providers will be kept alive during application lifetime.
+
 @riverpod
-Future<void> homePage(Ref ref) async {
-  ref
-    ..onCancel(() {
-      ref
-          .read(
-            aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-          )
-          .stopSubscription();
-      ref
-          .read(
-            aedappfm.CoinPriceProviders.coinPrices.notifier,
-          )
-          .stopTimer();
-    })
-    ..watch(DexPoolProviders.getPoolList)
-    ..watch(DexPoolProviders.getPoolListRaw)
-    ..watch(DexTokensProviders.tokensCommonBases)
-    ..watch(verifiedTokensProvider)
-    ..watch(DexTokensProviders.tokensFromAccount)
-    ..watch(farmLockFormFarmLockProvider)
-    ..watch(
-      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-    )
-    ..watch(aedappfm.CoinPriceProviders.coinPrices)
-    ..listen(
-      connectivityStatusProviders,
-      (previous, next) async {
-        if (previous != next && next == ConnectivityStatus.isConnected) {
-          ref
-            ..invalidate(environmentProvider)
-            ..invalidate(ContactProviders.fetchContacts)
-            ..invalidate(MarketPriceProviders.currencyMarketPrice);
+class HomePage extends _$HomePage {
+  @override
+  Future<void> build() async {
+    ref
+      ..watch(DexPoolProviders.getPoolList)
+      ..watch(DexPoolProviders.getPoolListRaw)
+      ..watch(DexTokensProviders.tokensCommonBases)
+      ..watch(verifiedTokensProvider)
+      ..watch(DexTokensProviders.tokensFromAccount)
+      ..watch(farmLockFormFarmLockProvider)
+      ..watch(
+        aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
+      )
+      ..watch(aedappfm.CoinPriceProviders.coinPrices)
+      ..listen(
+        connectivityStatusProviders,
+        (previous, next) async {
+          if (previous != next && next == ConnectivityStatus.isConnected) {
+            ref
+              ..invalidate(environmentProvider)
+              ..invalidate(ContactProviders.fetchContacts)
+              ..invalidate(MarketPriceProviders.currencyMarketPrice);
 
-          final poolListRaw =
-              await ref.read(DexPoolProviders.getPoolListRaw.future);
+            final poolListRaw =
+                await ref.read(DexPoolProviders.getPoolListRaw.future);
 
-          await (await ref
-                  .read(AccountProviders.accounts.notifier)
-                  .selectedAccountNotifier)
-              ?.refreshRecentTransactions(poolListRaw);
-        }
-        if (next == ConnectivityStatus.isDisconnected) {
-          /// When network becomes offline, start the subscriptions again
+            await (await ref
+                    .read(AccountProviders.accounts.notifier)
+                    .selectedAccountNotifier)
+                ?.refreshRecentTransactions(poolListRaw);
+          }
+          if (next == ConnectivityStatus.isDisconnected) {
+            /// When network becomes offline, stops subscriptions.
+            await stopSubscriptions();
+            return;
+          }
 
-          // TODO(Chralu): Uncomment when https://github.com/archethic-foundation/libdart/issues/155 is fixed
-          // ref
-          //     .read(
-          //       aedappfm
-          //           .ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-          //     )
-          //     .stopSubscription();
+          /// When network becomes online, start the subscriptions again
+          await startSubscriptions();
+        },
+      );
+  }
 
-          await ref
-              .read(
-                aedappfm.CoinPriceProviders.coinPrices.notifier,
-              )
-              .stopTimer();
+  Future<void> startSubscriptions() async {
+    await ref
+        .read(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+        )
+        .startSubscription();
 
-          return;
-        }
+    await ref
+        .read(
+          aedappfm.CoinPriceProviders.coinPrices.notifier,
+        )
+        .startTimer();
+  }
 
-        /// When network becomes online, start the subscriptions again
-        await ref
-            .read(
-              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-            )
-            .startSubscription();
+  Future<void> stopSubscriptions() async {
+    await ref
+        .read(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+        )
+        .stopSubscription();
 
-        ref.invalidate(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
-
-        await ref
-            .read(
-              aedappfm.CoinPriceProviders.coinPrices.notifier,
-            )
-            .startTimer();
-
-        ref.invalidate(aedappfm.CoinPriceProviders.coinPrices);
-      },
-    );
+    await ref
+        .read(
+          aedappfm.CoinPriceProviders.coinPrices.notifier,
+        )
+        .stopTimer();
+  }
 }
 
 final mainTabControllerProvider =

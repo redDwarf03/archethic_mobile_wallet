@@ -12,6 +12,7 @@ import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
+import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
@@ -56,18 +57,14 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    /// Eagerly initializes providers (https://riverpod.dev/docs/essentials/eager_initialization).
-    ///
-    /// Add Watch here for any provider you want to init when app is displayed.
-    /// Those providers will be kept alive during application lifetime.
-    ref.watch(homePageProvider);
-
-    return SheetSkeleton(
-      appBar: getAppBar(context, ref),
-      bottomNavigationBar: getFloatingActionButton(context, ref),
-      sheetContent: getSheetContent(context, ref),
-      menu: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    return HomeProvidersKeepalive(
+      child: SheetSkeleton(
+        appBar: getAppBar(context, ref),
+        bottomNavigationBar: getFloatingActionButton(context, ref),
+        sheetContent: getSheetContent(context, ref),
+        menu: true,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
 

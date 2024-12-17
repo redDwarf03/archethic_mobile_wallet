@@ -171,17 +171,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.paused:
         isDeviceSecured = await SecurityManager().isDeviceSecured();
-
-        await ref
-            .read(
-              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-            )
-            .stopSubscription();
-        await ref
-            .read(
-              aedappfm.CoinPriceProviders.coinPrices.notifier,
-            )
-            .stopTimer();
         break;
       case AppLifecycleState.resumed:
         updateDefaultLocale();
@@ -192,17 +181,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             rootNavigatorKey.currentState!.overlay!.context,
           );
         }
-
-        await ref
-            .read(
-              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-            )
-            .startSubscription();
-        await ref
-            .read(
-              aedappfm.CoinPriceProviders.coinPrices.notifier,
-            )
-            .startTimer();
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
