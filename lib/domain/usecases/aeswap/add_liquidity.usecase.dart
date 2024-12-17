@@ -101,7 +101,6 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       if (confirmation == null) return;
       liquidityAddNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setLiquidityAddOk(true);
 
       notificationService.start(

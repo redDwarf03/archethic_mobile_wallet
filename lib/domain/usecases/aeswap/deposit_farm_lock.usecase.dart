@@ -102,7 +102,6 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
       if (confirmation == null) return;
       farmLockDepositNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setFarmLockDepositOk(true);
 
       notificationService.start(
