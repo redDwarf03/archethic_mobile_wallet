@@ -34,7 +34,9 @@ List<Locale> _availableLocales(Ref ref) {
 }
 
 final _defaultLocaleProvider = StateProvider<Locale>(
-  (ref) => const Locale('en', 'US'),
+  (ref) {
+    return WidgetsBinding.instance.platformDispatcher.locale;
+  },
 );
 
 abstract class LanguageProviders {

@@ -103,7 +103,7 @@ class PreferencesHiveDatasource {
   LanguageSetting getLanguage() => LanguageSetting(
         AvailableLanguage.values[_getValue(
           curLanguage,
-          defaultValue: AvailableLanguage.english.index,
+          defaultValue: AvailableLanguage.systemDefault.index,
         )],
       );
 

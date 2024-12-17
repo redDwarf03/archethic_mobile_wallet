@@ -13,7 +13,7 @@ extension AvailableLanguageExt on AvailableLanguage {
       case AvailableLanguage.french:
         return const Locale('fr', 'FR');
       case AvailableLanguage.systemDefault:
-        return const Locale('en', 'US');
+        return WidgetsBinding.instance.platformDispatcher.locale;
     }
   }
 
@@ -24,7 +24,7 @@ extension AvailableLanguageExt on AvailableLanguage {
       case AvailableLanguage.french:
         return 'fr';
       case AvailableLanguage.systemDefault:
-        return 'en';
+        return WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     }
   }
 
@@ -35,7 +35,7 @@ extension AvailableLanguageExt on AvailableLanguage {
       case AvailableLanguage.french:
         return 'fr';
       case AvailableLanguage.systemDefault:
-        return 'en';
+        return WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     }
   }
 }
