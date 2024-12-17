@@ -3,17 +3,14 @@ import 'dart:ui';
 import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_webview.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
   const DAppsBoardSheet({super.key});
@@ -99,7 +96,7 @@ class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              dApp.code,
+                              dApp.name!,
                               style: AppTextStyles.bodyLarge(context),
                             ),
                             Text(
@@ -115,20 +112,12 @@ class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
                           ],
                         ),
                         onTap: () async {
-                          await CupertinoScaffold.showCupertinoModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return FractionallySizedBox(
-                                heightFactor: 1,
-                                child: Scaffold(
-                                  backgroundColor: aedappfm
-                                      .AppThemeBase.sheetBackground
-                                      .withOpacity(0.2),
-                                  body: DAppSheet(
-                                    dappKey: dApp.code,
-                                  ),
-                                ),
-                              );
+                          await context.push(
+                            DAppsBoardWebview.routerPage,
+                            extra: {
+                              'dappUrl': dApp.url,
+                              'dappName': dApp.name,
+                              'dappCode': dApp.code,
                             },
                           );
                         },
