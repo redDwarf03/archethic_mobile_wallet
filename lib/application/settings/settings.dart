@@ -28,7 +28,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> reset() => _update(
         state.copyWith(
           activeRPCServer: true,
-          language: AvailableLanguage.english,
+          language: AvailableLanguage.systemDefault,
           mainScreenCurrentPage: 0,
           primaryCurrency: const AvailablePrimaryCurrency(
             AvailablePrimaryCurrencyEnum.native,

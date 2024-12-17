@@ -173,7 +173,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         isDeviceSecured = await SecurityManager().isDeviceSecured();
         break;
       case AppLifecycleState.resumed:
-        updateDefaultLocale();
         // Value changed since last time we came in pause state
         if (isDeviceSecured != await SecurityManager().isDeviceSecured()) {
           await SecurityManager().checkDeviceSecurity(
@@ -188,14 +187,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         break;
     }
     super.didChangeAppLifecycleState(state);
-  }
-
-  void updateDefaultLocale() {
-    ref.read(LanguageProviders.defaultLocale.notifier).update(
-          (state) => Localizations.localeOf(
-            rootNavigatorKey.currentState!.overlay!.context,
-          ),
-        );
   }
 
   // This widget is the root of the application.
