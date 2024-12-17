@@ -322,4 +322,22 @@ final _authenticatedRoutes = [
       ),
     ),
   ),
+  GoRoute(
+    path: DAppsBoardWebview.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: DAppsBoardWebview(
+        dappUrl: (state.extra! as Map<String, dynamic>)['dappUrl']! as String,
+        dappName: (state.extra! as Map<String, dynamic>)['dappName']! as String,
+        dappCode: (state.extra! as Map<String, dynamic>)['dappCode']! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
 ];
