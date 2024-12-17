@@ -434,7 +434,7 @@
     "bottomMainMenuSwap": "Swap",
     "bottomMainMenuEarn": "Earn",
     "bottomMainMenuBridge": "Bridge",
-    "tokenDetailMenuEarn": "Earn %1",
+    "tokenDetailMenuEarn": "Earn",
     "localDataMigrationMessage": "Update your current application.\nPlease wait...",
     "nftNotOwnerInfo": "You are not the owner of this NFT",
     "accountsListWarningRemoveAccount": "Click on the trash icon to remove the account from your keychain",
