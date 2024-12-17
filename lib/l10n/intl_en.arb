@@ -59,6 +59,7 @@
     "pinMethod": "PIN",
     "biometricsMethod": "Biometrics",
     "language": "Language",
+    "languageDefaultSettings": "System language",
     "removeWallet": "Remove Wallet from this device",
     "removeWalletDescription": "You can find it at any time with your secret phrase",
     "resyncWallet": "Resynchronize Wallet",

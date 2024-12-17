@@ -59,6 +59,7 @@
     "pinMethod": "PIN",
     "biometricsMethod": "Biométrie",
     "language": "Langue",
+    "languageDefaultSettings": "Langue du système",
     "removeWallet": "Supprimer le wallet de cet appareil",
     "resyncWallet": "Resynchroniser le wallet",
     "resyncWalletAreYouSure": "Êtes-vous sûr(e) de vouloir vider votre cache et recharger les informations à partir de la blockchain ?\n\nCette action requiert quelques secondes et est sans risque car elle recharge uniquement vos transactions récentes.",
