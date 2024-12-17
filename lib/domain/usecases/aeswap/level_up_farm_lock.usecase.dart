@@ -105,7 +105,6 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
       if (confirmation == null) return;
       farmLevelUpNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setFarmLockLevelUpOk(true);
 
       notificationService.start(

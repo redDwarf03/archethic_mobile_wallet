@@ -104,7 +104,6 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
 
       farmLockWithdrawNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setFarmLockWithdrawOk(true);
 
       notificationService.start(

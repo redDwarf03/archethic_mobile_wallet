@@ -103,7 +103,6 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
 
       liquidityRemoveNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setLiquidityRemoveOk(true);
 
       notificationService.start(

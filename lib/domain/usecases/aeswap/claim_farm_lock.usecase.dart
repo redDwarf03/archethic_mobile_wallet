@@ -98,7 +98,6 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
       if (confirmation == null) return;
       farmClaimLockNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setFarmLockClaimOk(true);
 
       notificationService.start(

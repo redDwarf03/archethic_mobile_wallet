@@ -133,7 +133,6 @@ class SwapCase with aedappfm.TransactionMixin {
 
       swapNotifier
         ..setResumeProcess(false)
-        ..setProcessInProgress(false)
         ..setSwapOk(true);
 
       notificationService.start(
