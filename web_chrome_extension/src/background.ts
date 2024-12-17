@@ -3,6 +3,13 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
         ensureExtensionPopupOpened().then(() => { sendResponse() })
         return true
     }
+    if (message.type === "updateIcon" && typeof message.isLocked === "boolean") {
+        const isLocked = message.isLocked;
+        updateExtensionIcon(isLocked).then(() => {
+            sendResponse({ success: true });
+        });
+        return true;
+    }
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -95,4 +102,21 @@ async function ensureExtensionPopupOpened() {
         return
     }
     await openExtensionPopup()
+}
+async function updateExtensionIcon(isLocked: boolean): Promise<void> {
+    const iconPath = isLocked
+        ? {
+            "16": "icons/icon_16_locked.png",
+            "32": "icons/icon_32_locked.png",
+            "48": "icons/icon_48_locked.png",
+            "128": "icons/icon_128_locked.png"
+        }
+        : {
+            "16": "icons/icon_16.png",
+            "32": "icons/icon_32.png",
+            "48": "icons/icon_48.png",
+            "128": "icons/icon_128.png"
+        };
+
+    await chrome.action.setIcon({ path: iconPath });
 }
