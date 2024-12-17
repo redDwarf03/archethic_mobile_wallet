@@ -90,8 +90,6 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     Future.delayed(Duration.zero, () async {
       var dappKey = widget.dappKey;
 
-      if (!DAppSheet.isAvailable) dappKey = '${dappKey}Ext';
-
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
       );
@@ -103,7 +101,9 @@ class DAppSheetState extends ConsumerState<DAppSheet>
           featureCode,
         ).future,
       );
-      if (bridgeFlag == null || bridgeFlag == false) dappKey = '${dappKey}Ext';
+      if (bridgeFlag == null || bridgeFlag == false || !DAppSheet.isAvailable) {
+        dappKey = '${dappKey}Ext';
+      }
 
       final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
       DApp? dapp;
@@ -111,7 +111,6 @@ class DAppSheetState extends ConsumerState<DAppSheet>
         dapp = await ref.read(
           DAppsProviders.getDApp(dappKey).future,
         );
-
         setState(() {
           featureFlags = bridgeFlag;
           aeBridgeUrl = dapp!.url;
