@@ -476,7 +476,7 @@ class _GetTokenIconProviderElement
 }
 
 String _$estimateTokenInFiatHash() =>
-    r'5db90f36ed2ee0e92c7ad158166d169c2cbe7c8b';
+    r'2f22e5eecfbf9315132fcec98e6812153f0ae01e';
 
 /// See also [_estimateTokenInFiat].
 @ProviderFor(_estimateTokenInFiat)

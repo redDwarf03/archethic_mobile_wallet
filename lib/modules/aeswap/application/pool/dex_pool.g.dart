@@ -899,7 +899,7 @@ class _GetPoolListForSearchProviderElement
       (origin as _GetPoolListForSearchProvider).poolList;
 }
 
-String _$getPoolTxListHash() => r'7ea87f8baff442f09d90df6ecf6bd47be33bc4d5';
+String _$getPoolTxListHash() => r'86be07f288bf7a7ad8c651feda039965ed38c02b';
 
 /// See also [_getPoolTxList].
 @ProviderFor(_getPoolTxList)

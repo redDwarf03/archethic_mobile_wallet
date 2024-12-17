@@ -197,7 +197,7 @@ class _CurrencyMarketPriceProviderElement
 }
 
 String _$selectedCurrencyMarketPriceHash() =>
-    r'69f0af143b31a1721384a52e02f83754d998c655';
+    r'0cf631f6520aad26b955dad70be91fd811a7da87';
 
 /// See also [_selectedCurrencyMarketPrice].
 @ProviderFor(_selectedCurrencyMarketPrice)
