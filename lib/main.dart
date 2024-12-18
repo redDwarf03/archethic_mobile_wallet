@@ -48,6 +48,8 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
+const kApplicationCode = 'aeWallet';
+
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   aedappfm.LoggerOutput.setup();

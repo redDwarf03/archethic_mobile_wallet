@@ -3,8 +3,8 @@ import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
+import 'package:aewallet/main.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/sheets/bridge_sheet_feature_flag_false.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
@@ -16,68 +16,37 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DAppSheetIconRefresh extends ConsumerWidget {
-  factory DAppSheetIconRefresh({
-    required String dappKey,
-    String? featureCode,
-  }) =>
-      DAppSheetIconRefresh._(
-        dappKey: dappKey,
-        featureCode: featureCode,
-        key: Key(dappKey),
-      );
-  const DAppSheetIconRefresh._({
-    required this.dappKey,
-    this.featureCode,
-    super.key,
-  });
-
-  final String dappKey;
-  final String? featureCode;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      icon: const Icon(
-        aedappfm.Iconsax.refresh,
-        size: 16,
-        color: Colors.white,
-      ),
-      onPressed: () async {
-        final dapp = await ref.read(
-          getDAppProvider(dappKey).future,
-        );
-        if (dapp == null) return;
-        final webviewController =
-            AWCWebviewControllers.find(Uri.parse(dapp.url));
-        if (webviewController == null) return;
-
-        if (await webviewController.isLoading()) return;
-        await webviewController.reload();
-      },
-    );
-  }
-}
-
 class DAppSheet extends ConsumerStatefulWidget {
   factory DAppSheet({
     required String dappKey,
     String? featureCode,
+    String? launchMessage,
+    String? launchButtonLabel,
+    Widget? featureFlagFalseWidget,
   }) =>
       DAppSheet._(
         dappKey: dappKey,
         featureCode: featureCode,
+        launchMessage: launchMessage,
+        launchButtonLabel: launchButtonLabel,
+        featureFlagFalseWidget: featureFlagFalseWidget,
         key: Key(dappKey),
       );
 
   const DAppSheet._({
     required this.dappKey,
     this.featureCode,
+    this.launchMessage,
+    this.launchButtonLabel,
+    this.featureFlagFalseWidget,
     super.key,
   });
 
   final String dappKey;
   final String? featureCode;
+  final String? launchMessage;
+  final String? launchButtonLabel;
+  final Widget? featureFlagFalseWidget;
 
   static bool get isAvailable => AWCWebview.isAvailable;
 
@@ -89,7 +58,6 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     with AutomaticKeepAliveClientMixin {
   String? dappUrl;
   bool? featureFlags;
-  static const applicationCode = 'aeWallet';
 
   @override
   bool get wantKeepAlive => true;
@@ -102,7 +70,7 @@ class DAppSheetState extends ConsumerState<DAppSheet>
       if (widget.featureCode != null) {
         final _featureFlag = await ref.watch(
           getFeatureFlagProvider(
-            applicationCode,
+            kApplicationCode,
             widget.featureCode!,
           ).future,
         );
@@ -135,10 +103,10 @@ class DAppSheetState extends ConsumerState<DAppSheet>
     super.build(context);
     final localizations = AppLocalizations.of(context)!;
 
-    if (widget.featureCode == 'bridge' &&
+    if (widget.featureFlagFalseWidget != null &&
         featureFlags != null &&
         featureFlags == false) {
-      return const BridgeSheetFeatureFlagFalse();
+      return widget.featureFlagFalseWidget ?? const SizedBox.shrink();
     }
 
     if (UniversalPlatform.isDesktopOrWeb) {
@@ -164,10 +132,8 @@ class DAppSheetState extends ConsumerState<DAppSheet>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.featureCode == 'bridge'
-                                      ? AppLocalizations.of(context)!
-                                          .aeBridgeLaunchMessage
-                                      : AppLocalizations.of(context)!
+                                  widget.launchMessage ??
+                                      AppLocalizations.of(context)!
                                           .dAppLaunchMessage,
                                 ),
                               ],
@@ -190,9 +156,8 @@ class DAppSheetState extends ConsumerState<DAppSheet>
               child: Row(
                 children: [
                   AppButtonTinyConnectivity(
-                    widget.featureCode == 'bridge'
-                        ? AppLocalizations.of(context)!.aeBridgeLaunchButton
-                        : AppLocalizations.of(context)!.dAppLaunchButton,
+                    widget.launchButtonLabel ??
+                        AppLocalizations.of(context)!.dAppLaunchButton,
                     Dimens.buttonBottomDimens,
                     key: const Key('LaunchApplication'),
                     onPressed: () async {

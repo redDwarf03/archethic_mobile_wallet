@@ -1,7 +1,7 @@
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
+import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
