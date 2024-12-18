@@ -51,7 +51,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   CancelableTask<double?>? _calculateFeesTask;
 
   final _contactsHiveDatasource = ContactsHiveDatasource.instance();
-
   Future<void> _updateFees(
     BuildContext context, {
     Duration delay = const Duration(milliseconds: 800),
@@ -60,136 +59,84 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       feeEstimation: const AsyncValue.loading(),
     );
 
-    // TODO(reddwarf03): Factorize fees calculation (3)
-    late final double fees;
+    try {
+      final fees = await _calculateFeesForTransfer(context, delay);
+
+      state = state.copyWith(
+        feeEstimation: AsyncValue.data(fees),
+        errorAmountText: _getErrorAmountText(context, fees),
+      );
+    } on CanceledTask {
+      return;
+    }
+  }
+
+  Future<double> _calculateFeesForTransfer(
+    BuildContext context,
+    Duration delay,
+  ) async {
+    var amount = state.amount;
+
+    if (state.transferType == TransferType.uco) {
+      final primaryCurrency =
+          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+      if (primaryCurrency.primaryCurrency ==
+          AvailablePrimaryCurrencyEnum.fiat) {
+        amount = state.amountConverted;
+      }
+    }
+
+    if (amount <= 0 || !state.recipient.isAddressValid) {
+      return 0;
+    }
+
+    _calculateFeesTask?.cancel();
+    _calculateFeesTask = CancelableTask<double?>(
+      task: () => _calculateFees(
+        context: context,
+        formState: state.copyWith(amount: amount),
+      ),
+    );
+
+    final fees = await _calculateFeesTask?.schedule(delay);
+    return fees ?? 0;
+  }
+
+  String _getErrorAmountText(BuildContext context, double fees) {
     switch (state.transferType) {
       case TransferType.uco:
-        var amountInUCO = state.amount;
-        final primaryCurrency =
-            ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-        if (primaryCurrency.primaryCurrency ==
-            AvailablePrimaryCurrencyEnum.fiat) {
-          amountInUCO = state.amountConverted;
-        }
-
-        try {
-          fees = await Future<double>(
-            () async {
-              if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
-                return 0;
-              }
-
-              _calculateFeesTask?.cancel();
-              _calculateFeesTask = CancelableTask<double?>(
-                task: () => _calculateFees(
-                  context: context,
-                  formState: state.copyWith(
-                    amount: amountInUCO,
-                  ),
-                ),
-              );
-              final fees = await _calculateFeesTask?.schedule(delay);
-
-              return fees ?? 0;
-            },
-          );
-        } on CanceledTask {
-          return;
-        }
-
-        state = state.copyWith(
-          feeEstimation: AsyncValue.data(fees),
-          errorAmountText: amountInUCO >
-                  state.accountBalance.nativeTokenValue - fees
-              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  )
-              : '',
-        );
-        break;
+        return state.amountConverted >
+                state.accountBalance.nativeTokenValue - fees
+            ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                  '%1',
+                  state.symbol(context),
+                )
+            : '';
       case TransferType.token:
-        try {
-          fees = await Future<double>(
-            () async {
-              if (state.amount <= 0 || !state.recipient.isAddressValid) {
-                return 0;
-              }
-
-              _calculateFeesTask?.cancel();
-              _calculateFeesTask = CancelableTask<double?>(
-                task: () => _calculateFees(
-                  context: context,
-                  formState: state,
-                ),
+        if (state.amount > state.aeToken!.balance) {
+          return AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                '%1',
+                state.symbol(context),
               );
-              final fees = await _calculateFeesTask?.schedule(delay);
-
-              return fees ?? 0;
-            },
-          );
-        } on CanceledTask {
-          return;
+        } else if (fees > state.accountBalance.nativeTokenValue) {
+          return AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                '%1',
+                state.symbolFees(context),
+              );
         }
-
-        state = state.copyWith(
-          feeEstimation: AsyncValue.data(fees),
-          errorAmountText: state.amount > state.aeToken!.balance
-              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  )
-              : fees > state.accountBalance.nativeTokenValue
-                  ? AppLocalizations.of(context)!
-                      .insufficientBalance
-                      .replaceAll(
-                        '%1',
-                        state.symbolFees(context),
-                      )
-                  : '',
-        );
         break;
-
       case TransferType.nft:
-        try {
-          fees = await Future<double>(
-            () async {
-              if (!state.recipient.isAddressValid) {
-                return 0;
-              }
-
-              _calculateFeesTask?.cancel();
-              _calculateFeesTask = CancelableTask<double?>(
-                task: () => _calculateFees(
-                  context: context,
-                  formState: state,
-                ),
+        if (fees > state.accountBalance.nativeTokenValue) {
+          return AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                '%1',
+                state.symbolFees(context),
               );
-              final fees = await _calculateFeesTask?.schedule(delay);
-
-              return fees ?? 0;
-            },
-          );
-        } on CanceledTask {
-          return;
         }
-
-        state = state.copyWith(
-          feeEstimation: AsyncValue.data(fees),
-          errorAmountText: fees > state.accountBalance.nativeTokenValue
-              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbolFees(context),
-                  )
-              : '',
-        );
         break;
       case null:
-        state = state.copyWith(
-          feeEstimation: const AsyncValue.data(0),
-        );
-        break;
+        return '';
     }
+    return '';
   }
 
   @override

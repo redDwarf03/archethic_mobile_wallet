@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -9,6 +8,8 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
+import 'package:aewallet/util/biometrics_util.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/foundation.dart';
@@ -23,10 +24,7 @@ extension AuthMethodAvailability on AuthMethod {
     if (kIsWeb && this != AuthMethod.password) {
       return false;
     }
-
-    final hasBiometrics = await ref.read(
-      DeviceAbilities.hasBiometricsProvider.future,
-    );
+    final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
     if (this == AuthMethod.biometrics && !hasBiometrics) {
       return false;
     }

@@ -262,6 +262,8 @@
     "signXTransactionsCommandReceivedNotification": "L'application %1 vous demande de signer %2 transactions.\nSouhaitez-vous confirmer cette action avec le compte %3 ?\n\nUne fois signées, les frais de traitement des transactions sont estimés à",
     "sign1PayloadCommandReceivedNotification": "L'application %1 vous demande de signer 1 donnée.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nCette action ne requiert aucun frais.",
     "signXPayloadsCommandReceivedNotification": "L'application %1 vous demande de signer %2 données.\nSouhaitez-vous confirmer cette action avec le compte %3 ?\n\nCette action ne requiert aucun frais.",
+    "decrypt1PayloadCommandReceivedNotification": "L'application %1 souhaite déchiffrer une information avec votre compte.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nCette action ne nécessite aucuns frais.",
+    "decryptXPayloadsCommandReceivedNotification": "L'application %1 souhaite déchiffrer % informations avec votre compte.\nSouhaitez-vous confirmer cette action avec le compte %3 ?\n\nCette action ne nécessite aucuns frais.",
     "payload": "Donnée",
     "hexadecimalFormat": "Format Hexadécimal",
     "searchField": "Recherche...",
@@ -740,5 +742,21 @@
     "hideTokenConfirmationTitle": "Masquer ce token ?",
     "hideTokenConfirmationDesc": "Êtes-vous sûr(e) de vouloir masquer ce token dans votre wallet ? Vous pourrez le réafficher à tout moment en accédant à l'onglet Compte et en cliquant sur '+ jeton'.",
     "customTokenAddSelectionTokenTitle": "Sélectionner un token\navec un solde dans votre compte",
-    "customTokenAddBalance": "Votre solde"
+    "customTokenAddBalance": "Votre solde",
+    "openEvmWalletNotInstalledContent": "Le wallet {evmWalletName} n'est pas installé",
+    "@openEvmWalletNotInstalledContent": {
+        "placeholders": {
+            "evmWalletName": {
+                "type": "String"
+            }
+        }
+    },
+    "openEvmWalletOpeningContent": "Le wallet {evmWalletName} est en cours d'ouverture",
+    "@openEvmWalletOpeningContent": {
+        "placeholders": {
+            "evmWalletName": {
+                "type": "String"
+            }
+        }
+    }
 }

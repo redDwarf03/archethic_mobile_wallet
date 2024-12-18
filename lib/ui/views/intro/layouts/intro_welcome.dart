@@ -84,43 +84,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    return const Stack(
-      children: [
-        // TODO(reddwarf03): Follow https://github.com/flutter/flutter/issues/128885
-        /*
-        Opacity(
-          opacity: 0.8,
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 250,
-            child: LitStarfieldContainer(
-              velocity: 0.2,
-              number: 600,
-              starColor: ArchethicThemeBase.neutral0,
-              scale: 3,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height - 250,
-          child: Opacity(
-            opacity: 0.3,
-            child: LitStarfieldContainer(
-              velocity: 0.5,
-              number: 300,
-              scale: 6,
-              starColor: ArchethicThemeBase.blue600,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-        ),*/
-        _Main(),
-      ],
-    );
+    return const _Main();
   }
 }
 
