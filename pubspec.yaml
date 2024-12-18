@@ -111,7 +111,7 @@ dependencies:
   flutter_hooks: ^0.20.0
 
   # A WebView
-  flutter_inappwebview: ^6.2.0-beta.1 # TODO Used to take advantage of https://github.com/pichillilorenzo/flutter_inappwebview/pull/2168
+  flutter_inappwebview: ^6.2.0-beta.2
 
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.10.0
