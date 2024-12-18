@@ -130,7 +130,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
     );
     registerHandler(
       DeeplinkRpcRequestHandler(
-        route: const DeeplinkRpcRoute('encrypt_payload'),
+        route: const DeeplinkRpcRoute('encrypt_payloads'),
         handle: (request) => _handle(
           RPCEncryptPayloadsCommandHandler(),
           request,
@@ -139,7 +139,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
     );
     registerHandler(
       DeeplinkRpcRequestHandler(
-        route: const DeeplinkRpcRoute('decrypt_payload'),
+        route: const DeeplinkRpcRoute('decrypt_payloads'),
         handle: (request) => _handle(
           RPCDecryptPayloadsCommandHandler(),
           request,
