@@ -16,7 +16,7 @@ class MainMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final environnement = ref.watch(environmentProvider);
+    final environment = ref.watch(environmentProvider);
     final selectedAccount = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -49,7 +49,7 @@ class MainMenuView extends ConsumerWidget {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Align(
                           child: Text(
-                            environnement.label,
+                            environment.label,
                             style: AppTextStyles.bodyMediumSecondaryColor(
                               context,
                             ),

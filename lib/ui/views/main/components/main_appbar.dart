@@ -115,7 +115,7 @@ class _MainAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final environnement = ref.watch(environmentProvider);
+    final environment = ref.watch(environmentProvider);
 
     return AppBar(
       flexibleSpace: ClipRRect(
@@ -139,9 +139,9 @@ class _MainAppBar extends ConsumerWidget {
       title: Column(
         children: [
           title,
-          if (environnement != aedappfm.Environment.mainnet)
+          if (environment != aedappfm.Environment.mainnet)
             Text(
-              environnement.label,
+              environment.label,
               style: AppTextStyles.bodySmallSecondaryColor(context),
             ),
         ],

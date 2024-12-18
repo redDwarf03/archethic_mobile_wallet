@@ -36,7 +36,7 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final environnement = ref.watch(environmentProvider);
+    final environment = ref.watch(environmentProvider);
 
     return AppBar(
       flexibleSpace: ClipRRect(
@@ -69,9 +69,9 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ArchethicThemeStyles.textStyleSize24W700Primary,
               ),
             if (widgetAfterTitle != null) widgetAfterTitle!,
-            if (environnement != Environment.mainnet)
+            if (environment != Environment.mainnet)
               Text(
-                environnement.label,
+                environment.label,
                 style: AppTextStyles.bodySmallSecondaryColor(context),
               ),
           ],
