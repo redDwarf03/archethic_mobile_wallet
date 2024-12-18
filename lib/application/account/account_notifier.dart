@@ -52,7 +52,7 @@ class _AccountNotifier extends _$AccountNotifier {
   Future<void> _refreshBalance(Account account) async {
     final environment = ref.read(environmentProvider);
     final appService = ref.read(appServiceProvider);
-    final oracleService = ref.read(oracleServiceProvider);
+    final oracleService = ref.read(aedappfm.oracleServiceProvider);
 
     return account.updateBalance(
       environment,

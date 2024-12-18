@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
-import 'package:aewallet/application/oracle_service.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
@@ -16,6 +15,8 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';

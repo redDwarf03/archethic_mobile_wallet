@@ -1,4 +1,3 @@
-import 'package:aewallet/application/oracle_service.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market/market.dart';
@@ -33,7 +32,7 @@ Future<MarketPrice> _currencyMarketPrice(
     GetUCOMarketPriceUsecases(
       remoteRepositories: ref.watch(_remoteRepositoriesProvider),
       localRepository: ref.watch(_localRepositoryProvider),
-      oracleService: ref.watch(oracleServiceProvider),
+      oracleService: ref.watch(aedappfm.oracleServiceProvider),
     ).updateFromRemoteUseCase.run(currency).valueOrThrow;
 
 @Riverpod(keepAlive: true)
