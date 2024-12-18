@@ -128,6 +128,7 @@ Future<void> main() async {
     ProviderScope(
       observers: [
         aedappfm.ProvidersLogger(),
+        if (kDebugMode) aedappfm.ProvidersTracker(),
       ],
       child: const App(),
     ),

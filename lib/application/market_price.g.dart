@@ -44,7 +44,7 @@ final _localRepositoryProvider =
 // ignore: unused_element
 typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
 String _$currencyMarketPriceHash() =>
-    r'287c2e8e5baa424dadd7e608e4b9e2f41aa14646';
+    r'2fcce1fe42ea010a12ed51599b4a5a6f11e11900';
 
 /// Copied from Dart SDK
 class _SystemHash {
