@@ -7,7 +7,6 @@ import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -42,10 +41,8 @@ mixin KeychainServiceMixin {
   }
 
   Future<void> createKeyChainAccess(
-    NetworksSetting networkSettings,
     String? seed,
     String keychainAddress,
-    String originPrivateKey,
     Keychain keychain,
     ApiService apiService,
   ) async {
@@ -54,6 +51,7 @@ mixin KeychainServiceMixin {
     final blockchainTxVersion = int.parse(
       (await apiService.getBlockchainVersion()).version.transaction,
     );
+    final originPrivateKey = apiService.getOriginKey();
 
     /// Create Keychain Access for wallet
     final accessKeychainTx = apiService.newAccessKeychainTransaction(
@@ -89,10 +87,8 @@ mixin KeychainServiceMixin {
   }
 
   Future<void> createKeyChain(
-    NetworksSetting networkSettings,
     String? seed,
     String? name,
-    String originPrivateKey,
     ApiService apiService,
   ) async {
     final _logger = Logger('createKeyChain');
@@ -119,6 +115,8 @@ mixin KeychainServiceMixin {
     final blockchainTxVersion = int.parse(
       (await apiService.getBlockchainVersion()).version.transaction,
     );
+
+    final originPrivateKey = apiService.getOriginKey();
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
     final keychainTransaction = apiService.newKeychainTransaction(
@@ -157,7 +155,6 @@ mixin KeychainServiceMixin {
   }
 
   Future<void> removeService(
-    NetworksSetting networkSettings,
     String service,
     Keychain keychain,
     ApiService apiService,

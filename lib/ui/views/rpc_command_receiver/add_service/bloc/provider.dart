@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
@@ -73,9 +72,6 @@ UseCase<SendTransactionCommand,
     SendTransactionUseCase(
       wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
       apiService: ref.watch(apiServiceProvider),
-      networkSettings: ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      ),
     );
 
 class AddServiceConfirmationProviders {
