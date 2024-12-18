@@ -1,6 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 extension FutureRefDebounce on Ref {
+  /// Delays the provider resolution.
+  ///
+  /// For example, this is useful when provider
+  /// is created on each user input.
+  /// It may prevent spamming the backend.
   Future<T> debounce<T>({
     bool shouldDebounce = true,
     Duration delay = const Duration(milliseconds: 500),
