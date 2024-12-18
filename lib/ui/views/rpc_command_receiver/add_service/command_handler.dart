@@ -1,11 +1,8 @@
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -41,20 +38,11 @@ class AddServiceHandler extends CommandHandler {
                 awc.Failure.invalidParams,
               );
             }
-            final networkSettings = ref.watch(
-              SettingsProviders.settings.select((settings) => settings.network),
-            );
-            final appService = ref.read(appServiceProvider);
             final apiService = ref.watch(apiServiceProvider);
-            final addressService = ref.watch(addressServiceProvider);
 
             final archethicTransactionRepository =
                 ArchethicTransactionRepository(
-              phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-              websocketEndpoint: networkSettings.getWebsocketUri(),
               apiService: apiService,
-              appService: appService,
-              addressService: addressService,
             );
             final originPrivateKey =
                 archethicTransactionRepository.apiService.getOriginKey();

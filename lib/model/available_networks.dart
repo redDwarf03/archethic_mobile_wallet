@@ -51,28 +51,6 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
-  String getPhoenixHttpLink() {
-    switch (network) {
-      case AvailableNetworks.archethicMainNet:
-        return 'https://${DefaultNetworksHost.archethicMainNetHost.value}/socket/websocket';
-      case AvailableNetworks.archethicTestNet:
-        return 'https://${DefaultNetworksHost.archethicTestNetHost.value}/socket/websocket';
-      case AvailableNetworks.archethicDevNet:
-        return '$networkDevEndpoint/socket/websocket';
-    }
-  }
-
-  String getWebsocketUri() {
-    switch (network) {
-      case AvailableNetworks.archethicMainNet:
-        return 'wss://${DefaultNetworksHost.archethicMainNetHost.value}/socket/websocket';
-      case AvailableNetworks.archethicTestNet:
-        return 'wss://${DefaultNetworksHost.archethicTestNetHost.value}/socket/websocket';
-      case AvailableNetworks.archethicDevNet:
-        return '${networkDevEndpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket';
-    }
-  }
-
   String getAEWebUri() {
     switch (network) {
       case AvailableNetworks.archethicMainNet:
@@ -81,17 +59,6 @@ class NetworksSetting extends SettingSelectionItem {
         return 'https://${DefaultNetworksHost.archethicTestNetHost.value}/api/web_hosting/';
       case AvailableNetworks.archethicDevNet:
         return '$networkDevEndpoint/api/web_hosting/';
-    }
-  }
-
-  String getNetworkLabel() {
-    switch (network) {
-      case AvailableNetworks.archethicMainNet:
-        return 'mainnet';
-      case AvailableNetworks.archethicTestNet:
-        return 'testnet';
-      case AvailableNetworks.archethicDevNet:
-        return 'devnet';
     }
   }
 
