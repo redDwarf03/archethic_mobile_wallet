@@ -1,6 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
-import 'package:aewallet/util/riverpod_debounce.dart';
+import 'package:aewallet/application/utils/debounce.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
