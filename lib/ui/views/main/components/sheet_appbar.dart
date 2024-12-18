@@ -2,8 +2,11 @@
 
 import 'dart:ui';
 
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +36,8 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final environnement = ref.watch(environmentProvider);
+
     return AppBar(
       flexibleSpace: ClipRRect(
         child: BackdropFilter(
@@ -64,6 +69,11 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ArchethicThemeStyles.textStyleSize24W700Primary,
               ),
             if (widgetAfterTitle != null) widgetAfterTitle!,
+            if (environnement != Environment.mainnet)
+              Text(
+                environnement.label,
+                style: AppTextStyles.bodySmallSecondaryColor(context),
+              ),
           ],
         ),
       ).animate().fade(duration: const Duration(milliseconds: 300)),
