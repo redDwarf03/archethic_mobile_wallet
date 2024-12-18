@@ -9,7 +9,7 @@ import 'package:aewallet/ui/views/transactions/components/template/transaction_f
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_information.dart';
-import 'package:aewallet/ui/views/transactions/components/transaction_output/transfer_output.dart';
+import 'package:aewallet/ui/views/transactions/components/transfer_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,10 +40,11 @@ class TransactionOuput extends ConsumerWidget {
                 AvailablePrimaryCurrencyEnum.native,
             transaction: transaction,
             marketPrice: marketPrice,
-            child: TransferOutput(
+            child: TransferTransaction(
               isCurrencyNative: primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native,
               transaction: transaction,
+              isInput: false,
             ),
           ),
         ],

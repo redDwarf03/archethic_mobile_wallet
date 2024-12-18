@@ -8,6 +8,7 @@ import 'package:aewallet/util/universal_platform.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
@@ -207,7 +208,11 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                     uri.scheme,
                   );
                   if (matchingEvmWallet != null) {
-                    await _openEvmWallet(uri, matchingEvmWallet);
+                    await _openEvmWallet(
+                      uri,
+                      matchingEvmWallet,
+                      AppLocalizations.of(context)!,
+                    );
                     return NavigationActionPolicy.CANCEL;
                   }
 
@@ -235,12 +240,16 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     return launchUrl(uri.uriValue, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _openEvmWallet(WebUri uri, EVMWallet evmWallet) async {
+  Future<void> _openEvmWallet(
+    WebUri uri,
+    EVMWallet evmWallet,
+    AppLocalizations localizations,
+  ) async {
     if (!await canLaunchUrl(uri.uriValue)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Wallet ${evmWallet.name} not installed', // TODO(Chralu): internationalize this
+            localizations.openEvmWalletNotInstalledContent(evmWallet.name),
           ),
         ),
       );
@@ -250,8 +259,8 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Opening wallet ${evmWallet.name}',
-        ), // TODO(Chralu): internationalize this
+          localizations.openEvmWalletOpeningContent(evmWallet.name),
+        ),
         duration: const Duration(days: 1),
       ),
     );

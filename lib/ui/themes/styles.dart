@@ -11,7 +11,6 @@ class ArchethicThemeStyles {
     );
   }
 
-  // TODO(reddwarf03): To remove
   static TextStyle get textStyleSize16W400Primary60 {
     return TextStyle(
       fontSize: AppFontSizes.size16,

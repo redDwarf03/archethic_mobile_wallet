@@ -12,8 +12,6 @@ import 'package:aewallet/infrastructure/repositories/transaction/transaction_key
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_token_builder.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_transfer_builder.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
-import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -46,25 +44,6 @@ class ArchethicTransactionRepository
             lastAddressFromAddressMap[genesisAddress] == null)
         ? genesisAddress
         : lastAddressFromAddressMap[genesisAddress]!;
-  }
-
-  // TODO(chralu): Clarify the usage
-  @override
-  Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
-    required Account account,
-    required KeychainSecuredInfos keychainSecuredInfos,
-  }) async {
-    return Result.guard(
-      () async {
-        return appService.getAccountRecentTransactions(
-          account.genesisAddress,
-          account.lastAddress!,
-          account.name,
-          keychainSecuredInfos,
-          account.recentTransactions ?? [],
-        );
-      },
-    );
   }
 
   @override

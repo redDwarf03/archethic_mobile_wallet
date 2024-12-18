@@ -56,12 +56,10 @@ class NFTListDetail extends ConsumerWidget {
             name,
             style: ArchethicThemeStyles.textStyleSize12W600Primary,
           ),
-
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: _NFTLabelProperties(propertiesToCount: propertiesToCount),
           ),
-
           GestureDetector(
             onTap: () {
               context.push(
@@ -99,10 +97,6 @@ class NFTListDetail extends ConsumerWidget {
                     ),
             ),
           ),
-          // TODO(reddwarf03): Implement this feature (3)
-          /* NFTCardBottom(
-          tokenInformation: tokenInformation,
-        ),*/
         ],
       ),
     );

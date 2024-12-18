@@ -120,8 +120,12 @@ class RemoveServiceConfirmationForm extends ConsumerWidget
     );
 
     return formState.map(
-      error: (error) =>
-          const SizedBox(), // TODO(reddwarf): should we display an error/loading screen ?
+      error: (error) {
+        return Text(
+          '${error.error}',
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        );
+      },
       loading: (loading) => const SizedBox(),
       data: (formData) {
         return Column(

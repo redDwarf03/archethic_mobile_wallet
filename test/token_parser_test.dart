@@ -17,7 +17,7 @@ import 'package:mockito/mockito.dart';
     MockSpec<TokensRepositoryImpl>(),
   ],
 )
-import 'tokenParser_test.mocks.dart';
+import 'token_parser_test.mocks.dart';
 
 class _TokenParserImpl with TokenParser {}
 

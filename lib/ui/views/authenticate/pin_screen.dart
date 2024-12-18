@@ -2,15 +2,14 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/authentication.dart';
-import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_screen_overlay.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/pin_screen_button.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -198,78 +197,40 @@ class _PinScreenState extends ConsumerState<_PinScreen>
     });
   }
 
-  // TODO(Chralu): Convert to [Widget] subclass. (3)
-  Widget _buildPinScreenButton(
-    String buttonText,
-    BuildContext context,
-  ) {
-    final preferences = ref.watch(SettingsProviders.settings);
+  void _onTapDownbuttonPin(TapDownDetails details, String buttonText) {
+    if (_controller.status == AnimationStatus.forward ||
+        _controller.status == AnimationStatus.reverse) {
+      return;
+    }
 
-    return SizedBox(
-      height: smallScreen(context) ? buttonSize - 15 : buttonSize,
-      width: smallScreen(context) ? buttonSize - 15 : buttonSize,
-      child: InkWell(
-        key: Key('pinButton$buttonText'),
-        borderRadius: BorderRadius.circular(200),
-        highlightColor: ArchethicTheme.text15,
-        splashColor: ArchethicTheme.text30,
-        onTap: () {},
-        onTapDown: (TapDownDetails details) {
-          if (_controller.status == AnimationStatus.forward ||
-              _controller.status == AnimationStatus.reverse) {
-            return;
-          }
-
-          _setCharacter(buttonText);
-          if (allExpectedCharactersEntered) {
-            // Mild delay so they can actually see the last dot get filled
-            Future<void>.delayed(
-              const Duration(milliseconds: 50),
-              () async {
-                if (widget.type == PinOverlayType.enterPin) {
-                  await _decodePayload(context, preferences);
-                } else {
-                  if (!_awaitingConfirmation) {
-                    // Switch to confirm pin
-                    setState(() {
-                      _awaitingConfirmation = true;
-                      _header = AppLocalizations.of(context)!.pinConfirmTitle;
-                    });
-                  } else {
-                    // First and second pins match
-                    await _encodePayload(context, ref, preferences);
-                  }
-                }
-              },
-            );
+    _setCharacter(buttonText);
+    if (allExpectedCharactersEntered) {
+      // Mild delay so they can actually see the last dot get filled
+      Future<void>.delayed(
+        const Duration(milliseconds: 50),
+        () async {
+          if (widget.type == PinOverlayType.enterPin) {
+            await _decodePayload(context);
+          } else {
+            if (!_awaitingConfirmation) {
+              // Switch to confirm pin
+              setState(() {
+                _awaitingConfirmation = true;
+                _header = AppLocalizations.of(context)!.pinConfirmTitle;
+              });
+            } else {
+              // First and second pins match
+              await _encodePayload(context, ref);
+            }
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: ArchethicTheme.background40,
-                blurRadius: 15,
-                spreadRadius: -15,
-              ),
-            ],
-          ),
-          alignment: AlignmentDirectional.center,
-          child: Text(
-            buttonText,
-            textAlign: TextAlign.center,
-            style: ArchethicThemeStyles.textStyleSize20W700Primary,
-          ),
-        ),
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _encodePayload(
     BuildContext context,
     WidgetRef ref,
-    Settings preferences,
   ) async {
     final updatePinResult = await ref
         .read(AuthenticationProviders.pinAuthentication.notifier)
@@ -304,7 +265,6 @@ class _PinScreenState extends ConsumerState<_PinScreen>
 
   Future<void> _decodePayload(
     BuildContext context,
-    Settings preferences,
   ) async {
     if (!mounted) return;
     final result = await ref
@@ -391,39 +351,20 @@ class _PinScreenState extends ConsumerState<_PinScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(0).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(0).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(1).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(1).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(2).toString(),
-                  context,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.01,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(3).toString(),
-                  context,
-                ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(4).toString(),
-                  context,
-                ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(5).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(2).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
               ],
             ),
@@ -435,17 +376,45 @@ class _PinScreenState extends ConsumerState<_PinScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(6).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(3).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(7).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(4).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(8).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(5).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.01,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(6).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
+                ),
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(7).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
+                ),
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(8).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
               ],
             ),
@@ -461,9 +430,10 @@ class _PinScreenState extends ConsumerState<_PinScreen>
                   height: smallScreen(context) ? buttonSize - 15 : buttonSize,
                   width: smallScreen(context) ? buttonSize - 15 : buttonSize,
                 ),
-                _buildPinScreenButton(
-                  _listPinNumber.elementAt(9).toString(),
-                  context,
+                PinScreenButton(
+                  buttonText: _listPinNumber.elementAt(9).toString(),
+                  buttonSize: buttonSize,
+                  onTapDownbuttonPin: _onTapDownbuttonPin,
                 ),
                 SizedBox(
                   height: smallScreen(context) ? buttonSize - 15 : buttonSize,
@@ -554,8 +524,6 @@ class _PinScreenState extends ConsumerState<_PinScreen>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final preferences = ref.watch(SettingsProviders.settings);
-
     final pinAuthentication = ref
         .watch(
           AuthenticationProviders.pinAuthentication,
@@ -610,7 +578,7 @@ class _PinScreenState extends ConsumerState<_PinScreen>
                 const Duration(milliseconds: 50),
                 () async {
                   if (widget.action == CipherDelegateAction.decode) {
-                    await _decodePayload(context, preferences);
+                    await _decodePayload(context);
                   } else {
                     if (!_awaitingConfirmation) {
                       // Switch to confirm pin
@@ -620,7 +588,7 @@ class _PinScreenState extends ConsumerState<_PinScreen>
                       });
                     } else {
                       // First and second pins match
-                      await _encodePayload(context, ref, preferences);
+                      await _encodePayload(context, ref);
                     }
                   }
                 },

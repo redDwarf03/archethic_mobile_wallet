@@ -8,7 +8,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_information.dart';
-import 'package:aewallet/ui/views/transactions/components/transaction_input/transfer_input.dart';
+import 'package:aewallet/ui/views/transactions/components/transfer_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,10 +39,11 @@ class TransactionInput extends ConsumerWidget {
             marketPrice: marketPrice,
             isCurrencyNative: primaryCurrency.primaryCurrency ==
                 AvailablePrimaryCurrencyEnum.native,
-            child: TransferInput(
+            child: TransferTransaction(
               transaction: transaction,
               isCurrencyNative: primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native,
+              isInput: true,
             ),
           ),
         ],
