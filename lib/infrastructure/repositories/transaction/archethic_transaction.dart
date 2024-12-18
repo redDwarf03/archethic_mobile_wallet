@@ -12,25 +12,16 @@ import 'package:aewallet/infrastructure/repositories/transaction/transaction_key
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_token_builder.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_transfer_builder.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class ArchethicTransactionRepository
     implements TransactionRemoteRepositoryInterface {
   ArchethicTransactionRepository({
-    required this.phoenixHttpEndpoint,
-    required this.websocketEndpoint,
-    required this.appService,
     required this.apiService,
-    required this.addressService,
   });
 
-  final String phoenixHttpEndpoint;
-  final String websocketEndpoint;
-  final AppService appService;
   final archethic.ApiService apiService;
-  final archethic.AddressService addressService;
 
   @override
   Future<Result<double, Failure>> calculateFees(
