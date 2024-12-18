@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -13,6 +15,8 @@ import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -111,6 +115,7 @@ class _MainAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final environnement = ref.watch(environmentProvider);
 
     return AppBar(
       flexibleSpace: ClipRRect(
@@ -131,7 +136,16 @@ class _MainAppBar extends ConsumerWidget {
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning(),
       ],
-      title: title,
+      title: Column(
+        children: [
+          title,
+          if (environnement != aedappfm.Environment.mainnet)
+            Text(
+              environnement.label,
+              style: AppTextStyles.bodySmallSecondaryColor(context),
+            ),
+        ],
+      ),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
