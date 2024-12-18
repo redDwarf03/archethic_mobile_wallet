@@ -3,35 +3,22 @@ part of 'router.dart';
 final _authenticatedRoutes = [
   GoRoute(
     path: HomePage.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const HomePage(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
   ),
   GoRoute(
     path: NftCreationProcessSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const NftCreationProcessSheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
     routes: [
       GoRoute(
         name: AddAddress.routerPage,
         path: AddAddress.routerPage,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
+        pageBuilder: (context, state) => NoTransitionPage<void>(
           key: state.pageKey,
           child: AddAddress(
             propertyName: AddAddressParams.fromJson(
@@ -44,47 +31,29 @@ final _authenticatedRoutes = [
               state.extra! as Map<String, dynamic>,
             ).readOnly,
           ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
         ),
       ),
     ],
   ),
   GoRoute(
     path: AddAccountSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: AddAccountSheet(
         seed: state.extra! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
       ),
     ),
   ),
   GoRoute(
     path: BuySheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const BuySheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
   ),
   GoRoute(
     path: ContactDetail.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: ContactDetail(
         contactAddress: ContactDetailsRouteParams.fromJson(
@@ -95,33 +64,20 @@ final _authenticatedRoutes = [
             ).readOnly ??
             false,
       ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
   GoRoute(
     path: ConnectivityWarning.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const ConnectivityWarning(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
   ),
   GoRoute(
     path: AddTokenSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const AddTokenSheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
   ),
   GoRoute(
@@ -141,108 +97,69 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: TransactionInfosSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: TransactionInfosSheet(
         state.extra! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
       ),
     ),
   ),
   GoRoute(
     path: TransferSheet.routerPage,
-    pageBuilder: (context, state) {
-      return CustomTransitionPage<void>(
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
-        key: state.pageKey,
-        child: TransferSheet(
-          transferType:
-              (state.extra! as Map<String, dynamic>)['transferType'] == null
-                  ? null
-                  : TransferType.values.byName(
-                      (state.extra! as Map<String, dynamic>)['transferType']!
-                          as String,
-                    ),
-          recipient: TransferRecipient.fromJson(
-            (state.extra! as Map<String, dynamic>)['recipient'],
-          ),
-          actionButtonTitle: (state.extra!
-              as Map<String, dynamic>)['actionButtonTitle'] as String?,
-          aeToken: (state.extra! as Map<String, dynamic>)['aeToken'] == null
-              ? null
-              : const aedappfm.AETokenJsonConverter().fromJson(
-                  (state.extra! as Map<String, dynamic>)['aeToken'],
-                ),
-          accountToken:
-              (state.extra! as Map<String, dynamic>)['accountToken'] == null
-                  ? null
-                  : const AccountTokenConverter().fromJson(
-                      (state.extra! as Map<String, dynamic>)['accountToken'],
-                    ),
-          tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: TransferSheet(
+        transferType:
+            (state.extra! as Map<String, dynamic>)['transferType'] == null
+                ? null
+                : TransferType.values.byName(
+                    (state.extra! as Map<String, dynamic>)['transferType']!
+                        as String,
+                  ),
+        recipient: TransferRecipient.fromJson(
+          (state.extra! as Map<String, dynamic>)['recipient'],
         ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(
-          opacity: animation,
-          child: child,
-        ),
-      );
-    },
+        actionButtonTitle: (state.extra!
+            as Map<String, dynamic>)['actionButtonTitle'] as String?,
+        aeToken: (state.extra! as Map<String, dynamic>)['aeToken'] == null
+            ? null
+            : const aedappfm.AETokenJsonConverter().fromJson(
+                (state.extra! as Map<String, dynamic>)['aeToken'],
+              ),
+        accountToken:
+            (state.extra! as Map<String, dynamic>)['accountToken'] == null
+                ? null
+                : const AccountTokenConverter().fromJson(
+                    (state.extra! as Map<String, dynamic>)['accountToken'],
+                  ),
+        tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
+      ),
+    ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabAEWebForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const NFTCreationProcessImportTabAEWebForm(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabHTTPForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const NFTCreationProcessImportTabHTTPForm(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabIPFSForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const NFTCreationProcessImportTabIPFSForm(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
   GoRoute(
     path: NFTDetail.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: NFTDetail(
         name: (state.extra! as Map<String, dynamic>)['name']! as String,
@@ -257,11 +174,6 @@ final _authenticatedRoutes = [
             (state.extra! as Map<String, dynamic>)['detailCollection']! as bool,
         nameInCollection: (state.extra!
             as Map<String, dynamic>)['nameInCollection'] as String?,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
       ),
     ),
   ),
@@ -310,33 +222,19 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: DAppsBoardSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const DAppsBoardSheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
   GoRoute(
     path: DAppsBoardWebview.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: DAppsBoardWebview(
         dappUrl: (state.extra! as Map<String, dynamic>)['dappUrl']! as String,
         dappName: (state.extra! as Map<String, dynamic>)['dappName']! as String,
         dappCode: (state.extra! as Map<String, dynamic>)['dappCode']! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
       ),
     ),
   ),
