@@ -76,6 +76,8 @@ class CustomizationMenuView extends ConsumerWidget
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       const _SettingsListItem.spacer(),
+                      const _DevModeSettingsListItem(),
+                      const _SettingsListItem.spacer(),
                     ],
                   ),
                 ],
@@ -144,6 +146,27 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
+      },
+    );
+  }
+}
+
+class _DevModeSettingsListItem extends ConsumerWidget {
+  const _DevModeSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final devModeSetting = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.devMode),
+    );
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
+    return _SettingsListItem.withSwitch(
+      heading: localizations.devMode,
+      icon: Symbols.deployed_code_account,
+      isSwitched: devModeSetting,
+      onChanged: (devMode) async {
+        await preferencesNotifier.setDevMode(devMode);
       },
     );
   }

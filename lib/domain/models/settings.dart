@@ -24,6 +24,7 @@ class Settings with _$Settings {
     required String languageSeed,
     required bool firstLaunch,
     required bool showBalances,
+    required bool devMode,
     required bool activeRPCServer,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
@@ -43,6 +44,7 @@ class Settings with _$Settings {
         primaryCurrency:
             AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
         showBalances: true,
+        devMode: false,
         showPriceChart: true,
         priceChartIntervalOption: aedappfm.MarketPriceHistoryInterval.hour,
       );

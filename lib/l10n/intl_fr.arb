@@ -230,6 +230,7 @@
     "passwordStrengthStrong": "Votre mot de passe est fort.",
     "welcomeDisclaimerChoice": "J'ai lu et j'accepte la politique de confidentialité",
     "showBalances": "Afficher les balances",
+    "devMode": "Mode développeur",
     "enterEndpointBlank": "Le point d'accès est obligatoire.",
     "enterEndpointNotValid": "Le point d'accès n'est pas valide.",
     "enterEndpointUseByNetwork": "Le point d'accès est déjà utilisé par un réseau.",
