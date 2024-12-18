@@ -135,11 +135,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           setState(() {
             keychainAccessRequested = true;
           });
+
           await createKeyChainAccess(
             ref.read(SettingsProviders.settings).network,
-            widget.seed,
+s            widget.seed,
             event.params!['keychainAddress']! as String,
-            event.params!['originPrivateKey']! as String,
             event.params!['keychain']! as Keychain,
             apiService,
           );
@@ -521,13 +521,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
     try {
       final apiService = ref.read(apiServiceProvider);
-      final originPrivateKey = apiService.getOriginKey();
 
+<<<<<<< HEAD
       await createKeyChain(
         ref.read(SettingsProviders.settings).network,
+=======
+      await KeychainUtil().createKeyChain(
+>>>>>>> b8fdfc68 (chore: :fire: Clean code)
         widget.seed,
         widget.name,
-        originPrivateKey,
         apiService,
       );
     } catch (e) {

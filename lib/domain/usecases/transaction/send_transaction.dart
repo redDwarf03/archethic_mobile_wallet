@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -106,12 +105,10 @@ class SendTransactionUseCase
   const SendTransactionUseCase({
     required this.wallet,
     required this.apiService,
-    required this.networkSettings,
   });
 
   final AppWallet wallet;
   final ApiService apiService;
-  final NetworksSetting networkSettings;
 
   @override
   Future<Result<TransactionConfirmation, TransactionError>> run(
