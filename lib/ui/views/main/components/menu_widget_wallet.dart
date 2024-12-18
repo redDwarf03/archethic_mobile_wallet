@@ -3,7 +3,9 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -19,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuWidgetWallet extends ConsumerWidget {
   const MenuWidgetWallet({super.key});
@@ -34,6 +37,7 @@ class MenuWidgetWallet extends ConsumerWidget {
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
+    final environment = ref.watch(environmentProvider);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -50,35 +54,26 @@ class MenuWidgetWallet extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (accountSelected.balance!.isNativeTokenValuePositive() &&
-                connectivityStatusProvider == ConnectivityStatus.isConnected)
-              ActionButton(
-                key: const Key('sendUCObutton'),
-                text: localizations.send,
-                icon: Symbols.call_made,
-                onTap: () async {
-                  await context.push(
-                    TransferSheet.routerPage,
-                    extra: {
-                      'recipient': const TransferRecipient.address(
-                        address: Address(address: ''),
-                      ).toJson(),
-                    },
-                  );
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 200))
-                  .scale(duration: const Duration(milliseconds: 200))
-            else
-              ActionButton(
-                text: localizations.send,
-                icon: Symbols.call_made,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 200))
-                  .scale(duration: const Duration(milliseconds: 200)),
+            ActionButton(
+              key: const Key('sendUCObutton'),
+              text: localizations.send,
+              icon: Symbols.call_made,
+              enabled:
+                  connectivityStatusProvider == ConnectivityStatus.isConnected,
+              onTap: () async {
+                await context.push(
+                  TransferSheet.routerPage,
+                  extra: {
+                    'recipient': const TransferRecipient.address(
+                      address: Address(address: ''),
+                    ).toJson(),
+                  },
+                );
+              },
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 200))
+                .scale(duration: const Duration(milliseconds: 200)),
             if (contact != null)
               ActionButton(
                 key: const Key('receiveUCObutton'),
@@ -112,65 +107,60 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .animate()
                   .fade(duration: const Duration(milliseconds: 250))
                   .scale(duration: const Duration(milliseconds: 250)),
-            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+            ActionButton(
+              text: environment == aedappfm.Environment.mainnet
+                  ? localizations.buy
+                  : localizations.faucet,
+              icon: Symbols.add,
+              onTap: () async {
+                if (environment == aedappfm.Environment.mainnet) {
+                  await context.push(BuySheet.routerPage);
+                } else {
+                  await launchUrl(
+                    Uri.parse(
+                      '${ref.read(SettingsProviders.settings).network.getLink()}/faucet',
+                    ),
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              },
+              enabled:
+                  connectivityStatusProvider == ConnectivityStatus.isConnected,
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 300))
+                .scale(duration: const Duration(milliseconds: 300)),
+            if (refreshInProgress == false)
               ActionButton(
-                text: localizations.buy,
-                icon: Symbols.add,
-                onTap: () {
-                  context.push(BuySheet.routerPage);
+                text: localizations.refresh,
+                icon: Symbols.refresh,
+                enabled: connectivityStatusProvider ==
+                    ConnectivityStatus.isConnected,
+                onTap: () async {
+                  final _connectivityStatusProvider =
+                      ref.read(connectivityStatusProviders);
+                  if (_connectivityStatusProvider ==
+                      ConnectivityStatus.isDisconnected) {
+                    return;
+                  }
+                  final poolListRaw =
+                      await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+                  await (await ref
+                          .read(AccountProviders.accounts.notifier)
+                          .selectedAccountNotifier)
+                      ?.refreshRecentTransactions(poolListRaw);
+
+                  if (context.mounted) {
+                    ref
+                      ..invalidate(ContactProviders.fetchContacts)
+                      ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                  }
                 },
               )
                   .animate()
-                  .fade(duration: const Duration(milliseconds: 300))
-                  .scale(duration: const Duration(milliseconds: 300))
-            else
-              ActionButton(
-                text: localizations.buy,
-                icon: Symbols.add,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 300))
-                  .scale(duration: const Duration(milliseconds: 300)),
-            if (refreshInProgress == false)
-              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-                ActionButton(
-                  text: localizations.refresh,
-                  icon: Symbols.refresh,
-                  onTap: () async {
-                    final _connectivityStatusProvider =
-                        ref.read(connectivityStatusProviders);
-                    if (_connectivityStatusProvider ==
-                        ConnectivityStatus.isDisconnected) {
-                      return;
-                    }
-                    final poolListRaw =
-                        await ref.read(DexPoolProviders.getPoolListRaw.future);
-
-                    await (await ref
-                            .read(AccountProviders.accounts.notifier)
-                            .selectedAccountNotifier)
-                        ?.refreshRecentTransactions(poolListRaw);
-
-                    if (context.mounted) {
-                      ref
-                        ..invalidate(ContactProviders.fetchContacts)
-                        ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                    }
-                  },
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 350))
-                    .scale(duration: const Duration(milliseconds: 350))
-              else
-                ActionButton(
-                  text: localizations.refresh,
-                  icon: Symbols.refresh,
-                  enabled: false,
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 300))
-                    .scale(duration: const Duration(milliseconds: 300))
+                  .fade(duration: const Duration(milliseconds: 350))
+                  .scale(duration: const Duration(milliseconds: 350))
             else
               Stack(
                 alignment: Alignment.topCenter,

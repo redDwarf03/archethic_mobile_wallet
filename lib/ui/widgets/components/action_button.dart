@@ -24,7 +24,7 @@ class ActionButton extends ConsumerWidget {
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: onTap != null
           ? InkWell(
-              onTap: onTap,
+              onTap: enabled ? onTap : null,
               child: Column(
                 children: <Widget>[
                   ShaderMask(
