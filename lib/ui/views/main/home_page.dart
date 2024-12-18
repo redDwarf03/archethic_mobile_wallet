@@ -16,6 +16,7 @@ import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart'
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
+import 'package:aewallet/ui/views/sheets/bridge_sheet_feature_flag_false.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -170,7 +171,14 @@ class _HomePageState extends ConsumerState<HomePage>
           const TransactionsTab(),
           const SwapTab(),
           const EarnTab(),
-          DAppSheet(dappKey: 'aeBridge'),
+          DAppSheet(
+            dappKey: 'aeBridge',
+            featureCode: 'bridge',
+            launchMessage: AppLocalizations.of(context)!.aeBridgeLaunchMessage,
+            launchButtonLabel:
+                AppLocalizations.of(context)!.aeBridgeLaunchButton,
+            featureFlagFalseWidget: const BridgeSheetFeatureFlagFalse(),
+          ),
         ],
       ),
     );

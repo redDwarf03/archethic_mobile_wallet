@@ -75,9 +75,9 @@ class MainMenuView extends ConsumerWidget {
                         },
                         background: ArchethicTheme.backgroundWelcome,
                       ),
-                      if (FeatureFlags.dappBoard)
+                      if (FeatureFlags.dappBoard && UniversalPlatform.isMobile)
                         const _SettingsListItem.spacer(),
-                      if (FeatureFlags.dappBoard)
+                      if (FeatureFlags.dappBoard && UniversalPlatform.isMobile)
                         _SettingsListItem.singleLineWithInfos(
                           heading: localizations.dappBoardLinkHeader,
                           info: localizations.dappBoardLinkDesc,

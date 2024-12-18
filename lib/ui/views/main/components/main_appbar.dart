@@ -11,7 +11,7 @@ import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refre
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
-import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
+import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

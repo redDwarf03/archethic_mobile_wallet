@@ -35,6 +35,7 @@ import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mnemonics.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
