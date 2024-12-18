@@ -237,6 +237,7 @@
     "passwordBlank": "Password cannot be empty",
     "welcomeDisclaimerChoice": "I have read and agree to the privacy policy",
     "showBalances": "Show balances",
+    "devMode": "Developer mode",
     "enterEndpointBlank": "The endpoint cannot be empty",
     "enterEndpointNotValid": "The endpoint is not valid",
     "enterEndpointUseByNetwork": "The endpoint is already used by a network",
