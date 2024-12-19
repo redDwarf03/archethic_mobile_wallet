@@ -10,9 +10,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+extension UriRedirectionResolverExt on Uri {
+  Future<Uri> resolveRedirection() async {
+    final req = http.Request('Get', this)..followRedirects = false;
+    final baseClient = http.Client();
+    final response = await baseClient.send(req);
+    if (!response.isRedirect) return this;
+
+    final location = response.headers['location'];
+    if (location == null) return this;
+    return Uri.parse(location);
+  }
+}
 
 enum EVMWallet {
   metamask(
@@ -130,11 +144,17 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   bool _loaded = false;
   late final FocusNode _focusNode;
 
+  /// Stores uri after redirections resolution
+  /// This is important to detect navigations
+  /// to third party websites from dapp.
+  late Uri _resolvedUri;
+
   InAppWebViewController? get _controller =>
       AWCWebviewControllers.find(widget.uri);
 
   @override
   void initState() {
+    _resolvedUri = widget.uri;
     if (kDebugMode &&
         !kIsWeb &&
         defaultTargetPlatform == TargetPlatform.android) {
@@ -151,7 +171,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
     _peerServer?.close();
     _focusNode.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    AWCWebviewControllers.dispose(widget.uri);
+    AWCWebviewControllers.dispose(_resolvedUri);
     AWCWebview._logger.info('AWC webview disposed.');
 
     super.dispose();
@@ -186,7 +206,7 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                   transparentBackground: true,
                 ),
                 onLoadStop: (controller, _) async {
-                  AWCWebviewControllers.register(widget.uri, controller);
+                  AWCWebviewControllers.register(_resolvedUri, controller);
                   await _initMessageChannelRPC(controller);
                   await _maintainWebviewFocus(controller);
                   setState(() {
@@ -194,8 +214,14 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                   });
                 },
                 onWebViewCreated: (controller) async {
+                  final redirectedUri = await widget.uri.resolveRedirection();
+                  setState(
+                    () {
+                      _resolvedUri = redirectedUri;
+                    },
+                  );
                   await controller.loadUrl(
-                    urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
+                    urlRequest: URLRequest(url: WebUri.uri(redirectedUri)),
                   );
                 },
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
@@ -216,12 +242,13 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
                     return NavigationActionPolicy.CANCEL;
                   }
 
+                  // Allows dapps to open third party websites
                   if (navigationAction.isForMainFrame &&
-                      (uri.scheme != widget.uri.scheme ||
-                          uri.host != widget.uri.host)) {
+                      uri.origin != _resolvedUri.origin) {
                     await _openThirdPartyWebsite(uri);
                     return NavigationActionPolicy.CANCEL;
                   }
+
                   return NavigationActionPolicy.ALLOW;
                 },
                 onReceivedHttpError: (controller, request, errorResponse) {
