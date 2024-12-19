@@ -3,13 +3,6 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
         ensureExtensionPopupOpened().then(() => { sendResponse() })
         return true
     }
-    if (message.type === "updateIcon" && typeof message.isLocked === "boolean") {
-        const isLocked = message.isLocked;
-        updateExtensionIcon(isLocked).then(() => {
-            sendResponse({ success: true });
-        });
-        return true;
-    }
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -24,6 +17,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendResponse(response)
         })
         return true
+    }
+    if (message.type === "updateIcon" && typeof message.isLocked === "boolean") {
+        const isLocked = message.isLocked;
+        updateExtensionIcon(isLocked);
+        return false;
     }
 })
 
@@ -57,6 +55,13 @@ async function focusExtensionPopup(): Promise<boolean> {
     return false
 }
 
+chrome.windows.onRemoved.addListener(async (windowId) => {
+    const currentWindowId = await readWindowId()
+    if (windowId === currentWindowId) {
+        updateExtensionIcon(true)
+    }
+})
+
 async function findExtensionTab(): Promise<chrome.tabs.Tab | null> {
     const extensionTabs = await chrome.tabs.query({ url: extensionUrl() })
 
@@ -77,7 +82,7 @@ async function openExtensionPopup(): Promise<void> {
     const left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) - popupWidth - 32);
     const top = Math.round((currentWindow.top ?? 200) + 64);
 
-    await chrome.windows.create({
+    const window = await chrome.windows.create({
         url: "index.html",
         width: popupWidth,
         height: popupHeight,
@@ -86,6 +91,15 @@ async function openExtensionPopup(): Promise<void> {
         left: left,
         top: top,
     })
+    await saveWindowId(window.id!);
+}
+
+async function saveWindowId(windowId: number) {
+    await chrome.storage.local.set({ extensionWindowId: windowId });
+}
+async function readWindowId(): Promise<number | null> {
+    const values = await chrome.storage.local.get(["extensionWindowId"]);
+    return values.extensionWindowId
 }
 
 async function isExtensionPopupOpened(): Promise<boolean> {
