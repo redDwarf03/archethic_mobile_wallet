@@ -6,14 +6,18 @@ part of 'dapps.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+<<<<<<< HEAD
 String _$dAppsRepositoryHash() => r'6de8e91d80ef070475a657e77ea3f07fa5d9f543';
+=======
+String _$dAppsRepositoryHash() => r'fb013548900316c315da404d775c03d2e4f7a24e';
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
 
-/// See also [_dAppsRepository].
-@ProviderFor(_dAppsRepository)
-final _dAppsRepositoryProvider =
+/// See also [dAppsRepository].
+@ProviderFor(dAppsRepository)
+final dAppsRepositoryProvider =
     AutoDisposeProvider<DAppsRepositoryImpl>.internal(
-  _dAppsRepository,
-  name: r'_dAppsRepositoryProvider',
+  dAppsRepository,
+  name: r'dAppsRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$dAppsRepositoryHash,
@@ -23,8 +27,13 @@ final _dAppsRepositoryProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
+<<<<<<< HEAD
 typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
 String _$getDAppHash() => r'e708424d60dbef17da84a12ed02a67dd493a28a2';
+=======
+typedef DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
+String _$getDAppHash() => r'ecbe738bde602c22d655a26d4284ad83fb6f2c53';
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -47,27 +56,37 @@ class _SystemHash {
   }
 }
 
-/// See also [_getDApp].
-@ProviderFor(_getDApp)
-const _getDAppProvider = _GetDAppFamily();
+/// See also [getDApp].
+@ProviderFor(getDApp)
+const getDAppProvider = GetDAppFamily();
 
-/// See also [_getDApp].
-class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
-  /// See also [_getDApp].
-  const _GetDAppFamily();
+/// See also [getDApp].
+class GetDAppFamily extends Family<AsyncValue<DApp?>> {
+  /// See also [getDApp].
+  const GetDAppFamily();
 
+<<<<<<< HEAD
   /// See also [_getDApp].
   _GetDAppProvider call(
     String code,
   ) {
     return _GetDAppProvider(
+=======
+  /// See also [getDApp].
+  GetDAppProvider call(
+    AvailableNetworks network,
+    String code,
+  ) {
+    return GetDAppProvider(
+      network,
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
       code,
     );
   }
 
   @override
-  _GetDAppProvider getProviderOverride(
-    covariant _GetDAppProvider provider,
+  GetDAppProvider getProviderOverride(
+    covariant GetDAppProvider provider,
   ) {
     return call(
       provider.code,
@@ -86,9 +105,10 @@ class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getDAppProvider';
+  String? get name => r'getDAppProvider';
 }
 
+<<<<<<< HEAD
 /// See also [_getDApp].
 class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
   /// See also [_getDApp].
@@ -97,20 +117,38 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
   ) : this._internal(
           (ref) => _getDApp(
             ref as _GetDAppRef,
+=======
+/// See also [getDApp].
+class GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
+  /// See also [getDApp].
+  GetDAppProvider(
+    AvailableNetworks network,
+    String code,
+  ) : this._internal(
+          (ref) => getDApp(
+            ref as GetDAppRef,
+            network,
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
             code,
           ),
-          from: _getDAppProvider,
-          name: r'_getDAppProvider',
+          from: getDAppProvider,
+          name: r'getDAppProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$getDAppHash,
+<<<<<<< HEAD
           dependencies: _GetDAppFamily._dependencies,
           allTransitiveDependencies: _GetDAppFamily._allTransitiveDependencies,
+=======
+          dependencies: GetDAppFamily._dependencies,
+          allTransitiveDependencies: GetDAppFamily._allTransitiveDependencies,
+          network: network,
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
           code: code,
         );
 
-  _GetDAppProvider._internal(
+  GetDAppProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -124,12 +162,12 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
 
   @override
   Override overrideWith(
-    FutureOr<DApp?> Function(_GetDAppRef provider) create,
+    FutureOr<DApp?> Function(GetDAppRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetDAppProvider._internal(
-        (ref) => create(ref as _GetDAppRef),
+      override: GetDAppProvider._internal(
+        (ref) => create(ref as GetDAppRef),
         from: from,
         name: null,
         dependencies: null,
@@ -147,7 +185,13 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
 
   @override
   bool operator ==(Object other) {
+<<<<<<< HEAD
     return other is _GetDAppProvider && other.code == code;
+=======
+    return other is GetDAppProvider &&
+        other.network == network &&
+        other.code == code;
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
   }
 
   @override
@@ -161,43 +205,60 @@ class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
+<<<<<<< HEAD
 mixin _GetDAppRef on AutoDisposeFutureProviderRef<DApp?> {
+=======
+mixin GetDAppRef on AutoDisposeFutureProviderRef<DApp?> {
+  /// The parameter `network` of this provider.
+  AvailableNetworks get network;
+
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
   /// The parameter `code` of this provider.
   String get code;
 }
 
 class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
-    with _GetDAppRef {
+    with GetDAppRef {
   _GetDAppProviderElement(super.provider);
 
   @override
+<<<<<<< HEAD
   String get code => (origin as _GetDAppProvider).code;
 }
 
 String _$getDAppsFromNetworkHash() =>
     r'0b6c8824ab7d57c392d448753b5139840976372b';
+=======
+  AvailableNetworks get network => (origin as GetDAppProvider).network;
+  @override
+  String get code => (origin as GetDAppProvider).code;
+}
 
-/// See also [_getDAppsFromNetwork].
-@ProviderFor(_getDAppsFromNetwork)
-const _getDAppsFromNetworkProvider = _GetDAppsFromNetworkFamily();
+String _$getDAppsFromNetworkHash() =>
+    r'684e026068e0ca42e51aa771ac8e6e43fd92da55';
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
 
-/// See also [_getDAppsFromNetwork].
-class _GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApp>>> {
-  /// See also [_getDAppsFromNetwork].
-  const _GetDAppsFromNetworkFamily();
+/// See also [getDAppsFromNetwork].
+@ProviderFor(getDAppsFromNetwork)
+const getDAppsFromNetworkProvider = GetDAppsFromNetworkFamily();
 
-  /// See also [_getDAppsFromNetwork].
-  _GetDAppsFromNetworkProvider call(
+/// See also [getDAppsFromNetwork].
+class GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApp>>> {
+  /// See also [getDAppsFromNetwork].
+  const GetDAppsFromNetworkFamily();
+
+  /// See also [getDAppsFromNetwork].
+  GetDAppsFromNetworkProvider call(
     AvailableNetworks network,
   ) {
-    return _GetDAppsFromNetworkProvider(
+    return GetDAppsFromNetworkProvider(
       network,
     );
   }
 
   @override
-  _GetDAppsFromNetworkProvider getProviderOverride(
-    covariant _GetDAppsFromNetworkProvider provider,
+  GetDAppsFromNetworkProvider getProviderOverride(
+    covariant GetDAppsFromNetworkProvider provider,
   ) {
     return call(
       provider.network,
@@ -216,33 +277,33 @@ class _GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApp>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getDAppsFromNetworkProvider';
+  String? get name => r'getDAppsFromNetworkProvider';
 }
 
-/// See also [_getDAppsFromNetwork].
-class _GetDAppsFromNetworkProvider
+/// See also [getDAppsFromNetwork].
+class GetDAppsFromNetworkProvider
     extends AutoDisposeFutureProvider<List<DApp>> {
-  /// See also [_getDAppsFromNetwork].
-  _GetDAppsFromNetworkProvider(
+  /// See also [getDAppsFromNetwork].
+  GetDAppsFromNetworkProvider(
     AvailableNetworks network,
   ) : this._internal(
-          (ref) => _getDAppsFromNetwork(
-            ref as _GetDAppsFromNetworkRef,
+          (ref) => getDAppsFromNetwork(
+            ref as GetDAppsFromNetworkRef,
             network,
           ),
-          from: _getDAppsFromNetworkProvider,
-          name: r'_getDAppsFromNetworkProvider',
+          from: getDAppsFromNetworkProvider,
+          name: r'getDAppsFromNetworkProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$getDAppsFromNetworkHash,
-          dependencies: _GetDAppsFromNetworkFamily._dependencies,
+          dependencies: GetDAppsFromNetworkFamily._dependencies,
           allTransitiveDependencies:
-              _GetDAppsFromNetworkFamily._allTransitiveDependencies,
+              GetDAppsFromNetworkFamily._allTransitiveDependencies,
           network: network,
         );
 
-  _GetDAppsFromNetworkProvider._internal(
+  GetDAppsFromNetworkProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -256,12 +317,12 @@ class _GetDAppsFromNetworkProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<DApp>> Function(_GetDAppsFromNetworkRef provider) create,
+    FutureOr<List<DApp>> Function(GetDAppsFromNetworkRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetDAppsFromNetworkProvider._internal(
-        (ref) => create(ref as _GetDAppsFromNetworkRef),
+      override: GetDAppsFromNetworkProvider._internal(
+        (ref) => create(ref as GetDAppsFromNetworkRef),
         from: from,
         name: null,
         dependencies: null,
@@ -279,7 +340,7 @@ class _GetDAppsFromNetworkProvider
 
   @override
   bool operator ==(Object other) {
-    return other is _GetDAppsFromNetworkProvider && other.network == network;
+    return other is GetDAppsFromNetworkProvider && other.network == network;
   }
 
   @override
@@ -293,19 +354,23 @@ class _GetDAppsFromNetworkProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
+<<<<<<< HEAD
 mixin _GetDAppsFromNetworkRef on AutoDisposeFutureProviderRef<List<DApp>> {
+=======
+mixin GetDAppsFromNetworkRef on AutoDisposeFutureProviderRef<List<DApp>> {
+>>>>>>> 3cd2a51c (feat: :sparkles: Add Dapps Board)
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
 }
 
 class _GetDAppsFromNetworkProviderElement
     extends AutoDisposeFutureProviderElement<List<DApp>>
-    with _GetDAppsFromNetworkRef {
+    with GetDAppsFromNetworkRef {
   _GetDAppsFromNetworkProviderElement(super.provider);
 
   @override
   AvailableNetworks get network =>
-      (origin as _GetDAppsFromNetworkProvider).network;
+      (origin as GetDAppsFromNetworkProvider).network;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

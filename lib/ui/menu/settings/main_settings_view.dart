@@ -77,6 +77,17 @@ class MainMenuView extends ConsumerWidget {
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
+                        heading: localizations.dappBoardLinkHeader,
+                        info: localizations.dappBoardLinkDesc,
+                        icon: Symbols.apps,
+                        onPressed: () async {
+                          await context.push(
+                            DAppsBoardSheet.routerPage,
+                          );
+                        },
+                      ),
+                      const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLineWithInfos(
                         heading: localizations.mediumLinkHeader,
                         info: localizations.mediumLinkDesc,
                         icon: Symbols.news,

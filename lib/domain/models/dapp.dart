@@ -10,6 +10,10 @@ class DApp with _$DApp {
   const factory DApp({
     required String code,
     required String url,
+    String? category,
+    String? description,
+    String? name,
+    String? iconUrl,
     String? accessToken,
   }) = _DApp;
 
