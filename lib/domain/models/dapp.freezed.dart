@@ -22,6 +22,10 @@ DApp _$DAppFromJson(Map<String, dynamic> json) {
 mixin _$DApp {
   String get code => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get iconUrl => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
 
   /// Serializes this DApp to a JSON map.
@@ -38,7 +42,14 @@ abstract class $DAppCopyWith<$Res> {
   factory $DAppCopyWith(DApp value, $Res Function(DApp) then) =
       _$DAppCopyWithImpl<$Res, DApp>;
   @useResult
-  $Res call({String code, String url, String? accessToken});
+  $Res call(
+      {String code,
+      String url,
+      String? category,
+      String? description,
+      String? name,
+      String? iconUrl,
+      String? accessToken});
 }
 
 /// @nodoc
@@ -58,6 +69,10 @@ class _$DAppCopyWithImpl<$Res, $Val extends DApp>
   $Res call({
     Object? code = null,
     Object? url = null,
+    Object? category = freezed,
+    Object? description = freezed,
+    Object? name = freezed,
+    Object? iconUrl = freezed,
     Object? accessToken = freezed,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +84,22 @@ class _$DAppCopyWithImpl<$Res, $Val extends DApp>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      iconUrl: freezed == iconUrl
+          ? _value.iconUrl
+          : iconUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -84,7 +115,14 @@ abstract class _$$DAppImplCopyWith<$Res> implements $DAppCopyWith<$Res> {
       __$$DAppImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String code, String url, String? accessToken});
+  $Res call(
+      {String code,
+      String url,
+      String? category,
+      String? description,
+      String? name,
+      String? iconUrl,
+      String? accessToken});
 }
 
 /// @nodoc
@@ -101,6 +139,10 @@ class __$$DAppImplCopyWithImpl<$Res>
   $Res call({
     Object? code = null,
     Object? url = null,
+    Object? category = freezed,
+    Object? description = freezed,
+    Object? name = freezed,
+    Object? iconUrl = freezed,
     Object? accessToken = freezed,
   }) {
     return _then(_$DAppImpl(
@@ -112,6 +154,22 @@ class __$$DAppImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      iconUrl: freezed == iconUrl
+          ? _value.iconUrl
+          : iconUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -123,7 +181,14 @@ class __$$DAppImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DAppImpl implements _DApp {
-  const _$DAppImpl({required this.code, required this.url, this.accessToken});
+  const _$DAppImpl(
+      {required this.code,
+      required this.url,
+      this.category,
+      this.description,
+      this.name,
+      this.iconUrl,
+      this.accessToken});
 
   factory _$DAppImpl.fromJson(Map<String, dynamic> json) =>
       _$$DAppImplFromJson(json);
@@ -133,11 +198,19 @@ class _$DAppImpl implements _DApp {
   @override
   final String url;
   @override
+  final String? category;
+  @override
+  final String? description;
+  @override
+  final String? name;
+  @override
+  final String? iconUrl;
+  @override
   final String? accessToken;
 
   @override
   String toString() {
-    return 'DApp(code: $code, url: $url, accessToken: $accessToken)';
+    return 'DApp(code: $code, url: $url, category: $category, description: $description, name: $name, iconUrl: $iconUrl, accessToken: $accessToken)';
   }
 
   @override
@@ -147,13 +220,20 @@ class _$DAppImpl implements _DApp {
             other is _$DAppImpl &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.url, url) || other.url == url) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.iconUrl, iconUrl) || other.iconUrl == iconUrl) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, code, url, accessToken);
+  int get hashCode => Object.hash(runtimeType, code, url, category, description,
+      name, iconUrl, accessToken);
 
   /// Create a copy of DApp
   /// with the given fields replaced by the non-null parameter values.
@@ -175,6 +255,10 @@ abstract class _DApp implements DApp {
   const factory _DApp(
       {required final String code,
       required final String url,
+      final String? category,
+      final String? description,
+      final String? name,
+      final String? iconUrl,
       final String? accessToken}) = _$DAppImpl;
 
   factory _DApp.fromJson(Map<String, dynamic> json) = _$DAppImpl.fromJson;
@@ -183,6 +267,14 @@ abstract class _DApp implements DApp {
   String get code;
   @override
   String get url;
+  @override
+  String? get category;
+  @override
+  String? get description;
+  @override
+  String? get name;
+  @override
+  String? get iconUrl;
   @override
   String? get accessToken;
 

@@ -759,5 +759,8 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dappBoardLinkHeader": "DApps Board",
+    "dappBoardLinkDesc": "Accédez aux applications décentralisées sur la Blockchain Publique Archethic",
+    "dappBoardTitle": "DApps Board"
 }

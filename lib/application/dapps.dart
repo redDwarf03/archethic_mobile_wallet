@@ -9,38 +9,29 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'dapps.g.dart';
 
 @riverpod
-DAppsRepositoryImpl _dAppsRepository(
+DAppsRepositoryImpl dAppsRepository(
   Ref ref,
 ) =>
     DAppsRepositoryImpl();
 
 @riverpod
-Future<DApp?> _getDApp(
+Future<DApp?> getDApp(
   Ref ref,
+  AvailableNetworks network,
   String code,
 ) async {
   final apiService = ref.watch(apiServiceProvider);
-  final networkSettings = ref.watch(
-    SettingsProviders.settings.select((settings) => settings.network),
-  );
-  return ref
-      .watch(_dAppsRepositoryProvider)
-      .getDApp(networkSettings.network, code, apiService);
+  return ref.watch(dAppsRepositoryProvider).getDApp(network, code, apiService);
 }
 
 @riverpod
-Future<List<DApp>> _getDAppsFromNetwork(
+Future<List<DApp>> getDAppsFromNetwork(
   Ref ref,
   AvailableNetworks network,
 ) async {
   final apiService = ref.watch(apiServiceProvider);
   final dAppsFromNetwork = await ref
-      .read(_dAppsRepositoryProvider)
+      .read(dAppsRepositoryProvider)
       .getDAppsFromNetwork(network, apiService);
   return dAppsFromNetwork;
-}
-
-abstract class DAppsProviders {
-  static const getDApp = _getDAppProvider;
-  static const getDAppsFromNetwork = _getDAppsFromNetworkProvider;
 }

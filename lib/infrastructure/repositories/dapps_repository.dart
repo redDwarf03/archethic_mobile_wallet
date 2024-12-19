@@ -85,6 +85,10 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
               code: dapp['code'],
               url: dapp['url'],
               accessToken: dapp['accessToken'] ?? '',
+              category: dapp['category'],
+              description: dapp['description'],
+              iconUrl: dapp['iconUrl'],
+              name: dapp['name'],
             ),
           );
         }

@@ -77,10 +77,7 @@ class DAppSheet extends ConsumerStatefulWidget {
 
 class DAppSheetState extends ConsumerState<DAppSheet>
     with AutomaticKeepAliveClientMixin {
-  String? aeBridgeUrl;
-  bool? featureFlags;
-  static const applicationCode = 'aeWallet';
-  static const featureCode = 'bridge';
+  String? dappUrl;
 
   @override
   bool get wantKeepAlive => true;
@@ -112,8 +109,7 @@ class DAppSheetState extends ConsumerState<DAppSheet>
           DAppsProviders.getDApp(dappKey).future,
         );
         setState(() {
-          featureFlags = bridgeFlag;
-          aeBridgeUrl = dapp!.url;
+          dappUrl = dapp!.url;
         });
       }
     });
@@ -166,25 +162,19 @@ class DAppSheetState extends ConsumerState<DAppSheet>
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).padding.bottom + 20,
-              ),
-              child: Row(
-                children: [
-                  AppButtonTinyConnectivity(
-                    AppLocalizations.of(context)!.aeBridgeLaunchButton,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('LaunchApplication'),
-                    onPressed: () async {
-                      await launchUrl(Uri.parse(aeBridgeUrl!));
-                    },
-                    disabled: aeBridgeUrl == null,
-                  ),
-                ],
-              ),
+          SizedBox(
+            height: 55,
+            child: AppButtonTiny(
+              AppButtonTinyType.primary,
+              AppLocalizations.of(context)!.aeSwapLaunchButton,
+              Dimens.buttonBottomDimens,
+              key: const Key('LaunchApplication'),
+              onPressed: dappUrl != null
+                  ? () async {
+                      await launchUrl(Uri.parse(dappUrl!));
+                    }
+                  : null,
+              disabled: dappUrl == null,
             ),
           ),
         ],
@@ -208,7 +198,7 @@ class DAppSheetState extends ConsumerState<DAppSheet>
           if (isAWCSupported == null) {
             return const Center(child: LoadingListHeader());
           }
-          if (aeBridgeUrl == null) {
+          if (dappUrl == null) {
             return const Center(child: LoadingListHeader());
           }
 
@@ -220,7 +210,7 @@ class DAppSheetState extends ConsumerState<DAppSheet>
           }
 
           return AWCWebview(
-            uri: Uri.parse(aeBridgeUrl!),
+            uri: Uri.parse(dappUrl!),
           );
         },
       ),

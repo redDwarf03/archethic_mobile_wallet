@@ -308,4 +308,18 @@ final _authenticatedRoutes = [
       );
     },
   ),
+  GoRoute(
+    path: DAppsBoardSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const DAppsBoardSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
 ];
