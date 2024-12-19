@@ -1,6 +1,7 @@
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
@@ -17,6 +18,7 @@ class DAppsBoardWebview extends ConsumerWidget
     required this.dappUrl,
     required this.dappName,
     required this.dappCode,
+    this.deeplink,
     super.key,
   });
 
@@ -25,6 +27,7 @@ class DAppsBoardWebview extends ConsumerWidget
   final String dappUrl;
   final String dappName;
   final String dappCode;
+  final bool? deeplink;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +52,9 @@ class DAppsBoardWebview extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
+          if (deeplink != null) {
+            context.go(HomePage.routerPage);
+          }
           context.pop();
         },
       ),

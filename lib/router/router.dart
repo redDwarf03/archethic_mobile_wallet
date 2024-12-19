@@ -121,6 +121,11 @@ class RoutesPath {
         if (deeplinkRpcReceiver.canHandle(state.matchedLocation)) {
           await deeplinkRpcReceiver.handle(state.matchedLocation);
         }
+        if (state.uri.scheme == 'aewallet' &&
+            state.uri.path + state.uri.host == DAppsBoardWebview.routerPage) {
+          final query = state.uri.query;
+          return '${DAppsBoardWebview.routerPage}?deeplink&$query';
+        }
         return null;
       },
       errorBuilder: (context, state) => SheetSkeleton(
