@@ -1,3 +1,5 @@
+import 'package:aewallet/domain/models/dapp.dart';
+import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -6,7 +8,14 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BridgeSheetFeatureFlagFalse extends StatelessWidget {
-  const BridgeSheetFeatureFlagFalse({super.key});
+  const BridgeSheetFeatureFlagFalse({
+    super.key,
+    required this.cause,
+    required this.dapp,
+  });
+
+  final DAppUnavaibleCause cause;
+  final DApp dapp;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +49,10 @@ class BridgeSheetFeatureFlagFalse extends StatelessWidget {
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
-              _launchURL('https://bridge.archethic.net');
+              _launchURL(dapp.url);
             },
             child: Text(
-              'https://bridge.archethic.net',
+              dapp.url,
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     decoration: TextDecoration.underline,
                     color: aedappfm.AppThemeBase.secondaryColor,

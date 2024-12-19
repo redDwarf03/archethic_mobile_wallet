@@ -171,13 +171,17 @@ class _HomePageState extends ConsumerState<HomePage>
           const TransactionsTab(),
           const SwapTab(),
           const EarnTab(),
-          DAppSheet(
+          DAppSheet.withFeatureFlag(
             dappKey: 'aeBridge',
-            featureCode: 'bridge',
             launchMessage: AppLocalizations.of(context)!.aeBridgeLaunchMessage,
             launchButtonLabel:
                 AppLocalizations.of(context)!.aeBridgeLaunchButton,
-            featureFlagFalseWidget: const BridgeSheetFeatureFlagFalse(),
+            featureCode: 'bridge',
+            featureUnavailableBuilder: (cause, dapp) =>
+                BridgeSheetFeatureFlagFalse(
+              cause: cause,
+              dapp: dapp,
+            ),
           ),
         ],
       ),
