@@ -2,12 +2,31 @@
 library aws; // library name can be whatever you want
 
 import 'package:js/js.dart';
+import 'package:js/js_util.dart' as js;
+
+extension MapToJSExt on Map<dynamic, dynamic> {
+  /// Converts a Map to JS object
+  Object get toJS {
+    final object = js.newObject();
+    forEach((k, v) {
+      final key = k;
+      final value = v;
+      js.setProperty(object, key, value);
+    });
+    return object;
+  }
+}
 
 @JS('runtime.connect')
 external BrowserExtensionPort connect();
 
 @JS('runtime.sendMessage')
-external void sendMessage(dynamic message);
+external Future<void> sendMessage(
+  String? extensionId,
+  dynamic message,
+  dynamic options,
+  Function(dynamic response)? callback,
+);
 
 @JS('runtime.onMessage')
 external BrowserExtensionEvent<

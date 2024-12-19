@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_web_libraries_in_flutter
-import 'dart:js' as js;
+import 'package:aewallet/infrastructure/rpc/browser_extension_aws.js.dart';
 
 void updateExtensionIcon(bool isLocked) {
-  js.context.callMethod('chrome.runtime.sendMessage', [
+  sendMessage(
+    null,
     {
       'type': 'updateIcon',
       'isLocked': isLocked,
-    }
-  ]);
+    }.toJS,
+    null,
+    null,
+  );
 }

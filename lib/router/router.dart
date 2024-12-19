@@ -26,6 +26,7 @@ import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sh
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/lock_icon_updater.dart';
 import 'package:aewallet/ui/views/authenticate/logging_out.dart';
 import 'package:aewallet/ui/views/authenticate/privacy_mask.dart';
 import 'package:aewallet/ui/views/authenticate/set_biometrics_screen.dart';
@@ -143,7 +144,7 @@ class AutoLockGuardRoute extends ShellRoute {
               key: state.pageKey,
               child: PrivacyMaskGuard(
                 child: AutoLockGuard(
-                  child: child,
+                  child: LockIconUpdater(child: child),
                 ),
               ),
             );
