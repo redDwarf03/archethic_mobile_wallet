@@ -166,13 +166,25 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: DAppsBoardWebview.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: DAppsBoardWebview(
-        dappUrl: (state.extra! as Map<String, dynamic>)['dappUrl']! as String,
-        dappName: (state.extra! as Map<String, dynamic>)['dappName']! as String,
-        dappCode: (state.extra! as Map<String, dynamic>)['dappCode']! as String,
-      ),
-    ),
+    pageBuilder: (context, state) {
+      final extraData = state.extra as Map<String, dynamic>?;
+      final dappUrl =
+          extraData?['dappUrl'] ?? state.uri.queryParameters['dappUrl'] ?? '';
+      final dappName =
+          extraData?['dappName'] ?? state.uri.queryParameters['dappName'] ?? '';
+      final dappCode =
+          extraData?['dappCode'] ?? state.uri.queryParameters['dappCode'] ?? '';
+      final deeplink = state.uri.queryParameters['deeplink'] != null;
+
+      return NoTransitionPage<void>(
+        key: state.pageKey,
+        child: DAppsBoardWebview(
+          dappUrl: dappUrl,
+          dappName: dappName,
+          dappCode: dappCode,
+          deeplink: deeplink,
+        ),
+      );
+    },
   ),
 ];
