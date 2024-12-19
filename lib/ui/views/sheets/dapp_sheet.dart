@@ -5,7 +5,6 @@ import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -16,20 +15,42 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+enum DAppUnavaibleCause {
+  featureNotSupported,
+  disabled,
+}
+
+typedef FeatureUnavailableBuilder = Widget Function(
+  DAppUnavaibleCause unavailabilityCause,
+  DApp dapp,
+)?;
+
 class DAppSheet extends ConsumerStatefulWidget {
   factory DAppSheet({
     required String dappKey,
-    String? featureCode,
     String? launchMessage,
     String? launchButtonLabel,
-    Widget? featureFlagFalseWidget,
+  }) =>
+      DAppSheet._(
+        dappKey: dappKey,
+        launchMessage: launchMessage,
+        launchButtonLabel: launchButtonLabel,
+        key: Key(dappKey),
+      );
+
+  factory DAppSheet.withFeatureFlag({
+    required String dappKey,
+    required String featureCode,
+    required FeatureUnavailableBuilder featureUnavailableBuilder,
+    String? launchMessage,
+    String? launchButtonLabel,
   }) =>
       DAppSheet._(
         dappKey: dappKey,
         featureCode: featureCode,
         launchMessage: launchMessage,
         launchButtonLabel: launchButtonLabel,
-        featureFlagFalseWidget: featureFlagFalseWidget,
+        featureUnavailableBuilder: featureUnavailableBuilder,
         key: Key(dappKey),
       );
 
@@ -38,7 +59,7 @@ class DAppSheet extends ConsumerStatefulWidget {
     this.featureCode,
     this.launchMessage,
     this.launchButtonLabel,
-    this.featureFlagFalseWidget,
+    this.featureUnavailableBuilder,
     super.key,
   });
 
@@ -46,9 +67,7 @@ class DAppSheet extends ConsumerStatefulWidget {
   final String? featureCode;
   final String? launchMessage;
   final String? launchButtonLabel;
-  final Widget? featureFlagFalseWidget;
-
-  static bool get isAvailable => AWCWebview.isAvailable;
+  final FeatureUnavailableBuilder? featureUnavailableBuilder;
 
   @override
   ConsumerState<DAppSheet> createState() => DAppSheetState();
@@ -56,44 +75,63 @@ class DAppSheet extends ConsumerStatefulWidget {
 
 class DAppSheetState extends ConsumerState<DAppSheet>
     with AutomaticKeepAliveClientMixin {
-  String? dappUrl;
-  bool? featureFlags;
+  DApp? dapp;
+  DAppUnavaibleCause? unavailabilityCause;
 
   @override
   bool get wantKeepAlive => true;
 
+  Future<bool> checkIsSupported() async {
+    if (!AWCWebview.isAvailable) return false;
+    if (!await AWCWebview.isAWCSupported) return false;
+    return true;
+  }
+
+  Future<bool> checkShouldUseExternalBrowser() async {
+    final featureCode = widget.featureCode;
+
+    if (featureCode == null) return false;
+
+    final flag = await ref.watch(
+      getFeatureFlagProvider(
+        kApplicationCode,
+        featureCode,
+      ).future,
+    );
+
+    if (flag == null) return true;
+    return !flag;
+  }
+
+  Future<DAppUnavaibleCause?> checkUnavailabilityCause() async {
+    if (!await checkIsSupported()) {
+      return DAppUnavaibleCause.featureNotSupported;
+    }
+    if (await checkShouldUseExternalBrowser()) {
+      return DAppUnavaibleCause.disabled;
+    }
+    return null;
+  }
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      var dappKey = widget.dappKey;
-
-      if (widget.featureCode != null) {
-        final _featureFlag = await ref.watch(
-          getFeatureFlagProvider(
-            kApplicationCode,
-            widget.featureCode!,
-          ).future,
-        );
-        if (_featureFlag == null ||
-            _featureFlag == false ||
-            !DAppSheet.isAvailable) {
-          dappKey = '${dappKey}Ext';
-        }
-        setState(() {
-          featureFlags = _featureFlag;
-        });
-      }
-
       final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-      DApp? dapp;
-      if (connectivityStatusProvider == ConnectivityStatus.isConnected) {
-        dapp = await ref.read(
-          getDAppProvider(dappKey).future,
-        );
-        setState(() {
-          dappUrl = dapp!.url;
-        });
-      }
+      if (connectivityStatusProvider != ConnectivityStatus.isConnected) return;
+
+      final _unavailabilityCause = await checkUnavailabilityCause();
+
+      final dappKey = _unavailabilityCause == null
+          ? widget.dappKey
+          : '${widget.dappKey}Ext';
+
+      final dapp = await ref.read(
+        getDAppProvider(dappKey).future,
+      );
+      setState(() {
+        unavailabilityCause = _unavailabilityCause;
+        this.dapp = dapp;
+      });
     });
     super.initState();
   }
@@ -101,12 +139,9 @@ class DAppSheetState extends ConsumerState<DAppSheet>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final localizations = AppLocalizations.of(context)!;
 
-    if (widget.featureFlagFalseWidget != null &&
-        featureFlags != null &&
-        featureFlags == false) {
-      return widget.featureFlagFalseWidget ?? const SizedBox.shrink();
+    if (unavailabilityCause != null) {
+      return widget.featureUnavailableBuilder!(unavailabilityCause!, dapp!);
     }
 
     if (UniversalPlatform.isDesktopOrWeb) {
@@ -161,9 +196,9 @@ class DAppSheetState extends ConsumerState<DAppSheet>
                     Dimens.buttonBottomDimens,
                     key: const Key('LaunchApplication'),
                     onPressed: () async {
-                      await launchUrl(Uri.parse(dappUrl!));
+                      await launchUrl(Uri.parse(dapp!.url));
                     },
-                    disabled: dappUrl == null,
+                    disabled: dapp?.url == null,
                   ),
                 ],
               ),
@@ -173,33 +208,15 @@ class DAppSheetState extends ConsumerState<DAppSheet>
       );
     }
 
-    if (!DAppSheet.isAvailable) {
-      return SafeArea(
-        child: UnavailableFeatureWarning(
-          title: localizations.androidWebViewIncompatibilityWarning,
-          description: localizations.androidWebViewIncompatibilityWarningDesc,
-        ),
-      );
-    }
-
     return SafeArea(
-      child: FutureBuilder<bool>(
-        future: AWCWebview.isAWCSupported,
-        builder: (context, snapshot) {
-          final isAWCSupported = snapshot.data;
-          if (isAWCSupported == null || dappUrl == null) {
+      child: Builder(
+        builder: (context) {
+          if (dapp == null) {
             return const Center(child: LoadingListHeader());
           }
 
-          if (!isAWCSupported) {
-            return UnavailableFeatureWarning(
-              title: localizations.webChannelIncompatibilityWarning,
-              description: localizations.webChannelIncompatibilityWarningDesc,
-            );
-          }
-
           return AWCWebview(
-            uri: Uri.parse(dappUrl!),
+            uri: Uri.parse(dapp!.url),
           );
         },
       ),
