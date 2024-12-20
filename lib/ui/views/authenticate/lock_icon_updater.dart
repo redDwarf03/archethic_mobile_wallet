@@ -1,5 +1,6 @@
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/update_extension_icon.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/update_extension_icon_non_web.dart'
+    if (dart.library.js) 'package:aewallet/modules/aeswap/ui/views/util/update_extension_icon_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
