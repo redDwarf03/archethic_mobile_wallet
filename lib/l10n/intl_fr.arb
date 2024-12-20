@@ -267,6 +267,7 @@
     "searchField": "Recherche...",
     "search": "Rechercher",
     "pleaseWait": "Veuillez patienter",
+    "pleaseWaitChangeNetwork": "Changement d'environnement en cours",
     "appWalletInitInProgress": "Votre wallet est en cours de configuration...",
     "sendMessageHeader": "Message",
     "sendMessageConfirmHeader": "Votre message :",
@@ -690,5 +691,15 @@
     "dappBoardArchethicSelectionTitle": "La sélection d'Archethic",
     "dappBoardMySelectionTitle": "Ma sélection",
     "dappBoardMyDAppFavoriteAdd": "La DApp a été ajoutée dans vos favoris. Retrouvez là dans le menu général, section \"DApps Board\"",
-    "dappBoardMyDAppFavoriteRemove": "La DApp a été supprimée de vos favoris."
+    "dappBoardMyDAppFavoriteRemove": "La DApp a été supprimée de vos favoris.",
+    "networkChangeHeader": "Changement d'env.",
+    "networkChangeKeychainNotExists": "Votre wallet n'existe pas encore dans l'environnement {envName}. Nous vous proposons de le créer automatiquement.\nVeuillez sélectionner les comptes que vous souhaitez dupliquer dans cet environnement. Vous pourrez à tout moment ajouter ou retirer des comptes sur votre wallet {envName}.\n\nImportant :\n- Il n'existe aucune synchronisation automatique entre les environnements.\n- Les fonds, tokens, NFT et UCO ne peuvent pas être transférés ou dupliqués entre les environnements. Les comptes créés dans Testnet seront donc vides.",
+    "@networkChangeKeychainNotExists": {
+        "placeholders": {
+            "envName": {
+                "type": "String"
+            }
+        }
+    },
+    "networkChangeCreateKeychainBtn": "Créer le wallet"
 }

@@ -2,7 +2,7 @@ import 'package:aewallet/util/universal_platform.dart';
 
 /// Simply activate/deactivate features.
 class FeatureFlags {
-  static const forceLogout = false;
+  static const forceLogout = true;
   static const tokenFungibleCreationFeature = false;
   static const dappBoard = true;
   static final privacyMask = !UniversalPlatform

@@ -124,19 +124,12 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     );
   }
 
-  Future<LoggedInSession?> restoreFromMnemonics({
-    required List<String> mnemonics,
+  Future<LoggedInSession?> restoreFromSeed({
+    required String seed,
     required String languageCode,
   }) async {
     await _appWalletDatasource.clearAppWallet();
 
-    final seed = AppMnemomics.mnemonicListToSeed(
-      mnemonics,
-      languageCode: languageCode,
-    );
-    if (seed.isEmpty) {
-      return null;
-    }
     final vault = await KeychainInfoVaultDatasource.getInstance();
 
     await vault.setSeed(seed);
@@ -168,7 +161,33 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
         ),
       );
     } catch (e) {
+      if (e.toString() == "Exception: Keychain doesn't exists") {
+        throw const ArchethicKeychainNotExistsException();
+      }
+
       return null;
     }
   }
+
+  Future<LoggedInSession?> restoreFromMnemonics({
+    required List<String> mnemonics,
+    required String languageCode,
+  }) async {
+    await _appWalletDatasource.clearAppWallet();
+
+    final seed = AppMnemomics.mnemonicListToSeed(
+      mnemonics,
+      languageCode: languageCode,
+    );
+    if (seed.isEmpty) {
+      return null;
+    }
+    return restoreFromSeed(seed: seed, languageCode: languageCode);
+  }
+}
+
+// TODO(reddwarf03): Move to libdart
+@immutable
+class ArchethicKeychainNotExistsException implements ArchethicException {
+  const ArchethicKeychainNotExistsException();
 }
