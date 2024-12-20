@@ -1,4 +1,6 @@
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,7 +43,19 @@ class _LoggedInProvidersState extends ConsumerState<HomeProvidersKeepalive>
         await ref.read(homePageProvider.notifier).stopSubscriptions();
         break;
       case AppLifecycleState.resumed:
-        await ref.read(homePageProvider.notifier).startSubscriptions();
+        await ref
+            .read(
+              aedappfm.CoinPriceProviders.coinPrices.notifier,
+            )
+            .startTimer();
+        await ref
+            .read(
+              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+            )
+            .startSubscription();
+
+        // TODO(Chralu): Check Issue https://github.com/archethic-foundation/archethic-wallet/issues/1199
+        // await ref.read(homePageProvider.notifier).startSubscriptions();
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
