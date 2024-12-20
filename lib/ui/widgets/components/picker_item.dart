@@ -40,6 +40,7 @@ class PickerWidget<T> extends ConsumerStatefulWidget {
     required this.pickerItems,
     this.onSelected,
     this.onUnselected,
+    this.getSelectedIndexes,
     List<int>? selectedIndexes,
     this.multipleSelectionsAllowed = false,
     this.height,
@@ -50,6 +51,7 @@ class PickerWidget<T> extends ConsumerStatefulWidget {
 
   final FutureOr<void> Function(PickerItem<T>)? onSelected;
   final FutureOr<void> Function(PickerItem<T>)? onUnselected;
+  final FutureOr<void> Function(List<int>?)? getSelectedIndexes;
   final List<PickerItem<T>> pickerItems;
   late final List<int> selectedIndexes;
   final bool multipleSelectionsAllowed;
@@ -99,6 +101,7 @@ class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
                     selectedIndexes.add(index);
                   });
                   widget.onSelected?.call(widget.pickerItems[index]);
+                  widget.getSelectedIndexes?.call(selectedIndexes);
                 }
               },
               key: pickerItem.key,

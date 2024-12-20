@@ -275,6 +275,7 @@
     "searchField": "Search...",
     "search": "Search",
     "pleaseWait": "Please wait",
+    "pleaseWaitChangeNetwork": "Network change in progress",
     "appWalletInitInProgress": "Your wallet is being configured...",
     "sendMessageHeader": "Message",
     "sendMessageConfirmHeader": "Your message :",
@@ -698,5 +699,15 @@
     "dappBoardArchethicSelectionTitle": "Archethic Selection",
     "dappBoardMySelectionTitle": "My Selection",
     "dappBoardMyDAppFavoriteAdd": "The DApp has been added to your favorites. You'll find it in the \"DApps Board\" section of the general menu.",
-    "dappBoardMyDAppFavoriteRemove": "The DApp has been removed from your favorites."
+    "dappBoardMyDAppFavoriteRemove": "The DApp has been removed from your favorites.",
+    "networkChangeHeader": "Network change",
+    "networkChangeKeychainNotExists": "Your wallet doesn't yet exist in the {envName} environment. You can create it automatically.\nPlease select the accounts you wish to duplicate in this environment. You can add or remove accounts from your {envName} wallet at any time.\n\nImportant:\n- There is no automatic synchronization between environments.\n- Funds, tokens, NFTs, and UCO cannot be transferred or duplicated between environments. Accounts created in Testnet will be empty.",
+    "@networkChangeKeychainNotExists": {
+        "placeholders": {
+            "envName": {
+                "type": "String"
+            }
+        }
+    },
+    "networkChangeCreateKeychainBtn": "Create wallet"
 }
