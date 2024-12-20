@@ -1,0 +1,4 @@
+Version 4.1.0
+
+- Add Custom tokens management
+- Fix bugs
