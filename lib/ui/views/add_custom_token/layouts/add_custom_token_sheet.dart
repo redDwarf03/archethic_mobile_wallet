@@ -14,6 +14,8 @@ import 'package:aewallet/ui/views/add_custom_token/bloc/state.dart';
 import 'package:aewallet/ui/views/add_custom_token/layouts/components/add_custom_token_info_token.dart';
 import 'package:aewallet/ui/views/add_custom_token/layouts/components/add_custom_token_textfield_address.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,8 +23,10 @@ import 'package:go_router/go_router.dart';
 
 class AddCustomTokenSheet extends ConsumerWidget {
   const AddCustomTokenSheet({
+    this.myTokens,
     super.key,
   });
+  final List<aedappfm.AEToken>? myTokens;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -79,7 +83,9 @@ class AddCustomTokenSheet extends ConsumerWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    const AddCustomTokenTextFieldAddress(),
+                    AddCustomTokenTextFieldAddress(
+                      myTokens: myTokens,
+                    ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: AddCustomTokenInfoToken(),

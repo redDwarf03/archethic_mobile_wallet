@@ -77,11 +77,14 @@ class TokensListState extends ConsumerState<TokensList>
         Stack(
           alignment: Alignment.centerLeft,
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (FeatureFlags.tokenFungibleCreationFeature) TokenAddBtn(),
-                CustomTokenAddBtn(),
+                if (FeatureFlags.tokenFungibleCreationFeature)
+                  const TokenAddBtn(),
+                CustomTokenAddBtn(
+                  myTokens: tokens,
+                ),
               ],
             ),
             SizedBox(

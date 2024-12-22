@@ -10,8 +10,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CustomTokenAddBtn extends ConsumerWidget {
   const CustomTokenAddBtn({
+    this.myTokens,
     super.key,
   });
+
+  final List<aedappfm.AEToken>? myTokens;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +33,9 @@ class CustomTokenAddBtn extends ConsumerWidget {
                     child: Scaffold(
                       backgroundColor: aedappfm.AppThemeBase.sheetBackground
                           .withOpacity(0.2),
-                      body: const AddCustomTokenSheet(),
+                      body: AddCustomTokenSheet(
+                        myTokens: myTokens,
+                      ),
                     ),
                   );
                 },

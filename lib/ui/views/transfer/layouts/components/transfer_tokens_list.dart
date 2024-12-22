@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_token_detail.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +14,7 @@ class TransferTokensList extends ConsumerStatefulWidget {
     this.withNotVerified = false,
     this.withLPToken = false,
     this.withCustomToken = true,
+    this.myTokens,
     super.key,
   });
 
@@ -20,6 +23,7 @@ class TransferTokensList extends ConsumerStatefulWidget {
   final bool withNotVerified;
   final bool withLPToken;
   final bool withCustomToken;
+  final List<aedappfm.AEToken>? myTokens;
 
   @override
   ConsumerState<TransferTokensList> createState() => TransferTokensListState();
@@ -50,7 +54,18 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
           return const SizedBox.shrink();
         }
 
-        tokensList.sort((a, b) {
+        final filteredTokensList = widget.myTokens != null
+            ? tokensList.where((token) {
+                return widget.myTokens!
+                    .every((myToken) => myToken.address != token.address);
+              }).toList()
+            : tokensList;
+
+        if (filteredTokensList.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        filteredTokensList.sort((a, b) {
           if (a.address == null && b.address != null) return -1;
           if (a.address != null && b.address == null) return 1;
 
@@ -81,10 +96,10 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
                 top: MediaQuery.of(context).padding.top + 20,
                 bottom: MediaQuery.of(context).padding.bottom + 70,
               ),
-              itemCount: tokensList.length,
+              itemCount: filteredTokensList.length,
               itemBuilder: (BuildContext context, int index) {
                 return TransferTokenDetail(
-                  aeToken: tokensList[index],
+                  aeToken: filteredTokensList[index],
                 );
               },
             ),

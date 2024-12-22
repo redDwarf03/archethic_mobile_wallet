@@ -14,8 +14,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AddCustomTokenTextFieldAddress extends ConsumerStatefulWidget {
   const AddCustomTokenTextFieldAddress({
+    this.myTokens,
     super.key,
   });
+
+  final List<aedappfm.AEToken>? myTokens;
 
   @override
   ConsumerState<AddCustomTokenTextFieldAddress> createState() =>
@@ -145,11 +148,12 @@ class _AddCustomTokenTextFieldAddressState
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        const TransferTokensList(
+                                        TransferTokensList(
                                           withUCO: false,
                                           withLPToken: true,
                                           withNotVerified: true,
                                           withCustomToken: false,
+                                          myTokens: widget.myTokens,
                                         ),
                                       ],
                                     ),
