@@ -16,7 +16,7 @@ class CustomTokenAddBtn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
