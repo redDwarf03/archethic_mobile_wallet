@@ -85,7 +85,7 @@ class TokensListState extends ConsumerState<TokensList>
               ],
             ),
             SizedBox(
-              height: 48,
+              height: 30,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: _searchFieldWidth,
