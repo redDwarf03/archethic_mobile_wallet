@@ -108,7 +108,7 @@ class _IntroNewWalletDisclaimerState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return SheetAppBar(
-      title: ' ',
+      title: '',
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,

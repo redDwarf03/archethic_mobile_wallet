@@ -15,6 +15,7 @@ import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/menu/settings/network_change.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
@@ -37,6 +38,8 @@ import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

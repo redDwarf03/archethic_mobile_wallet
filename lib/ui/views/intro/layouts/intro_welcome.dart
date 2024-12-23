@@ -66,7 +66,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return SheetAppBar(
-      title: ' ',
+      title: '',
       widgetRight:
           connectivityStatusProvider == ConnectivityStatus.isDisconnected
               ? const Padding(

@@ -511,7 +511,7 @@ class _PinScreenState extends ConsumerState<_PinScreen>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return SheetAppBar(
-      title: ' ',
+      title: '',
       widgetLeft: widget.canNavigateBack
           ? BackButton(
               key: const Key('back'),
