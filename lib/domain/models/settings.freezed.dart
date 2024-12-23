@@ -23,7 +23,7 @@ mixin _$Settings {
   String get languageSeed => throw _privateConstructorUsedError;
   bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
-  bool get devMode => throw _privateConstructorUsedError;
+  bool get testnetEnabled => throw _privateConstructorUsedError;
   bool get activeRPCServer => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $SettingsCopyWith<$Res> {
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
-      bool devMode,
+      bool testnetEnabled,
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -77,7 +77,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
-    Object? devMode = null,
+    Object? testnetEnabled = null,
     Object? activeRPCServer = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -108,9 +108,9 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
               as bool,
-      devMode: null == devMode
-          ? _value.devMode
-          : devMode // ignore: cast_nullable_to_non_nullable
+      testnetEnabled: null == testnetEnabled
+          ? _value.testnetEnabled
+          : testnetEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
@@ -147,7 +147,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
-      bool devMode,
+      bool testnetEnabled,
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -173,7 +173,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
-    Object? devMode = null,
+    Object? testnetEnabled = null,
     Object? activeRPCServer = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -204,9 +204,9 @@ class __$$SettingsImplCopyWithImpl<$Res>
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
               as bool,
-      devMode: null == devMode
-          ? _value.devMode
-          : devMode // ignore: cast_nullable_to_non_nullable
+      testnetEnabled: null == testnetEnabled
+          ? _value.testnetEnabled
+          : testnetEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
@@ -238,7 +238,7 @@ class _$SettingsImpl extends _Settings {
       required this.languageSeed,
       required this.firstLaunch,
       required this.showBalances,
-      required this.devMode,
+      required this.testnetEnabled,
       required this.activeRPCServer,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
@@ -258,7 +258,7 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool showBalances;
   @override
-  final bool devMode;
+  final bool testnetEnabled;
   @override
   final bool activeRPCServer;
   @override
@@ -270,7 +270,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, devMode: $devMode, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, testnetEnabled: $testnetEnabled, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -289,7 +289,8 @@ class _$SettingsImpl extends _Settings {
                 other.firstLaunch == firstLaunch) &&
             (identical(other.showBalances, showBalances) ||
                 other.showBalances == showBalances) &&
-            (identical(other.devMode, devMode) || other.devMode == devMode) &&
+            (identical(other.testnetEnabled, testnetEnabled) ||
+                other.testnetEnabled == testnetEnabled) &&
             (identical(other.activeRPCServer, activeRPCServer) ||
                 other.activeRPCServer == activeRPCServer) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
@@ -310,7 +311,7 @@ class _$SettingsImpl extends _Settings {
       languageSeed,
       firstLaunch,
       showBalances,
-      devMode,
+      testnetEnabled,
       activeRPCServer,
       mainScreenCurrentPage,
       showPriceChart,
@@ -333,7 +334,7 @@ abstract class _Settings extends Settings {
       required final String languageSeed,
       required final bool firstLaunch,
       required final bool showBalances,
-      required final bool devMode,
+      required final bool testnetEnabled,
       required final bool activeRPCServer,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
@@ -354,7 +355,7 @@ abstract class _Settings extends Settings {
   @override
   bool get showBalances;
   @override
-  bool get devMode;
+  bool get testnetEnabled;
   @override
   bool get activeRPCServer;
   @override

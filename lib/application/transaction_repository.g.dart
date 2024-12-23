@@ -7,7 +7,7 @@ part of 'transaction_repository.dart';
 // **************************************************************************
 
 String _$archethicTransactionRepositoryHash() =>
-    r'b9d7e47b2e99de71d11e642991d47d51004aa838';
+    r'e834b3c6ccd35bcb5fa0a0fb58fd54c19186d9ef';
 
 /// See also [archethicTransactionRepository].
 @ProviderFor(archethicTransactionRepository)

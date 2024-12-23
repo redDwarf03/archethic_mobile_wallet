@@ -32,7 +32,7 @@ class NetworkChange extends ConsumerWidget {
     if (selectedAccount == null) return const SizedBox();
 
     return InkWell(
-      onTap: settings.devMode
+      onTap: settings.testnetEnabled
           ? () async {
               final _saveNetwork = settings.network;
               await context.push(NetworkDialog.routerPage);
@@ -101,7 +101,7 @@ class NetworkChange extends ConsumerWidget {
               ),
             ),
           ),
-          if (settings.devMode)
+          if (settings.testnetEnabled)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
