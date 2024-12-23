@@ -57,26 +57,28 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
           : [
               widgetRight!,
             ],
-      title: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: Column(
-          children: [
-            if (widgetBeforeTitle != null) widgetBeforeTitle!,
-            if (title.isNotEmpty)
-              AutoSizeText(
-                title,
-                style: styleTitle ??
-                    ArchethicThemeStyles.textStyleSize24W700Primary,
+      title: title.trim().isNotEmpty
+          ? FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Column(
+                children: [
+                  if (widgetBeforeTitle != null) widgetBeforeTitle!,
+                  if (title.isNotEmpty)
+                    AutoSizeText(
+                      title,
+                      style: styleTitle ??
+                          ArchethicThemeStyles.textStyleSize24W700Primary,
+                    ),
+                  if (widgetAfterTitle != null) widgetAfterTitle!,
+                  if (environment != Environment.mainnet)
+                    Text(
+                      environment.label,
+                      style: AppTextStyles.bodySmallSecondaryColor(context),
+                    ),
+                ],
               ),
-            if (widgetAfterTitle != null) widgetAfterTitle!,
-            if (environment != Environment.mainnet)
-              Text(
-                environment.label,
-                style: AppTextStyles.bodySmallSecondaryColor(context),
-              ),
-          ],
-        ),
-      ).animate().fade(duration: const Duration(milliseconds: 300)),
+            ).animate().fade(duration: const Duration(milliseconds: 300))
+          : const SizedBox(),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,

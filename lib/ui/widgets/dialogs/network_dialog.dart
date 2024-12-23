@@ -65,6 +65,11 @@ class NetworkDialog extends ConsumerWidget {
           await ref
               .read(SettingsProviders.settings.notifier)
               .setNetwork(selectedNetworkSettings);
+          await ref.read(SettingsProviders.settings.notifier).setTestnetEnabled(
+                selectedNetworkSettings.network !=
+                    AvailableNetworks.archethicMainNet,
+              );
+
           // If selected network is DevNet
           // Show a dialog to enter a custom network
           // else use the network selected
@@ -128,6 +133,7 @@ class NetworkDialog extends ConsumerWidget {
                                 networkDevEndpoint: uriInput.toString(),
                               ),
                             );
+
                         context.pop();
                       },
                     );

@@ -41,8 +41,9 @@ class CustomizationMenuView extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
+    final environment = ref.watch(environmentProvider);
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -76,8 +77,10 @@ class CustomizationMenuView extends ConsumerWidget
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      const _TestnetEnabledSettingsListItem(),
-                      const _SettingsListItem.spacer(),
+                      if (environment == aedappfm.Environment.mainnet)
+                        const _TestnetEnabledSettingsListItem(),
+                      if (environment == aedappfm.Environment.mainnet)
+                        const _SettingsListItem.spacer(),
                     ],
                   ),
                 ],
