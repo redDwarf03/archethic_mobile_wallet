@@ -22,7 +22,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
       network: loadedPreferences.getNetwork(),
       primaryCurrency: loadedPreferences.getPrimaryCurrency(),
       showBalances: loadedPreferences.getShowBalances(),
-      devMode: loadedPreferences.getDevMode(),
+      testnetEnabled: loadedPreferences.getTestnetEnabled(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
       priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
     );
@@ -40,7 +40,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setNetwork(settings.network);
     await loadedPreferences.setPrimaryCurrency(settings.primaryCurrency);
     await loadedPreferences.setShowBalances(settings.showBalances);
-    await loadedPreferences.setDevMode(settings.devMode);
+    await loadedPreferences.setTestnetEnabled(settings.testnetEnabled);
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
     await loadedPreferences
         .setPriceChartIntervalOption(settings.priceChartIntervalOption);

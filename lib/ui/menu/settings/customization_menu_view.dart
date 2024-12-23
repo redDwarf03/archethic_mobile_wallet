@@ -76,7 +76,7 @@ class CustomizationMenuView extends ConsumerWidget
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      const _DevModeSettingsListItem(),
+                      const _TestnetEnabledSettingsListItem(),
                       const _SettingsListItem.spacer(),
                     ],
                   ),
@@ -151,22 +151,22 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
   }
 }
 
-class _DevModeSettingsListItem extends ConsumerWidget {
-  const _DevModeSettingsListItem();
+class _TestnetEnabledSettingsListItem extends ConsumerWidget {
+  const _TestnetEnabledSettingsListItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final devModeSetting = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.devMode),
+    final testnetEnabledSetting = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.testnetEnabled),
     );
     final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
     return _SettingsListItem.withSwitch(
-      heading: localizations.devMode,
+      heading: localizations.testnetEnabled,
       icon: Symbols.deployed_code_account,
-      isSwitched: devModeSetting,
-      onChanged: (devMode) async {
-        await preferencesNotifier.setDevMode(devMode);
+      isSwitched: testnetEnabledSetting,
+      onChanged: (testnetEnabled) async {
+        await preferencesNotifier.setTestnetEnabled(testnetEnabled);
       },
     );
   }
