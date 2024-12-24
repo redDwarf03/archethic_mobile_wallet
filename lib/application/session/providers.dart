@@ -134,10 +134,10 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
 
     await vault.setSeed(seed);
 
-    try {
-      final apiService = ref.read(apiServiceProvider);
-      final appService = ref.read(appServiceProvider);
-      final keychain = await apiService.getKeychain(seed);
+    final apiService = ref.read(apiServiceProvider);
+    final appService = ref.read(appServiceProvider);
+    final keychain = await apiService.getKeychain(seed);
+
 
       final appWallet = await getListAccountsFromKeychain(
         keychain,
@@ -165,8 +165,20 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
         throw const ArchethicKeychainNotExistsException();
       }
 
+    if (appWallet == null) {
       return null;
     }
+
+    final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
+
+    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
+
+    return state = LoggedInSession(
+      wallet: appWallet.toModel(
+        seed: seed,
+        keychainSecuredInfos: keychainSecuredInfos,
+      ),
+    );
   }
 
   Future<LoggedInSession?> restoreFromMnemonics({
@@ -184,10 +196,4 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     }
     return restoreFromSeed(seed: seed, languageCode: languageCode);
   }
-}
-
-// TODO(reddwarf03): Move to libdart
-@immutable
-class ArchethicKeychainNotExistsException implements ArchethicException {
-  const ArchethicKeychainNotExistsException();
 }

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:math';
 import 'dart:typed_data';
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -82,74 +81,6 @@ mixin KeychainServiceMixin {
       onError(
         error,
         TransactionSendEventType.keychainAccess,
-      );
-    }
-  }
-
-  Future<void> createKeyChain(
-    String? seed,
-    String? name,
-    ApiService apiService,
-  ) async {
-    final _logger = Logger('createKeyChain');
-
-    /// Get Wallet KeyPair
-    final walletKeyPair = deriveKeyPair(seed!, 0);
-
-    /// Generate keyChain Seed from random value
-    final keychainSeed = uint8ListToHex(
-      Uint8List.fromList(
-        List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
-      ),
-    );
-
-    /// Default service for wallet
-    final kServiceName = 'archethic-wallet-${Uri.encodeFull(name!)}';
-    final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
-    const index = '0';
-    final kDerivationPath = '$kDerivationPathWithoutIndex$index';
-
-    final keychain = Keychain(seed: hexToUint8List(keychainSeed))
-        .copyWithService(kServiceName, kDerivationPath);
-
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
-    final originPrivateKey = apiService.getOriginKey();
-
-    /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final keychainTransaction = apiService.newKeychainTransaction(
-      keychainSeed,
-      <String>[uint8ListToHex(walletKeyPair.publicKey!)],
-      hexToUint8List(originPrivateKey),
-      blockchainTxVersion,
-      servicesMap: {kServiceName: kDerivationPath},
-    );
-
-    _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
-    try {
-      final confirmation = await ArchethicTransactionSender(
-        apiService: apiService,
-      ).send(
-        transaction: keychainTransaction,
-      );
-
-      if (confirmation == null) return;
-      onConfirmation(
-        confirmation,
-        TransactionSendEventType.keychain,
-        params: <String, Object>{
-          'keychainAddress':
-              keychainTransaction.address!.address!.toUpperCase(),
-          'originPrivateKey': originPrivateKey,
-          'keychain': keychain,
-        },
-      );
-    } on TransactionError catch (error) {
-      onError(
-        error,
-        TransactionSendEventType.keychain,
       );
     }
   }

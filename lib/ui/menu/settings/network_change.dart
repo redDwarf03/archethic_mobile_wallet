@@ -2,10 +2,13 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/util/accounts_dialog.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:flutter/material.dart';
@@ -57,11 +60,13 @@ class NetworkChange extends ConsumerWidget {
                           languageCode: languageSeed,
                         );
                     context.loadingOverlay.hide();
-                  } on ArchethicKeychainNotExistsException catch (_) {
+                  } catch (e) {
                     context.loadingOverlay.hide();
                     context.pop();
                     final session = ref.read(sessionNotifierProvider);
-                    await AccountsDialog.selectMultipleAccounts(
+
+                    final accounts =
+                        await AccountsDialog.selectMultipleAccounts(
                       context: context,
                       accounts: session.loggedIn!.wallet.appKeychain.accounts,
                       confirmBtnLabel:
@@ -74,7 +79,7 @@ class NetworkChange extends ConsumerWidget {
                           children: [
                             Text(
                               localizations.networkChangeKeychainNotExists(
-                                _saveNetwork.getDisplayName(context),
+                                _settings.network.getDisplayName(context),
                               ),
                               style: AppTextStyles.bodySmall(context),
                             ),
@@ -82,6 +87,39 @@ class NetworkChange extends ConsumerWidget {
                         ),
                       ),
                     );
+
+                    final nameList = <String>[];
+                    if (accounts == null || accounts.isEmpty) {
+                      return;
+                    }
+                    for (final account in accounts) {
+                      nameList.add(account.name);
+                    }
+
+                    try {
+                      await ref
+                          .read(createNewAppWalletCaseProvider)
+                          .run(seed, nameList);
+
+                      UIUtil.showSnackbar(
+                        'création ok',
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        duration: const Duration(milliseconds: 5000),
+                        icon: Symbols.info,
+                      );
+                    } catch (e) {
+                      UIUtil.showSnackbar(
+                        'Pb avec création + $e',
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        duration: const Duration(milliseconds: 5000),
+                      );
+                    }
                   }
                 }
               }
