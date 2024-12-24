@@ -7,9 +7,9 @@ import 'dart:async' as _i10;
 import 'dart:typed_data' as _i18;
 
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart'
-    as _i23;
+    as _i22;
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart'
-    as _i24;
+    as _i23;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as _i9;
 import 'package:archethic_dapp_framework_flutter/src/domain/models/ae_token.dart'
@@ -31,7 +31,6 @@ import 'package:archethic_lib_dart/src/model/transaction.dart' as _i4;
 import 'package:archethic_lib_dart/src/model/transaction_fee.dart' as _i3;
 import 'package:archethic_lib_dart/src/model/transaction_input.dart' as _i16;
 import 'package:archethic_lib_dart/src/model/transaction_status.dart' as _i2;
-import 'package:graphql/client.dart' as _i22;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i13;
 
@@ -730,8 +729,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
       ) as _i10.Future<_i7.BlockchainVersionModel>);
 
   @override
-  void manageLinkException(_i22.QueryResult<Object?>? result) =>
-      super.noSuchMethod(
+  void manageLinkException(dynamic result) => super.noSuchMethod(
         Invocation.method(
           #manageLinkException,
           [result],
@@ -814,7 +812,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockTokensRepositoryImpl extends _i1.Mock
-    implements _i23.TokensRepositoryImpl {
+    implements _i22.TokensRepositoryImpl {
   @override
   _i10.Future<Map<String, _i19.Token>> getTokensFromAddresses(
     List<String>? addresses,
@@ -839,10 +837,10 @@ class MockTokensRepositoryImpl extends _i1.Mock
     String? userGenesisAddress,
     List<String>? userTokenLocalAddresses,
     _i12.ApiService? apiService,
-    List<_i24.GetPoolListResponse>? poolsListRaw,
+    List<_i23.GetPoolListResponse>? poolsListRaw,
     _i11.Environment? environment,
     _i9.DefTokensRepositoryImpl? defTokensRepositoryImpl,
-    _i23.TokensRepositoryImpl? tokensRepositoryImpl, {
+    _i22.TokensRepositoryImpl? tokensRepositoryImpl, {
     bool? withUCO = true,
     bool? withVerified = true,
     bool? withLPToken = true,
@@ -878,11 +876,11 @@ class MockTokensRepositoryImpl extends _i1.Mock
   _i10.Future<_i8.AEToken> tokenModelToAETokenModel(
     _i19.Token? token,
     List<String>? verifiedTokens,
-    List<_i24.GetPoolListResponse>? poolsListRaw,
+    List<_i23.GetPoolListResponse>? poolsListRaw,
     _i11.Environment? environment,
     _i12.ApiService? apiService,
     _i9.DefTokensRepositoryImpl? defTokensRepository,
-    _i23.TokensRepositoryImpl? tokensRepository,
+    _i22.TokensRepositoryImpl? tokensRepository,
   ) =>
       (super.noSuchMethod(
         Invocation.method(

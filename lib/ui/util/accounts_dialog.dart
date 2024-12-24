@@ -111,7 +111,7 @@ class AccountsDialog {
       );
     }
 
-    await showCupertinoModalBottomSheet(
+    return showCupertinoModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(
@@ -131,11 +131,10 @@ class AccountsDialog {
         );
       },
     );
-    return;
   }
 }
 
-class AccountsDialogContent extends ConsumerWidget {
+class AccountsDialogContent extends ConsumerStatefulWidget {
   const AccountsDialogContent({
     required this.accounts,
     required this.multipleSelectionsAllowed,
@@ -154,9 +153,19 @@ class AccountsDialogContent extends ConsumerWidget {
   final List<PickerItem<Account>> pickerItemsList;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AccountsDialogContent> createState() =>
+      AccountsDialogContentState();
+}
+
+class AccountsDialogContentState extends ConsumerState<AccountsDialogContent> {
+  final pickerItemsListSelected = <PickerItem<Account>>[];
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     final localizations = AppLocalizations.of(context)!;
-    final pickerItemsListSelected = <PickerItem<Account>>[];
+
     return Stack(
       children: [
         ClipRRect(
@@ -177,36 +186,46 @@ class AccountsDialogContent extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      dialogTitle ?? localizations.accountsHeader,
+                      widget.dialogTitle ?? localizations.accountsHeader,
                       style: ArchethicThemeStyles.textStyleSize24W700Primary,
                     ),
                   ),
-                  header ?? const SizedBox(height: 20),
+                  widget.header ?? const SizedBox(height: 20),
                   Expanded(
                     child: Padding(
-                      padding: multipleSelectionsAllowed
+                      padding: widget.multipleSelectionsAllowed
                           ? const EdgeInsets.only(bottom: 130)
                           : EdgeInsets.zero,
                       child: PickerWidget(
-                        pickerItems: pickerItemsList,
-                        multipleSelectionsAllowed: multipleSelectionsAllowed,
+                        pickerItems: widget.pickerItemsList,
+                        multipleSelectionsAllowed:
+                            widget.multipleSelectionsAllowed,
                         scrollable: true,
                         onSelected: (pickerItem) {
-                          if (!multipleSelectionsAllowed) {
+                          if (!widget.multipleSelectionsAllowed) {
                             Navigator.of(context).pop(pickerItem.value);
                           }
                         },
-                        onUnselected: (_) {},
+                        onUnselected: (selectedIndexes) {
+                          setState(() {
+                            pickerItemsListSelected.removeWhere(
+                              (item) => item == selectedIndexes,
+                            );
+                          });
+                        },
                         selectedIndexes: const [],
                         getSelectedIndexes: (selectedIndexes) {
-                          if (selectedIndexes != null) {
-                            pickerItemsListSelected
-                              ..clear()
-                              ..addAll(
-                                selectedIndexes
-                                    .map((index) => pickerItemsList[index]),
-                              );
-                          }
+                          setState(() {
+                            if (selectedIndexes != null) {
+                              pickerItemsListSelected
+                                ..clear()
+                                ..addAll(
+                                  selectedIndexes.map(
+                                    (index) => widget.pickerItemsList[index],
+                                  ),
+                                );
+                            }
+                          });
                         },
                       ),
                     ),
@@ -216,7 +235,7 @@ class AccountsDialogContent extends ConsumerWidget {
             ),
           ),
         ),
-        if (multipleSelectionsAllowed)
+        if (widget.multipleSelectionsAllowed)
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -229,7 +248,7 @@ class AccountsDialogContent extends ConsumerWidget {
                   Row(
                     children: [
                       AppButtonTinyConnectivity(
-                        confirmBtnLabel ?? localizations.ok,
+                        widget.confirmBtnLabel ?? localizations.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () {
                           final _accountsList = pickerItemsListSelected
@@ -238,6 +257,7 @@ class AccountsDialogContent extends ConsumerWidget {
 
                           Navigator.of(context).pop(_accountsList);
                         },
+                        disabled: pickerItemsListSelected.isEmpty,
                       ),
                     ],
                   ),
