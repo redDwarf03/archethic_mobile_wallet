@@ -43,7 +43,7 @@ final _sortedAccountsProvider =
 // ignore: unused_element
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
 String _$getAccountNFTFilteredHash() =>
-    r'73fe7ac31e9add825086e35ef9722a312a702ce0';
+    r'd8dcecd583719e3076ef2f3da323b319f0d40121';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -77,12 +77,10 @@ class _GetAccountNFTFilteredFamily extends Family<List<AccountToken>> {
 
   /// See also [_getAccountNFTFiltered].
   _GetAccountNFTFilteredProvider call(
-    Account account, {
-    bool? favorite,
-  }) {
+    Account account,
+  ) {
     return _GetAccountNFTFilteredProvider(
       account,
-      favorite: favorite,
     );
   }
 
@@ -92,7 +90,6 @@ class _GetAccountNFTFilteredFamily extends Family<List<AccountToken>> {
   ) {
     return call(
       provider.account,
-      favorite: provider.favorite,
     );
   }
 
@@ -116,13 +113,11 @@ class _GetAccountNFTFilteredProvider
     extends AutoDisposeProvider<List<AccountToken>> {
   /// See also [_getAccountNFTFiltered].
   _GetAccountNFTFilteredProvider(
-    Account account, {
-    bool? favorite,
-  }) : this._internal(
+    Account account,
+  ) : this._internal(
           (ref) => _getAccountNFTFiltered(
             ref as _GetAccountNFTFilteredRef,
             account,
-            favorite: favorite,
           ),
           from: _getAccountNFTFilteredProvider,
           name: r'_getAccountNFTFilteredProvider',
@@ -134,7 +129,6 @@ class _GetAccountNFTFilteredProvider
           allTransitiveDependencies:
               _GetAccountNFTFilteredFamily._allTransitiveDependencies,
           account: account,
-          favorite: favorite,
         );
 
   _GetAccountNFTFilteredProvider._internal(
@@ -145,11 +139,9 @@ class _GetAccountNFTFilteredProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.account,
-    required this.favorite,
   }) : super.internal();
 
   final Account account;
-  final bool? favorite;
 
   @override
   Override overrideWith(
@@ -165,7 +157,6 @@ class _GetAccountNFTFilteredProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         account: account,
-        favorite: favorite,
       ),
     );
   }
@@ -177,16 +168,13 @@ class _GetAccountNFTFilteredProvider
 
   @override
   bool operator ==(Object other) {
-    return other is _GetAccountNFTFilteredProvider &&
-        other.account == account &&
-        other.favorite == favorite;
+    return other is _GetAccountNFTFilteredProvider && other.account == account;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, account.hashCode);
-    hash = _SystemHash.combine(hash, favorite.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -197,9 +185,6 @@ class _GetAccountNFTFilteredProvider
 mixin _GetAccountNFTFilteredRef on AutoDisposeProviderRef<List<AccountToken>> {
   /// The parameter `account` of this provider.
   Account get account;
-
-  /// The parameter `favorite` of this provider.
-  bool? get favorite;
 }
 
 class _GetAccountNFTFilteredProviderElement
@@ -209,8 +194,6 @@ class _GetAccountNFTFilteredProviderElement
 
   @override
   Account get account => (origin as _GetAccountNFTFilteredProvider).account;
-  @override
-  bool? get favorite => (origin as _GetAccountNFTFilteredProvider).favorite;
 }
 
 String _$accountsRepositoryHash() =>

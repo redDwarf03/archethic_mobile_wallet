@@ -34,8 +34,6 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.accountTokens,
     this.accountNFT,
     this.accountNFTCollections,
-    this.nftInfosOffChainList,
-    this.nftCategoryList,
     this.serviceType,
     this.customTokenAddressList,
   });
@@ -68,7 +66,6 @@ class Account extends HiveObject with KeychainServiceMixin {
     List<AccountToken>? accountTokens,
     List<AccountToken>? accountNFT,
     List<AccountToken>? accountNFTCollections,
-    List<NftInfosOffChain>? nftInfosOffChainList,
     List<int>? nftCategoryList,
     List<String>? customTokenAddressList,
   }) =>
@@ -86,8 +83,6 @@ class Account extends HiveObject with KeychainServiceMixin {
         accountNFT: accountNFT ?? this.accountNFT,
         accountNFTCollections:
             accountNFTCollections ?? this.accountNFTCollections,
-        nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
-        nftCategoryList: nftCategoryList ?? this.nftCategoryList,
         customTokenAddressList:
             customTokenAddressList ?? this.customTokenAddressList,
       );
@@ -129,12 +124,9 @@ class Account extends HiveObject with KeychainServiceMixin {
   List<AccountToken>? accountNFT;
 
   /// NFT Info Off Chain
+  @Deprecated('Thanks to hive, we should keep this unsued property...')
   @HiveField(10)
   List<NftInfosOffChain>? nftInfosOffChainList;
-
-  /// List of NFT category
-  @HiveField(11)
-  List<int>? nftCategoryList;
 
   /// Service Type
   @HiveField(13)
@@ -179,33 +171,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.accountNFT = accountNFT;
     this.accountNFTCollections = accountNFTCollections;
 
-    _addToken(accountNFT);
-    _addToken(accountNFTCollections);
-
     await updateAccount();
-  }
-
-  void _addToken(List<AccountToken>? accountTokens) {
-    if (accountTokens == null) {
-      return;
-    }
-
-    nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
-    for (final accountToken in accountTokens) {
-      final nftInfoOffChainExists = nftInfosOffChainList!.any(
-        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
-      );
-      if (nftInfoOffChainExists == true) {
-        continue;
-      }
-      nftInfosOffChainList!.add(
-        NftInfosOffChain(
-          categoryNftIndex: 0,
-          favorite: false,
-          id: accountToken.tokenInformation!.id,
-        ),
-      );
-    }
   }
 
   Future<void> updateBalance(
@@ -300,88 +266,6 @@ class Account extends HiveObject with KeychainServiceMixin {
 
   Future<void> updateAccount() async {
     await AccountHiveDatasource.instance().updateAccount(this);
-  }
-
-  Future<void> updateNftInfosOffChainFavorite(String? tokenId) async {
-    if (nftInfosOffChainList == null) {
-      final nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
-      final nftInfosOffChain =
-          NftInfosOffChain(categoryNftIndex: 0, favorite: false, id: tokenId);
-      nftInfosOffChainList.add(nftInfosOffChain);
-      await updateAccount();
-    } else {
-      for (final nftInfosOffChain in nftInfosOffChainList!) {
-        if (nftInfosOffChain.id == tokenId) {
-          if (nftInfosOffChain.favorite != null) {
-            nftInfosOffChain.favorite = !nftInfosOffChain.favorite!;
-          } else {
-            nftInfosOffChain.favorite = true;
-          }
-        }
-      }
-    }
-    await updateAccount();
-  }
-
-  NftInfosOffChain? getftInfosOffChain(String? tokenId) {
-    if (nftInfosOffChainList == null) {
-      final nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
-      final nftInfosOffChain =
-          NftInfosOffChain(categoryNftIndex: 0, favorite: false, id: tokenId);
-      nftInfosOffChainList.add(nftInfosOffChain);
-    } else {
-      for (final nftInfosOffChain in nftInfosOffChainList!) {
-        if (nftInfosOffChain.id == tokenId) {
-          return nftInfosOffChain;
-        }
-      }
-    }
-    return null;
-  }
-
-  Future<void> removeftInfosOffChain(String? tokenId) async {
-    if (nftInfosOffChainList == null) {
-      return;
-    }
-
-    nftInfosOffChainList!.removeWhere(
-      (element) => element.id == tokenId,
-    );
-
-    await updateAccount();
-  }
-
-  Future<void> updateNftInfosOffChain({
-    String? tokenAddress,
-    String? tokenId,
-    int? categoryNftIndex,
-    bool? favorite = false,
-    required AppService appService,
-  }) async {
-    final localOrRemoteToken = tokenId ??
-        (await appService.getToken([tokenAddress!]))[tokenAddress]!.id;
-
-    nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
-    if (nftInfosOffChainList!
-        .where((element) => element.id == localOrRemoteToken)
-        .isEmpty) {
-      nftInfosOffChainList!.add(
-        NftInfosOffChain(
-          id: localOrRemoteToken,
-          categoryNftIndex: categoryNftIndex,
-          favorite: favorite,
-        ),
-      );
-    } else {
-      nftInfosOffChainList![nftInfosOffChainList!
-              .indexWhere((element) => element.id == localOrRemoteToken)] =
-          NftInfosOffChain(
-        id: localOrRemoteToken,
-        categoryNftIndex: categoryNftIndex,
-        favorite: favorite,
-      );
-    }
-    await updateAccount();
   }
 
   Future<void> clearRecentTransactionsFromCache() async {

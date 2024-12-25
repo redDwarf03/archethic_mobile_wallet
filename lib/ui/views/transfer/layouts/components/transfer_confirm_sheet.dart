@@ -4,7 +4,6 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
@@ -105,27 +104,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
     try {
       final transfer = ref.read(TransferFormProvider.transferForm);
       if (transfer.transferType == TransferType.nft) {
-        final apiService = ref.read(apiServiceProvider);
-        final transactionMap =
-            await apiService.getLastTransaction([event.transactionAddress!]);
-        final transaction = transactionMap[event.transactionAddress!];
-        final tokenMap = await appService.getToken(
-          [
-            transaction!.data!.ledger!.token!.transfers[0].tokenAddress!,
-          ],
-        );
-
-        final selectedAccount = await ref
-            .read(
-              AccountProviders.accounts.future,
-            )
-            .selectedAccount;
-
-        await selectedAccount!.removeftInfosOffChain(
-          tokenMap[transaction.data!.ledger!.token!.transfers[0].tokenAddress!]!
-              .id,
-        ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
-
         unawaited(
           (await ref
                   .read(AccountProviders.accounts.notifier)

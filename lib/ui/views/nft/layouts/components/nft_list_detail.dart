@@ -1,7 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
@@ -11,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListDetail extends ConsumerWidget {
   const NFTListDetail({
@@ -99,82 +94,6 @@ class NFTListDetail extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class NFTCardBottom extends ConsumerWidget {
-  const NFTCardBottom({
-    super.key,
-    required this.tokenInformation,
-  });
-
-  final TokenInformation tokenInformation;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount =
-        ref.watch(AccountProviders.accounts).valueOrNull!.selectedAccount!;
-    final nftInfosOffChain = selectedAccount.getftInfosOffChain(
-      // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
-      tokenInformation.id,
-    );
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 10, top: 5),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                /*InkWell(
-                  onTap: (() async {
-                    await accountSelected
-                        .updateNftInfosOffChain(
-                            tokenAddress: widget.tokenInformation.address,
-                            favorite: false);
-                  }),
-                  child: const Icon(
-                    Symbols.verified,
-                    color: Colors.blue,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),*/
-                InkWell(
-                  onTap: () async {
-                    await selectedAccount.updateNftInfosOffChainFavorite(
-                      tokenInformation.id,
-                    );
-                  },
-                  child: nftInfosOffChain == null ||
-                          nftInfosOffChain.favorite == false
-                      ? Icon(
-                          Symbols.favorite_border,
-                          color: ArchethicTheme.favoriteIconColor,
-                          size: 18,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                        )
-                      : Icon(
-                          Symbols.favorite,
-                          color: ArchethicTheme.favoriteIconColor,
-                          size: 18,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                          fill: 1,
-                        ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

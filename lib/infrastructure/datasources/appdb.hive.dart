@@ -1,7 +1,6 @@
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
-import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -47,6 +46,8 @@ class DBHelper {
 
     Hive
       ..ignoreTypeId(HiveTypeIds.notificationsSetup)
+      ..ignoreTypeId(HiveTypeIds.pubKeyAccessRecipient)
+      ..ignoreTypeId(HiveTypeIds.contactAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.tokenCollection)
       ..registerAdapter(ContactAdapter())
       ..registerAdapter(HiveAppWalletDTOAdapter())
@@ -58,8 +59,6 @@ class DBHelper {
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
-      ..registerAdapter(PubKeyAccessRecipientAdapter())
-      ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(CacheItemHiveAdapter())
       ..registerAdapter(WalletTokenHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())

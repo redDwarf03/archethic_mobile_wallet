@@ -10,9 +10,6 @@ environment:
   flutter: ">=3.24.3"
 
 dependencies:
-  # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
-  animate_do: ^3.0.2
-
   # Retrieve version and url for local app update against store app Android and iOS
   app_version_update: ^5.0.2
 
@@ -39,9 +36,6 @@ dependencies:
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
-  # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
-  badges: ^3.0.3
-
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
   barcode_scan2: ^4.3.3
 
@@ -63,9 +57,6 @@ dependencies:
   # Flutter plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.
   connectivity_plus: ^5.0.2
 
-  # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
-  convert: ^3.1.1
-
   # Implementations of SHA, MD5, and HMAC cryptographic functions
   crypto: ^3.0.3
 
@@ -86,20 +77,8 @@ dependencies:
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
 
-  # Dart package to decode Exif data from tiff, jpeg and heic files.
-  exif: ^3.1.4
-
-  # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^6.2.0
-
-  # A package to get humanized file sizes. Translate raw file size into human readable strings
-  filesize: ^2.0.1
-
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
   fl_chart: ^0.66.2
-
-  # A component that provides flip card animation. It could be used for hide and show details of a product.
-  flip_card: ^0.7.0
 
   flutter:
     sdk: flutter
@@ -156,12 +135,6 @@ dependencies:
   # Convert all *.svg icons from dir to icon-font (.ttf) and generates flutter compatible dart class
   icon_font_generator: ^3.2.0
 
-  # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
-  image_picker: ^1.0.2
-
-  # ListViews pagination
-  infinite_scroll_pagination: ^4.0.0
-
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: ^0.19.0
 
@@ -176,8 +149,6 @@ dependencies:
 
   # JSON Schema implementation in Dart
   json_schema: ^5.1.2
-
-  lit_starfield: ^0.1.1
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+4
@@ -212,9 +183,6 @@ dependencies:
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
 
-  # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
-  path: ^1.9.0
-
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
   path_provider: ^2.1.0
 
@@ -239,14 +207,8 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^7.1.0
 
-  # Dartlang port of socket.io-client for web, flutter, dartvm to use
-  socket_io_client: ^2.0.3+1
-
   # An abstraction for two-way communication channels based on the Dart Stream class.
   stream_channel: any
-
-  # Lock mechanism to prevent concurrent access to asynchronous code.
-  synchronized: ^3.1.0
 
   # Tuple data structure
   tuple: ^2.0.1
@@ -265,9 +227,6 @@ dependencies:
 
   # RPC server
   web_socket_channel: ^3.0.1
-
-  # A Flutter plugin that provides a WebView widget on Android and iOS
-  webview_flutter: ^4.7.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.3.8

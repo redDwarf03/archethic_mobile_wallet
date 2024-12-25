@@ -9,33 +9,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: NftCreationProcessSheet.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const NftCreationProcessSheet(),
-    ),
-    routes: [
-      GoRoute(
-        name: AddAddress.routerPage,
-        path: AddAddress.routerPage,
-        pageBuilder: (context, state) => NoTransitionPage<void>(
-          key: state.pageKey,
-          child: AddAddress(
-            propertyName: AddAddressParams.fromJson(
-              state.extra! as Map<String, dynamic>,
-            ).propertyName,
-            propertyValue: AddAddressParams.fromJson(
-              state.extra! as Map<String, dynamic>,
-            ).propertyValue,
-            readOnly: AddAddressParams.fromJson(
-              state.extra! as Map<String, dynamic>,
-            ).readOnly,
-          ),
-        ),
-      ),
-    ],
-  ),
-  GoRoute(
     path: AddAccountSheet.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
@@ -134,27 +107,6 @@ final _authenticatedRoutes = [
                   ),
         tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
       ),
-    ),
-  ),
-  GoRoute(
-    path: NFTCreationProcessImportTabAEWebForm.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const NFTCreationProcessImportTabAEWebForm(),
-    ),
-  ),
-  GoRoute(
-    path: NFTCreationProcessImportTabHTTPForm.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const NFTCreationProcessImportTabHTTPForm(),
-    ),
-  ),
-  GoRoute(
-    path: NFTCreationProcessImportTabIPFSForm.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const NFTCreationProcessImportTabIPFSForm(),
     ),
   ),
   GoRoute(
