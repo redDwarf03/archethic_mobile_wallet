@@ -17,7 +17,6 @@ import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -44,20 +43,17 @@ Future<List<Account>> _sortedAccounts(Ref ref) async {
 @riverpod
 List<AccountToken> _getAccountNFTFiltered(
   Ref ref,
-  Account account, {
-  bool? favorite,
-}) {
+  Account account,
+) {
   return ref.watch(_accountRepositoryProvider).getAccountNFTFiltered(
         account,
-        favorite: favorite,
       );
 }
 
 class AccountRepository {
   List<AccountToken> getAccountNFTFiltered(
-    Account account, {
-    bool? favorite,
-  }) {
+    Account account,
+  ) {
     final accountNFTFiltered = <AccountToken>[
       ..._filterTokens(account, account.accountNFT),
       // A collection of NFT has the same address for all the sub NFT, we only want to display one NFT in that case
@@ -70,28 +66,15 @@ class AccountRepository {
 
   List<AccountToken> _filterTokens(
     Account account,
-    List<AccountToken>? accountTokens, {
-    bool? favorite,
-  }) {
+    List<AccountToken>? accountTokens,
+  ) {
     final listTokens = <AccountToken>[];
     if (accountTokens == null) {
       return listTokens;
     }
 
     for (final accountToken in accountTokens) {
-      final nftInfoOffChain = account.nftInfosOffChainList!.firstWhereOrNull(
-        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
-      );
-      if (nftInfoOffChain == null) {
-        continue;
-      }
-      if (favorite == null) {
-        listTokens.add(accountToken);
-      } else {
-        if (nftInfoOffChain.favorite == favorite) {
-          listTokens.add(accountToken);
-        }
-      }
+      listTokens.add(accountToken);
     }
 
     return listTokens;

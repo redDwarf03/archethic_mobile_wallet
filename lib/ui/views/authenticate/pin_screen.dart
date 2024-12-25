@@ -210,7 +210,9 @@ class _PinScreenState extends ConsumerState<_PinScreen>
         const Duration(milliseconds: 50),
         () async {
           if (widget.type == PinOverlayType.enterPin) {
-            await _decodePayload(context);
+            if (mounted) {
+              await _decodePayload(context);
+            }
           } else {
             if (!_awaitingConfirmation) {
               // Switch to confirm pin
@@ -220,7 +222,9 @@ class _PinScreenState extends ConsumerState<_PinScreen>
               });
             } else {
               // First and second pins match
-              await _encodePayload(context, ref);
+              if (mounted) {
+                await _encodePayload(context, ref);
+              }
             }
           }
         },

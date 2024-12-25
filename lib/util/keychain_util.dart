@@ -242,17 +242,6 @@ class KeychainUtil with KeychainServiceMixin {
           account.selected = false;
         }
 
-        // Get offchain infos if exists locally
-        if (appWallet != null) {
-          for (final element in appWallet.appKeychain.accounts) {
-            if (element.name == account.name) {
-              if (element.nftInfosOffChainList != null) {
-                account.nftInfosOffChainList = element.nftInfosOffChainList;
-              }
-            }
-          }
-        }
-
         accounts.add(account);
 
         if (serviceType == 'archethicWallet') {
