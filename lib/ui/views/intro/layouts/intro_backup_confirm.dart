@@ -49,6 +49,7 @@ class IntroBackupConfirm extends ConsumerStatefulWidget {
 }
 
 class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
+    with KeychainServiceMixin
     implements SheetSkeletonInterface {
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
@@ -134,7 +135,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           setState(() {
             keychainAccessRequested = true;
           });
-          await KeychainUtil().createKeyChainAccess(
+          await createKeyChainAccess(
             ref.read(SettingsProviders.settings).network,
             widget.seed,
             event.params!['keychainAddress']! as String,
@@ -522,7 +523,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
       final apiService = ref.read(apiServiceProvider);
       final originPrivateKey = apiService.getOriginKey();
 
-      await KeychainUtil().createKeyChain(
+      await createKeyChain(
         ref.read(SettingsProviders.settings).network,
         widget.seed,
         widget.name,

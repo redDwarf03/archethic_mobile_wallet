@@ -21,10 +21,27 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
 
-class KeychainUtil with KeychainServiceMixin {
-  final appWalletDatasource = AppWalletHiveDatasource.instance();
+mixin KeychainServiceMixin {
+  final kMainDerivation = "m/650'/";
 
-  final _logger = Logger('KeychainUtil');
+  String getServiceTypeFromPath(String derivationPath) {
+    var serviceType = 'other';
+    final name = derivationPath.replaceFirst(kMainDerivation, '');
+
+    if (name.startsWith('archethic-wallet-')) {
+      serviceType = 'archethicWallet';
+    } else {
+      if (name.startsWith('aeweb-')) {
+        serviceType = 'aeweb';
+      }
+    }
+    return serviceType;
+  }
+
+  String getNameFromPath(String derivationPath) {
+    final name = derivationPath.replaceFirst(kMainDerivation, '');
+    return name.split('/').first;
+  }
 
   Future<void> createKeyChainAccess(
     NetworksSetting networkSettings,
@@ -34,6 +51,8 @@ class KeychainUtil with KeychainServiceMixin {
     Keychain keychain,
     ApiService apiService,
   ) async {
+    final _logger = Logger('createKeyChainAccess');
+
     final blockchainTxVersion = int.parse(
       (await apiService.getBlockchainVersion()).version.transaction,
     );
@@ -78,6 +97,8 @@ class KeychainUtil with KeychainServiceMixin {
     String originPrivateKey,
     ApiService apiService,
   ) async {
+    final _logger = Logger('createKeyChain');
+
     /// Get Wallet KeyPair
     final walletKeyPair = deriveKeyPair(seed!, 0);
 
@@ -195,7 +216,8 @@ class KeychainUtil with KeychainServiceMixin {
         final lastTransactionMap =
             await apiService.getLastTransaction([addressKeychain]);
 
-        currentAppWallet = await appWalletDatasource.createAppWallet(
+        currentAppWallet =
+            await AppWalletHiveDatasource.instance().createAppWallet(
           lastTransactionMap[addressKeychain]!.address!.address!,
         );
       } else {
@@ -320,7 +342,7 @@ class KeychainUtil with KeychainServiceMixin {
       accounts.sort((a, b) => a.nameDisplayed.compareTo(b.nameDisplayed));
       currentAppWallet.appKeychain.accounts = accounts;
 
-      await appWalletDatasource.saveAppWallet(currentAppWallet);
+      await AppWalletHiveDatasource.instance().saveAppWallet(currentAppWallet);
     } catch (e) {
       throw Exception();
     }
