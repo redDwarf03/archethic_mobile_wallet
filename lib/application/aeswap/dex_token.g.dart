@@ -179,7 +179,7 @@ class _GetTokenFromAddressProviderElement
   dynamic get address => (origin as _GetTokenFromAddressProvider).address;
 }
 
-String _$tokensFromAccountHash() => r'1c72386cb1da228839f679494a627d6e051fbf68';
+String _$tokensFromAccountHash() => r'435effdb54b3a7feaf2bde08184bd9af2139cc34';
 
 /// See also [_tokensFromAccount].
 @ProviderFor(_tokensFromAccount)

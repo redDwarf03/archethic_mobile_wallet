@@ -6,7 +6,7 @@ part of 'balance.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userBalanceHash() => r'7a04c8bb2538d5b19c2329ab18a06f5d4471f44b';
+String _$userBalanceHash() => r'67519503831115c9998318b5c4d81eceb1bbad66';
 
 /// See also [userBalance].
 @ProviderFor(userBalance)

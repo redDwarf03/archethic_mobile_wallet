@@ -1,9 +1,8 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -29,7 +28,7 @@ class MenuWidgetWallet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;
@@ -142,13 +141,11 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ConnectivityStatus.isDisconnected) {
                     return;
                   }
-                  final poolListRaw =
-                      await ref.read(DexPoolProviders.getPoolListRaw.future);
 
                   await (await ref
-                          .read(AccountProviders.accounts.notifier)
+                          .read(accountsNotifierProvider.notifier)
                           .selectedAccountNotifier)
-                      ?.refreshRecentTransactions(poolListRaw);
+                      ?.refreshRecentTransactions();
 
                   if (context.mounted) {
                     ref.invalidate(ContactProviders.fetchContacts);

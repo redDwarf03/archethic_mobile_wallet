@@ -95,7 +95,7 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();
     await Vault.instance().clearSecureKey();
-    await AccountProviders.reset(ref);
+    ref.invalidate(accountsNotifierProvider);
 
     state = const Session.loggedOut();
   }

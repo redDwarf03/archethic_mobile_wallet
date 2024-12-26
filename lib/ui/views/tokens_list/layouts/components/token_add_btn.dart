@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -16,7 +16,7 @@ class TokenAddBtn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

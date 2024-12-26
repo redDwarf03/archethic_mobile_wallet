@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_confirm_sheet.dart';
@@ -53,7 +53,7 @@ class _LiquidityAddSheetState extends ConsumerState<LiquidityAddSheet> {
   Widget build(BuildContext context) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

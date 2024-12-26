@@ -6,7 +6,7 @@ part of 'usecases.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addLiquidityCaseHash() => r'03e2bb0672b6a31a94921ed9dc35e3412f0b5af0';
+String _$addLiquidityCaseHash() => r'8bd59bc6dcd599c04d31c26ce16d0af20978835b';
 
 /// See also [addLiquidityCase].
 @ProviderFor(addLiquidityCase)
@@ -23,7 +23,7 @@ final addLiquidityCaseProvider = AutoDisposeProvider<AddLiquidityCase>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AddLiquidityCaseRef = AutoDisposeProviderRef<AddLiquidityCase>;
-String _$claimFarmLockCaseHash() => r'bdc582170630000bbc4f6a16069a560d0e62e664';
+String _$claimFarmLockCaseHash() => r'bb3c70953f4ff9db691cfb4f172c2273bd0978a3';
 
 /// See also [claimFarmLockCase].
 @ProviderFor(claimFarmLockCase)
@@ -42,7 +42,7 @@ final claimFarmLockCaseProvider =
 // ignore: unused_element
 typedef ClaimFarmLockCaseRef = AutoDisposeProviderRef<ClaimFarmLockCase>;
 String _$depositFarmLockCaseHash() =>
-    r'f5a764bc64d659b7b7bb5c8974189bff20e679b6';
+    r'2b87c94617f9e958feedc0e43f4c0238f9d14c1b';
 
 /// See also [depositFarmLockCase].
 @ProviderFor(depositFarmLockCase)
@@ -61,7 +61,7 @@ final depositFarmLockCaseProvider =
 // ignore: unused_element
 typedef DepositFarmLockCaseRef = AutoDisposeProviderRef<DepositFarmLockCase>;
 String _$levelUpFarmLockCaseHash() =>
-    r'94c15553af516d421bbb06b49de6c1ef3bfdd777';
+    r'1a21dc5f33109c1ea66d4183234251e5659e3354';
 
 /// See also [levelUpFarmLockCase].
 @ProviderFor(levelUpFarmLockCase)
@@ -80,7 +80,7 @@ final levelUpFarmLockCaseProvider =
 // ignore: unused_element
 typedef LevelUpFarmLockCaseRef = AutoDisposeProviderRef<LevelUpFarmLockCase>;
 String _$removeLiquidityCaseHash() =>
-    r'b680863dcf52cf8232b9846e53f1cd2cc50bb7a1';
+    r'deb0ffb6f5eb855f60d90049ddba6dfb7c001747';
 
 /// See also [removeLiquidityCase].
 @ProviderFor(removeLiquidityCase)
@@ -98,7 +98,7 @@ final removeLiquidityCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef RemoveLiquidityCaseRef = AutoDisposeProviderRef<RemoveLiquidityCase>;
-String _$swapCaseHash() => r'339f36d8dedbc519cc9877b0a033a7ccff986ed6';
+String _$swapCaseHash() => r'70e64aef3b01eb2fa0e911363838f13db7508cba';
 
 /// See also [swapCase].
 @ProviderFor(swapCase)
@@ -115,7 +115,7 @@ final swapCaseProvider = AutoDisposeProvider<SwapCase>.internal(
 // ignore: unused_element
 typedef SwapCaseRef = AutoDisposeProviderRef<SwapCase>;
 String _$withdrawFarmLockCaseHash() =>
-    r'827f1005b80de784eb7e759d7605fe125bf3d4bd';
+    r'6da1aaebdc7edbda8cba2cafab9cc184aa14796a';
 
 /// See also [withdrawFarmLockCase].
 @ProviderFor(withdrawFarmLockCase)

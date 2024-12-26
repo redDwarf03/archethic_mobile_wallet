@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
@@ -33,7 +33,7 @@ class TokenDetailMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

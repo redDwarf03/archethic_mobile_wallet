@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
@@ -44,13 +44,10 @@ class HomePage extends _$HomePage {
               ..invalidate(environmentProvider)
               ..invalidate(ContactProviders.fetchContacts);
 
-            final poolListRaw =
-                await ref.read(DexPoolProviders.getPoolListRaw.future);
-
             await (await ref
-                    .read(AccountProviders.accounts.notifier)
+                    .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions(poolListRaw);
+                ?.refreshRecentTransactions();
           }
           if (next == ConnectivityStatus.isDisconnected) {
             /// When network becomes offline, stops subscriptions.

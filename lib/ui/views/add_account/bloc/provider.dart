@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -28,7 +28,7 @@ final _addAccountFormProvider =
   },
   dependencies: [
     AddAccountFormProvider.initialAddAccountForm,
-    AccountProviders.accounts,
+    accountsNotifierProvider,
     sessionNotifierProvider,
   ],
 );
@@ -75,7 +75,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       return false;
     }
 
-    final accounts = ref.read(AccountProviders.accounts).valueOrNull ?? [];
+    final accounts = ref.read(accountsNotifierProvider).valueOrNull ?? [];
     if (accounts
         .where(
           (Account element) =>

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -14,7 +14,6 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/model/setting_item.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';

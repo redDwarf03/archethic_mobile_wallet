@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
@@ -11,7 +11,6 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -105,12 +104,10 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       icon: Symbols.info,
     );
     await ref.read(sessionNotifierProvider.notifier).refresh();
-    final poolListRaw = await ref.read(DexPoolProviders.getPoolListRaw.future);
-
     await (await ref
-            .read(AccountProviders.accounts.notifier)
+            .read(accountsNotifierProvider.notifier)
             .selectedAccountNotifier)
-        ?.refreshRecentTransactions(poolListRaw);
+        ?.refreshRecentTransactions();
     context.loadingOverlay.hide();
     if (mounted) {
       context.pop();
@@ -152,7 +149,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
     final balanceTotalFiat = ref
         .watch(addressBalanceTotalFiatProvider(widget.account.genesisAddress));
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -171,16 +168,14 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
           }
           context.loadingOverlay.show();
           await ref
-              .read(AccountProviders.accounts.notifier)
+              .read(accountsNotifierProvider.notifier)
               .selectAccount(widget.account);
-          final poolListRaw =
-              await ref.read(DexPoolProviders.getPoolListRaw.future);
 
           await ref
               .read(
-                AccountProviders.account(widget.account.name).notifier,
+                accountNotifierProvider(widget.account.name).notifier,
               )
-              .refreshRecentTransactions(poolListRaw);
+              .refreshRecentTransactions();
 
           context.loadingOverlay.hide();
           context.pop();

@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';

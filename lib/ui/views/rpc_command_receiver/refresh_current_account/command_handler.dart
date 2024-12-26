@@ -1,10 +1,9 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,12 +24,10 @@ class RefreshCurrentAccountHandler extends CommandHandler {
                 awc.Failure.connectivity,
               );
             }
-            final poolListRaw =
-                await ref.read(DexPoolProviders.getPoolListRaw.future);
             await (await ref
-                    .read(AccountProviders.accounts.notifier)
+                    .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions(poolListRaw);
+                ?.refreshRecentTransactions();
             ref.invalidate(ContactProviders.fetchContacts);
 
             return const Result.success(awc.RefreshCurrentAccountResponse());

@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
@@ -72,7 +72,7 @@ class _FarmLockLevelUpSheetState extends ConsumerState<FarmLockLevelUpSheet> {
   Widget build(BuildContext context) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

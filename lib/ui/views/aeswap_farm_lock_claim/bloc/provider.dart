@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
@@ -100,7 +100,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     }
 
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -155,7 +155,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     }
 
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

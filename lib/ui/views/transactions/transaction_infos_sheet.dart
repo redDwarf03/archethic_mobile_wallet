@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -43,7 +43,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
   @override
   Widget build(BuildContext context) {
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -99,7 +99,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

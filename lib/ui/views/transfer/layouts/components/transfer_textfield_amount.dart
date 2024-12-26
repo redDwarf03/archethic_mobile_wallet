@@ -50,7 +50,7 @@ class _TransferTextFieldAmountState
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

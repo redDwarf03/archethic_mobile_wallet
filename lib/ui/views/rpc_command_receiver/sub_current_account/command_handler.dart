@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/utils/stream.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 final accountUpdateProvider = StreamProvider.autoDispose((ref) async* {
   final account =
-      await ref.watch(AccountProviders.accounts.future).selectedAccount;
+      await ref.watch(accountsNotifierProvider.future).selectedAccount;
   yield account?.toRPC;
 });
 

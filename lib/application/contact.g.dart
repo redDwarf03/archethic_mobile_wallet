@@ -177,7 +177,7 @@ class _FetchContactsProviderElement
 }
 
 String _$getSelectedContactHash() =>
-    r'bbf655d7266f9446ec246c8c9873cce82bd04c16';
+    r'353627eb44f9e3d0bfa8493c7cd45cf85a34f693';
 
 /// See also [_getSelectedContact].
 @ProviderFor(_getSelectedContact)

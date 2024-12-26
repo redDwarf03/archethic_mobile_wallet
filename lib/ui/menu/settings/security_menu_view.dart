@@ -293,21 +293,18 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
           localizations.resyncWalletAreYouSure,
           localizations.yes,
           () async {
-            final session = ref.read(sessionNotifierProvider).loggedIn!;
-            for (final element in session.wallet.appKeychain.accounts) {
-              await element.clearRecentTransactionsFromCache();
-            }
+            await ref
+                .read(accountsNotifierProvider.notifier)
+                .clearRecentTransactionsFromCache();
             final cache = await Hive.openBox<CacheItemHive>(
               CacheManagerHive.cacheManagerHiveTable,
             );
             await cache.clear();
             await TokensListHiveDatasource.clear();
-            final poolListRaw =
-                await ref.watch(DexPoolProviders.getPoolListRaw.future);
             await (await ref
-                    .read(AccountProviders.accounts.notifier)
+                    .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions(poolListRaw);
+                ?.refreshRecentTransactions();
           },
         );
       },

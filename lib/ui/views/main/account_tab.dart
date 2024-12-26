@@ -1,7 +1,6 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -30,7 +29,7 @@ class AccountTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;
@@ -42,13 +41,11 @@ class AccountTab extends ConsumerWidget {
         if (_connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
           return;
         }
-        final poolListRaw =
-            await ref.read(DexPoolProviders.getPoolListRaw.future);
 
         await (await ref
-                .read(AccountProviders.accounts.notifier)
+                .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions(poolListRaw);
+            ?.refreshRecentTransactions();
         ref.invalidate(ContactProviders.fetchContacts);
       }),
       child: ScrollConfiguration(

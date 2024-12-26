@@ -18,7 +18,7 @@ class MainMenuView extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
