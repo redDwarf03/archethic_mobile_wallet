@@ -6,41 +6,47 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repositoryHash() => r'9d6e088a720a2095a4061d2f27a0667df30d50c3';
+String _$priceHistoryRepositoryHash() =>
+    r'3b4f325abc67795b1bd581b58f29965e781fdc40';
 
-/// See also [_repository].
-@ProviderFor(_repository)
-final _repositoryProvider =
-    Provider<CoinPriceHistoryRepositoryInterface>.internal(
-  _repository,
-  name: r'_repositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$repositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _RepositoryRef = ProviderRef<CoinPriceHistoryRepositoryInterface>;
-String _$intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
-
-/// See also [_intervalOption].
-@ProviderFor(_intervalOption)
-final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
-  _intervalOption,
-  name: r'_intervalOptionProvider',
+/// See also [priceHistoryRepository].
+@ProviderFor(priceHistoryRepository)
+final priceHistoryRepositoryProvider =
+    AutoDisposeProvider<CoinPriceHistoryRepositoryInterface>.internal(
+  priceHistoryRepository,
+  name: r'priceHistoryRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$intervalOptionHash,
+      : _$priceHistoryRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String _$priceHistoryHash() => r'fc773f43bff37f0bb74da866458cb32727ee4cc3';
+typedef PriceHistoryRepositoryRef
+    = AutoDisposeProviderRef<CoinPriceHistoryRepositoryInterface>;
+String _$priceHistoryIntervalOptionHash() =>
+    r'a96fa0d83b79a3f48fdcfa2dd11f974310350086';
+
+/// See also [priceHistoryIntervalOption].
+@ProviderFor(priceHistoryIntervalOption)
+final priceHistoryIntervalOptionProvider =
+    AutoDisposeProvider<MarketPriceHistoryInterval>.internal(
+  priceHistoryIntervalOption,
+  name: r'priceHistoryIntervalOptionProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$priceHistoryIntervalOptionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PriceHistoryIntervalOptionRef
+    = AutoDisposeProviderRef<MarketPriceHistoryInterval>;
+String _$priceHistoryHash() => r'fe93818ce842d7c1cec311f2c67ed47bc3816114';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -63,27 +69,27 @@ class _SystemHash {
   }
 }
 
-/// See also [_priceHistory].
-@ProviderFor(_priceHistory)
-const _priceHistoryProvider = _PriceHistoryFamily();
+/// See also [priceHistory].
+@ProviderFor(priceHistory)
+const priceHistoryProvider = PriceHistoryFamily();
 
-/// See also [_priceHistory].
-class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>?>> {
-  /// See also [_priceHistory].
-  const _PriceHistoryFamily();
+/// See also [priceHistory].
+class PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>?>> {
+  /// See also [priceHistory].
+  const PriceHistoryFamily();
 
-  /// See also [_priceHistory].
-  _PriceHistoryProvider call({
+  /// See also [priceHistory].
+  PriceHistoryProvider call({
     int? ucid,
   }) {
-    return _PriceHistoryProvider(
+    return PriceHistoryProvider(
       ucid: ucid,
     );
   }
 
   @override
-  _PriceHistoryProvider getProviderOverride(
-    covariant _PriceHistoryProvider provider,
+  PriceHistoryProvider getProviderOverride(
+    covariant PriceHistoryProvider provider,
   ) {
     return call(
       ucid: provider.ucid,
@@ -102,32 +108,33 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_priceHistoryProvider';
+  String? get name => r'priceHistoryProvider';
 }
 
-/// See also [_priceHistory].
-class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
-  /// See also [_priceHistory].
-  _PriceHistoryProvider({
+/// See also [priceHistory].
+class PriceHistoryProvider
+    extends AutoDisposeFutureProvider<List<PriceHistoryValue>?> {
+  /// See also [priceHistory].
+  PriceHistoryProvider({
     int? ucid,
   }) : this._internal(
-          (ref) => _priceHistory(
-            ref as _PriceHistoryRef,
+          (ref) => priceHistory(
+            ref as PriceHistoryRef,
             ucid: ucid,
           ),
-          from: _priceHistoryProvider,
-          name: r'_priceHistoryProvider',
+          from: priceHistoryProvider,
+          name: r'priceHistoryProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$priceHistoryHash,
-          dependencies: _PriceHistoryFamily._dependencies,
+          dependencies: PriceHistoryFamily._dependencies,
           allTransitiveDependencies:
-              _PriceHistoryFamily._allTransitiveDependencies,
+              PriceHistoryFamily._allTransitiveDependencies,
           ucid: ucid,
         );
 
-  _PriceHistoryProvider._internal(
+  PriceHistoryProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -141,13 +148,13 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
 
   @override
   Override overrideWith(
-    FutureOr<List<PriceHistoryValue>?> Function(_PriceHistoryRef provider)
+    FutureOr<List<PriceHistoryValue>?> Function(PriceHistoryRef provider)
         create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _PriceHistoryProvider._internal(
-        (ref) => create(ref as _PriceHistoryRef),
+      override: PriceHistoryProvider._internal(
+        (ref) => create(ref as PriceHistoryRef),
         from: from,
         name: null,
         dependencies: null,
@@ -159,13 +166,13 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
   }
 
   @override
-  FutureProviderElement<List<PriceHistoryValue>?> createElement() {
+  AutoDisposeFutureProviderElement<List<PriceHistoryValue>?> createElement() {
     return _PriceHistoryProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _PriceHistoryProvider && other.ucid == ucid;
+    return other is PriceHistoryProvider && other.ucid == ucid;
   }
 
   @override
@@ -179,18 +186,19 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>?> {
+mixin PriceHistoryRef
+    on AutoDisposeFutureProviderRef<List<PriceHistoryValue>?> {
   /// The parameter `ucid` of this provider.
   int? get ucid;
 }
 
 class _PriceHistoryProviderElement
-    extends FutureProviderElement<List<PriceHistoryValue>?>
-    with _PriceHistoryRef {
+    extends AutoDisposeFutureProviderElement<List<PriceHistoryValue>?>
+    with PriceHistoryRef {
   _PriceHistoryProviderElement(super.provider);
 
   @override
-  int? get ucid => (origin as _PriceHistoryProvider).ucid;
+  int? get ucid => (origin as PriceHistoryProvider).ucid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

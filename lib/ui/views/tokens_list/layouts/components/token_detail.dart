@@ -69,7 +69,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
     final priceHistory = widget.aeToken.ucid != null && widget.aeToken.ucid != 0
         ? ref
             .watch(
-              PriceHistoryProviders.priceHistory(ucid: widget.aeToken.ucid),
+              priceHistoryProvider(ucid: widget.aeToken.ucid),
             )
             .valueOrNull
         : null;

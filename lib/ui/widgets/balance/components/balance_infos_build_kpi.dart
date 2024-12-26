@@ -29,7 +29,7 @@ class BalanceInfosKpi extends ConsumerWidget {
     }
 
     final selectedPriceHistoryInterval =
-        ref.watch(PriceHistoryProviders.scaleOption);
+        ref.watch(priceHistoryIntervalOptionProvider);
     return Row(
       children: <Widget>[
         AutoSizeText(
