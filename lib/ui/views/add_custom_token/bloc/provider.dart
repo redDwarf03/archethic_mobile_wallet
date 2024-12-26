@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/domain/models/token_parser.dart';
@@ -107,15 +107,12 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
       return false;
     }
 
-    final accountSelected = ref
-        .read(
-          AccountProviders.accounts,
-        )
-        .valueOrNull
-        ?.selectedAccount;
-    if (accountSelected != null &&
-        accountSelected.customTokenAddressList != null &&
-        accountSelected.checkCustomTokenAddress(state.tokenAddress)) {
+    final customTokenAddressAlreadyExists = await (await ref
+            .read(accountsNotifierProvider.notifier)
+            .selectedAccountNotifier)
+        ?.checkCustomTokenAddress(state.tokenAddress);
+    if (customTokenAddressAlreadyExists != null &&
+        customTokenAddressAlreadyExists) {
       setError(appLocalizations.customTokenAddressAlreadyExistsInAccount);
       return false;
     }
@@ -131,13 +128,11 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
       return false;
     }
 
-    final accountSelected = ref
-        .read(
-          AccountProviders.accounts,
-        )
-        .valueOrNull
-        ?.selectedAccount;
-    await accountSelected!.addCustomTokenAddress(state.tokenAddress);
+    await (await ref
+            .read(accountsNotifierProvider.notifier)
+            .selectedAccountNotifier)
+        ?.addCustomTokenAddress(state.tokenAddress);
+
     return true;
   }
 }

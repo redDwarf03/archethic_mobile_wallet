@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';

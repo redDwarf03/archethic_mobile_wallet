@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -128,7 +128,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.accounts
+      accountsNotifierProvider
           .select((value) => value.valueOrNull?.selectedAccount?.balance),
     );
 
@@ -164,7 +164,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (value) => value.valueOrNull?.selectedAccount?.balance,
       ),
     );

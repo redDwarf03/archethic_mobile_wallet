@@ -1,4 +1,5 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
@@ -113,7 +114,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -159,7 +160,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
 
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/utils/stream.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 final accountUpdateProvider = StreamProvider.autoDispose
     .family<awc.Account?, String>((ref, serviceName) async* {
-  final account = await ref.watch(AccountProviders.account(serviceName).future);
+  final account = await ref.watch(accountNotifierProvider(serviceName).future);
 
   yield account?.toRPC;
 });
@@ -26,7 +26,7 @@ class SubscribeAccountHandler extends CommandHandler {
             command as RPCCommand<awc.SubscribeAccountRequest>;
 
             final account = await ref.read(
-              AccountProviders.account(command.data.serviceName).future,
+              accountNotifierProvider(command.data.serviceName).future,
             );
 
             if (account == null) {

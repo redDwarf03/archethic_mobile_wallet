@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -34,7 +34,7 @@ class SignTransactionConfirmationFormNotifier
     RPCCommand<SendTransactionRequest> arg,
   ) async {
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -69,7 +69,7 @@ class SignTransactionConfirmationFormNotifier
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
           final accountSelected = ref.watch(
-            AccountProviders.accounts.select(
+            accountsNotifierProvider.select(
               (accounts) => accounts.valueOrNull?.selectedAccount,
             ),
           );

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -44,7 +44,7 @@ class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
           final accountSelected =
-              ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
+              ref.read(accountsNotifierProvider).valueOrNull?.selectedAccount;
           return useCase
               .run(
             SendTransactionCommand(

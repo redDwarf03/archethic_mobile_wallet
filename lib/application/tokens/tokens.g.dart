@@ -186,7 +186,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'65295bf500c0c6e9682ed073e1e342a741289f05';
+    r'254d8d9be48aae28c96b9dcc1e1cbc98999ac8a6';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)
@@ -389,7 +389,7 @@ class _TokensFromUserBalanceProviderElement
       (origin as TokensFromUserBalanceProvider).withCustomToken;
 }
 
-String _$tokensTotalUSDHash() => r'4cd1d9dfe1e4a3c828254a2be2461ee032318cc0';
+String _$tokensTotalUSDHash() => r'827c29176ad27d2aade080d6893b25aa2e65404f';
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/authentication/authentication.dart';

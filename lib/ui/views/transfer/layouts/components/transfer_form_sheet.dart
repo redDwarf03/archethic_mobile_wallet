@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -31,7 +31,7 @@ class TransferFormSheet extends ConsumerWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -49,7 +49,7 @@ class TransferFormSheet extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

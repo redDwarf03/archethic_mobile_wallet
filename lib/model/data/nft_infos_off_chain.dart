@@ -6,9 +6,9 @@ import 'package:hive/hive.dart';
 
 part 'nft_infos_off_chain.g.dart';
 
-/// Next field available : 5
 @HiveType(typeId: HiveTypeIds.nftInfosOffChain)
 class NftInfosOffChain extends HiveObject {
+  @Deprecated('Thanks to hive, we should keep this unsused class...')
   NftInfosOffChain({this.id, this.categoryNftIndex, this.favorite});
 
   /// Token's Id

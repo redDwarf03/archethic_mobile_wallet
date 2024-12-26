@@ -2,8 +2,8 @@
 
 import 'dart:async';
 import 'dart:ui';
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -186,7 +186,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
 
                 unawaited(
                   (await ref
-                          .read(AccountProviders.accounts.notifier)
+                          .read(accountsNotifierProvider.notifier)
                           .selectedAccountNotifier)
                       ?.refreshAll(poolListRaw),
                 );
@@ -632,7 +632,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     );
     if (selection != null) {
       await ref
-          .read(AccountProviders.accounts.notifier)
+          .read(accountsNotifierProvider.notifier)
           .selectAccount(selection);
     }
     return selection;

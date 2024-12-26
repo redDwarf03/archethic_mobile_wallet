@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -45,7 +45,7 @@ class RemoveServiceConfirmationFormNotifier
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
           final accountSelected =
-              ref.watch(AccountProviders.accounts).valueOrNull?.selectedAccount;
+              ref.watch(accountsNotifierProvider).valueOrNull?.selectedAccount;
           return useCase
               .run(
             SendTransactionCommand(

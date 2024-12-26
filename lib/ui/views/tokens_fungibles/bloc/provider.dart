@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -34,7 +34,7 @@ final _addTokenFormProvider =
   },
   dependencies: [
     AddTokenFormProvider.initialAddTokenForm,
-    AccountProviders.accounts,
+    accountsNotifierProvider,
     sessionNotifierProvider,
   ],
 );
@@ -105,7 +105,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   }) async {
     final selectedAccount = await ref
         .read(
-          AccountProviders.accounts.future,
+          accountsNotifierProvider.future,
         )
         .selectedAccount;
 
@@ -265,7 +265,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     final selectedAccount = await ref
         .read(
-          AccountProviders.accounts.future,
+          accountsNotifierProvider.future,
         )
         .selectedAccount;
 

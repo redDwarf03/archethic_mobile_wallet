@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
-
+import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';

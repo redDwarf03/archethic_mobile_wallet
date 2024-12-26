@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/application/notification.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/enum/dex_action_type.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';

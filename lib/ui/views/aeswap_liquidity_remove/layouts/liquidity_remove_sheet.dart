@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
@@ -61,7 +61,7 @@ class _LiquidityRemoveSheetState extends ConsumerState<LiquidityRemoveSheet> {
   Widget build(BuildContext context) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

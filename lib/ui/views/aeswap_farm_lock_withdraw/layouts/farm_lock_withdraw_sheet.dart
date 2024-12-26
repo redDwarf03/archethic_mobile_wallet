@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
@@ -68,7 +68,7 @@ class _FarmLockWithdrawSheetState extends ConsumerState<FarmLockWithdrawSheet> {
   Widget build(BuildContext context) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

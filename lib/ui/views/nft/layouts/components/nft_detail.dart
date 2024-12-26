@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -58,7 +58,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
   @override
   Widget build(BuildContext context) {
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -77,7 +77,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

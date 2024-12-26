@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:ui';
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -30,7 +30,7 @@ class ContactsDialog {
     var contacts = await ref.read(ContactProviders.fetchContacts().future);
     final accountSelected = await ref
         .read(
-          AccountProviders.accounts.future,
+          accountsNotifierProvider.future,
         )
         .selectedAccount;
 

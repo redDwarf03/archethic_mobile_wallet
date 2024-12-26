@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -86,7 +86,7 @@ class TransferSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (value) => value.valueOrNull?.selectedAccount,
       ),
     );

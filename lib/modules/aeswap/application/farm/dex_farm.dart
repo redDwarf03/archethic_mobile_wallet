@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/dex_config.dart';
@@ -34,7 +34,7 @@ Future<DexFarm?> _getFarmInfos(
   final poolList = await ref.watch(DexPoolProviders.getPoolList.future);
   final selectedAccount = await ref
       .read(
-        AccountProviders.accounts.future,
+        accountsNotifierProvider.future,
       )
       .selectedAccount;
 

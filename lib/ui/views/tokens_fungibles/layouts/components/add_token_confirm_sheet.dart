@@ -2,9 +2,8 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -90,18 +89,17 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
-    final poolListRaw = await ref.read(DexPoolProviders.getPoolListRaw.future);
     unawaited(
       (await ref
-              .read(AccountProviders.accounts.notifier)
+              .read(accountsNotifierProvider.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions(poolListRaw),
+          ?.refreshRecentTransactions(),
     );
     unawaited(
       (await ref
-              .read(AccountProviders.accounts.notifier)
+              .read(accountsNotifierProvider.notifier)
               .selectedAccountNotifier)
-          ?.refreshFungibleTokens(poolListRaw),
+          ?.refreshFungibleTokens(),
     );
     context.loadingOverlay.hide();
     context.pop();

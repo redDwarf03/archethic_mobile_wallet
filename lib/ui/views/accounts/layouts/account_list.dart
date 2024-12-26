@@ -1,6 +1,6 @@
 import 'dart:ui';
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +26,11 @@ class AccountsListState extends ConsumerState<AccountsList>
     super.build(context);
 
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-    final accountsList = ref.watch(AccountProviders.accounts).valueOrNull ?? [];
+    final accountsList = ref.watch(accountsNotifierProvider).valueOrNull ?? [];
     if (accountsList.isNotEmpty) {
       accountsList.sort(
         (a, b) => a.nameDisplayed.compareTo(b.nameDisplayed),

@@ -1,4 +1,5 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/app_service.dart';
@@ -11,7 +12,6 @@ import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/failure.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
@@ -122,12 +122,10 @@ class RemoveServiceHandler extends CommandHandler {
                         await ref
                             .read(sessionNotifierProvider.notifier)
                             .refresh();
-                        final poolListRaw = await ref
-                            .read(DexPoolProviders.getPoolListRaw.future);
                         await (await ref
-                                .read(AccountProviders.accounts.notifier)
+                                .read(accountsNotifierProvider.notifier)
                                 .selectedAccountNotifier)
-                            ?.refreshRecentTransactions(poolListRaw);
+                            ?.refreshRecentTransactions();
                       }
                     });
 
@@ -148,7 +146,7 @@ class RemoveServiceHandler extends CommandHandler {
     required RPCCommand<awc.RemoveServiceRequest> command,
   }) {
     final accountSelected =
-        ref.watch(AccountProviders.accounts).valueOrNull?.selectedAccount;
+        ref.watch(accountsNotifierProvider).valueOrNull?.selectedAccount;
 
     final message =
         AppLocalizations.of(context)!.removeServiceCommandReceivedNotification;

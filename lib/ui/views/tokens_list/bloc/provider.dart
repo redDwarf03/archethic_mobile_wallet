@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/application/utils/debounce.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
@@ -19,7 +19,7 @@ Future<List<AEToken>> tokens(
       shouldDebounce: searchCriteria.isNotEmpty,
       build: () async {
         final selectedAccount =
-            await ref.watch(AccountProviders.accounts.future).selectedAccount;
+            await ref.watch(accountsNotifierProvider.future).selectedAccount;
 
         if (selectedAccount == null) return [];
 

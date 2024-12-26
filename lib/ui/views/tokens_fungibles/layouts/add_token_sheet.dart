@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -22,7 +22,7 @@ class AddTokenSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .valueOrNull
         ?.selectedAccount;

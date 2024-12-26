@@ -1,4 +1,5 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -14,9 +15,8 @@ class GetCurrentAccountCommandHandler extends CommandHandler {
           handle: (command) async {
             command as RPCCommand<awc.GetCurrentAccountRequest>;
 
-            final selectedAccount = await ref
-                .read(AccountProviders.accounts.future)
-                .selectedAccount;
+            final selectedAccount =
+                await ref.read(accountsNotifierProvider.future).selectedAccount;
 
             if (selectedAccount == null) {
               return const Result.failure(

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
@@ -52,7 +52,7 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
   final environment = ref.watch(environmentProvider);
   final poolListRaw = await ref.watch(DexPoolProviders.getPoolListRaw.future);
   final selectedAccount =
-      await ref.watch(AccountProviders.accounts.future).selectedAccount;
+      await ref.watch(accountsNotifierProvider.future).selectedAccount;
 
   if (selectedAccount == null) return [];
 
@@ -87,7 +87,7 @@ Future<double> tokensTotalUSD(
   var total = 0.0;
   const _logName = 'tokensTotalUSD';
   final selectedAccount =
-      await ref.watch(AccountProviders.accounts.future).selectedAccount;
+      await ref.watch(accountsNotifierProvider.future).selectedAccount;
 
   if (selectedAccount == null) return 0.0;
 

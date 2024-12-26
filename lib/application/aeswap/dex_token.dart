@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -32,7 +32,7 @@ Future<List<DexToken>> _tokensFromAccount(
   Ref ref,
 ) async {
   final accountSelected = ref.watch(
-    AccountProviders.accounts.select(
+    accountsNotifierProvider.select(
       (accounts) => accounts.valueOrNull?.selectedAccount,
     ),
   );

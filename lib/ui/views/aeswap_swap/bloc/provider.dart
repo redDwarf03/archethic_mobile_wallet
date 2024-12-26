@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
@@ -759,7 +759,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
     }
 
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -894,7 +894,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
     }
 
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
@@ -17,7 +17,7 @@ Future<archethic.Balance> userBalance(Ref ref) async {
   final apiService = ref.watch(apiServiceProvider);
   final selectedAccount = await ref
       .watch(
-        AccountProviders.accounts.future,
+        accountsNotifierProvider.future,
       )
       .selectedAccount;
   final genesisAddress = selectedAccount?.genesisAddress ?? '';

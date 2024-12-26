@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
@@ -32,7 +32,7 @@ AddLiquidityCase addLiquidityCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -54,7 +54,7 @@ ClaimFarmLockCase claimFarmLockCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -76,7 +76,7 @@ DepositFarmLockCase depositFarmLockCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -98,7 +98,7 @@ LevelUpFarmLockCase levelUpFarmLockCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -120,7 +120,7 @@ RemoveLiquidityCase removeLiquidityCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -142,7 +142,7 @@ SwapCase swapCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,
@@ -164,7 +164,7 @@ WithdrawFarmLockCase withdrawFarmLockCase(
           .keychainSecuredInfos,
       selectedAccount: ref
           .watch(
-            AccountProviders.accounts,
+            accountsNotifierProvider,
           )
           .value!
           .selectedAccount!,

@@ -2,8 +2,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -131,20 +130,17 @@ class AddCustomTokenSheet extends ConsumerWidget {
 
                     if (!result) return;
 
-                    final poolListRaw =
-                        await ref.read(DexPoolProviders.getPoolListRaw.future);
-
                     unawaited(
                       (await ref
-                              .read(AccountProviders.accounts.notifier)
+                              .read(accountsNotifierProvider.notifier)
                               .selectedAccountNotifier)
-                          ?.refreshBalance(),
+                          ?.updateBalance(),
                     );
                     unawaited(
                       (await ref
-                              .read(AccountProviders.accounts.notifier)
+                              .read(accountsNotifierProvider.notifier)
                               .selectedAccountNotifier)
-                          ?.refreshFungibleTokens(poolListRaw),
+                          ?.refreshFungibleTokens(),
                     );
 
                     context.pop();

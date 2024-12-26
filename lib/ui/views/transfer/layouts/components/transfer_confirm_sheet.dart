@@ -3,10 +3,9 @@
 import 'dart:async';
 
 // Project imports:
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -106,25 +105,23 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       if (transfer.transferType == TransferType.nft) {
         unawaited(
           (await ref
-                  .read(AccountProviders.accounts.notifier)
+                  .read(accountsNotifierProvider.notifier)
                   .selectedAccountNotifier)
-              ?.refreshNFTs(),
+              ?.updateNFT(),
         );
       }
-      final poolListRaw =
-          await ref.read(DexPoolProviders.getPoolListRaw.future);
       unawaited(
         (await ref
-                .read(AccountProviders.accounts.notifier)
+                .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions(poolListRaw),
+            ?.refreshRecentTransactions(),
       );
       if (transfer.transferType == TransferType.token) {
         unawaited(
           (await ref
-                  .read(AccountProviders.accounts.notifier)
+                  .read(accountsNotifierProvider.notifier)
                   .selectedAccountNotifier)
-              ?.refreshFungibleTokens(poolListRaw),
+              ?.refreshFungibleTokens(),
         );
       }
     } finally {

@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
@@ -48,7 +48,7 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.accounts,
+          accountsNotifierProvider,
         )
         .value
         ?.selectedAccount;

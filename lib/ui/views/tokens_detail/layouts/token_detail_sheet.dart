@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/price_history/providers.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -152,27 +151,27 @@ class TokenDetailSheet extends ConsumerWidget
                     localizations.yes,
                     () async {
                       final accountSelected = ref.read(
-                        AccountProviders.accounts.select(
+                        accountsNotifierProvider.select(
                           (accounts) => accounts.valueOrNull?.selectedAccount,
                         ),
                       );
                       if (accountSelected != null && aeToken.address != null) {
-                        await accountSelected
-                            .removeCustomTokenAddress(aeToken.address!);
+                        await (await ref
+                                .read(accountsNotifierProvider.notifier)
+                                .selectedAccountNotifier)
+                            ?.removeCustomTokenAddress(aeToken.address!);
 
-                        final poolListRaw = await ref
-                            .read(DexPoolProviders.getPoolListRaw.future);
                         unawaited(
                           (await ref
-                                  .read(AccountProviders.accounts.notifier)
+                                  .read(accountsNotifierProvider.notifier)
                                   .selectedAccountNotifier)
-                              ?.refreshBalance(),
+                              ?.updateBalance(),
                         );
                         unawaited(
                           (await ref
-                                  .read(AccountProviders.accounts.notifier)
+                                  .read(accountsNotifierProvider.notifier)
                                   .selectedAccountNotifier)
-                              ?.refreshFungibleTokens(poolListRaw),
+                              ?.refreshFungibleTokens(),
                         );
                       }
                       context.pop();

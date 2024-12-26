@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -37,7 +37,7 @@ final _transferFormProvider =
   },
   dependencies: [
     TransferFormProvider.initialTransferForm,
-    AccountProviders.accounts,
+    accountsNotifierProvider,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
     PrimaryCurrencyProviders.convertedValue,
     sessionNotifierProvider,
@@ -308,7 +308,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   }) async {
     final selectedAccount = await ref
         .read(
-          AccountProviders.accounts.future,
+          accountsNotifierProvider.future,
         )
         .selectedAccount;
     final recipientAddress = formState.recipient.address;
@@ -688,7 +688,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final selectedAccount = await ref
         .read(
-          AccountProviders.accounts.future,
+          accountsNotifierProvider.future,
         )
         .selectedAccount;
 

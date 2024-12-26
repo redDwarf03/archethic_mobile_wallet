@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
@@ -392,7 +392,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
     }
 
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
@@ -535,7 +535,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
       return false;
     }
     final accountSelected = ref.read(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
