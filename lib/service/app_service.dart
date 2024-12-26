@@ -865,7 +865,7 @@ class AppService {
     final transactionMap = await apiService.getTransaction(
       [address],
       request:
-          ' address, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients }, type ',
+          ' address, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } actionRecipients { action, address, args } }, type ',
     );
     final transaction = transactionMap[address];
     if (transaction == null) {
