@@ -8,7 +8,6 @@ import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -49,13 +48,13 @@ class DBHelper {
       ..ignoreTypeId(HiveTypeIds.pubKeyAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.contactAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.tokenCollection)
+      ..ignoreTypeId(HiveTypeIds.price)
       ..registerAdapter(ContactAdapter())
       ..registerAdapter(HiveAppWalletDTOAdapter())
       ..registerAdapter(AccountBalanceAdapter())
       ..registerAdapter(AccountAdapter())
       ..registerAdapter(AppKeychainAdapter())
       ..registerAdapter(RecentTransactionAdapter())
-      ..registerAdapter(PriceAdapter())
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
