@@ -1,6 +1,6 @@
 part of 'providers.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class _AccountsNotifier extends _$AccountsNotifier {
   @override
   FutureOr<List<Account>> build() async {
@@ -54,7 +54,7 @@ extension AccountsExt on List<Account> {
   }
 }
 
-extension FuturteAccountsExt on Future<List<Account>> {
+extension FutureAccountsExt on Future<List<Account>> {
   Future<Account?> get selectedAccount async {
     return (await this).selectedAccount;
   }

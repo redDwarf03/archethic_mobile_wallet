@@ -11,6 +11,7 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -288,28 +289,5 @@ class Account extends HiveObject with KeychainServiceMixin {
   bool checkCustomTokenAddress(String tokenAddress) {
     if (Address(address: tokenAddress).isValid() == false) return false;
     return (customTokenAddressList ?? []).contains(tokenAddress.toUpperCase());
-  }
-}
-
-mixin KeychainServiceMixin {
-  final kMainDerivation = "m/650'/";
-
-  String getServiceTypeFromPath(String derivationPath) {
-    var serviceType = 'other';
-    final name = derivationPath.replaceFirst(kMainDerivation, '');
-
-    if (name.startsWith('archethic-wallet-')) {
-      serviceType = 'archethicWallet';
-    } else {
-      if (name.startsWith('aeweb-')) {
-        serviceType = 'aeweb';
-      }
-    }
-    return serviceType;
-  }
-
-  String getNameFromPath(String derivationPath) {
-    final name = derivationPath.replaceFirst(kMainDerivation, '');
-    return name.split('/').first;
   }
 }
