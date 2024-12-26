@@ -38,7 +38,6 @@ class Account extends HiveObject {
     List<AccountToken>? accountTokens,
     List<AccountToken>? accountNFT,
     List<AccountToken>? accountNFTCollections,
-    List<int>? nftCategoryList,
     List<String>? customTokenAddressList,
   }) =>
       Account(

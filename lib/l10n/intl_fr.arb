@@ -302,7 +302,6 @@
     "retireAccountConfirmed1": "Le compte a été retiré du porte-clés avec %1 confirmation sur %2",
     "retireAccountConfirmed": "Le compte a été retiré du porte-clés avec %1 confirmations sur %2",
     "build": "Build : ",
-    "nftCategory": "Catégorie",
     "consensusNotReached": "Le consensus n'est pas atteint. Veuillez réitérer votre demande...",
     "transactionTimeOut": "La transaction a rencontré un problème de délai d'attente. Veuillez réitérer votre demande...",
     "genericError": "Nous sommes désolés, mais une erreur s'est produite. Veuillez réitérer votre demande...",
