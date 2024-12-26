@@ -29,18 +29,6 @@ part 'providers.g.dart';
 AccountRepository _accountRepository(Ref ref) => AccountRepository();
 
 @riverpod
-Future<List<Account>> _sortedAccounts(Ref ref) async {
-  final accounts = await ref.watch(
-    AccountProviders.accounts.future,
-  );
-  return [
-    ...accounts,
-  ]..sort(
-      (a, b) => a.nameDisplayed.compareTo(b.nameDisplayed),
-    );
-}
-
-@riverpod
 List<AccountToken> _getAccountNFTFiltered(
   Ref ref,
   Account account,
@@ -55,67 +43,33 @@ class AccountRepository {
     Account account,
   ) {
     final accountNFTFiltered = <AccountToken>[
-      ..._filterTokens(account, account.accountNFT),
+      ...account.accountNFT ?? [],
       // A collection of NFT has the same address for all the sub NFT, we only want to display one NFT in that case
-      ..._getUniqueTokens(
-        _filterTokens(account, account.accountNFTCollections),
-      ),
+      ...(account.accountNFTCollections?.where(
+            (e) => <String>{}.add(e.tokenInformation?.address ?? ''),
+          ) ??
+          []),
     ];
     return accountNFTFiltered;
   }
-
-  List<AccountToken> _filterTokens(
-    Account account,
-    List<AccountToken>? accountTokens,
-  ) {
-    final listTokens = <AccountToken>[];
-    if (accountTokens == null) {
-      return listTokens;
-    }
-
-    for (final accountToken in accountTokens) {
-      listTokens.add(accountToken);
-    }
-
-    return listTokens;
-  }
-
-  List<AccountToken> _getUniqueTokens(List<AccountToken> accountTokens) {
-    final set = <String>{};
-    return accountTokens
-        .where((e) => set.add(e.tokenInformation?.address ?? ''))
-        .toList();
-  }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 AccountLocalRepositoryInterface _accountsRepository(
   Ref ref,
 ) =>
     AccountLocalRepository();
 
-@riverpod
-class _AccountExistsNotifier extends _$AccountExistsNotifier {
-  @override
-  Future<bool> build(String accountName) async {
-    return (await ref.watch(AccountProviders.account(accountName).future)) !=
-        null;
-  }
-}
-
 abstract class AccountProviders {
   static final accountsRepository = _accountsRepositoryProvider;
   static final accounts = _accountsNotifierProvider;
-  static const accountExists = _accountExistsNotifierProvider;
   static const account = _accountNotifierProvider;
-  static final sortedAccounts = _sortedAccountsProvider;
   static final accountRepository = _accountRepositoryProvider;
   static const getAccountNFTFiltered = _getAccountNFTFilteredProvider;
 
   static Future<void> reset(Ref ref) async {
     ref
       ..invalidate(accountsRepository)
-      ..invalidate(accountExists)
       ..invalidate(account)
       ..invalidate(accountRepository)
       ..invalidate(getAccountNFTFiltered);

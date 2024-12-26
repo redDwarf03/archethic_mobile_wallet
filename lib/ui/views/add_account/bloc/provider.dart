@@ -29,7 +29,6 @@ final _addAccountFormProvider =
   dependencies: [
     AddAccountFormProvider.initialAddAccountForm,
     AccountProviders.accounts,
-    AccountProviders.sortedAccounts,
     sessionNotifierProvider,
   ],
 );
@@ -76,8 +75,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       return false;
     }
 
-    final accounts =
-        ref.read(AccountProviders.sortedAccounts).valueOrNull ?? [];
+    final accounts = ref.read(AccountProviders.accounts).valueOrNull ?? [];
     if (accounts
         .where(
           (Account element) =>

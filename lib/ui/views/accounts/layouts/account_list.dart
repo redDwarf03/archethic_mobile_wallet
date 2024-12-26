@@ -30,8 +30,12 @@ class AccountsListState extends ConsumerState<AccountsList>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-    final accountsList =
-        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
+    final accountsList = ref.watch(AccountProviders.accounts).valueOrNull ?? [];
+    if (accountsList.isNotEmpty) {
+      accountsList.sort(
+        (a, b) => a.nameDisplayed.compareTo(b.nameDisplayed),
+      );
+    }
 
     return Expanded(
       child: ScrollConfiguration(
