@@ -47,7 +47,7 @@ class AccountListItem extends ConsumerStatefulWidget {
 }
 
 class _AccountListItemState extends ConsumerState<AccountListItem>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, KeychainServiceMixin {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
   @override
   bool get wantKeepAlive => true;
@@ -399,7 +399,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                       () async {
                                         context.loadingOverlay.show();
 
-                                        await KeychainUtil().removeService(
+                                        await removeService(
                                           ref
                                               .read(SettingsProviders.settings)
                                               .network,

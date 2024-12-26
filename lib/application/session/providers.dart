@@ -1,7 +1,7 @@
 part of 'session.dart';
 
 @Riverpod(keepAlive: true)
-class SessionNotifier extends _$SessionNotifier {
+class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
   final _appWalletDatasource = AppWalletHiveDatasource.instance();
 
   @override
@@ -69,7 +69,7 @@ class SessionNotifier extends _$SessionNotifier {
 
       final appService = ref.read(appServiceProvider);
 
-      final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
+      final newWalletDTO = await getListAccountsFromKeychain(
         keychain,
         HiveAppWalletDTO.fromModel(loggedInState.wallet),
         appService,
@@ -148,7 +148,7 @@ class SessionNotifier extends _$SessionNotifier {
       final appService = ref.read(appServiceProvider);
       final keychain = await apiService.getKeychain(seed);
 
-      final appWallet = await KeychainUtil().getListAccountsFromKeychain(
+      final appWallet = await getListAccountsFromKeychain(
         keychain,
         null,
         appService,
