@@ -4,7 +4,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -43,8 +42,7 @@ class HomePage extends _$HomePage {
           if (previous != next && next == ConnectivityStatus.isConnected) {
             ref
               ..invalidate(environmentProvider)
-              ..invalidate(ContactProviders.fetchContacts)
-              ..invalidate(MarketPriceProviders.currencyMarketPrice);
+              ..invalidate(ContactProviders.fetchContacts);
 
             final poolListRaw =
                 await ref.read(DexPoolProviders.getPoolListRaw.future);

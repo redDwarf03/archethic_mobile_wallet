@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -16,12 +15,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TransactionOuput extends ConsumerWidget {
   const TransactionOuput({
     required this.transaction,
-    required this.marketPrice,
     super.key,
   });
 
   final RecentTransaction transaction;
-  final MarketPrice marketPrice;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +36,6 @@ class TransactionOuput extends ConsumerWidget {
             isCurrencyNative: primaryCurrency.primaryCurrency ==
                 AvailablePrimaryCurrencyEnum.native,
             transaction: transaction,
-            marketPrice: marketPrice,
             child: TransferTransaction(
               isCurrencyNative: primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native,
@@ -52,7 +48,9 @@ class TransactionOuput extends ConsumerWidget {
       information: TransactionOutputInformation(
         transaction: transaction,
       ),
-      fees: TransactionFees(transaction: transaction, marketPrice: marketPrice),
+      fees: TransactionFees(
+        transaction: transaction,
+      ),
     );
   }
 }

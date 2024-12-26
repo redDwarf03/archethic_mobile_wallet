@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
@@ -152,9 +151,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ?.refreshRecentTransactions(poolListRaw);
 
                   if (context.mounted) {
-                    ref
-                      ..invalidate(ContactProviders.fetchContacts)
-                      ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                    ref.invalidate(ContactProviders.fetchContacts);
                   }
                 },
               )

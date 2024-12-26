@@ -25,21 +25,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: ContactDetail.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: ContactDetail(
-        contactAddress: ContactDetailsRouteParams.fromJson(
-          state.extra! as Map<String, dynamic>,
-        ).contactAddress,
-        readOnly: ContactDetailsRouteParams.fromJson(
-              state.extra! as Map<String, dynamic>,
-            ).readOnly ??
-            false,
-      ),
-    ),
-  ),
-  GoRoute(
     path: ConnectivityWarning.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,

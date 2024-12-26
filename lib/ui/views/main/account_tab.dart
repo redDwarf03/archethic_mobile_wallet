@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -50,9 +49,7 @@ class AccountTab extends ConsumerWidget {
                 .read(AccountProviders.accounts.notifier)
                 .selectedAccountNotifier)
             ?.refreshRecentTransactions(poolListRaw);
-        ref
-          ..invalidate(ContactProviders.fetchContacts)
-          ..invalidate(MarketPriceProviders.currencyMarketPrice);
+        ref.invalidate(ContactProviders.fetchContacts);
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/token_creation/token_creation.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_hosting/transaction_hosting.dart';
@@ -23,10 +22,7 @@ class TransactionDetail extends ConsumerWidget {
       ),
     );
 
-    final selectedCurrencyMarketPrice =
-        ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;
-
-    if (accountSelected == null || selectedCurrencyMarketPrice == null) {
+    if (accountSelected == null) {
       return const SizedBox();
     }
 
@@ -34,22 +30,18 @@ class TransactionDetail extends ConsumerWidget {
       case RecentTransaction.tokenCreation:
         return TokenCreation(
           transaction: transaction,
-          marketPrice: selectedCurrencyMarketPrice,
         );
       case RecentTransaction.transferInput:
         return TransactionInput(
           transaction: transaction,
-          marketPrice: selectedCurrencyMarketPrice,
         );
       case RecentTransaction.transferOutput:
         return TransactionOuput(
           transaction: transaction,
-          marketPrice: selectedCurrencyMarketPrice,
         );
       case RecentTransaction.hosting:
         return TransactionHosting(
           transaction: transaction,
-          marketPrice: selectedCurrencyMarketPrice,
         );
       default:
         return const SizedBox();

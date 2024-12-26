@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
@@ -67,7 +66,6 @@ class TransferSheet extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
   }) async {
-    ref.invalidate(MarketPriceProviders.currencyMarketPrice);
     context.go(
       routerPage,
       extra: {

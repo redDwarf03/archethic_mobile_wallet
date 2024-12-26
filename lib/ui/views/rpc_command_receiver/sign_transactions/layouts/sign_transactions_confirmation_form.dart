@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -90,13 +89,15 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
 
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final selectedCurrencyMarketPrice =
-        ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;
 
-    final amountInFiat = selectedCurrencyMarketPrice == null
+    final archethicOracleUCO = ref
+        .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
+        .valueOrNull;
+
+    final amountInFiat = archethicOracleUCO == null
         ? 0
         : CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-            selectedCurrencyMarketPrice.amount,
+            archethicOracleUCO.usd,
             estimatedFees,
             3,
           );

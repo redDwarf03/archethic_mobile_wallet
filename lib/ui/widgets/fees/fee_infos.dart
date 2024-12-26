@@ -1,6 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -8,6 +5,8 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/util/currency_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,16 +37,12 @@ class FeeInfos extends ConsumerWidget {
       return _CannotLoadFeeInfos(estimatedFeesNote: estimatedFeesNote);
     }
 
-    final fiatFeeEstimation = ref
-        .watch(
-          MarketPriceProviders.convertedToSelectedCurrency(
-            nativeAmount: nativeFeeEstimation,
-          ),
-        )
+    final archethicOracleUCO = ref
+        .read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
         .valueOrNull;
-    if (fiatFeeEstimation == null) {
-      return const _LoadingFeeInfos();
-    }
+
+    final fiatFeeEstimation =
+        archethicOracleUCO?.usd ?? 0 * nativeFeeEstimation;
 
     return SizedBox(
       height: 40,
