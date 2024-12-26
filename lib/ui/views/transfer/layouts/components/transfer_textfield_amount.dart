@@ -65,13 +65,7 @@ class _TransferTextFieldAmountState
             )
             .valueOrNull;
 
-    final selectedCurrencyMarketPrice = ref
-        .watch(
-          MarketPriceProviders.selectedCurrencyMarketPrice,
-        )
-        .valueOrNull;
-
-    if (accountSelected == null || selectedCurrencyMarketPrice == null) {
+    if (accountSelected == null) {
       return const SizedBox();
     }
 
@@ -324,13 +318,9 @@ class _TransferTextFieldAmountState
             );
             return;
           }
-          final selectedCurrencyMarketPrice = await ref.read(
-            MarketPriceProviders.selectedCurrencyMarketPrice.future,
-          );
 
           await transferNotifier.setMaxAmount(
             context: context,
-            tokenPrice: selectedCurrencyMarketPrice.amount,
           );
           _updateAmountTextController();
           transferNotifier.setDefineMaxAmountInProgress(

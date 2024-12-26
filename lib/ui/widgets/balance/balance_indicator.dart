@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -11,10 +10,11 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:material_symbols_icons/symbols.dart';
 
 class BalanceIndicatorWidget extends ConsumerWidget {
@@ -134,14 +134,12 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
 
     if (accountSelectedBalance == null) return const SizedBox();
 
-    final fiatValue = ref
-        .watch(
-          MarketPriceProviders.convertedToSelectedCurrency(
-            nativeAmount: accountSelectedBalance.nativeTokenValue,
-          ),
-        )
+    final archethicOracleUCO = ref
+        .read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
         .valueOrNull;
-    if (fiatValue == null) return const SizedBox();
+
+    final fiatValue =
+        archethicOracleUCO?.usd ?? 0 * accountSelectedBalance.nativeTokenValue;
 
     return Text(
       NumberUtil.formatThousandsStr(

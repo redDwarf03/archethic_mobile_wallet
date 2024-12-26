@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/app_service.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/transaction_repository.dart';
@@ -382,7 +381,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   Future<void> setMaxAmount({
     required BuildContext context,
-    double? tokenPrice,
   }) async {
     if (state.transferType == TransferType.token && state.aeToken != null) {
       state = state.copyWith(
@@ -407,28 +405,30 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final primaryCurrency =
         ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
+    final archethicOracleUCO = await ref
+        .read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
+
     switch (primaryCurrency.primaryCurrency) {
       case AvailablePrimaryCurrencyEnum.fiat:
         var amountMax = 0.0;
-        if (tokenPrice != null) {
-          amountMax = (balance.nativeTokenValue > fees
-                  ? balance.nativeTokenValue - fees
-                  : 0) *
-              tokenPrice;
-          state = state.copyWith(
-            amount: amountMax,
-            amountConverted: balance.nativeTokenValue > fees
+        amountMax = (balance.nativeTokenValue > fees
                 ? balance.nativeTokenValue - fees
-                : 0,
-            feeEstimation: AsyncValue.data(fees),
-            errorAmountText: balance.nativeTokenValue > fees
-                ? ''
-                : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                      '%1',
-                      state.symbol(context),
-                    ),
-          );
-        }
+                : 0) *
+            archethicOracleUCO.usd;
+        state = state.copyWith(
+          amount: amountMax,
+          amountConverted: balance.nativeTokenValue > fees
+              ? balance.nativeTokenValue - fees
+              : 0,
+          feeEstimation: AsyncValue.data(fees),
+          errorAmountText: balance.nativeTokenValue > fees
+              ? ''
+              : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol(context),
+                  ),
+        );
+
         break;
       case AvailablePrimaryCurrencyEnum.native:
         state = state.copyWith(
@@ -466,16 +466,15 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAmountText: '',
     );
 
-    final selectedCurrencyMarketPrice = await ref.read(
-      MarketPriceProviders.selectedCurrencyMarketPrice.future,
-    );
+    final archethicOracleUCO = await ref
+        .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
 
     var amountConverted = 0.0;
     if (amount > 0) {
       amountConverted = ref.read(
         PrimaryCurrencyProviders.convertedValue(
           amount: amount,
-          tokenPrice: selectedCurrencyMarketPrice.amount,
+          tokenPrice: archethicOracleUCO.usd,
         ),
       );
     }

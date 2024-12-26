@@ -32,7 +32,6 @@ import 'package:aewallet/ui/views/authenticate/privacy_mask.dart';
 import 'package:aewallet/ui/views/authenticate/set_biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_yubikey_screen.dart';
-import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_sheet.dart';
 import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_webview.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';

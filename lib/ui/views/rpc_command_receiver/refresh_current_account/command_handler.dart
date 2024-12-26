@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -32,9 +31,7 @@ class RefreshCurrentAccountHandler extends CommandHandler {
                     .read(AccountProviders.accounts.notifier)
                     .selectedAccountNotifier)
                 ?.refreshRecentTransactions(poolListRaw);
-            ref
-              ..invalidate(ContactProviders.fetchContacts)
-              ..invalidate(MarketPriceProviders.currencyMarketPrice);
+            ref.invalidate(ContactProviders.fetchContacts);
 
             return const Result.success(awc.RefreshCurrentAccountResponse());
           },

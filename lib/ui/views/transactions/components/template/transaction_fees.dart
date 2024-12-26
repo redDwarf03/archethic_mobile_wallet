@@ -2,12 +2,13 @@
 
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,11 +17,9 @@ class TransactionFees extends ConsumerWidget {
   const TransactionFees({
     super.key,
     required this.transaction,
-    required this.marketPrice,
   });
 
   final RecentTransaction transaction;
-  final MarketPrice marketPrice;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,9 +29,13 @@ class TransactionFees extends ConsumerWidget {
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
+    final archethicOracleUCO = ref
+        .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
+        .valueOrNull;
+
     final amountConverted =
         CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-      marketPrice.amount,
+      archethicOracleUCO?.usd ?? 0,
       transaction.fee!,
       3,
     );
