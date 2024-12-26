@@ -13,7 +13,6 @@
 //     await importWalletAction($);
 
 //     await $(#bottomBarAddressNFTlink).tap();
-//     await $(#nftCategory0).tap();
 //     await $(#createNFT).tap();
 //     await $(#nftCreationField).first.enterText('nftTest');
 //     await $(#next).tap();

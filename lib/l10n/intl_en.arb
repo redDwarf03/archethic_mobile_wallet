@@ -310,7 +310,6 @@
     "retireAccountConfirmed1": "The account was retired with %1 confirmation out of %2",
     "retireAccountConfirmed": "The account was retired with %1 confirmations out of %2",
     "build": "Build :",
-    "nftCategory": "Category",
     "consensusNotReached": "The consensus is not reached. Please retry your request...",
     "transactionTimeOut": "The transaction encountered a timeout issue. Please retry your request...",
     "genericError": "We're sorry, but an error has occurred. Please retry your request...",
