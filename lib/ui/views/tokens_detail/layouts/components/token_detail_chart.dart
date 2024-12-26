@@ -18,7 +18,7 @@ class TokenDetailChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedInterval = ref.watch(PriceHistoryProviders.scaleOption);
+    final selectedInterval = ref.watch(priceHistoryIntervalOptionProvider);
     if (chartInfos == null) {
       return const SizedBox.shrink();
     }

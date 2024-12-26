@@ -5,33 +5,28 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.g.dart';
 
-@Riverpod(keepAlive: true)
-CoinPriceHistoryRepositoryInterface _repository(Ref ref) =>
+@riverpod
+CoinPriceHistoryRepositoryInterface priceHistoryRepository(Ref ref) =>
     CoinPriceHistoryRepository();
 
-@Riverpod(keepAlive: true)
-MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
+@riverpod
+MarketPriceHistoryInterval priceHistoryIntervalOption(Ref ref) => ref.watch(
       SettingsProviders.settings
           .select((value) => value.priceChartIntervalOption),
     );
 
-@Riverpod(keepAlive: true)
-Future<List<PriceHistoryValue>?> _priceHistory(
+@riverpod
+Future<List<PriceHistoryValue>?> priceHistory(
   Ref ref, {
   int? ucid,
 }) async {
   if (ucid == null || ucid == 0) return null;
-  final scaleOption = ref.watch(_intervalOptionProvider);
+  final scaleOption = ref.watch(priceHistoryIntervalOptionProvider);
   return ref
-      .watch(_repositoryProvider)
+      .watch(priceHistoryRepositoryProvider)
       .getWithInterval(
         interval: scaleOption,
         ucid: ucid,
       )
       .valueOrThrow;
-}
-
-abstract class PriceHistoryProviders {
-  static final scaleOption = _intervalOptionProvider;
-  static const priceHistory = _priceHistoryProvider;
 }
