@@ -21,7 +21,6 @@ class AccountAdapter extends TypeAdapter<Account> {
       genesisAddress: fields[1] as String,
       lastLoadingTransactionInputs: fields[2] as int?,
       selected: fields[3] as bool?,
-      lastAddress: fields[4] as String?,
       balance: fields[5] as AccountBalance?,
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
@@ -29,7 +28,9 @@ class AccountAdapter extends TypeAdapter<Account> {
       accountNFTCollections: (fields[14] as List?)?.cast<AccountToken>(),
       serviceType: fields[13] as String?,
       customTokenAddressList: (fields[15] as List?)?.cast<String>(),
-    )..nftInfosOffChainList = (fields[10] as List?)?.cast<NftInfosOffChain>();
+    )
+      ..lastAddress = fields[4] as String?
+      ..nftInfosOffChainList = (fields[10] as List?)?.cast<NftInfosOffChain>();
   }
 
   @override

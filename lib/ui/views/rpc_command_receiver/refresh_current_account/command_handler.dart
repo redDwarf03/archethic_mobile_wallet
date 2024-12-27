@@ -28,7 +28,7 @@ class RefreshCurrentAccountHandler extends CommandHandler {
                     .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
                 ?.refreshRecentTransactions();
-            ref.invalidate(ContactProviders.fetchContacts);
+            ref.invalidate(fetchContactsProvider);
 
             return const Result.success(awc.RefreshCurrentAccountResponse());
           },

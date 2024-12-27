@@ -92,7 +92,7 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionLevelUp!,
-        selectedAccount.lastAddress!,
+        selectedAccount.genesisAddress,
         selectedAccount.name,
       );
 

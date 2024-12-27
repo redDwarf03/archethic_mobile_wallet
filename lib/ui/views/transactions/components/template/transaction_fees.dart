@@ -26,8 +26,7 @@ class TransactionFees extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final settings = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     final archethicOracleUCO = ref
         .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)

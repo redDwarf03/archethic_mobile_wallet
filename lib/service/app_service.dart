@@ -339,7 +339,6 @@ class AppService {
 
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
-    String lastAddress,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
     List<RecentTransaction> localRecentTransactionList,
@@ -361,10 +360,10 @@ class AppService {
     final keychain = keychainSecuredInfos.toKeychain();
 
     final lastIndex = await apiService.getTransactionIndex(
-      [lastAddress],
+      [genesisAddress],
     );
-    _logger.info('lastAddress : $lastAddress -> lastIndex: $lastIndex');
-    var index = lastIndex[lastAddress] ?? 0;
+    _logger.info('genesisAddress : $genesisAddress -> lastIndex: $lastIndex');
+    var index = lastIndex[genesisAddress] ?? 0;
     String addressToSearch;
     var iterMax = 10;
     recentTransactions.addAll(localRecentTransactionList);
@@ -382,13 +381,11 @@ class AppService {
             element.address!.toUpperCase() == addressToSearch.toUpperCase(),
       )) {
         _logger.info('addressToSearch exists in local -> break');
-        if (addressToSearch.toUpperCase() == lastAddress.toUpperCase()) {
-          recentTransactions = await _buildRecentTransactionFromTransaction(
-            recentTransactions,
-            addressToSearch,
-            mostRecentTimestamp,
-          );
-        }
+        recentTransactions = await _buildRecentTransactionFromTransaction(
+          recentTransactions,
+          addressToSearch,
+          mostRecentTimestamp,
+        );
         break;
       }
 

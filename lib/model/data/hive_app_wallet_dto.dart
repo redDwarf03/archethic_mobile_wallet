@@ -54,7 +54,6 @@ class HiveAppWalletDTO extends HiveObject {
     final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
-      lastAddress: uint8ListToHex(genesisAddress),
       genesisAddress: uint8ListToHex(genesisAddress),
       name: kServiceName,
       balance: AccountBalance(

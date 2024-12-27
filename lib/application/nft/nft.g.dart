@@ -357,7 +357,7 @@ class _IsAccountOwnerProviderElement
   String get tokenId => (origin as _IsAccountOwnerProvider).tokenId;
 }
 
-String _$getNFTListHash() => r'3ac47e3302e3d2570f1e394b991ef01996f30af0';
+String _$getNFTListHash() => r'5dcaab1b5d8ddd6c5ac67a7c55da2705282c4185';
 
 /// See also [_getNFTList].
 @ProviderFor(_getNFTList)
@@ -371,12 +371,12 @@ class _GetNFTListFamily
 
   /// See also [_getNFTList].
   _GetNFTListProvider call(
-    String address,
+    String genesisAddress,
     String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
   ) {
     return _GetNFTListProvider(
-      address,
+      genesisAddress,
       nameAccount,
       keychainSecuredInfos,
     );
@@ -387,7 +387,7 @@ class _GetNFTListFamily
     covariant _GetNFTListProvider provider,
   ) {
     return call(
-      provider.address,
+      provider.genesisAddress,
       provider.nameAccount,
       provider.keychainSecuredInfos,
     );
@@ -413,13 +413,13 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
     (List<AccountToken>, List<AccountToken>)> {
   /// See also [_getNFTList].
   _GetNFTListProvider(
-    String address,
+    String genesisAddress,
     String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
   ) : this._internal(
           (ref) => _getNFTList(
             ref as _GetNFTListRef,
-            address,
+            genesisAddress,
             nameAccount,
             keychainSecuredInfos,
           ),
@@ -432,7 +432,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
           dependencies: _GetNFTListFamily._dependencies,
           allTransitiveDependencies:
               _GetNFTListFamily._allTransitiveDependencies,
-          address: address,
+          genesisAddress: genesisAddress,
           nameAccount: nameAccount,
           keychainSecuredInfos: keychainSecuredInfos,
         );
@@ -444,12 +444,12 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.address,
+    required this.genesisAddress,
     required this.nameAccount,
     required this.keychainSecuredInfos,
   }) : super.internal();
 
-  final String address;
+  final String genesisAddress;
   final String nameAccount;
   final KeychainSecuredInfos keychainSecuredInfos;
 
@@ -468,7 +468,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        address: address,
+        genesisAddress: genesisAddress,
         nameAccount: nameAccount,
         keychainSecuredInfos: keychainSecuredInfos,
       ),
@@ -484,7 +484,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   @override
   bool operator ==(Object other) {
     return other is _GetNFTListProvider &&
-        other.address == address &&
+        other.genesisAddress == genesisAddress &&
         other.nameAccount == nameAccount &&
         other.keychainSecuredInfos == keychainSecuredInfos;
   }
@@ -492,7 +492,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, address.hashCode);
+    hash = _SystemHash.combine(hash, genesisAddress.hashCode);
     hash = _SystemHash.combine(hash, nameAccount.hashCode);
     hash = _SystemHash.combine(hash, keychainSecuredInfos.hashCode);
 
@@ -504,8 +504,8 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
 // ignore: unused_element
 mixin _GetNFTListRef
     on AutoDisposeFutureProviderRef<(List<AccountToken>, List<AccountToken>)> {
-  /// The parameter `address` of this provider.
-  String get address;
+  /// The parameter `genesisAddress` of this provider.
+  String get genesisAddress;
 
   /// The parameter `nameAccount` of this provider.
   String get nameAccount;
@@ -519,7 +519,7 @@ class _GetNFTListProviderElement extends AutoDisposeFutureProviderElement<
   _GetNFTListProviderElement(super.provider);
 
   @override
-  String get address => (origin as _GetNFTListProvider).address;
+  String get genesisAddress => (origin as _GetNFTListProvider).genesisAddress;
   @override
   String get nameAccount => (origin as _GetNFTListProvider).nameAccount;
   @override

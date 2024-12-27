@@ -88,7 +88,7 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionDeposit!,
-        selectedAccount.lastAddress!,
+        selectedAccount.genesisAddress,
         selectedAccount.name,
       );
 

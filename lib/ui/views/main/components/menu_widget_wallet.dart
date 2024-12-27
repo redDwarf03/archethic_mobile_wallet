@@ -32,7 +32,7 @@ class MenuWidgetWallet extends ConsumerWidget {
         )
         .valueOrNull
         ?.selectedAccount;
-    final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final contact = ref.watch(getSelectedContactProvider).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
     final environment = ref.watch(environmentProvider);
@@ -148,7 +148,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ?.refreshRecentTransactions();
 
                   if (context.mounted) {
-                    ref.invalidate(ContactProviders.fetchContacts);
+                    ref.invalidate(fetchContactsProvider);
                   }
                 },
               )

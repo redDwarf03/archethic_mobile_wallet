@@ -41,8 +41,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final priceToken =
         widget.aeToken.isLpToken && widget.aeToken.lpTokenPair != null
             ? ref

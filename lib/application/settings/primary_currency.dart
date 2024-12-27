@@ -3,6 +3,8 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -11,41 +13,37 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'primary_currency.g.dart';
 
 @riverpod
-double _convertedValue(
+Future<double> convertedValue(
   Ref ref, {
   required double amount,
-  required double tokenPrice,
-}) {
+}) async {
   final primaryCurrency = ref.watch(
     SettingsProviders.settings.select(
       (settings) => settings.primaryCurrency.primaryCurrency,
     ),
   );
-  if (primaryCurrency == AvailablePrimaryCurrencyEnum.native) {
-    return PrimaryCurrencyConverter.networkCurrencyToSelectedCurrency(
-      amount,
-      tokenPrice,
-      ref,
-    );
-  } else {
-    return PrimaryCurrencyConverter.selectedCurrencyToNetworkCurrency(
-      amount,
-      tokenPrice,
-    );
+  final archethicOracleUCO = await ref
+      .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
+
+  if (archethicOracleUCO.usd == 0) {
+    return 0;
   }
+
+  return primaryCurrency == AvailablePrimaryCurrencyEnum.native
+      ? PrimaryCurrencyConverter.networkCurrencyToSelectedCurrency(
+          amount,
+          archethicOracleUCO.usd,
+        )
+      : PrimaryCurrencyConverter.selectedCurrencyToNetworkCurrency(
+          amount,
+          archethicOracleUCO.usd,
+        );
 }
 
 @riverpod
-AvailablePrimaryCurrency _selectedPrimaryCurrency(Ref ref) => ref.watch(
+AvailablePrimaryCurrency selectedPrimaryCurrency(Ref ref) => ref.watch(
       SettingsProviders.settings.select((settings) => settings.primaryCurrency),
     );
-
-abstract class PrimaryCurrencyProviders {
-  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
-  static const convertedValue = _convertedValueProvider;
-
-  static final selectedPrimaryCurrency = _selectedPrimaryCurrencyProvider;
-}
 
 abstract class PrimaryCurrencyConverter {
   static double selectedCurrencyToNetworkCurrency(
@@ -65,7 +63,6 @@ abstract class PrimaryCurrencyConverter {
   static double networkCurrencyToSelectedCurrency(
     double amountEntered,
     double tokenPriceAmount,
-    Ref ref,
   ) {
     if (amountEntered == 0 || tokenPriceAmount == 0) {
       return 0;

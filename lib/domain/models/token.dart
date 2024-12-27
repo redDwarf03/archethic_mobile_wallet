@@ -13,7 +13,7 @@ const kTokenFordiddenName = ['UCO', 'MUCO'];
 class Token with _$Token {
   const factory Token({
     required KeychainSecuredInfos keychainSecuredInfos,
-    required String transactionLastAddress,
+    required String genesisAddress,
     required String accountSelectedName,
     required String name,
     required String symbol,

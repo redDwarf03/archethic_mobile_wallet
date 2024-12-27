@@ -11,7 +11,7 @@ class Transfer with _$Transfer {
   const Transfer._();
   const factory Transfer.uco({
     required KeychainSecuredInfos keychainSecuredInfos,
-    required String transactionLastAddress,
+    required String genesisAddress,
     required String accountSelectedName,
     required String message,
     required double amount, // expressed in UCO
@@ -20,7 +20,7 @@ class Transfer with _$Transfer {
 
   const factory Transfer.token({
     required KeychainSecuredInfos keychainSecuredInfos,
-    required String transactionLastAddress,
+    required String genesisAddress,
     required String accountSelectedName,
     required String message,
     required double amount, // expressed in token

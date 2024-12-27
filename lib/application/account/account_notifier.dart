@@ -2,12 +2,10 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -41,7 +39,6 @@ class AccountNotifier extends _$AccountNotifier {
     try {
       final account = await future;
       if (account == null) return;
-      await updateLastAddress();
 
       ref.read(refreshInProgressNotifierProvider.notifier).refreshInProgress =
           true;
@@ -71,12 +68,6 @@ class AccountNotifier extends _$AccountNotifier {
           _logger.fine(
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
           );
-
-          ref
-            ..invalidate(userBalanceProvider)
-            ..invalidate(
-              tokensFromUserBalanceProvider,
-            );
         },
       ]);
 
@@ -124,9 +115,9 @@ class AccountNotifier extends _$AccountNotifier {
 
     final balanceGetResponseMap = await ref
         .read(appServiceProvider)
-        .getBalanceGetResponse([account.lastAddress!]);
+        .getBalanceGetResponse([account.genesisAddress]);
 
-    if (balanceGetResponseMap[account.lastAddress] == null) {
+    if (balanceGetResponseMap[account.genesisAddress] == null) {
       return;
     }
 
@@ -138,7 +129,7 @@ class AccountNotifier extends _$AccountNotifier {
 
     final cryptoPrice = ref.read(aedappfm.CoinPriceProviders.coinPrices);
 
-    final balanceGetResponse = balanceGetResponseMap[account.lastAddress]!;
+    final balanceGetResponse = balanceGetResponseMap[account.genesisAddress]!;
     final ucoAmount = fromBigInt(balanceGetResponse.uco).toDouble();
     final accountBalance = AccountBalance(
       nativeTokenName: AccountBalance.cryptoCurrencyLabel,
@@ -185,24 +176,6 @@ class AccountNotifier extends _$AccountNotifier {
     await updateAccount();
   }
 
-  Future<void> updateLastAddress() async {
-    final account = await future;
-    if (account == null) {
-      return;
-    }
-
-    final addressService = ref.read(addressServiceProvider);
-
-    final lastAddressFromAddressMap =
-        await addressService.lastAddressFromAddress([account.genesisAddress]);
-    account.lastAddress = lastAddressFromAddressMap.isEmpty ||
-            lastAddressFromAddressMap[account.genesisAddress] == null
-        ? account.genesisAddress
-        : lastAddressFromAddressMap[account.genesisAddress];
-
-    await updateAccount();
-  }
-
   Future<void> updateFungiblesTokens() async {
     final account = await future;
     if (account == null) {
@@ -212,7 +185,7 @@ class AccountNotifier extends _$AccountNotifier {
     final poolsListRaw = await ref.read(DexPoolProviders.getPoolListRaw.future);
 
     account.accountTokens = await appService.getFungiblesTokensList(
-      account.lastAddress!,
+      account.genesisAddress,
       poolsListRaw,
     );
     await updateAccount();
@@ -229,7 +202,6 @@ class AccountNotifier extends _$AccountNotifier {
     account
       ..recentTransactions = await appService.getAccountRecentTransactions(
         account.genesisAddress,
-        account.lastAddress!,
         account.name,
         session.wallet.keychainSecuredInfos,
         account.recentTransactions ?? [],
@@ -280,7 +252,7 @@ class AccountNotifier extends _$AccountNotifier {
     final session = ref.read(sessionNotifierProvider).loggedIn!;
     final tokenInformation = await ref.read(
       NFTProviders.getNFTList(
-        account.lastAddress!,
+        account.genesisAddress,
         account.name,
         session.wallet.keychainSecuredInfos,
       ).future,

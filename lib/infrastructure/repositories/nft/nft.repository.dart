@@ -103,14 +103,14 @@ class NFTRepositoryImpl implements NFTRepository {
 
   @override
   Future<(List<AccountToken>, List<AccountToken>)> getNFTList(
-    String address,
+    String genesisAddress,
     String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
     AppService appService,
     ApiService apiService,
   ) async {
-    final balanceMap = await apiService.fetchBalance([address]);
-    final balance = balanceMap[address];
+    final balanceMap = await apiService.fetchBalance([genesisAddress]);
+    final balance = balanceMap[genesisAddress];
     final nftList = <AccountToken>[];
     final nftCollectionList = <AccountToken>[];
 

@@ -55,39 +55,20 @@ class ContactsHiveDatasource {
       addressContact.add(contact.address);
     }
 
-    final lastTransactionMap = await apiService.getLastTransaction(
-      [address, ...addressContact],
-      request: 'address',
+    final genesisAddress = await apiService.getGenesisAddress(
+      address,
     );
 
-    var lastAddress = '';
-    if (lastTransactionMap[address] != null) {
-      lastAddress = lastTransactionMap[address]!.address!.address ?? '';
-    }
-    if (lastAddress == '') {
-      lastAddress = address;
-    }
-
-    Contact? contactSelected;
     for (final contact in contactsList) {
-      var lastAddressContact = '';
-      if (lastTransactionMap[contact.address] != null &&
-          lastTransactionMap[contact.address]!.address != null) {
-        lastAddressContact =
-            lastTransactionMap[contact.address]!.address!.address!;
-      }
-
-      if (lastAddressContact.isEmpty) {
-        lastAddressContact = contact.address;
-      } else {
-        final contactToUpdate = contact..address = lastAddressContact;
-        await saveContact(contactToUpdate);
-      }
-      if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
-        contactSelected = contact;
+      if (genesisAddress.address != null &&
+          contact.genesisAddress != null &&
+          contact.genesisAddress!.toLowerCase() ==
+              genesisAddress.address!.toLowerCase()) {
+        return contact;
       }
     }
-    return contactSelected;
+
+    return null;
   }
 
   Future<Contact> getContactWithPublicKey(

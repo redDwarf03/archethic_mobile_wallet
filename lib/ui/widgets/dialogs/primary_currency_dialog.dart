@@ -36,8 +36,7 @@ class PrimaryCurrencyDialog {
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
-        final primaryCurrency =
-            ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
         return aedappfm.PopupTemplate(
           popupContent: SingleChildScrollView(
             child: PickerWidget(

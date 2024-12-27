@@ -87,8 +87,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       SignTransactionsConfirmationProviders.form(command),
     );
 
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     final archethicOracleUCO = ref
         .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)

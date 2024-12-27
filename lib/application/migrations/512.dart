@@ -9,7 +9,7 @@ final migration_512 = LocalDataMigration(
     // https://github.com/archethic-foundation/archethic-wallet/issues/887
 
     final contacts = await ref.read(
-      ContactProviders.fetchContacts().future,
+      fetchContactsProvider().future,
     );
     for (final contact in contacts) {
       final genesisAddress =

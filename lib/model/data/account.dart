@@ -16,7 +16,6 @@ class Account extends HiveObject {
     required this.genesisAddress,
     this.lastLoadingTransactionInputs,
     this.selected = false,
-    this.lastAddress,
     this.balance,
     this.recentTransactions,
     this.accountTokens,
@@ -31,7 +30,6 @@ class Account extends HiveObject {
     String? genesisAddress,
     int? lastLoadingTransactionInputs,
     bool? selected,
-    String? lastAddress,
     String? serviceType,
     AccountBalance? balance,
     List<RecentTransaction>? recentTransactions,
@@ -46,7 +44,6 @@ class Account extends HiveObject {
         lastLoadingTransactionInputs:
             lastLoadingTransactionInputs ?? this.lastLoadingTransactionInputs,
         selected: selected ?? this.selected,
-        lastAddress: lastAddress ?? this.lastAddress,
         serviceType: serviceType ?? this.serviceType,
         balance: balance ?? this.balance,
         recentTransactions: recentTransactions ?? this.recentTransactions,
@@ -76,6 +73,9 @@ class Account extends HiveObject {
 
   /// Last address
   @HiveField(4)
+  @Deprecated(
+    'Genesis address should be preferred instead of last address after AEIP21',
+  )
   String? lastAddress;
 
   /// Balance

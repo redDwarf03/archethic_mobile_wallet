@@ -38,8 +38,8 @@ final _transferFormProvider =
   dependencies: [
     TransferFormProvider.initialTransferForm,
     accountsNotifierProvider,
-    PrimaryCurrencyProviders.selectedPrimaryCurrency,
-    PrimaryCurrencyProviders.convertedValue,
+    selectedPrimaryCurrencyProvider,
+    convertedValueProvider,
     sessionNotifierProvider,
   ],
 );
@@ -77,8 +77,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     var amount = state.amount;
 
     if (state.transferType == TransferType.uco) {
-      final primaryCurrency =
-          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+      final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
       if (primaryCurrency.primaryCurrency ==
           AvailablePrimaryCurrencyEnum.fiat) {
         amount = state.amountConverted;
@@ -328,7 +327,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!,
+            genesisAddress: selectedAccount.genesisAddress,
             tokenAddress: formState.aeToken!.address!.toUpperCase(),
             type: 'fungible',
             aeip: [2, 9],
@@ -345,7 +344,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
+            genesisAddress: selectedAccount.genesisAddress,
           ),
         );
         break;
@@ -357,7 +356,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
+            genesisAddress: selectedAccount.genesisAddress,
             tokenAddress: formState.accountToken?.tokenInformation!.address!
                 .toUpperCase(),
             type: 'non-fungible',
@@ -402,8 +401,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return;
     }
 
-    final primaryCurrency =
-        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
 
     final archethicOracleUCO = await ref
         .read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
@@ -466,16 +464,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAmountText: '',
     );
 
-    final archethicOracleUCO = await ref
-        .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
-
     var amountConverted = 0.0;
     if (amount > 0) {
-      amountConverted = ref.read(
-        PrimaryCurrencyProviders.convertedValue(
+      amountConverted = await ref.read(
+        convertedValueProvider(
           amount: amount,
-          tokenPrice: archethicOracleUCO.usd,
-        ),
+        ).future,
       );
     }
 
@@ -558,8 +552,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     switch (state.transferType) {
       case TransferType.uco:
         var amountInUCO = state.amount;
-        final primaryCurrency =
-            ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
         if (primaryCurrency.primaryCurrency ==
             AvailablePrimaryCurrencyEnum.fiat) {
           amountInUCO = state.amountConverted;
@@ -645,7 +638,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         if (!address.isValid()) {
           return AppLocalizations.of(context)!.invalidAddress;
         }
-        if (accountSelected.lastAddress == address.address) {
+        if (accountSelected.genesisAddress == address.address) {
           return AppLocalizations.of(context)!.sendToMeError.replaceAll(
                 '%1',
                 state.symbol(context),
@@ -661,7 +654,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           return AppLocalizations.of(context)!.invalidAddress;
         }
 
-        if (accountSelected.lastAddress == contact.address) {
+        if (accountSelected.genesisAddress == contact.address) {
           return AppLocalizations.of(context)!.sendToMeError.replaceAll(
                 '%1',
                 state.symbol(context),
@@ -693,8 +686,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         .selectedAccount;
 
     var amountInUCO = state.amount;
-    final primaryCurrency =
-        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat &&
         state.transferType == TransferType.uco) {
       amountInUCO = state.amountConverted;
@@ -714,7 +706,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
+            genesisAddress: selectedAccount.genesisAddress,
             tokenAddress: state.aeToken!.address!.toUpperCase(),
             type: 'fungible',
             tokenId: 0,
@@ -731,7 +723,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
+            genesisAddress: selectedAccount.genesisAddress,
           ),
         );
         break;
@@ -743,7 +735,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             keychainSecuredInfos: keychainSecuredInfos,
-            transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
+            genesisAddress: selectedAccount.genesisAddress,
             tokenAddress:
                 state.accountToken?.tokenInformation!.address!.toUpperCase(),
             type: 'non-fungible',
