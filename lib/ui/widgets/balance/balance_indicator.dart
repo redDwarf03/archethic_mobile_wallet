@@ -32,8 +32,7 @@ class BalanceIndicatorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final localizations = AppLocalizations.of(context)!;
 
     return preferences.showBalances

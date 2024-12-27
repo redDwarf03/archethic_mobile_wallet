@@ -88,7 +88,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionAddLiquidity!,
-        selectedAccount.lastAddress!,
+        selectedAccount.genesisAddress,
         selectedAccount.name,
       );
 

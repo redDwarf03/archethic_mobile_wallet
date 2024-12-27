@@ -307,7 +307,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                             onTap: () async {
                               await launchUrl(
                                 Uri.parse(
-                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
+                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${widget.account.genesisAddress}',
                                 ),
                                 mode: LaunchMode.externalApplication,
                               );

@@ -47,8 +47,7 @@ class _TransferTextFieldAmountState
   ) {
     final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final accountSelected = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -147,8 +146,7 @@ class _TransferTextFieldAmountState
     );
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     return Row(
       children: [

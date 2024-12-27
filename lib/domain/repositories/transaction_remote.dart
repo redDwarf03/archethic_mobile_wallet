@@ -33,11 +33,7 @@ abstract class TransactionRemoteRepositoryInterface {
   Future<archethic.Transaction> buildTransactionRaw(
     KeychainSecuredInfos keychainSecuredInfos,
     archethic.Transaction transactionRaw,
-    String transactionLastAddress,
+    String address,
     String serviceName,
   );
-
-  Future<String?> getLastTransactionAddress({
-    required String genesisAddress,
-  });
 }

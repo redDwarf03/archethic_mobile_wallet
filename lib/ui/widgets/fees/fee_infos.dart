@@ -25,8 +25,7 @@ class FeeInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     final nativeFeeEstimation = asyncFeeEstimation.valueOrNull;
     if (nativeFeeEstimation == null) {

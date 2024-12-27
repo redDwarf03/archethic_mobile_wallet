@@ -27,7 +27,7 @@ class ContactsDialog {
     final searchNameController = TextEditingController();
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    var contacts = await ref.read(ContactProviders.fetchContacts().future);
+    var contacts = await ref.read(fetchContactsProvider().future);
     final accountSelected = await ref
         .read(
           accountsNotifierProvider.future,
@@ -99,7 +99,7 @@ class ContactsDialog {
                           ],
                           onChanged: (text) async {
                             contacts = await ref.read(
-                              ContactProviders.fetchContacts().future,
+                              fetchContactsProvider().future,
                             )
                               ..removeWhere(
                                 (element) =>

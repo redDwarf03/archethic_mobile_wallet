@@ -313,7 +313,7 @@ class _TransactionBuildInfos extends ConsumerWidget {
       _logger.info('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
       return ref
           .watch(
-            ContactProviders.getContactWithAddress(transactionInfo.valueInfo),
+            getContactWithAddressProvider(transactionInfo.valueInfo),
           )
           .map(
             data: (data) {

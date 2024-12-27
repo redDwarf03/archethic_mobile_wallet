@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homePageHash() => r'495225497a4d9db88dcc90fe35ad78cb599ac1d8';
+String _$homePageHash() => r'450070432a6539eb391292db9a6f4f8517cee248';
 
 /// Eagerly initializes providers (https://riverpod.dev/docs/essentials/eager_initialization).
 ///

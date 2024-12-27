@@ -246,7 +246,6 @@ mixin KeychainServiceMixin {
         final account = Account(
           lastLoadingTransactionInputs: DateTime.now().millisecondsSinceEpoch ~/
               Duration.millisecondsPerSecond,
-          lastAddress: uint8ListToHex(genesisAddress),
           genesisAddress: uint8ListToHex(genesisAddress),
           name: name,
           balance: AccountBalance(
@@ -295,10 +294,6 @@ mixin KeychainServiceMixin {
         if (lastTransactionKeychainMap[accounts[i].genesisAddress] != null &&
             lastTransactionKeychainMap[accounts[i].genesisAddress]!.address !=
                 null) {
-          accounts[i].lastAddress =
-              lastTransactionKeychainMap[accounts[i].genesisAddress]!
-                  .address!
-                  .address;
           lastAddressAccountList.add(
             lastTransactionKeychainMap[accounts[i].genesisAddress]!
                 .address!
@@ -315,9 +310,9 @@ mixin KeychainServiceMixin {
           await appService.getBalanceGetResponse(lastAddressAccountList);
 
       for (var i = 0; i < accounts.length; i++) {
-        if (balanceGetResponseMap[accounts[i].lastAddress] != null) {
+        if (balanceGetResponseMap[accounts[i].genesisAddress] != null) {
           final balanceGetResponse =
-              balanceGetResponseMap[accounts[i].lastAddress]!;
+              balanceGetResponseMap[accounts[i].genesisAddress]!;
           final accountBalance = AccountBalance(
             nativeTokenName: AccountBalance.cryptoCurrencyLabel,
             nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),

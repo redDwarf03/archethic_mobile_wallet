@@ -44,14 +44,14 @@ Future<bool> _isAccountOwner(
 @riverpod
 Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
   Ref ref,
-  String address,
+  String genesisAddress,
   String nameAccount,
   KeychainSecuredInfos keychainSecuredInfos,
 ) async {
   final appService = ref.watch(appServiceProvider);
   final apiService = ref.watch(apiServiceProvider);
   return ref.watch(_nftRepositoryProvider).getNFTList(
-        address,
+        genesisAddress,
         nameAccount,
         keychainSecuredInfos,
         appService,

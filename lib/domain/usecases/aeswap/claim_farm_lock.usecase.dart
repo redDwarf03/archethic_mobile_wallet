@@ -83,7 +83,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionClaim!,
-        selectedAccount.lastAddress!,
+        selectedAccount.genesisAddress,
         selectedAccount.name,
       );
 

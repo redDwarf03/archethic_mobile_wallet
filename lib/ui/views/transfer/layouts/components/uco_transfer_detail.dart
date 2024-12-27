@@ -24,8 +24,7 @@ class UCOTransferDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final accountSelected = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,

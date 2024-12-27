@@ -30,8 +30,7 @@ class _TransferTokenDetailState extends ConsumerState<TransferTokenDetail> {
   @override
   Widget build(BuildContext context) {
     final settings = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final price = widget.aeToken.isVerified
         ? ref
             .watch(

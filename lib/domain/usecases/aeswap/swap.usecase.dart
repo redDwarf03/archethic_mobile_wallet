@@ -119,7 +119,7 @@ class SwapCase with aedappfm.TransactionMixin {
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionSwap!,
-        selectedAccount.lastAddress!,
+        selectedAccount.genesisAddress,
         selectedAccount.name,
       );
 

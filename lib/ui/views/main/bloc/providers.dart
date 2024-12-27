@@ -42,7 +42,7 @@ class HomePage extends _$HomePage {
           if (previous != next && next == ConnectivityStatus.isConnected) {
             ref
               ..invalidate(environmentProvider)
-              ..invalidate(ContactProviders.fetchContacts);
+              ..invalidate(fetchContactsProvider);
 
             await (await ref
                     .read(accountsNotifierProvider.notifier)

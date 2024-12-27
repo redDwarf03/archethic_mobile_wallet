@@ -33,20 +33,6 @@ class ArchethicTransactionRepository
   final archethic.AddressService addressService;
 
   @override
-  Future<String> getLastTransactionAddress({
-    required String genesisAddress,
-  }) async {
-    final lastAddressFromAddressMap =
-        await addressService.lastAddressFromAddress(
-      [genesisAddress],
-    );
-    return (lastAddressFromAddressMap.isEmpty ||
-            lastAddressFromAddressMap[genesisAddress] == null)
-        ? genesisAddress
-        : lastAddressFromAddressMap[genesisAddress]!;
-  }
-
-  @override
   Future<Result<double, Failure>> calculateFees(
     Transaction transaction,
   ) async {
@@ -89,10 +75,10 @@ class ArchethicTransactionRepository
     final keychain = transfer.keychainSecuredInfos.toKeychain();
 
     final indexMap = await apiService.getTransactionIndex(
-      [transfer.transactionLastAddress],
+      [transfer.genesisAddress],
     );
 
-    final index = indexMap[transfer.transactionLastAddress] ?? 0;
+    final index = indexMap[transfer.genesisAddress] ?? 0;
 
     final blockchainTxVersion = int.parse(
       (await apiService.getBlockchainVersion()).version.transaction,
@@ -152,10 +138,10 @@ class ArchethicTransactionRepository
     final keychain = token.keychainSecuredInfos.toKeychain();
 
     final indexMap = await apiService.getTransactionIndex(
-      [token.transactionLastAddress],
+      [token.genesisAddress],
     );
 
-    final index = indexMap[token.transactionLastAddress] ?? 0;
+    final index = indexMap[token.genesisAddress] ?? 0;
 
     final blockchainTxVersion = int.parse(
       (await apiService.getBlockchainVersion()).version.transaction,
@@ -208,7 +194,7 @@ class ArchethicTransactionRepository
   Future<archethic.Transaction> buildTransactionRaw(
     KeychainSecuredInfos keychainSecuredInfos,
     archethic.Transaction transactionRaw,
-    String transactionLastAddress,
+    String address,
     String serviceName,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
@@ -216,10 +202,10 @@ class ArchethicTransactionRepository
     final keychain = keychainSecuredInfos.toKeychain();
 
     final indexMap = await apiService.getTransactionIndex(
-      [transactionLastAddress],
+      [address],
     );
 
-    final index = indexMap[transactionLastAddress] ?? 0;
+    final index = indexMap[address] ?? 0;
 
     final transactionSigned = keychain
         .buildTransaction(

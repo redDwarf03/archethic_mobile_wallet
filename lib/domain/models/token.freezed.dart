@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Token {
   KeychainSecuredInfos get keychainSecuredInfos =>
       throw _privateConstructorUsedError;
-  String get transactionLastAddress => throw _privateConstructorUsedError;
+  String get genesisAddress => throw _privateConstructorUsedError;
   String get accountSelectedName => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $TokenCopyWith<$Res> {
   @useResult
   $Res call(
       {KeychainSecuredInfos keychainSecuredInfos,
-      String transactionLastAddress,
+      String genesisAddress,
       String accountSelectedName,
       String name,
       String symbol,
@@ -68,7 +68,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
   @override
   $Res call({
     Object? keychainSecuredInfos = null,
-    Object? transactionLastAddress = null,
+    Object? genesisAddress = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -82,9 +82,9 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
           ? _value.keychainSecuredInfos
           : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
               as KeychainSecuredInfos,
-      transactionLastAddress: null == transactionLastAddress
-          ? _value.transactionLastAddress
-          : transactionLastAddress // ignore: cast_nullable_to_non_nullable
+      genesisAddress: null == genesisAddress
+          ? _value.genesisAddress
+          : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
@@ -138,7 +138,7 @@ abstract class _$$TokenImplCopyWith<$Res> implements $TokenCopyWith<$Res> {
   @useResult
   $Res call(
       {KeychainSecuredInfos keychainSecuredInfos,
-      String transactionLastAddress,
+      String genesisAddress,
       String accountSelectedName,
       String name,
       String symbol,
@@ -165,7 +165,7 @@ class __$$TokenImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? keychainSecuredInfos = null,
-    Object? transactionLastAddress = null,
+    Object? genesisAddress = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -179,9 +179,9 @@ class __$$TokenImplCopyWithImpl<$Res>
           ? _value.keychainSecuredInfos
           : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
               as KeychainSecuredInfos,
-      transactionLastAddress: null == transactionLastAddress
-          ? _value.transactionLastAddress
-          : transactionLastAddress // ignore: cast_nullable_to_non_nullable
+      genesisAddress: null == genesisAddress
+          ? _value.genesisAddress
+          : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
@@ -220,7 +220,7 @@ class __$$TokenImplCopyWithImpl<$Res>
 class _$TokenImpl extends _Token {
   const _$TokenImpl(
       {required this.keychainSecuredInfos,
-      required this.transactionLastAddress,
+      required this.genesisAddress,
       required this.accountSelectedName,
       required this.name,
       required this.symbol,
@@ -235,7 +235,7 @@ class _$TokenImpl extends _Token {
   @override
   final KeychainSecuredInfos keychainSecuredInfos;
   @override
-  final String transactionLastAddress;
+  final String genesisAddress;
   @override
   final String accountSelectedName;
   @override
@@ -264,7 +264,7 @@ class _$TokenImpl extends _Token {
 
   @override
   String toString() {
-    return 'Token(keychainSecuredInfos: $keychainSecuredInfos, transactionLastAddress: $transactionLastAddress, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
+    return 'Token(keychainSecuredInfos: $keychainSecuredInfos, genesisAddress: $genesisAddress, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
   }
 
   @override
@@ -274,8 +274,8 @@ class _$TokenImpl extends _Token {
             other is _$TokenImpl &&
             (identical(other.keychainSecuredInfos, keychainSecuredInfos) ||
                 other.keychainSecuredInfos == keychainSecuredInfos) &&
-            (identical(other.transactionLastAddress, transactionLastAddress) ||
-                other.transactionLastAddress == transactionLastAddress) &&
+            (identical(other.genesisAddress, genesisAddress) ||
+                other.genesisAddress == genesisAddress) &&
             (identical(other.accountSelectedName, accountSelectedName) ||
                 other.accountSelectedName == accountSelectedName) &&
             (identical(other.name, name) || other.name == name) &&
@@ -292,7 +292,7 @@ class _$TokenImpl extends _Token {
   int get hashCode => Object.hash(
       runtimeType,
       keychainSecuredInfos,
-      transactionLastAddress,
+      genesisAddress,
       accountSelectedName,
       name,
       symbol,
@@ -313,7 +313,7 @@ class _$TokenImpl extends _Token {
 abstract class _Token extends Token {
   const factory _Token(
       {required final KeychainSecuredInfos keychainSecuredInfos,
-      required final String transactionLastAddress,
+      required final String genesisAddress,
       required final String accountSelectedName,
       required final String name,
       required final String symbol,
@@ -326,7 +326,7 @@ abstract class _Token extends Token {
   @override
   KeychainSecuredInfos get keychainSecuredInfos;
   @override
-  String get transactionLastAddress;
+  String get genesisAddress;
   @override
   String get accountSelectedName;
   @override

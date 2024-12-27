@@ -6,7 +6,6 @@ extension AccountToRPC on Account {
   awc.Account get toRPC => awc.Account(
         genesisAddress: genesisAddress,
         name: name,
-        lastAddress: lastAddress,
         balance: balance?.toRPC,
       );
 }

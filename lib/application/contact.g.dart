@@ -6,14 +6,14 @@ part of 'contact.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$contactRepositoryHash() => r'9607001f4c2c00c7d1b270803182d9f0a31b2554';
+String _$contactRepositoryHash() => r'09634b29863aac57c42ff8825769bc6b72a0be69';
 
-/// See also [_contactRepository].
-@ProviderFor(_contactRepository)
-final _contactRepositoryProvider =
-    AutoDisposeProvider<ContactRepository>.internal(
-  _contactRepository,
-  name: r'_contactRepositoryProvider',
+/// See also [contactRepository].
+@ProviderFor(contactRepository)
+final contactRepositoryProvider =
+    AutoDisposeProvider<ContactRepositoryImpl>.internal(
+  contactRepository,
+  name: r'contactRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$contactRepositoryHash,
@@ -23,8 +23,8 @@ final _contactRepositoryProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
-String _$fetchContactsHash() => r'71fcbf6530b61c573cad051f104b49aaac0e6861';
+typedef ContactRepositoryRef = AutoDisposeProviderRef<ContactRepositoryImpl>;
+String _$fetchContactsHash() => r'7ad90286017eccb9bbba3b302ce494697a2b700a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -47,27 +47,27 @@ class _SystemHash {
   }
 }
 
-/// See also [_fetchContacts].
-@ProviderFor(_fetchContacts)
-const _fetchContactsProvider = _FetchContactsFamily();
+/// See also [fetchContacts].
+@ProviderFor(fetchContacts)
+const fetchContactsProvider = FetchContactsFamily();
 
-/// See also [_fetchContacts].
-class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
-  /// See also [_fetchContacts].
-  const _FetchContactsFamily();
+/// See also [fetchContacts].
+class FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
+  /// See also [fetchContacts].
+  const FetchContactsFamily();
 
-  /// See also [_fetchContacts].
-  _FetchContactsProvider call({
+  /// See also [fetchContacts].
+  FetchContactsProvider call({
     String search = '',
   }) {
-    return _FetchContactsProvider(
+    return FetchContactsProvider(
       search: search,
     );
   }
 
   @override
-  _FetchContactsProvider getProviderOverride(
-    covariant _FetchContactsProvider provider,
+  FetchContactsProvider getProviderOverride(
+    covariant FetchContactsProvider provider,
   ) {
     return call(
       search: provider.search,
@@ -86,32 +86,32 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_fetchContactsProvider';
+  String? get name => r'fetchContactsProvider';
 }
 
-/// See also [_fetchContacts].
-class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
-  /// See also [_fetchContacts].
-  _FetchContactsProvider({
+/// See also [fetchContacts].
+class FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
+  /// See also [fetchContacts].
+  FetchContactsProvider({
     String search = '',
   }) : this._internal(
-          (ref) => _fetchContacts(
-            ref as _FetchContactsRef,
+          (ref) => fetchContacts(
+            ref as FetchContactsRef,
             search: search,
           ),
-          from: _fetchContactsProvider,
-          name: r'_fetchContactsProvider',
+          from: fetchContactsProvider,
+          name: r'fetchContactsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$fetchContactsHash,
-          dependencies: _FetchContactsFamily._dependencies,
+          dependencies: FetchContactsFamily._dependencies,
           allTransitiveDependencies:
-              _FetchContactsFamily._allTransitiveDependencies,
+              FetchContactsFamily._allTransitiveDependencies,
           search: search,
         );
 
-  _FetchContactsProvider._internal(
+  FetchContactsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -125,12 +125,12 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<Contact>> Function(_FetchContactsRef provider) create,
+    FutureOr<List<Contact>> Function(FetchContactsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _FetchContactsProvider._internal(
-        (ref) => create(ref as _FetchContactsRef),
+      override: FetchContactsProvider._internal(
+        (ref) => create(ref as FetchContactsRef),
         from: from,
         name: null,
         dependencies: null,
@@ -148,7 +148,7 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
 
   @override
   bool operator ==(Object other) {
-    return other is _FetchContactsProvider && other.search == search;
+    return other is FetchContactsProvider && other.search == search;
   }
 
   @override
@@ -162,29 +162,28 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _FetchContactsRef on AutoDisposeFutureProviderRef<List<Contact>> {
+mixin FetchContactsRef on AutoDisposeFutureProviderRef<List<Contact>> {
   /// The parameter `search` of this provider.
   String get search;
 }
 
 class _FetchContactsProviderElement
     extends AutoDisposeFutureProviderElement<List<Contact>>
-    with _FetchContactsRef {
+    with FetchContactsRef {
   _FetchContactsProviderElement(super.provider);
 
   @override
-  String get search => (origin as _FetchContactsProvider).search;
+  String get search => (origin as FetchContactsProvider).search;
 }
 
 String _$getSelectedContactHash() =>
-    r'353627eb44f9e3d0bfa8493c7cd45cf85a34f693';
+    r'a8587668be0e199e853b616d9442e2ea282278cd';
 
-/// See also [_getSelectedContact].
-@ProviderFor(_getSelectedContact)
-final _getSelectedContactProvider =
-    AutoDisposeFutureProvider<Contact?>.internal(
-  _getSelectedContact,
-  name: r'_getSelectedContactProvider',
+/// See also [getSelectedContact].
+@ProviderFor(getSelectedContact)
+final getSelectedContactProvider = AutoDisposeFutureProvider<Contact?>.internal(
+  getSelectedContact,
+  name: r'getSelectedContactProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$getSelectedContactHash,
@@ -194,31 +193,31 @@ final _getSelectedContactProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact?>;
+typedef GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact?>;
 String _$getContactWithNameHash() =>
-    r'afe398dfeb748aa4f5ccd1306ef17c1ed19eddd7';
+    r'82a977ba03c39378104aaef800a7dad1bf8a46d3';
 
-/// See also [_getContactWithName].
-@ProviderFor(_getContactWithName)
-const _getContactWithNameProvider = _GetContactWithNameFamily();
+/// See also [getContactWithName].
+@ProviderFor(getContactWithName)
+const getContactWithNameProvider = GetContactWithNameFamily();
 
-/// See also [_getContactWithName].
-class _GetContactWithNameFamily extends Family<AsyncValue<Contact?>> {
-  /// See also [_getContactWithName].
-  const _GetContactWithNameFamily();
+/// See also [getContactWithName].
+class GetContactWithNameFamily extends Family<AsyncValue<Contact?>> {
+  /// See also [getContactWithName].
+  const GetContactWithNameFamily();
 
-  /// See also [_getContactWithName].
-  _GetContactWithNameProvider call(
+  /// See also [getContactWithName].
+  GetContactWithNameProvider call(
     String contactName,
   ) {
-    return _GetContactWithNameProvider(
+    return GetContactWithNameProvider(
       contactName,
     );
   }
 
   @override
-  _GetContactWithNameProvider getProviderOverride(
-    covariant _GetContactWithNameProvider provider,
+  GetContactWithNameProvider getProviderOverride(
+    covariant GetContactWithNameProvider provider,
   ) {
     return call(
       provider.contactName,
@@ -237,32 +236,32 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getContactWithNameProvider';
+  String? get name => r'getContactWithNameProvider';
 }
 
-/// See also [_getContactWithName].
-class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
-  /// See also [_getContactWithName].
-  _GetContactWithNameProvider(
+/// See also [getContactWithName].
+class GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
+  /// See also [getContactWithName].
+  GetContactWithNameProvider(
     String contactName,
   ) : this._internal(
-          (ref) => _getContactWithName(
-            ref as _GetContactWithNameRef,
+          (ref) => getContactWithName(
+            ref as GetContactWithNameRef,
             contactName,
           ),
-          from: _getContactWithNameProvider,
-          name: r'_getContactWithNameProvider',
+          from: getContactWithNameProvider,
+          name: r'getContactWithNameProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$getContactWithNameHash,
-          dependencies: _GetContactWithNameFamily._dependencies,
+          dependencies: GetContactWithNameFamily._dependencies,
           allTransitiveDependencies:
-              _GetContactWithNameFamily._allTransitiveDependencies,
+              GetContactWithNameFamily._allTransitiveDependencies,
           contactName: contactName,
         );
 
-  _GetContactWithNameProvider._internal(
+  GetContactWithNameProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -276,12 +275,12 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
 
   @override
   Override overrideWith(
-    FutureOr<Contact?> Function(_GetContactWithNameRef provider) create,
+    FutureOr<Contact?> Function(GetContactWithNameRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetContactWithNameProvider._internal(
-        (ref) => create(ref as _GetContactWithNameRef),
+      override: GetContactWithNameProvider._internal(
+        (ref) => create(ref as GetContactWithNameRef),
         from: from,
         name: null,
         dependencies: null,
@@ -299,7 +298,7 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
 
   @override
   bool operator ==(Object other) {
-    return other is _GetContactWithNameProvider &&
+    return other is GetContactWithNameProvider &&
         other.contactName == contactName;
   }
 
@@ -314,44 +313,44 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact?> {
+mixin GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `contactName` of this provider.
   String get contactName;
 }
 
 class _GetContactWithNameProviderElement
     extends AutoDisposeFutureProviderElement<Contact?>
-    with _GetContactWithNameRef {
+    with GetContactWithNameRef {
   _GetContactWithNameProviderElement(super.provider);
 
   @override
-  String get contactName => (origin as _GetContactWithNameProvider).contactName;
+  String get contactName => (origin as GetContactWithNameProvider).contactName;
 }
 
 String _$getContactWithAddressHash() =>
-    r'3e9bfbb47fc4a35c8227b1c9b65e5a7a561e154d';
+    r'42f9e65c821d6ee9618177fdb99238499f0021da';
 
-/// See also [_getContactWithAddress].
-@ProviderFor(_getContactWithAddress)
-const _getContactWithAddressProvider = _GetContactWithAddressFamily();
+/// See also [getContactWithAddress].
+@ProviderFor(getContactWithAddress)
+const getContactWithAddressProvider = GetContactWithAddressFamily();
 
-/// See also [_getContactWithAddress].
-class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
-  /// See also [_getContactWithAddress].
-  const _GetContactWithAddressFamily();
+/// See also [getContactWithAddress].
+class GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
+  /// See also [getContactWithAddress].
+  const GetContactWithAddressFamily();
 
-  /// See also [_getContactWithAddress].
-  _GetContactWithAddressProvider call(
+  /// See also [getContactWithAddress].
+  GetContactWithAddressProvider call(
     String address,
   ) {
-    return _GetContactWithAddressProvider(
+    return GetContactWithAddressProvider(
       address,
     );
   }
 
   @override
-  _GetContactWithAddressProvider getProviderOverride(
-    covariant _GetContactWithAddressProvider provider,
+  GetContactWithAddressProvider getProviderOverride(
+    covariant GetContactWithAddressProvider provider,
   ) {
     return call(
       provider.address,
@@ -370,33 +369,33 @@ class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getContactWithAddressProvider';
+  String? get name => r'getContactWithAddressProvider';
 }
 
-/// See also [_getContactWithAddress].
-class _GetContactWithAddressProvider
+/// See also [getContactWithAddress].
+class GetContactWithAddressProvider
     extends AutoDisposeFutureProvider<Contact?> {
-  /// See also [_getContactWithAddress].
-  _GetContactWithAddressProvider(
+  /// See also [getContactWithAddress].
+  GetContactWithAddressProvider(
     String address,
   ) : this._internal(
-          (ref) => _getContactWithAddress(
-            ref as _GetContactWithAddressRef,
+          (ref) => getContactWithAddress(
+            ref as GetContactWithAddressRef,
             address,
           ),
-          from: _getContactWithAddressProvider,
-          name: r'_getContactWithAddressProvider',
+          from: getContactWithAddressProvider,
+          name: r'getContactWithAddressProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$getContactWithAddressHash,
-          dependencies: _GetContactWithAddressFamily._dependencies,
+          dependencies: GetContactWithAddressFamily._dependencies,
           allTransitiveDependencies:
-              _GetContactWithAddressFamily._allTransitiveDependencies,
+              GetContactWithAddressFamily._allTransitiveDependencies,
           address: address,
         );
 
-  _GetContactWithAddressProvider._internal(
+  GetContactWithAddressProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -410,12 +409,12 @@ class _GetContactWithAddressProvider
 
   @override
   Override overrideWith(
-    FutureOr<Contact?> Function(_GetContactWithAddressRef provider) create,
+    FutureOr<Contact?> Function(GetContactWithAddressRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetContactWithAddressProvider._internal(
-        (ref) => create(ref as _GetContactWithAddressRef),
+      override: GetContactWithAddressProvider._internal(
+        (ref) => create(ref as GetContactWithAddressRef),
         from: from,
         name: null,
         dependencies: null,
@@ -433,7 +432,7 @@ class _GetContactWithAddressProvider
 
   @override
   bool operator ==(Object other) {
-    return other is _GetContactWithAddressProvider && other.address == address;
+    return other is GetContactWithAddressProvider && other.address == address;
   }
 
   @override
@@ -447,952 +446,37 @@ class _GetContactWithAddressProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _GetContactWithAddressRef on AutoDisposeFutureProviderRef<Contact?> {
+mixin GetContactWithAddressRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `address` of this provider.
   String get address;
 }
 
 class _GetContactWithAddressProviderElement
     extends AutoDisposeFutureProviderElement<Contact?>
-    with _GetContactWithAddressRef {
+    with GetContactWithAddressRef {
   _GetContactWithAddressProviderElement(super.provider);
 
   @override
-  String get address => (origin as _GetContactWithAddressProvider).address;
+  String get address => (origin as GetContactWithAddressProvider).address;
 }
 
-String _$getContactWithPublicKeyHash() =>
-    r'4af923d478c93dd4e3cbbc84acc1513792e837d3';
+String _$contactProviderResetHash() =>
+    r'c1e0f3fbdb99f9675f11edceba8b6959ca43dd11';
 
-/// See also [_getContactWithPublicKey].
-@ProviderFor(_getContactWithPublicKey)
-const _getContactWithPublicKeyProvider = _GetContactWithPublicKeyFamily();
-
-/// See also [_getContactWithPublicKey].
-class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact?>> {
-  /// See also [_getContactWithPublicKey].
-  const _GetContactWithPublicKeyFamily();
-
-  /// See also [_getContactWithPublicKey].
-  _GetContactWithPublicKeyProvider call(
-    String publicKey,
-  ) {
-    return _GetContactWithPublicKeyProvider(
-      publicKey,
-    );
-  }
-
-  @override
-  _GetContactWithPublicKeyProvider getProviderOverride(
-    covariant _GetContactWithPublicKeyProvider provider,
-  ) {
-    return call(
-      provider.publicKey,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_getContactWithPublicKeyProvider';
-}
-
-/// See also [_getContactWithPublicKey].
-class _GetContactWithPublicKeyProvider
-    extends AutoDisposeFutureProvider<Contact?> {
-  /// See also [_getContactWithPublicKey].
-  _GetContactWithPublicKeyProvider(
-    String publicKey,
-  ) : this._internal(
-          (ref) => _getContactWithPublicKey(
-            ref as _GetContactWithPublicKeyRef,
-            publicKey,
-          ),
-          from: _getContactWithPublicKeyProvider,
-          name: r'_getContactWithPublicKeyProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getContactWithPublicKeyHash,
-          dependencies: _GetContactWithPublicKeyFamily._dependencies,
-          allTransitiveDependencies:
-              _GetContactWithPublicKeyFamily._allTransitiveDependencies,
-          publicKey: publicKey,
-        );
-
-  _GetContactWithPublicKeyProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.publicKey,
-  }) : super.internal();
-
-  final String publicKey;
-
-  @override
-  Override overrideWith(
-    FutureOr<Contact?> Function(_GetContactWithPublicKeyRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _GetContactWithPublicKeyProvider._internal(
-        (ref) => create(ref as _GetContactWithPublicKeyRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        publicKey: publicKey,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<Contact?> createElement() {
-    return _GetContactWithPublicKeyProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _GetContactWithPublicKeyProvider &&
-        other.publicKey == publicKey;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, publicKey.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
+/// See also [contactProviderReset].
+@ProviderFor(contactProviderReset)
+final contactProviderResetProvider = AutoDisposeFutureProvider<void>.internal(
+  contactProviderReset,
+  name: r'contactProviderResetProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$contactProviderResetHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin _GetContactWithPublicKeyRef on AutoDisposeFutureProviderRef<Contact?> {
-  /// The parameter `publicKey` of this provider.
-  String get publicKey;
-}
-
-class _GetContactWithPublicKeyProviderElement
-    extends AutoDisposeFutureProviderElement<Contact?>
-    with _GetContactWithPublicKeyRef {
-  _GetContactWithPublicKeyProviderElement(super.provider);
-
-  @override
-  String get publicKey =>
-      (origin as _GetContactWithPublicKeyProvider).publicKey;
-}
-
-String _$getContactWithGenesisPublicKeyHash() =>
-    r'990704043eecf6c887e715c05da86445865daeeb';
-
-/// See also [_getContactWithGenesisPublicKey].
-@ProviderFor(_getContactWithGenesisPublicKey)
-const _getContactWithGenesisPublicKeyProvider =
-    _GetContactWithGenesisPublicKeyFamily();
-
-/// See also [_getContactWithGenesisPublicKey].
-class _GetContactWithGenesisPublicKeyFamily
-    extends Family<AsyncValue<Contact?>> {
-  /// See also [_getContactWithGenesisPublicKey].
-  const _GetContactWithGenesisPublicKeyFamily();
-
-  /// See also [_getContactWithGenesisPublicKey].
-  _GetContactWithGenesisPublicKeyProvider call(
-    String genesisPublicKey,
-  ) {
-    return _GetContactWithGenesisPublicKeyProvider(
-      genesisPublicKey,
-    );
-  }
-
-  @override
-  _GetContactWithGenesisPublicKeyProvider getProviderOverride(
-    covariant _GetContactWithGenesisPublicKeyProvider provider,
-  ) {
-    return call(
-      provider.genesisPublicKey,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_getContactWithGenesisPublicKeyProvider';
-}
-
-/// See also [_getContactWithGenesisPublicKey].
-class _GetContactWithGenesisPublicKeyProvider
-    extends AutoDisposeFutureProvider<Contact?> {
-  /// See also [_getContactWithGenesisPublicKey].
-  _GetContactWithGenesisPublicKeyProvider(
-    String genesisPublicKey,
-  ) : this._internal(
-          (ref) => _getContactWithGenesisPublicKey(
-            ref as _GetContactWithGenesisPublicKeyRef,
-            genesisPublicKey,
-          ),
-          from: _getContactWithGenesisPublicKeyProvider,
-          name: r'_getContactWithGenesisPublicKeyProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getContactWithGenesisPublicKeyHash,
-          dependencies: _GetContactWithGenesisPublicKeyFamily._dependencies,
-          allTransitiveDependencies:
-              _GetContactWithGenesisPublicKeyFamily._allTransitiveDependencies,
-          genesisPublicKey: genesisPublicKey,
-        );
-
-  _GetContactWithGenesisPublicKeyProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.genesisPublicKey,
-  }) : super.internal();
-
-  final String genesisPublicKey;
-
-  @override
-  Override overrideWith(
-    FutureOr<Contact?> Function(_GetContactWithGenesisPublicKeyRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _GetContactWithGenesisPublicKeyProvider._internal(
-        (ref) => create(ref as _GetContactWithGenesisPublicKeyRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        genesisPublicKey: genesisPublicKey,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<Contact?> createElement() {
-    return _GetContactWithGenesisPublicKeyProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _GetContactWithGenesisPublicKeyProvider &&
-        other.genesisPublicKey == genesisPublicKey;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, genesisPublicKey.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _GetContactWithGenesisPublicKeyRef
-    on AutoDisposeFutureProviderRef<Contact?> {
-  /// The parameter `genesisPublicKey` of this provider.
-  String get genesisPublicKey;
-}
-
-class _GetContactWithGenesisPublicKeyProviderElement
-    extends AutoDisposeFutureProviderElement<Contact?>
-    with _GetContactWithGenesisPublicKeyRef {
-  _GetContactWithGenesisPublicKeyProviderElement(super.provider);
-
-  @override
-  String get genesisPublicKey =>
-      (origin as _GetContactWithGenesisPublicKeyProvider).genesisPublicKey;
-}
-
-String _$saveContactHash() => r'29b7b152e83b9b6d1555c73a7a9505d0eb6231b6';
-
-/// See also [_saveContact].
-@ProviderFor(_saveContact)
-const _saveContactProvider = _SaveContactFamily();
-
-/// See also [_saveContact].
-class _SaveContactFamily extends Family<AsyncValue<void>> {
-  /// See also [_saveContact].
-  const _SaveContactFamily();
-
-  /// See also [_saveContact].
-  _SaveContactProvider call({
-    Contact? contact,
-  }) {
-    return _SaveContactProvider(
-      contact: contact,
-    );
-  }
-
-  @override
-  _SaveContactProvider getProviderOverride(
-    covariant _SaveContactProvider provider,
-  ) {
-    return call(
-      contact: provider.contact,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_saveContactProvider';
-}
-
-/// See also [_saveContact].
-class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
-  /// See also [_saveContact].
-  _SaveContactProvider({
-    Contact? contact,
-  }) : this._internal(
-          (ref) => _saveContact(
-            ref as _SaveContactRef,
-            contact: contact,
-          ),
-          from: _saveContactProvider,
-          name: r'_saveContactProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$saveContactHash,
-          dependencies: _SaveContactFamily._dependencies,
-          allTransitiveDependencies:
-              _SaveContactFamily._allTransitiveDependencies,
-          contact: contact,
-        );
-
-  _SaveContactProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.contact,
-  }) : super.internal();
-
-  final Contact? contact;
-
-  @override
-  Override overrideWith(
-    FutureOr<void> Function(_SaveContactRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _SaveContactProvider._internal(
-        (ref) => create(ref as _SaveContactRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        contact: contact,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<void> createElement() {
-    return _SaveContactProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _SaveContactProvider && other.contact == contact;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, contact.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _SaveContactRef on AutoDisposeFutureProviderRef<void> {
-  /// The parameter `contact` of this provider.
-  Contact? get contact;
-}
-
-class _SaveContactProviderElement extends AutoDisposeFutureProviderElement<void>
-    with _SaveContactRef {
-  _SaveContactProviderElement(super.provider);
-
-  @override
-  Contact? get contact => (origin as _SaveContactProvider).contact;
-}
-
-String _$deleteContactHash() => r'08d6c8504ca606547d07cfdc867d54195dfc2fd8';
-
-/// See also [_deleteContact].
-@ProviderFor(_deleteContact)
-const _deleteContactProvider = _DeleteContactFamily();
-
-/// See also [_deleteContact].
-class _DeleteContactFamily extends Family<AsyncValue<void>> {
-  /// See also [_deleteContact].
-  const _DeleteContactFamily();
-
-  /// See also [_deleteContact].
-  _DeleteContactProvider call({
-    Contact? contact,
-  }) {
-    return _DeleteContactProvider(
-      contact: contact,
-    );
-  }
-
-  @override
-  _DeleteContactProvider getProviderOverride(
-    covariant _DeleteContactProvider provider,
-  ) {
-    return call(
-      contact: provider.contact,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_deleteContactProvider';
-}
-
-/// See also [_deleteContact].
-class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
-  /// See also [_deleteContact].
-  _DeleteContactProvider({
-    Contact? contact,
-  }) : this._internal(
-          (ref) => _deleteContact(
-            ref as _DeleteContactRef,
-            contact: contact,
-          ),
-          from: _deleteContactProvider,
-          name: r'_deleteContactProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$deleteContactHash,
-          dependencies: _DeleteContactFamily._dependencies,
-          allTransitiveDependencies:
-              _DeleteContactFamily._allTransitiveDependencies,
-          contact: contact,
-        );
-
-  _DeleteContactProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.contact,
-  }) : super.internal();
-
-  final Contact? contact;
-
-  @override
-  Override overrideWith(
-    FutureOr<void> Function(_DeleteContactRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _DeleteContactProvider._internal(
-        (ref) => create(ref as _DeleteContactRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        contact: contact,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<void> createElement() {
-    return _DeleteContactProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _DeleteContactProvider && other.contact == contact;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, contact.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _DeleteContactRef on AutoDisposeFutureProviderRef<void> {
-  /// The parameter `contact` of this provider.
-  Contact? get contact;
-}
-
-class _DeleteContactProviderElement
-    extends AutoDisposeFutureProviderElement<void> with _DeleteContactRef {
-  _DeleteContactProviderElement(super.provider);
-
-  @override
-  Contact? get contact => (origin as _DeleteContactProvider).contact;
-}
-
-String _$isContactExistsWithNameHash() =>
-    r'893285e74484a43ede3429969f8d73620da997cc';
-
-/// See also [_isContactExistsWithName].
-@ProviderFor(_isContactExistsWithName)
-const _isContactExistsWithNameProvider = _IsContactExistsWithNameFamily();
-
-/// See also [_isContactExistsWithName].
-class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
-  /// See also [_isContactExistsWithName].
-  const _IsContactExistsWithNameFamily();
-
-  /// See also [_isContactExistsWithName].
-  _IsContactExistsWithNameProvider call({
-    String? contactName,
-  }) {
-    return _IsContactExistsWithNameProvider(
-      contactName: contactName,
-    );
-  }
-
-  @override
-  _IsContactExistsWithNameProvider getProviderOverride(
-    covariant _IsContactExistsWithNameProvider provider,
-  ) {
-    return call(
-      contactName: provider.contactName,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_isContactExistsWithNameProvider';
-}
-
-/// See also [_isContactExistsWithName].
-class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
-  /// See also [_isContactExistsWithName].
-  _IsContactExistsWithNameProvider({
-    String? contactName,
-  }) : this._internal(
-          (ref) => _isContactExistsWithName(
-            ref as _IsContactExistsWithNameRef,
-            contactName: contactName,
-          ),
-          from: _isContactExistsWithNameProvider,
-          name: r'_isContactExistsWithNameProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$isContactExistsWithNameHash,
-          dependencies: _IsContactExistsWithNameFamily._dependencies,
-          allTransitiveDependencies:
-              _IsContactExistsWithNameFamily._allTransitiveDependencies,
-          contactName: contactName,
-        );
-
-  _IsContactExistsWithNameProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.contactName,
-  }) : super.internal();
-
-  final String? contactName;
-
-  @override
-  Override overrideWith(
-    FutureOr<bool> Function(_IsContactExistsWithNameRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _IsContactExistsWithNameProvider._internal(
-        (ref) => create(ref as _IsContactExistsWithNameRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        contactName: contactName,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<bool> createElement() {
-    return _IsContactExistsWithNameProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _IsContactExistsWithNameProvider &&
-        other.contactName == contactName;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, contactName.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _IsContactExistsWithNameRef on AutoDisposeFutureProviderRef<bool> {
-  /// The parameter `contactName` of this provider.
-  String? get contactName;
-}
-
-class _IsContactExistsWithNameProviderElement
-    extends AutoDisposeFutureProviderElement<bool>
-    with _IsContactExistsWithNameRef {
-  _IsContactExistsWithNameProviderElement(super.provider);
-
-  @override
-  String? get contactName =>
-      (origin as _IsContactExistsWithNameProvider).contactName;
-}
-
-String _$isContactExistsWithAddressHash() =>
-    r'67e5d691f2ab3ddb7a1241d8ae8251203bd835b8';
-
-/// See also [_isContactExistsWithAddress].
-@ProviderFor(_isContactExistsWithAddress)
-const _isContactExistsWithAddressProvider = _IsContactExistsWithAddressFamily();
-
-/// See also [_isContactExistsWithAddress].
-class _IsContactExistsWithAddressFamily extends Family<AsyncValue<bool>> {
-  /// See also [_isContactExistsWithAddress].
-  const _IsContactExistsWithAddressFamily();
-
-  /// See also [_isContactExistsWithAddress].
-  _IsContactExistsWithAddressProvider call({
-    String? address,
-  }) {
-    return _IsContactExistsWithAddressProvider(
-      address: address,
-    );
-  }
-
-  @override
-  _IsContactExistsWithAddressProvider getProviderOverride(
-    covariant _IsContactExistsWithAddressProvider provider,
-  ) {
-    return call(
-      address: provider.address,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_isContactExistsWithAddressProvider';
-}
-
-/// See also [_isContactExistsWithAddress].
-class _IsContactExistsWithAddressProvider
-    extends AutoDisposeFutureProvider<bool> {
-  /// See also [_isContactExistsWithAddress].
-  _IsContactExistsWithAddressProvider({
-    String? address,
-  }) : this._internal(
-          (ref) => _isContactExistsWithAddress(
-            ref as _IsContactExistsWithAddressRef,
-            address: address,
-          ),
-          from: _isContactExistsWithAddressProvider,
-          name: r'_isContactExistsWithAddressProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$isContactExistsWithAddressHash,
-          dependencies: _IsContactExistsWithAddressFamily._dependencies,
-          allTransitiveDependencies:
-              _IsContactExistsWithAddressFamily._allTransitiveDependencies,
-          address: address,
-        );
-
-  _IsContactExistsWithAddressProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.address,
-  }) : super.internal();
-
-  final String? address;
-
-  @override
-  Override overrideWith(
-    FutureOr<bool> Function(_IsContactExistsWithAddressRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _IsContactExistsWithAddressProvider._internal(
-        (ref) => create(ref as _IsContactExistsWithAddressRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        address: address,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<bool> createElement() {
-    return _IsContactExistsWithAddressProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _IsContactExistsWithAddressProvider &&
-        other.address == address;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, address.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _IsContactExistsWithAddressRef on AutoDisposeFutureProviderRef<bool> {
-  /// The parameter `address` of this provider.
-  String? get address;
-}
-
-class _IsContactExistsWithAddressProviderElement
-    extends AutoDisposeFutureProviderElement<bool>
-    with _IsContactExistsWithAddressRef {
-  _IsContactExistsWithAddressProviderElement(super.provider);
-
-  @override
-  String? get address =>
-      (origin as _IsContactExistsWithAddressProvider).address;
-}
-
-String _$getBalanceHash() => r'38c80fca819850dfafb6da0f1d8aa5a71c8c6036';
-
-/// See also [_getBalance].
-@ProviderFor(_getBalance)
-const _getBalanceProvider = _GetBalanceFamily();
-
-/// See also [_getBalance].
-class _GetBalanceFamily extends Family<AsyncValue<AccountBalance>> {
-  /// See also [_getBalance].
-  const _GetBalanceFamily();
-
-  /// See also [_getBalance].
-  _GetBalanceProvider call({
-    String? address,
-  }) {
-    return _GetBalanceProvider(
-      address: address,
-    );
-  }
-
-  @override
-  _GetBalanceProvider getProviderOverride(
-    covariant _GetBalanceProvider provider,
-  ) {
-    return call(
-      address: provider.address,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_getBalanceProvider';
-}
-
-/// See also [_getBalance].
-class _GetBalanceProvider extends AutoDisposeFutureProvider<AccountBalance> {
-  /// See also [_getBalance].
-  _GetBalanceProvider({
-    String? address,
-  }) : this._internal(
-          (ref) => _getBalance(
-            ref as _GetBalanceRef,
-            address: address,
-          ),
-          from: _getBalanceProvider,
-          name: r'_getBalanceProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getBalanceHash,
-          dependencies: _GetBalanceFamily._dependencies,
-          allTransitiveDependencies:
-              _GetBalanceFamily._allTransitiveDependencies,
-          address: address,
-        );
-
-  _GetBalanceProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.address,
-  }) : super.internal();
-
-  final String? address;
-
-  @override
-  Override overrideWith(
-    FutureOr<AccountBalance> Function(_GetBalanceRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _GetBalanceProvider._internal(
-        (ref) => create(ref as _GetBalanceRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        address: address,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<AccountBalance> createElement() {
-    return _GetBalanceProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _GetBalanceProvider && other.address == address;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, address.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _GetBalanceRef on AutoDisposeFutureProviderRef<AccountBalance> {
-  /// The parameter `address` of this provider.
-  String? get address;
-}
-
-class _GetBalanceProviderElement
-    extends AutoDisposeFutureProviderElement<AccountBalance>
-    with _GetBalanceRef {
-  _GetBalanceProviderElement(super.provider);
-
-  @override
-  String? get address => (origin as _GetBalanceProvider).address;
-}
+typedef ContactProviderResetRef = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
