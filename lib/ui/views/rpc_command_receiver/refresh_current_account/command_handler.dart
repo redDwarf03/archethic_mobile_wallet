@@ -1,6 +1,5 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -28,7 +27,6 @@ class RefreshCurrentAccountHandler extends CommandHandler {
                     .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
                 ?.refreshRecentTransactions();
-            ref.invalidate(fetchContactsProvider);
 
             return const Result.success(awc.RefreshCurrentAccountResponse());
           },

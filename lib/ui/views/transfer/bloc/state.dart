@@ -1,6 +1,6 @@
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -92,8 +92,8 @@ class TransferRecipient with _$TransferRecipient {
   const factory TransferRecipient.address({
     @AddressJsonConverter() required Address address,
   }) = _TransferDestinationAddress;
-  const factory TransferRecipient.contact({
-    @ContactConverter() required Contact contact,
+  const factory TransferRecipient.account({
+    @AccountConverter() required Account account,
   }) = _TransferDestinationContact;
   const factory TransferRecipient.unknownContact({
     required String name,
@@ -101,7 +101,7 @@ class TransferRecipient with _$TransferRecipient {
 
   Address? get address => when(
         address: (address) => address,
-        contact: (contact) => Address(address: contact.address),
+        account: (account) => Address(address: account.genesisAddress),
         unknownContact: (_) => null,
       );
 

@@ -1,15 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/application/account/accounts.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/app_service.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/account_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
@@ -313,11 +313,11 @@ class _TransactionBuildInfos extends ConsumerWidget {
       _logger.info('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
       return ref
           .watch(
-            getContactWithAddressProvider(transactionInfo.valueInfo),
+            accountWithGenesisAddressProvider(transactionInfo.valueInfo),
           )
-          .map(
+          .when(
             data: (data) {
-              if (data.value == null) {
+              if (data == null) {
                 _logger.info(
                   'transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null',
                 );
@@ -330,16 +330,16 @@ class _TransactionBuildInfos extends ConsumerWidget {
                   'transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null',
                 );
                 return SelectableText(
-                  data.value!.format,
+                  data.format,
                   style: ArchethicThemeStyles.textStyleSize14W200Primary,
                 );
               }
             },
-            error: (error) => SelectableText(
+            error: (error, stacktrace) => SelectableText(
               transactionInfo.valueInfo,
               style: ArchethicThemeStyles.textStyleSize14W200Primary,
             ),
-            loading: (loading) => SelectableText(
+            loading: () => SelectableText(
               transactionInfo.valueInfo,
               style: ArchethicThemeStyles.textStyleSize14W200Primary,
             ),

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -40,9 +39,7 @@ class HomePage extends _$HomePage {
         connectivityStatusProviders,
         (previous, next) async {
           if (previous != next && next == ConnectivityStatus.isConnected) {
-            ref
-              ..invalidate(environmentProvider)
-              ..invalidate(fetchContactsProvider);
+            ref.invalidate(environmentProvider);
 
             await (await ref
                     .read(accountsNotifierProvider.notifier)

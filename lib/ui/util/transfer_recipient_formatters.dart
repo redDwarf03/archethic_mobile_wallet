@@ -1,5 +1,5 @@
+import 'package:aewallet/ui/util/account_formatters.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
@@ -9,7 +9,7 @@ extension TransferRecipientFormatters on TransferRecipient {
                 '00000000000000000000000000000000000000000000000000000000000000000000'
             ? localizations.burnAddressLbl
             : AddressFormatters(address.address!).getShortString(),
-        contact: (contact) => contact.format,
+        account: (account) => account.format,
         unknownContact: (name) => name.replaceFirst('@', ''),
       );
 }

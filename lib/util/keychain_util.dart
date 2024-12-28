@@ -6,14 +6,12 @@ import 'dart:typed_data';
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
-import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -230,9 +228,6 @@ mixin KeychainServiceMixin {
       final genesisAddressAccountList = <String>[];
       final lastAddressAccountList = <String>[];
 
-      await ContactsHiveDatasource.instance()
-          .deleteContactByType(ContactType.keychainService.name);
-
       /// Get all services for archethic blockchain
       keychain.services.forEach((serviceName, service) async {
         final serviceType = getServiceTypeFromPath(service.derivationPath);
@@ -264,19 +259,6 @@ mixin KeychainServiceMixin {
         }
 
         accounts.add(account);
-
-        if (serviceType == 'archethicWallet') {
-          final newContact = Contact(
-            name: '@${Uri.encodeFull(account.nameDisplayed)}',
-            address: uint8ListToHex(genesisAddress),
-            genesisAddress: uint8ListToHex(genesisAddress),
-            type: ContactType.keychainService.name,
-            publicKey:
-                uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
-                    .toUpperCase(),
-          );
-          await ContactsHiveDatasource.instance().saveContact(newContact);
-        }
       });
 
       final genesisAddressKeychain =

@@ -3,11 +3,10 @@
 import 'dart:ui';
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/account_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -17,8 +16,8 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ContactsDialog {
-  static Future<Contact?> getDialog(
+class AccountsDialog {
+  static Future<Account?> getDialog(
     BuildContext context,
     WidgetRef ref,
   ) async {
@@ -27,29 +26,29 @@ class ContactsDialog {
     final searchNameController = TextEditingController();
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    var contacts = await ref.read(fetchContactsProvider().future);
+    var accounts = await ref.read(accountsNotifierProvider.future);
     final accountSelected = await ref
         .read(
           accountsNotifierProvider.future,
         )
         .selectedAccount;
 
-    for (final contact in contacts) {
-      if (contact.format.toUpperCase() !=
-          accountSelected!.nameDisplayed.toUpperCase()) {
+    for (final account in accounts) {
+      if (account.genesisAddress.toUpperCase() !=
+          accountSelected!.genesisAddress.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
-            contact.format,
+            account.format,
             null,
             null,
             null,
-            contact,
+            account,
             true,
           ),
         );
       }
     }
-    return showDialog<Contact>(
+    return showDialog<Account>(
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
@@ -98,8 +97,8 @@ class ContactsDialog {
                             LengthLimitingTextInputFormatter(20),
                           ],
                           onChanged: (text) async {
-                            contacts = await ref.read(
-                              fetchContactsProvider().future,
+                            accounts = await ref.read(
+                              accountsNotifierProvider.future,
                             )
                               ..removeWhere(
                                 (element) =>
@@ -109,24 +108,24 @@ class ContactsDialog {
                               );
                             setState(
                               () {
-                                contacts = contacts.where((Contact contact) {
-                                  final contactName =
-                                      contact.format.toUpperCase();
-                                  return contactName
+                                accounts = accounts.where((Account account) {
+                                  final accountName =
+                                      account.format.toUpperCase();
+                                  return accountName
                                       .contains(text.toUpperCase());
                                 }).toList();
                                 pickerItemsList.clear();
-                                for (final contact in contacts) {
-                                  if (contact.format.toUpperCase() !=
-                                      accountSelected!.nameDisplayed
+                                for (final account in accounts) {
+                                  if (account.genesisAddress.toUpperCase() !=
+                                      accountSelected!.genesisAddress
                                           .toUpperCase()) {
                                     pickerItemsList.add(
                                       PickerItem(
-                                        contact.format,
+                                        account.format,
                                         null,
                                         null,
                                         null,
-                                        contact,
+                                        account,
                                         true,
                                       ),
                                     );

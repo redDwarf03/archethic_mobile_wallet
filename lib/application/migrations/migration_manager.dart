@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
@@ -17,10 +15,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part '437.dart';
-part '512.dart';
 part '526.dart';
 part '540.dart';
 part '541.dart';
+part '603.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
 
@@ -135,10 +133,10 @@ class LocalDataMigration {
 @riverpod
 List<LocalDataMigration> _migrations(Ref ref) => [
       migration_437,
-      migration_512,
       migration_526,
       migration_540,
       migration_541,
+      migration_603,
     ];
 
 class CurrentVersionRepository {

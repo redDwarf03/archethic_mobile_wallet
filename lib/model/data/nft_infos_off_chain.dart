@@ -8,7 +8,7 @@ part 'nft_infos_off_chain.g.dart';
 
 @HiveType(typeId: HiveTypeIds.nftInfosOffChain)
 class NftInfosOffChain extends HiveObject {
-  @Deprecated('Thanks to hive, we should keep this unsused class...')
+  @Deprecated('Thanks to hive, we should keep this unused class...')
   NftInfosOffChain({this.id, this.categoryNftIndex, this.favorite});
 
   /// Token's Id

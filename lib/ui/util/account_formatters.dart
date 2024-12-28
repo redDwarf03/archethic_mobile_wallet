@@ -1,6 +1,6 @@
-import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/account.dart';
 
-extension ContactFormatters on Contact {
+extension AccountFormatters on Account {
   String get format {
     final decodedName = Uri.decodeFull(name);
     return decodedName.length > 1 && decodedName.startsWith('@')

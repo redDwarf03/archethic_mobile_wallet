@@ -3,9 +3,30 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'account.g.dart';
+
+class AccountConverter implements JsonConverter<Account, Map<String, dynamic>> {
+  const AccountConverter();
+
+  @override
+  Account fromJson(Map<String, dynamic> json) {
+    return Account(
+      name: json['name'] as String,
+      genesisAddress: json['genesisAddress'] as String,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(Account account) {
+    return {
+      'name': account.name,
+      'genesisAddress': account.genesisAddress,
+    };
+  }
+}
 
 @HiveType(typeId: HiveTypeIds.account)
 
@@ -30,6 +51,7 @@ class Account extends HiveObject {
     String? genesisAddress,
     int? lastLoadingTransactionInputs,
     bool? selected,
+    String? lastAddress,
     String? serviceType,
     AccountBalance? balance,
     List<RecentTransaction>? recentTransactions,
@@ -72,6 +94,7 @@ class Account extends HiveObject {
   bool? selected;
 
   /// Last address
+
   @HiveField(4)
   @Deprecated(
     'Genesis address should be preferred instead of last address after AEIP21',
