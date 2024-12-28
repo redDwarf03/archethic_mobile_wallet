@@ -1,6 +1,5 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -32,7 +31,6 @@ class MenuWidgetWallet extends ConsumerWidget {
         )
         .valueOrNull
         ?.selectedAccount;
-    final contact = ref.watch(getSelectedContactProvider).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
     final environment = ref.watch(environmentProvider);
@@ -72,39 +70,29 @@ class MenuWidgetWallet extends ConsumerWidget {
                 .animate()
                 .fade(duration: const Duration(milliseconds: 200))
                 .scale(duration: const Duration(milliseconds: 200)),
-            if (contact != null)
-              ActionButton(
-                key: const Key('receiveUCObutton'),
-                text: localizations.receive,
-                icon: Symbols.call_received,
-                onTap: () async {
-                  await CupertinoScaffold.showCupertinoModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return FractionallySizedBox(
-                        heightFactor: 1,
-                        child: Scaffold(
-                          backgroundColor: aedappfm.AppThemeBase.sheetBackground
-                              .withOpacity(0.2),
-                          body: const ReceiveModal(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 250))
-                  .scale(duration: const Duration(milliseconds: 250))
-            else
-              ActionButton(
-                text: localizations.receive,
-                icon: Symbols.call_received,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 250))
-                  .scale(duration: const Duration(milliseconds: 250)),
+            ActionButton(
+              key: const Key('receiveUCObutton'),
+              text: localizations.receive,
+              icon: Symbols.call_received,
+              onTap: () async {
+                await CupertinoScaffold.showCupertinoModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return FractionallySizedBox(
+                      heightFactor: 1,
+                      child: Scaffold(
+                        backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                            .withOpacity(0.2),
+                        body: const ReceiveModal(),
+                      ),
+                    );
+                  },
+                );
+              },
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 250))
+                .scale(duration: const Duration(milliseconds: 250)),
             ActionButton(
               text: environment == aedappfm.Environment.mainnet
                   ? localizations.buy
@@ -146,10 +134,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                           .read(accountsNotifierProvider.notifier)
                           .selectedAccountNotifier)
                       ?.refreshRecentTransactions();
-
-                  if (context.mounted) {
-                    ref.invalidate(fetchContactsProvider);
-                  }
                 },
               )
                   .animate()

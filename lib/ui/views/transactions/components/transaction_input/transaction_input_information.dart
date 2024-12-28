@@ -2,7 +2,6 @@
 
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -20,13 +19,9 @@ class TransactionInputInformation extends ConsumerWidget {
     return TransactionInformation(
       isEmpty: transaction.from == null,
       prefixMessage: localizations.txListFrom,
-      message: AddressFormatters(
-        transaction.contactInformation == null
-            ? transaction.from == null
-                ? ''
-                : transaction.from!
-            : transaction.contactInformation!.format,
-      ).getShortString4(),
+      message:
+          AddressFormatters(transaction.from == null ? '' : transaction.from!)
+              .getShortString4(),
     );
   }
 }

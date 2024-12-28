@@ -514,7 +514,7 @@ TransferRecipient _$TransferRecipientFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'address':
       return _TransferDestinationAddress.fromJson(json);
-    case 'contact':
+    case 'account':
       return _TransferDestinationContact.fromJson(json);
     case 'unknownContact':
       return _TransferDestinationUnknownContact.fromJson(json);
@@ -530,21 +530,21 @@ mixin _$TransferRecipient {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(@AddressJsonConverter() Address address) address,
-    required TResult Function(@ContactConverter() Contact contact) contact,
+    required TResult Function(@AccountConverter() Account account) account,
     required TResult Function(String name) unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@AddressJsonConverter() Address address)? address,
-    TResult? Function(@ContactConverter() Contact contact)? contact,
+    TResult? Function(@AccountConverter() Account account)? account,
     TResult? Function(String name)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@AddressJsonConverter() Address address)? address,
-    TResult Function(@ContactConverter() Contact contact)? contact,
+    TResult Function(@AccountConverter() Account account)? account,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) =>
@@ -552,7 +552,7 @@ mixin _$TransferRecipient {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TransferDestinationAddress value) address,
-    required TResult Function(_TransferDestinationContact value) contact,
+    required TResult Function(_TransferDestinationContact value) account,
     required TResult Function(_TransferDestinationUnknownContact value)
         unknownContact,
   }) =>
@@ -560,14 +560,14 @@ mixin _$TransferRecipient {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransferDestinationAddress value)? address,
-    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationContact value)? account,
     TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
+    TResult Function(_TransferDestinationContact value)? account,
     TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
     required TResult orElse(),
   }) =>
@@ -695,7 +695,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(@AddressJsonConverter() Address address) address,
-    required TResult Function(@ContactConverter() Contact contact) contact,
+    required TResult Function(@AccountConverter() Account account) account,
     required TResult Function(String name) unknownContact,
   }) {
     return address(this.address);
@@ -705,7 +705,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@AddressJsonConverter() Address address)? address,
-    TResult? Function(@ContactConverter() Contact contact)? contact,
+    TResult? Function(@AccountConverter() Account account)? account,
     TResult? Function(String name)? unknownContact,
   }) {
     return address?.call(this.address);
@@ -715,7 +715,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@AddressJsonConverter() Address address)? address,
-    TResult Function(@ContactConverter() Contact contact)? contact,
+    TResult Function(@AccountConverter() Account account)? account,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
@@ -729,7 +729,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TransferDestinationAddress value) address,
-    required TResult Function(_TransferDestinationContact value) contact,
+    required TResult Function(_TransferDestinationContact value) account,
     required TResult Function(_TransferDestinationUnknownContact value)
         unknownContact,
   }) {
@@ -740,7 +740,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransferDestinationAddress value)? address,
-    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationContact value)? account,
     TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
     return address?.call(this);
@@ -750,7 +750,7 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
+    TResult Function(_TransferDestinationContact value)? account,
     TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
     required TResult orElse(),
   }) {
@@ -794,7 +794,7 @@ abstract class _$$TransferDestinationContactImplCopyWith<$Res> {
           $Res Function(_$TransferDestinationContactImpl) then) =
       __$$TransferDestinationContactImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({@ContactConverter() Contact contact});
+  $Res call({@AccountConverter() Account account});
 }
 
 /// @nodoc
@@ -812,13 +812,13 @@ class __$$TransferDestinationContactImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contact = null,
+    Object? account = null,
   }) {
     return _then(_$TransferDestinationContactImpl(
-      contact: null == contact
-          ? _value.contact
-          : contact // ignore: cast_nullable_to_non_nullable
-              as Contact,
+      account: null == account
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
     ));
   }
 }
@@ -827,8 +827,8 @@ class __$$TransferDestinationContactImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   const _$TransferDestinationContactImpl(
-      {@ContactConverter() required this.contact, final String? $type})
-      : $type = $type ?? 'contact',
+      {@AccountConverter() required this.account, final String? $type})
+      : $type = $type ?? 'account',
         super._();
 
   factory _$TransferDestinationContactImpl.fromJson(
@@ -836,15 +836,15 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
       _$$TransferDestinationContactImplFromJson(json);
 
   @override
-  @ContactConverter()
-  final Contact contact;
+  @AccountConverter()
+  final Account account;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'TransferRecipient.contact(contact: $contact)';
+    return 'TransferRecipient.account(account: $account)';
   }
 
   @override
@@ -852,12 +852,12 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferDestinationContactImpl &&
-            (identical(other.contact, contact) || other.contact == contact));
+            (identical(other.account, account) || other.account == account));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, contact);
+  int get hashCode => Object.hash(runtimeType, account);
 
   /// Create a copy of TransferRecipient
   /// with the given fields replaced by the non-null parameter values.
@@ -872,32 +872,32 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(@AddressJsonConverter() Address address) address,
-    required TResult Function(@ContactConverter() Contact contact) contact,
+    required TResult Function(@AccountConverter() Account account) account,
     required TResult Function(String name) unknownContact,
   }) {
-    return contact(this.contact);
+    return account(this.account);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@AddressJsonConverter() Address address)? address,
-    TResult? Function(@ContactConverter() Contact contact)? contact,
+    TResult? Function(@AccountConverter() Account account)? account,
     TResult? Function(String name)? unknownContact,
   }) {
-    return contact?.call(this.contact);
+    return account?.call(this.account);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@AddressJsonConverter() Address address)? address,
-    TResult Function(@ContactConverter() Contact contact)? contact,
+    TResult Function(@AccountConverter() Account account)? account,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
-    if (contact != null) {
-      return contact(this.contact);
+    if (account != null) {
+      return account(this.account);
     }
     return orElse();
   }
@@ -906,33 +906,33 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TransferDestinationAddress value) address,
-    required TResult Function(_TransferDestinationContact value) contact,
+    required TResult Function(_TransferDestinationContact value) account,
     required TResult Function(_TransferDestinationUnknownContact value)
         unknownContact,
   }) {
-    return contact(this);
+    return account(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransferDestinationAddress value)? address,
-    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationContact value)? account,
     TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
-    return contact?.call(this);
+    return account?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
+    TResult Function(_TransferDestinationContact value)? account,
     TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
     required TResult orElse(),
   }) {
-    if (contact != null) {
-      return contact(this);
+    if (account != null) {
+      return account(this);
     }
     return orElse();
   }
@@ -947,15 +947,15 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
 
 abstract class _TransferDestinationContact extends TransferRecipient {
   const factory _TransferDestinationContact(
-          {@ContactConverter() required final Contact contact}) =
+          {@AccountConverter() required final Account account}) =
       _$TransferDestinationContactImpl;
   const _TransferDestinationContact._() : super._();
 
   factory _TransferDestinationContact.fromJson(Map<String, dynamic> json) =
       _$TransferDestinationContactImpl.fromJson;
 
-  @ContactConverter()
-  Contact get contact;
+  @AccountConverter()
+  Account get account;
 
   /// Create a copy of TransferRecipient
   /// with the given fields replaced by the non-null parameter values.
@@ -1050,7 +1050,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(@AddressJsonConverter() Address address) address,
-    required TResult Function(@ContactConverter() Contact contact) contact,
+    required TResult Function(@AccountConverter() Account account) account,
     required TResult Function(String name) unknownContact,
   }) {
     return unknownContact(name);
@@ -1060,7 +1060,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@AddressJsonConverter() Address address)? address,
-    TResult? Function(@ContactConverter() Contact contact)? contact,
+    TResult? Function(@AccountConverter() Account account)? account,
     TResult? Function(String name)? unknownContact,
   }) {
     return unknownContact?.call(name);
@@ -1070,7 +1070,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@AddressJsonConverter() Address address)? address,
-    TResult Function(@ContactConverter() Contact contact)? contact,
+    TResult Function(@AccountConverter() Account account)? account,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
@@ -1084,7 +1084,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TransferDestinationAddress value) address,
-    required TResult Function(_TransferDestinationContact value) contact,
+    required TResult Function(_TransferDestinationContact value) account,
     required TResult Function(_TransferDestinationUnknownContact value)
         unknownContact,
   }) {
@@ -1095,7 +1095,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransferDestinationAddress value)? address,
-    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationContact value)? account,
     TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
     return unknownContact?.call(this);
@@ -1105,7 +1105,7 @@ class _$TransferDestinationUnknownContactImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
+    TResult Function(_TransferDestinationContact value)? account,
     TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
     required TResult orElse(),
   }) {

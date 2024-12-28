@@ -90,7 +90,6 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
   Future<void> logout() async {
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
-    await ref.read(contactProviderResetProvider.future);
     await KeychainInfoVaultDatasource.clear();
     await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();

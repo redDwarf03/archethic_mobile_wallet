@@ -23,15 +23,15 @@ Map<String, dynamic> _$$TransferDestinationAddressImplToJson(
 _$TransferDestinationContactImpl _$$TransferDestinationContactImplFromJson(
         Map<String, dynamic> json) =>
     _$TransferDestinationContactImpl(
-      contact: const ContactConverter()
-          .fromJson(json['contact'] as Map<String, dynamic>),
+      account: const AccountConverter()
+          .fromJson(json['account'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$TransferDestinationContactImplToJson(
         _$TransferDestinationContactImpl instance) =>
     <String, dynamic>{
-      'contact': const ContactConverter().toJson(instance.contact),
+      'account': const AccountConverter().toJson(instance.account),
       'runtimeType': instance.$type,
     };
 

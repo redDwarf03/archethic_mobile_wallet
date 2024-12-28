@@ -1,6 +1,5 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -46,7 +45,6 @@ class AccountTab extends ConsumerWidget {
                 .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
             ?.refreshRecentTransactions();
-        ref.invalidate(fetchContactsProvider);
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(

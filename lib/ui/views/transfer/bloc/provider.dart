@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aewallet/application/account/accounts.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -9,7 +10,6 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
-import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -49,7 +49,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   CancelableTask<double?>? _calculateFeesTask;
 
-  final _contactsHiveDatasource = ContactsHiveDatasource.instance();
   Future<void> _updateFees(
     BuildContext context, {
     Duration delay = const Duration(milliseconds: 800),
@@ -214,12 +213,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         return;
       }
 
-      final contact =
-          await _contactsHiveDatasource.getContactWithAddress(text, apiService);
-      if (contact != null) {
+      final account =
+          await ref.read(accountWithGenesisAddressProvider(text).future);
+      if (account != null) {
         _setRecipient(
-          recipient: TransferRecipient.contact(
-            contact: contact,
+          recipient: TransferRecipient.account(
+            account: account,
           ),
         );
       } else {
@@ -238,10 +237,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     try {
-      final contact = await _contactsHiveDatasource.getContactWithName(text);
+      final account = await ref.read(accountWithNameProvider(text).future);
+
       _setRecipient(
-        recipient: TransferRecipient.contact(
-          contact: contact!,
+        recipient: TransferRecipient.account(
+          account: account!,
         ),
       );
     } catch (e) {
@@ -277,14 +277,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required archethic.Address address,
     required archethic.ApiService apiService,
   }) async {
-    final contact = await _contactsHiveDatasource.getContactWithAddress(
-      address.address!,
-      apiService,
-    );
-
-    if (contact != null) {
+    final account = await ref
+        .read(accountWithGenesisAddressProvider(address.address!).future);
+    if (account != null) {
       _setRecipient(
-        recipient: TransferRecipient.contact(contact: contact),
+        recipient: TransferRecipient.account(account: account),
       );
     } else {
       _setRecipient(
@@ -645,16 +642,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               );
         }
       },
-      contact: (contact) {
-        if (contact.address.isEmpty) {
+      account: (account) {
+        if (account.genesisAddress.isEmpty) {
           return AppLocalizations.of(context)!.addressMissing;
         }
 
-        if (!archethic.Address(address: contact.address).isValid()) {
+        if (!archethic.Address(address: account.genesisAddress).isValid()) {
           return AppLocalizations.of(context)!.invalidAddress;
         }
 
-        if (accountSelected.genesisAddress == contact.address) {
+        if (accountSelected.genesisAddress == account.genesisAddress) {
           return AppLocalizations.of(context)!.sendToMeError.replaceAll(
                 '%1',
                 state.symbol(context),

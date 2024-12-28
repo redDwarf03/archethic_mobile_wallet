@@ -2,12 +2,10 @@ import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
-import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
@@ -45,8 +43,7 @@ class HiveAppWalletDTO extends HiveObject {
   ) async {
     Account? selectedAcct;
 
-    var appWallet = await AppWalletHiveDatasource.instance()
-        .createAppWallet(keychainAddress);
+    await AppWalletHiveDatasource.instance().createAppWallet(keychainAddress);
 
     /// Default service for wallet
     final kServiceName = 'archethic-wallet-${Uri.encodeFull(name!)}';
@@ -64,24 +61,7 @@ class HiveAppWalletDTO extends HiveObject {
       serviceType: 'archethicWallet',
       recentTransactions: [],
     );
-    appWallet = await AccountHiveDatasource.instance().addAccount(selectedAcct);
-
-    final newContact = Contact(
-      name: '@${Uri.encodeFull(name)}',
-      address: uint8ListToHex(genesisAddress),
-      genesisAddress: uint8ListToHex(genesisAddress),
-      type: ContactType.keychainService.name,
-      publicKey: uint8ListToHex(
-        keychain
-            .deriveKeypair(
-              kServiceName,
-            )
-            .publicKey!,
-      ).toUpperCase(),
-    );
-    await ContactsHiveDatasource.instance().saveContact(newContact);
-
-    return appWallet;
+    return AccountHiveDatasource.instance().addAccount(selectedAcct);
   }
 
   HiveAppWalletDTO copyWith({

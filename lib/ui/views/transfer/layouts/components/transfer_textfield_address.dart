@@ -28,15 +28,6 @@ class _TransferTextFieldAddressState
         sendAddressController.selection = TextSelection.fromPosition(
           TextPosition(offset: sendAddressController.text.length),
         );
-        if (sendAddressController.text.startsWith('@')) {
-          ContactsHiveDatasource.instance()
-              .getContactsWithNameLike(sendAddressController.text)
-              .then((List<Contact> contactList) {});
-        }
-      } else {
-        if (sendAddressController.text.trim() == '@') {
-          sendAddressController.text = '';
-        }
       }
     });
   }
@@ -52,7 +43,7 @@ class _TransferTextFieldAddressState
     final recipient = ref.read(TransferFormProvider.transferForm).recipient;
     sendAddressController.text = recipient.when(
       address: (address) => address.address!,
-      contact: (contact) => contact.format,
+      account: (account) => account.format,
       unknownContact: (name) => name,
     );
   }
@@ -139,7 +130,7 @@ class _TransferTextFieldAddressState
                                         transfer.recipient.maybeWhen(
                                           address: (_) => 68,
                                           unknownContact: (_) => 68,
-                                          contact: (_) => 20,
+                                          account: (_) => 20,
                                           orElse: () => 20,
                                         ),
                                       ),
@@ -208,13 +199,13 @@ class _TransferTextFieldAddressState
                   TextFieldButton(
                     icon: Symbols.contacts,
                     onPressed: () async {
-                      final contact =
-                          await ContactsDialog.getDialog(context, ref);
-                      if (contact == null) return;
+                      final account =
+                          await AccountsDialog.getDialog(context, ref);
+                      if (account == null) return;
 
                       transferNotifier.setRecipient(
                         context: context,
-                        contact: TransferRecipient.contact(contact: contact),
+                        contact: TransferRecipient.account(account: account),
                       );
 
                       _updateAdressTextController();

@@ -7,6 +7,7 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounts_notifier.g.dart';
@@ -68,6 +69,24 @@ extension AccountsExt on List<Account> {
       if (account.selected == true) return account;
     }
     return null;
+  }
+
+  Account? getAccountWithGenesisAddress(
+    String genesisAddress,
+  ) {
+    return firstWhereOrNull(
+      (account) =>
+          account.genesisAddress.toLowerCase() == genesisAddress.toLowerCase(),
+    );
+  }
+
+  Account? getAccountWithName(
+    String nameAccount,
+  ) {
+    return firstWhereOrNull(
+      (account) =>
+          account.nameDisplayed.toLowerCase() == nameAccount.toLowerCase(),
+    );
   }
 }
 

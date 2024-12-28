@@ -89,6 +89,7 @@ class RecentTransaction extends HiveObject {
 
   /// Contact Information
   @HiveField(12)
+  @Deprecated('Thanks to hive, we should keep this unused property...')
   Contact? contactInformation;
 
   /// Decrypted Secret

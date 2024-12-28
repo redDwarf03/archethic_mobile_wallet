@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -102,7 +101,6 @@ class _TransactionsList extends ConsumerWidget {
                 .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
             ?.refreshRecentTransactions();
-        ref.invalidate(fetchContactsProvider);
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
