@@ -126,8 +126,7 @@ mixin KeychainServiceMixin {
       <String>[uint8ListToHex(walletKeyPair.publicKey!)],
       hexToUint8List(originPrivateKey),
       blockchainTxVersion,
-      serviceName: kServiceName,
-      derivationPath: kDerivationPath,
+      servicesMap: {kServiceName: kDerivationPath},
     );
 
     _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
