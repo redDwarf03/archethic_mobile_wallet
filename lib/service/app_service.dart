@@ -17,7 +17,6 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
-import 'package:aewallet/util/queue.dart';
 import 'package:aewallet/util/task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
@@ -49,6 +48,9 @@ class AppService {
   Future<Map<String, Token>> getToken(
     List<String> addresses,
   ) async {
+    if (addresses.isEmpty) {
+      return <String, Token>{};
+    }
     final tokenMap = <String, Token>{};
 
     final addressesOutCache = <String>[];
@@ -664,9 +666,13 @@ class AppService {
               poolRaw.concatenatedTokensAddresses.split('/')[0].toUpperCase();
           token2Address =
               poolRaw.concatenatedTokensAddresses.split('/')[1].toUpperCase();
-          tokenSymbolSearch
-            ..add(token1Address)
-            ..add(token2Address);
+          if (token1Address != kUCOAddress) {
+            tokenSymbolSearch.add(token1Address);
+          }
+          if (token2Address != kUCOAddress) {
+            tokenSymbolSearch.add(token2Address);
+          }
+
           final tokensSymbolMap = await getToken(
             tokenSymbolSearch,
           );
@@ -712,29 +718,28 @@ class AppService {
   Future<Map<String, Balance>> getBalanceGetResponse(
     List<String> addresses,
   ) async {
-    final tasks = addresses.toSet().map(
-          (address) => () => apiService.fetchBalance(
-                [address],
-              ),
-        );
+    if (addresses.isEmpty) {
+      return <String, Balance>{};
+    }
+    final balanceMap = <String, Balance>{};
 
-    // Search token Information
-    final balanceMap = await OperationQueue.run<Balance>(tasks);
+    final fetchBalances = await addresses
+        .map(
+          (address) => Task(
+            name: 'getBalanceGetResponse - address: $address',
+            logger: _logger,
+            action: () => apiService.fetchBalance([address]),
+          ),
+        )
+        .autoRetry()
+        .batch();
+    for (final fetchBalance in fetchBalances) {
+      balanceMap.addAll(fetchBalance);
+    }
 
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
-      var balance = balanceMap[address] ??
-          Balance(token: List<TokenBalance>.empty(growable: true));
-      final balanceTokenList = List<TokenBalance>.empty(growable: true);
-
-      for (var i = 0; i < balance.token.length; i++) {
-        var balanceToken = const TokenBalance();
-        balanceToken = balance.token[i];
-        balanceTokenList.add(balanceToken);
-      }
-      balance = balance.copyWith(token: balanceTokenList);
-
-      balancesToReturn[address] = balance;
+      balancesToReturn[address] = balanceMap[address] ?? const Balance();
     }
     return balancesToReturn;
   }
