@@ -6,11 +6,7 @@ part of 'session.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-<<<<<<< HEAD
-String _$sessionNotifierHash() => r'28cfad78f350fd427018659280265e86ede7c2ff';
-=======
-String _$sessionNotifierHash() => r'139b81cdb7258aaa34878df0a3730e9d1a5bf6a1';
->>>>>>> a8d9983f (chore: Add usecase to create newWalletApp (WIP))
+String _$sessionNotifierHash() => r'cbac7ac17cbeee87dd92f3aa6b07397e80ae4615';
 
 /// See also [SessionNotifier].
 @ProviderFor(SessionNotifier)

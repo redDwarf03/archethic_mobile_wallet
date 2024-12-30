@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/usecases.dart';
@@ -25,7 +25,7 @@ class NetworkChange extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final environment = ref.watch(environmentProvider);
     final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
+      accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );

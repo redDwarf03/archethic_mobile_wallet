@@ -382,7 +382,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     try {
       await ref.read(createNewAppWalletCaseProvider).run(
         widget.seed,
-        [widget.name],
+        [widget.name!],
       );
 
       context.loadingOverlay.hide();
