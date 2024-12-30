@@ -26,7 +26,7 @@ final _featureFlagsRepositoryProvider =
 // ignore: unused_element
 typedef _FeatureFlagsRepositoryRef
     = AutoDisposeProviderRef<FeatureFlagsRepositoryImpl>;
-String _$getFeatureFlagHash() => r'3d889fb9e466efd3e438678c4202e674acaf884a';
+String _$getFeatureFlagHash() => r'f67578a123909d0ee008e69fa37dcabc4bc5aee3';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,8 +1,8 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/nft/nft.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -166,7 +166,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
               onPressed: () async {
                 await launchUrl(
                   Uri.parse(
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
+                    '${ref.read(environmentProvider).endpoint}/explorer/transaction/${widget.address}',
                   ),
                   mode: LaunchMode.externalApplication,
                 );

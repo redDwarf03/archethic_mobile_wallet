@@ -17,10 +17,8 @@ class GetEndpointHandler extends CommandHandler {
             final settings =
                 await settingsRepository.getSettings(const Locale('en'));
 
-            final endpointUrl = settings.network.getLink();
-
             return Result.success(
-              awc.GetEndpointResult(endpointUrl: endpointUrl),
+              awc.GetEndpointResult(endpointUrl: settings.environment.endpoint),
             );
           },
         );

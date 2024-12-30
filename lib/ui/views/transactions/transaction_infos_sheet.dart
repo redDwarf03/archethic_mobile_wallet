@@ -7,6 +7,7 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/account_formatters.dart';
@@ -70,7 +71,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
           onPressed: () async {
             await launchUrl(
               Uri.parse(
-                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
+                '${ref.read(environmentProvider).endpoint}/explorer/transaction/${widget.notificationRecipientAddress}',
               ),
               mode: LaunchMode.externalApplication,
             );

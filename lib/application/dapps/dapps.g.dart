@@ -24,7 +24,7 @@ final dAppsRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
-String _$getDAppHash() => r'74094f96d68512dbd3eb1224e89265e4e3fad1c2';
+String _$getDAppHash() => r'99a3f23987c5566794003de0cbd6de2c44292da3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -175,7 +175,7 @@ class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
 }
 
 String _$getDAppsFromNetworkHash() =>
-    r'9d37f6aedc3ff3ae26f95705b4f04fc87b85ced9';
+    r'70c9aa2a09b0a6638582979f82d6a122c2d1df38';
 
 /// See also [getDAppsFromNetwork].
 @ProviderFor(getDAppsFromNetwork)

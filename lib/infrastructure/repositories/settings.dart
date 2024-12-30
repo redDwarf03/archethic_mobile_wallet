@@ -19,7 +19,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
       language: loadedPreferences.getLanguage().language,
       languageSeed: loadedPreferences.getLanguageSeed(),
       mainScreenCurrentPage: loadedPreferences.getMainScreenCurrentPage(),
-      network: loadedPreferences.getNetwork(),
+      environment: loadedPreferences.getEnvironment(),
       primaryCurrency: loadedPreferences.getPrimaryCurrency(),
       showBalances: loadedPreferences.getShowBalances(),
       testnetEnabled: loadedPreferences.getTestnetEnabled(),
@@ -37,7 +37,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setLanguageSeed(settings.languageSeed);
     await loadedPreferences
         .setMainScreenCurrentPage(settings.mainScreenCurrentPage);
-    await loadedPreferences.setNetwork(settings.network);
+    await loadedPreferences.setEnvironment(settings.environment);
     await loadedPreferences.setPrimaryCurrency(settings.primaryCurrency);
     await loadedPreferences.setShowBalances(settings.showBalances);
     await loadedPreferences.setTestnetEnabled(settings.testnetEnabled);

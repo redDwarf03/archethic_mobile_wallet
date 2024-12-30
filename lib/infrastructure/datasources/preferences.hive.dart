@@ -3,7 +3,6 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
@@ -23,8 +22,7 @@ class PreferencesHiveDatasource {
   static const String curLanguage = 'archethic_wallet_cur_language';
   static const String curPrimarySetting =
       'archethic_wallet_cur_primary_setting';
-  static const String curNetwork = 'archethic_wallet_cur_network';
-  static const String curNetworkDevEndpoint = '_cur_network_dev_endpoint';
+  static const String curEnvironment = 'archethic_wallet_cur_environment';
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
   static const String privacyMaskEnabled =
@@ -118,21 +116,15 @@ class PreferencesHiveDatasource {
         )],
       );
 
-  Future<void> setNetwork(NetworksSetting network) async {
-    await _setValue(curNetwork, network.getIndex());
-    await _setValue(curNetworkDevEndpoint, network.networkDevEndpoint);
+  Future<void> setEnvironment(aedappfm.Environment environment) async {
+    await _setValue(curEnvironment, environment.index);
   }
 
-  NetworksSetting getNetwork() => NetworksSetting(
-        network: AvailableNetworks.values[_getValue(
-          curNetwork,
-          defaultValue: AvailableNetworks.archethicMainNet.index,
-        )],
-        networkDevEndpoint: _getValue(
-          curNetworkDevEndpoint,
-          defaultValue: '',
-        ),
-      );
+  aedappfm.Environment getEnvironment() =>
+      aedappfm.Environment.values[_getValue(
+        curEnvironment,
+        defaultValue: aedappfm.Environment.mainnet.index,
+      )];
 
   Future<void> setLanguageSeed(String v) => _setValue(languageSeed, v);
 

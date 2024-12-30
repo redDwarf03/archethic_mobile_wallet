@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
@@ -30,8 +29,8 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
     final raw = TokenUtil.getAEWebUrlFromToken(
       properties,
     );
-    final networkSettings = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.network),
+    final environment = ref.watch(
+      environmentProvider,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,19 +44,19 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: ImageNetworkWidgeted(
-                    url: networkSettings.getAEWebUri() + raw,
+                    url: environment.aeHostingUri + raw,
                     errorMessage: localizations.nftURLEmpty,
                   ),
                 )
               : ImageNetworkWidgeted(
-                  url: networkSettings.getAEWebUri() + raw,
+                  url: environment.aeHostingUri + raw,
                   errorMessage: localizations.nftURLEmpty,
                 ),
         if (withContentInfo)
           Padding(
             padding: const EdgeInsets.all(10),
             child: SelectableText(
-              '${localizations.nftAEWebFrom}\n${networkSettings.getAEWebUri()}${raw!}',
+              '${localizations.nftAEWebFrom}\n${environment.aeHostingUri}${raw!}',
               style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),

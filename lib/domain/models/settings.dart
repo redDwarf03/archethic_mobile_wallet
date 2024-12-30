@@ -1,5 +1,4 @@
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -20,7 +19,7 @@ class Settings with _$Settings {
   const factory Settings({
     required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
-    required NetworksSetting network,
+    required aedappfm.Environment environment,
     required String languageSeed,
     required bool firstLaunch,
     required bool showBalances,
@@ -37,10 +36,7 @@ class Settings with _$Settings {
         language: AvailableLanguage.english,
         languageSeed: '',
         mainScreenCurrentPage: 0,
-        network: NetworksSetting(
-          network: AvailableNetworks.archethicMainNet,
-          networkDevEndpoint: '',
-        ),
+        environment: aedappfm.Environment.mainnet,
         primaryCurrency:
             AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
         showBalances: true,

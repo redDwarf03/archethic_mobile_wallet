@@ -8,10 +8,9 @@ part 'provider.g.dart';
 
 @riverpod
 Environment environment(Ref ref) {
-  final network = ref.watch(
+  return ref.watch(
     SettingsProviders.settings.select(
-      (settings) => settings.network,
+      (settings) => settings.environment,
     ),
   );
-  return Environment.byEndpoint(network.getLink());
 }

@@ -44,7 +44,7 @@ class MainMenuView extends ConsumerWidget {
                 children: <Widget>[
                   ListView(
                     children: <Widget>[
-                      const NetworkChange(),
+                      const EnvironmentChange(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.information),
                       const _SettingsListItem.spacer(),

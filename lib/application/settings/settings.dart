@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -60,17 +59,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
         state.copyWith(activeRPCServer: activeRPCServer),
       );
 
-  Future<void> setNetwork(NetworksSetting selectedNetworkSettings) => _update(
-        state.copyWith(network: selectedNetworkSettings),
-      );
-
-  Future<void> setNetworkDevEndpoint(String networkDevEndpoint) => _update(
-        state.copyWith(
-          network: NetworksSetting(
-            network: state.network.network,
-            networkDevEndpoint: networkDevEndpoint,
-          ),
-        ),
+  Future<void> setEnvironment(aedappfm.Environment environment) => _update(
+        state.copyWith(environment: environment),
       );
 
   Future<void> selectPrimaryCurrency(
