@@ -137,8 +137,7 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     final apiService = ref.read(apiServiceProvider);
     final appService = ref.read(appServiceProvider);
     final keychain = await apiService.getKeychain(seed);
-
-
+    try {
       final appWallet = await getListAccountsFromKeychain(
         keychain,
         null,
@@ -164,21 +163,8 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
       if (e.toString() == "Exception: Keychain doesn't exists") {
         throw const ArchethicKeychainNotExistsException();
       }
-
-    if (appWallet == null) {
-      return null;
     }
-
-    final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
-
-    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
-
-    return state = LoggedInSession(
-      wallet: appWallet.toModel(
-        seed: seed,
-        keychainSecuredInfos: keychainSecuredInfos,
-      ),
-    );
+    return null;
   }
 
   Future<LoggedInSession?> restoreFromMnemonics({

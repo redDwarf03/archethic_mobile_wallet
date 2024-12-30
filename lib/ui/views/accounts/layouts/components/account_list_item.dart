@@ -395,9 +395,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                         context.loadingOverlay.show();
 
                                         await removeService(
-                                          ref
-                                              .read(SettingsProviders.settings)
-                                              .network,
                                           widget.account.name,
                                           keychain,
                                           apiService,

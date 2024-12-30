@@ -2,8 +2,8 @@
 
 import 'dart:async';
 import 'dart:ui';
-
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/account_notifier.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -36,7 +36,7 @@ class AccountsDialog {
     ) as Account?;
     if (selection != null) {
       await ref
-          .read(AccountProviders.accounts.notifier)
+          .read(accountsNotifierProvider.notifier)
           .selectAccount(selection);
     }
     return selection;

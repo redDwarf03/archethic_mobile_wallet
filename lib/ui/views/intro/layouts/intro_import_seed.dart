@@ -2,15 +2,16 @@
 
 import 'dart:async';
 import 'dart:ui';
+import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/accounts_dialog.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -21,6 +22,7 @@ import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
+import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -29,6 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class IntroImportSeedPage extends ConsumerStatefulWidget {
@@ -42,6 +45,8 @@ class IntroImportSeedPage extends ConsumerStatefulWidget {
 
 class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     implements SheetSkeletonInterface {
+  final _logger = Logger('IntroImportSeed');
+
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
@@ -169,10 +174,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   context.go(IntroImportSeedPage.routerPage);
                   return;
                 }
-                await AccountsDialog.selectSingleAccount(
-                  context: context,
-                  ref: ref,
-                  accounts: newSession.wallet.appKeychain.accounts,
+                await _accountsDialog(
+                  newSession.wallet.appKeychain.accounts,
                 );
                 context.loadingOverlay.show(
                   title: localizations.pleaseWait,

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:ui';
+
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -21,142 +22,152 @@ class AccountsDialog {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    // TODO(reddwarf03): manage dispose // do a dedicated widget (2)
-    final searchNameFocusNode = FocusNode();
-    final searchNameController = TextEditingController();
-
-    final pickerItemsList = List<PickerItem>.empty(growable: true);
-    var accounts = await ref.read(accountsNotifierProvider.future);
-    final accountSelected = await ref
-        .read(
-          accountsNotifierProvider.future,
-        )
-        .selectedAccount;
-
-    for (final account in accounts) {
-      if (account.genesisAddress.toUpperCase() !=
-          accountSelected!.genesisAddress.toUpperCase()) {
-        pickerItemsList.add(
-          PickerItem(
-            account.format,
-            null,
-            null,
-            null,
-            account,
-            true,
-          ),
-        );
-      }
-    }
     return showDialog<Account>(
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
-        final localizations = AppLocalizations.of(context)!;
+        return AccountsDialogWidget(ref: ref);
+      },
+    );
+  }
+}
 
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              insetPadding: const EdgeInsets.only(
-                top: 100,
-                bottom: 100,
+class AccountsDialogWidget extends StatefulWidget {
+  const AccountsDialogWidget({super.key, required this.ref});
+  final WidgetRef ref;
+
+  @override
+  AccountsDialogWidgetState createState() => AccountsDialogWidgetState();
+}
+
+class AccountsDialogWidgetState extends State<AccountsDialogWidget> {
+  late final FocusNode _searchNameFocusNode;
+  late final TextEditingController _searchNameController;
+
+  List<PickerItem> pickerItemsList = [];
+  late List<Account> accounts;
+  Account? accountSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchNameFocusNode = FocusNode();
+    _searchNameController = TextEditingController();
+    _initializeAccounts();
+  }
+
+  Future<void> _initializeAccounts() async {
+    accounts = await widget.ref.read(accountsNotifierProvider.future);
+    accountSelected =
+        await widget.ref.read(accountsNotifierProvider.future).selectedAccount;
+    _filterAccounts('', accounts, accountSelected);
+  }
+
+  @override
+  void dispose() {
+    _searchNameFocusNode.dispose();
+    _searchNameController.dispose();
+    super.dispose();
+  }
+
+  void _filterAccounts(
+    String text,
+    List<Account> accounts,
+    Account? accountSelected,
+  ) {
+    final filteredAccounts = accounts
+      ..removeWhere(
+        (element) =>
+            element.format.toUpperCase() ==
+            accountSelected?.nameDisplayed.toUpperCase(),
+      );
+
+    setState(() {
+      final matchingAccounts = filteredAccounts.where((account) {
+        return account.format.toUpperCase().contains(text.toUpperCase());
+      }).toList();
+
+      pickerItemsList
+        ..clear()
+        ..addAll(
+          matchingAccounts.map(
+            (account) => PickerItem(
+              account.format,
+              null,
+              null,
+              null,
+              account,
+              true,
+            ),
+          ),
+        );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return AlertDialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      insetPadding: const EdgeInsets.only(
+        top: 100,
+        bottom: 100,
+      ),
+      alignment: Alignment.topCenter,
+      content: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+              border: Border.all(
+                color: ArchethicTheme.sheetBorder,
               ),
-              alignment: Alignment.topCenter,
-              content: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: ArchethicTheme.sheetBackground.withOpacity(0.2),
-                      border: Border.all(
-                        color: ArchethicTheme.sheetBorder,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          localizations.accountsHeader,
-                          style:
-                              ArchethicThemeStyles.textStyleSize24W700Primary,
-                        ),
-                        AppTextField(
-                          focusNode: searchNameFocusNode,
-                          controller: searchNameController,
-                          autofocus: true,
-                          autocorrect: false,
-                          labelText: localizations.searchField,
-                          keyboardType: TextInputType.text,
-                          style:
-                              ArchethicThemeStyles.textStyleSize16W600Primary,
-                          inputFormatters: <TextInputFormatter>[
-                            UpperCaseTextFormatter(),
-                            LengthLimitingTextInputFormatter(20),
-                          ],
-                          onChanged: (text) async {
-                            accounts = await ref.read(
-                              accountsNotifierProvider.future,
-                            )
-                              ..removeWhere(
-                                (element) =>
-                                    element.format.toUpperCase() ==
-                                    accountSelected!.nameDisplayed
-                                        .toUpperCase(),
-                              );
-                            setState(
-                              () {
-                                accounts = accounts.where((Account account) {
-                                  final accountName =
-                                      account.format.toUpperCase();
-                                  return accountName
-                                      .contains(text.toUpperCase());
-                                }).toList();
-                                pickerItemsList.clear();
-                                for (final account in accounts) {
-                                  if (account.genesisAddress.toUpperCase() !=
-                                      accountSelected!.genesisAddress
-                                          .toUpperCase()) {
-                                    pickerItemsList.add(
-                                      PickerItem(
-                                        account.format,
-                                        null,
-                                        null,
-                                        null,
-                                        account,
-                                        true,
-                                      ),
-                                    );
-                                  }
-                                }
-                              },
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: PickerWidget(
-                              pickerItems: pickerItemsList,
-                              onSelected: (value) {
-                                context.pop(value.value);
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  localizations.accountsHeader,
+                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
+                ),
+                AppTextField(
+                  focusNode: _searchNameFocusNode,
+                  controller: _searchNameController,
+                  autofocus: true,
+                  autocorrect: false,
+                  labelText: localizations.searchField,
+                  keyboardType: TextInputType.text,
+                  style: ArchethicThemeStyles.textStyleSize16W600Primary,
+                  inputFormatters: <TextInputFormatter>[
+                    UpperCaseTextFormatter(),
+                    LengthLimitingTextInputFormatter(20),
+                  ],
+                  onChanged: (text) {
+                    _filterAccounts(text, accounts, accountSelected);
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: PickerWidget(
+                      pickerItems: pickerItemsList,
+                      onSelected: (value) {
+                        context.pop(value.value);
+                      },
                     ),
                   ),
                 ),
-              ),
-            );
-          },
-        );
-      },
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

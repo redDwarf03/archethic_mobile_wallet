@@ -464,7 +464,6 @@ class AppService {
         final token = tokensAddressMap[recentTransaction.tokenAddress];
         if (token != null) {
           recentTransaction.tokenInformation = TokenInformation(
-            // TODO(reddwarf03): Use Genesis instead of address ?
             address: token.address,
             name: token.name,
             supply: fromBigInt(token.supply).toDouble(),
