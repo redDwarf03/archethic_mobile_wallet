@@ -430,8 +430,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
     List<String>? authorizedPublicKeys,
     _i18.Uint8List? originPrivateKey,
     int? blockchainTxVersion, {
-    String? serviceName,
-    String? derivationPath,
+    Map<String, String>? servicesMap,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -442,10 +441,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
             originPrivateKey,
             blockchainTxVersion,
           ],
-          {
-            #serviceName: serviceName,
-            #derivationPath: derivationPath,
-          },
+          {#servicesMap: servicesMap},
         ),
         returnValue: _FakeTransaction_2(
           this,
@@ -457,10 +453,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
               originPrivateKey,
               blockchainTxVersion,
             ],
-            {
-              #serviceName: serviceName,
-              #derivationPath: derivationPath,
-            },
+            {#servicesMap: servicesMap},
           ),
         ),
         returnValueForMissingStub: _FakeTransaction_2(
@@ -473,10 +466,7 @@ class MockApiService extends _i1.Mock implements _i12.ApiService {
               originPrivateKey,
               blockchainTxVersion,
             ],
-            {
-              #serviceName: serviceName,
-              #derivationPath: derivationPath,
-            },
+            {#servicesMap: servicesMap},
           ),
         ),
       ) as _i4.Transaction);
