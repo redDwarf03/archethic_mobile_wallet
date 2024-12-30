@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
@@ -162,7 +163,7 @@ class TokenDetailMenu extends ConsumerWidget {
                               onTap: () async {
                                 await launchUrl(
                                   Uri.parse(
-                                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
+                                    '${ref.read(environmentProvider).endpoint}/explorer/transaction/${aeToken.address}',
                                   ),
                                   mode: LaunchMode.externalApplication,
                                 );

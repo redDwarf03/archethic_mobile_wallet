@@ -1,4 +1,4 @@
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class ExplorerButton extends ConsumerWidget {
       onPressed: () async {
         await launchUrl(
           Uri.parse(
-            '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=$address',
+            '${ref.read(environmentProvider).endpoint}/explorer/chain?address=$address',
           ),
           mode: LaunchMode.externalApplication,
         );

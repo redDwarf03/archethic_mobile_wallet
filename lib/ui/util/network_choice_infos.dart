@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
-    final network = settings.network;
+    final environment = ref.watch(environmentProvider);
     Widget content = Container(
       padding: const EdgeInsets.only(right: 10),
       width: 230,
@@ -47,7 +45,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            network.getDisplayName(context),
+                            environment.displayName,
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(width: 5),

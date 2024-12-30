@@ -69,10 +69,10 @@ final _introductionRoutes = [
     ),
   ),
   GoRoute(
-    path: NetworkDialog.routerPage,
-    pageBuilder: (context, state) => DialogPage<NetworksSetting>(
+    path: EnvironmentDialog.routerPage,
+    pageBuilder: (context, state) => DialogPage<aedappfm.Environment>(
       barrierDismissible: false,
-      builder: (BuildContext context) => const NetworkDialog(),
+      builder: (BuildContext context) => const EnvironmentDialog(),
     ),
   ),
 ];

@@ -19,7 +19,7 @@ mixin _$Settings {
   AvailablePrimaryCurrency get primaryCurrency =>
       throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
-  NetworksSetting get network => throw _privateConstructorUsedError;
+  aedappfm.Environment get environment => throw _privateConstructorUsedError;
   String get languageSeed => throw _privateConstructorUsedError;
   bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $SettingsCopyWith<$Res> {
   $Res call(
       {AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
-      NetworksSetting network,
+      aedappfm.Environment environment,
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
@@ -73,7 +73,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
   $Res call({
     Object? primaryCurrency = null,
     Object? language = null,
-    Object? network = null,
+    Object? environment = null,
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
@@ -92,10 +92,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      network: null == network
-          ? _value.network
-          : network // ignore: cast_nullable_to_non_nullable
-              as NetworksSetting,
+      environment: null == environment
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as aedappfm.Environment,
       languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
@@ -143,7 +143,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
   $Res call(
       {AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
-      NetworksSetting network,
+      aedappfm.Environment environment,
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
@@ -169,7 +169,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
   $Res call({
     Object? primaryCurrency = null,
     Object? language = null,
-    Object? network = null,
+    Object? environment = null,
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
@@ -188,10 +188,10 @@ class __$$SettingsImplCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      network: null == network
-          ? _value.network
-          : network // ignore: cast_nullable_to_non_nullable
-              as NetworksSetting,
+      environment: null == environment
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as aedappfm.Environment,
       languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
@@ -234,7 +234,7 @@ class _$SettingsImpl extends _Settings {
   const _$SettingsImpl(
       {required this.primaryCurrency,
       required this.language,
-      required this.network,
+      required this.environment,
       required this.languageSeed,
       required this.firstLaunch,
       required this.showBalances,
@@ -250,7 +250,7 @@ class _$SettingsImpl extends _Settings {
   @override
   final AvailableLanguage language;
   @override
-  final NetworksSetting network;
+  final aedappfm.Environment environment;
   @override
   final String languageSeed;
   @override
@@ -270,7 +270,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, testnetEnabled: $testnetEnabled, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, testnetEnabled: $testnetEnabled, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -282,7 +282,8 @@ class _$SettingsImpl extends _Settings {
                 other.primaryCurrency == primaryCurrency) &&
             (identical(other.language, language) ||
                 other.language == language) &&
-            (identical(other.network, network) || other.network == network) &&
+            (identical(other.environment, environment) ||
+                other.environment == environment) &&
             (identical(other.languageSeed, languageSeed) ||
                 other.languageSeed == languageSeed) &&
             (identical(other.firstLaunch, firstLaunch) ||
@@ -307,7 +308,7 @@ class _$SettingsImpl extends _Settings {
       runtimeType,
       primaryCurrency,
       language,
-      network,
+      environment,
       languageSeed,
       firstLaunch,
       showBalances,
@@ -330,7 +331,7 @@ abstract class _Settings extends Settings {
   const factory _Settings(
       {required final AvailablePrimaryCurrency primaryCurrency,
       required final AvailableLanguage language,
-      required final NetworksSetting network,
+      required final aedappfm.Environment environment,
       required final String languageSeed,
       required final bool firstLaunch,
       required final bool showBalances,
@@ -347,7 +348,7 @@ abstract class _Settings extends Settings {
   @override
   AvailableLanguage get language;
   @override
-  NetworksSetting get network;
+  aedappfm.Environment get environment;
   @override
   String get languageSeed;
   @override

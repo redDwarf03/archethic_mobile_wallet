@@ -2,20 +2,22 @@ import 'dart:convert';
 
 import 'package:aewallet/domain/models/feature_flags.dart';
 import 'package:aewallet/domain/repositories/feature_flags/feature_flags_repository.dart';
-import 'package:aewallet/model/available_networks.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/services.dart';
 
 class FeatureFlagsRepositoryImpl implements FeatureFlagsRepositoryInterface {
   @override
   Future<bool> getFeatureFlag(
-    AvailableNetworks network,
+    aedappfm.Environment environment,
     ApiService apiService,
     String applicationCode,
     String featureCode,
     String platform,
   ) async {
-    final featureFlags = await getFeatureFlagsFromNetwork(network, apiService);
+    final featureFlags =
+        await getFeatureFlagsFromNetwork(environment, apiService);
     final application = featureFlags.firstWhere(
       (flag) => flag.applicationCode == applicationCode,
       orElse: () => const FeatureFlags(applicationCode: '', features: {}),
@@ -62,21 +64,21 @@ class FeatureFlagsRepositoryImpl implements FeatureFlagsRepositoryInterface {
 
   @override
   Future<List<FeatureFlags>> getFeatureFlagsFromNetwork(
-    AvailableNetworks network,
+    aedappfm.Environment environment,
     ApiService apiService,
   ) async {
-    switch (network) {
-      case AvailableNetworks.archethicTestNet:
+    switch (environment) {
+      case aedappfm.Environment.testnet:
         return _getFeatureFlagsFromBlockchain(
           '000052BA03493517C72F56960F2218873E710689EA5D702CF3BC28E84A8A4F79C78A',
           apiService,
         );
-      case AvailableNetworks.archethicMainNet:
+      case aedappfm.Environment.mainnet:
         return _getFeatureFlagsFromBlockchain(
           '0000cf5e09b68d4d873e6cade7b4a951ea2eeadc148ce346120dfc96cf5879448d8c',
           apiService,
         );
-      case AvailableNetworks.archethicDevNet:
+      case aedappfm.Environment.devnet:
         final featureFlags = await _getFeatureFlagsLocal();
         return featureFlags;
     }

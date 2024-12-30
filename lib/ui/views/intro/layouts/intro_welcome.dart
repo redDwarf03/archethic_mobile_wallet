@@ -1,7 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -13,8 +12,10 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/ui/widgets/dialogs/environment_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
-import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -336,12 +337,10 @@ class _ButtonNewWallet extends ConsumerWidget {
           key: const Key('newWallet'),
           onPressed: () async {
             if (cguChecked) {
-              await ref.read(SettingsProviders.settings.notifier).setNetwork(
-                    const NetworksSetting(
-                      network: AvailableNetworks.archethicMainNet,
-                      networkDevEndpoint: '',
-                    ),
-                  );
+              await ref
+                  .read(SettingsProviders.settings.notifier)
+                  .setEnvironment(aedappfm.Environment.mainnet);
+
               context.go(
                 IntroNewWalletGetFirstInfos.routerPage,
               );
@@ -371,7 +370,18 @@ class _ButtonImportWallet extends ConsumerWidget {
           key: const Key('importWallet'),
           onPressed: () async {
             if (cguChecked) {
-              await context.push(NetworkDialog.routerPage);
+              final environment =
+                  await context.push(EnvironmentDialog.routerPage);
+              if (environment != null) {
+                await ref
+                    .read(SettingsProviders.settings.notifier)
+                    .setEnvironment(environment as aedappfm.Environment);
+                await ref
+                    .read(SettingsProviders.settings.notifier)
+                    .setTestnetEnabled(
+                      environment != aedappfm.Environment.mainnet,
+                    );
+              }
               context.go(IntroImportSeedPage.routerPage);
             }
           },

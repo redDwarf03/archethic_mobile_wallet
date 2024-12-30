@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
@@ -55,7 +54,7 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
+import 'package:aewallet/ui/widgets/dialogs/environment_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;

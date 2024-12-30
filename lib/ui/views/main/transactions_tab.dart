@@ -4,8 +4,8 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -65,7 +65,7 @@ class TransactionsTab extends ConsumerWidget {
                     onPressed: () async {
                       await launchUrl(
                         Uri.parse(
-                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${accountSelected.genesisAddress}',
+                          '${ref.read(environmentProvider).endpoint}/explorer/chain?address=${accountSelected.genesisAddress}',
                         ),
                         mode: LaunchMode.externalApplication,
                       );
