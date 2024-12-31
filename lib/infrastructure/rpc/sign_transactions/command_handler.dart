@@ -16,7 +16,7 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
         <awc.SignTransactionRequestData>[];
     final transactions = dto.payload['transactions'];
     for (final Map<String, dynamic> transaction in transactions) {
-      final tx = archethic.Transaction.fromJson(transaction);
+      final tx = archethic.Transaction.fromNodeRPC(transaction);
       final rpcSignTransactionCommandData = awc.SignTransactionRequestData(
         data: tx.data!,
         version: tx.version,
