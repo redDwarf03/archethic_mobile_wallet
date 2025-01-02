@@ -22,7 +22,19 @@ class MainMenuView extends ConsumerWidget {
       ),
     );
 
-    if (selectedAccount == null) return const SizedBox();
+    if (selectedAccount == null) {
+      return HomeFailure(
+        restoreFailedInfo2Label:
+            localizations.restoreFailedInfo2LabelAccountNull,
+        removeWalletCallback: () {
+          RemoveWalletDialog.show(
+            context,
+            ref,
+            authRequired: false,
+          );
+        },
+      );
+    }
 
     return DecoratedBox(
       decoration: BoxDecoration(
