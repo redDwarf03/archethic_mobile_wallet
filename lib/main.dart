@@ -17,15 +17,12 @@ import 'package:aewallet/modules/aeswap/infrastructure/hive/db_helper.hive.dart'
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
-import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/home_failure.dart';
 import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
-import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:aewallet/ui/widgets/dialogs/logs_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
@@ -44,7 +41,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -324,124 +320,28 @@ class SplashState extends ConsumerState<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     if (restorationFailure != null) {
-      return SheetSkeleton(
-        appBar: SheetAppBar(
-          title: localizations.restoreFailedTitle,
-          widgetAfterTitle: Text(
-            localizations.restoreFailedSubtitle,
-            style: ArchethicThemeStyles.textStyleSize14W600Primary,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        menu: true,
-        sheetContent: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
-              ),
-              fit: BoxFit.cover,
-              alignment: Alignment.centerRight,
-              opacity: 0.7,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 32,
-              right: 32,
-              bottom: 32,
-            ),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Text(
-                    localizations.restoreFailedInfo1,
-                    style: ArchethicThemeStyles.textStyleSize16W700Primary,
-                    textAlign: TextAlign.start,
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Text(
-                    localizations.restoreFailedInfo2,
-                    style: ArchethicThemeStyles.textStyleSize14W400Highlighted,
-                    textAlign: TextAlign.start,
-                  ),
-                  const Spacer(),
-                ],
-              ),
-            ),
-          ),
-        ),
-        floatingActionButton: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextButton(
-              onPressed: () {
-                LogsDialog.getDialog(
-                  context,
-                  ref,
-                  restorationFailure.toString(),
-                );
-              },
-              child: Text(
-                localizations.getSomeHelp,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.retry,
-                  Dimens.buttonBottomDimens,
-                  onPressed: () {
-                    setState(() {
-                      restorationFailure = null;
-                    });
-                    checkLoggedIn();
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              height: 50,
-              margin: Dimens.buttonBottomDimens.edgeInsetsDirectional,
-              child: FilledButton(
-                onPressed: () {
-                  RemoveWalletDialog.show(
-                    context,
-                    ref,
-                    authRequired: false,
-                  );
-                },
-                style: FilledButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: ArchethicThemeStyles
-                      .textStyleSize16W400MainButtonLabel.color,
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Symbols.delete),
-                    const Spacer(),
-                    Text(
-                      'Remove wallet',
-                      style: ArchethicThemeStyles
-                          .textStyleSize16W400MainButtonLabel,
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+      return HomeFailure(
+        helpCallback: () {
+          LogsDialog.getDialog(
+            context,
+            ref,
+            restorationFailure.toString(),
+          );
+        },
+        removeWalletCallback: () {
+          RemoveWalletDialog.show(
+            context,
+            ref,
+            authRequired: false,
+          );
+        },
+        retryCallback: () {
+          setState(() {
+            restorationFailure = null;
+          });
+          checkLoggedIn();
+        },
       );
     }
     return const LockMask();
