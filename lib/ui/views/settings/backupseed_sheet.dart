@@ -14,9 +14,11 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AppSeedBackupSheet extends ConsumerWidget
     implements SheetSkeletonInterface {
@@ -90,6 +92,36 @@ class AppSeedBackupSheet extends ConsumerWidget
           context.pop();
         },
       ),
+      widgetRight: mnemonic != null
+          ? IconButton(
+              icon: const Icon(
+                Symbols.content_copy,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+              ),
+              onPressed: () async {
+                await Clipboard.setData(
+                  ClipboardData(text: mnemonic!.join(' ')),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor:
+                        Theme.of(context).snackBarTheme.backgroundColor,
+                    content: SelectableText(
+                      AppLocalizations.of(context)!.addressCopied,
+                      style: Theme.of(context).snackBarTheme.contentTextStyle,
+                    ),
+                    duration: const Duration(seconds: 3),
+                    action: SnackBarAction(
+                      label: AppLocalizations.of(context)!.ok,
+                      onPressed: () {},
+                    ),
+                  ),
+                );
+              },
+            )
+          : const SizedBox.shrink(),
     );
   }
 
