@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:aewallet/application/account/account_notifier.dart';
+
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
@@ -13,6 +13,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
@@ -134,10 +135,10 @@ mixin KeychainServiceMixin {
 
     HiveAppWalletDTO currentAppWallet;
     try {
+      final addressKeychain = deriveAddress(uint8ListToHex(keychain.seed!), 0);
+
       /// Creation of a new appWallet
       if (appWallet == null) {
-        final addressKeychain =
-            deriveAddress(uint8ListToHex(keychain.seed!), 0);
         final lastTransactionMap =
             await apiService.getLastTransaction([addressKeychain]);
 
@@ -188,16 +189,13 @@ mixin KeychainServiceMixin {
         accounts.add(account);
       });
 
-      final genesisAddressKeychain =
-          deriveAddress(uint8ListToHex(keychain.seed!), 0);
-
       final lastTransactionKeychainMap = await apiService.getLastTransaction(
-        [genesisAddressKeychain, ...genesisAddressAccountList],
+        [addressKeychain, ...genesisAddressAccountList],
         request: 'address',
       );
 
       currentAppWallet.appKeychain.address =
-          lastTransactionKeychainMap[genesisAddressKeychain]!.address!.address!;
+          lastTransactionKeychainMap[addressKeychain]!.address!.address!;
 
       for (var i = 0; i < accounts.length; i++) {
         if (lastTransactionKeychainMap[accounts[i].genesisAddress] != null &&
@@ -248,7 +246,7 @@ mixin KeychainServiceMixin {
 
       await AppWalletHiveDatasource.instance().saveAppWallet(currentAppWallet);
     } catch (e) {
-      throw Exception();
+      rethrow;
     }
 
     return currentAppWallet;

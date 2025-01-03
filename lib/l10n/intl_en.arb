@@ -712,5 +712,15 @@
             }
         }
     },
-    "networkChangeCreateKeychainBtn": "Create wallet"
+    "networkChangeCreateKeychainBtn": "Create wallet",
+    "walletCreatedTargetEnv": "The wallet has been created in the {targetEnv} environment.",
+    "@walletCreatedTargetEnv": {
+        "placeholders": {
+            "targetEnv": {
+                "type": "String"
+            }
+        }
+    },
+    "walletNotCreatedTargetEnv": "The wallet has not been created in the {targetEnv} environment.",
+    "walletChangeLoadingError": "The change of environment encountered an issue."
 }
