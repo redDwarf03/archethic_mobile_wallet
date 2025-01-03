@@ -1,4 +1,3 @@
-import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -13,6 +12,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;

@@ -2,15 +2,14 @@
 
 import 'dart:ui';
 
-import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/account_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';

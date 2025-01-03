@@ -1,7 +1,8 @@
 import 'dart:ui';
-import 'package:aewallet/application/account/account_notifier.dart';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

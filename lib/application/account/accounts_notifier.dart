@@ -7,6 +7,7 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
