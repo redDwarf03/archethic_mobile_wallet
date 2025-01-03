@@ -102,7 +102,7 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     required String seed,
     required String keychainAddress,
     required Keychain keychain,
-    String? name,
+    required String name,
   }) async {
     final newAppWalletDTO = await HiveAppWalletDTO.createNewAppWallet(
       keychainAddress,
@@ -136,8 +136,9 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
 
     final apiService = ref.read(apiServiceProvider);
     final appService = ref.read(appServiceProvider);
-    final keychain = await apiService.getKeychain(seed);
+
     try {
+      final keychain = await apiService.getKeychain(seed);
       final appWallet = await getListAccountsFromKeychain(
         keychain,
         null,
@@ -163,8 +164,8 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
       if (e.toString() == "Exception: Keychain doesn't exists") {
         throw const ArchethicKeychainNotExistsException();
       }
+      rethrow;
     }
-    return null;
   }
 
   Future<LoggedInSession?> restoreFromMnemonics({

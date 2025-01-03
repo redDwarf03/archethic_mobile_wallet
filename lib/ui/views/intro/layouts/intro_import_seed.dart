@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:ui';
-import 'package:aewallet/application/account/account_notifier.dart';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
@@ -25,7 +25,9 @@ import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:aewallet/util/mnemonics.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -150,22 +152,67 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   title: localizations.pleaseWait,
                 );
 
-                final newSession = await ref
-                    .read(sessionNotifierProvider.notifier)
-                    .restoreFromMnemonics(
-                      mnemonics: phrase.toList(),
-                      languageCode: languageSeed,
+                try {
+                  final newSession = await ref
+                      .read(sessionNotifierProvider.notifier)
+                      .restoreFromMnemonics(
+                        mnemonics: phrase.toList(),
+                        languageCode: languageSeed,
+                      );
+                  context.loadingOverlay.hide();
+                  if (newSession == null) {
+                    setState(() {
+                      _mnemonicIsValid = false;
+                      isPressed = false;
+                    });
+                    UIUtil.showSnackbar(
+                      localizations.noKeychain,
+                      context,
+                      ref,
+                      ArchethicTheme.text,
+                      ArchethicTheme.snackBarShadow,
                     );
+                    context.go(IntroImportSeedPage.routerPage);
+                    return;
+                  }
 
-                context.loadingOverlay.hide();
+                  await _accountsDialog(
+                    newSession.wallet.appKeychain.accounts,
+                  );
+                  context.loadingOverlay.show(
+                    title: localizations.pleaseWait,
+                  );
 
-                if (newSession == null) {
+                  final poolListRaw =
+                      await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+                  unawaited(
+                    (await ref
+                            .read(accountsNotifierProvider.notifier)
+                            .selectedAccountNotifier)
+                        ?.refreshAll(poolListRaw),
+                  );
+                  ref.read(
+                    RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
+                  );
+                  context.go(HomePage.routerPage);
+                  context.loadingOverlay.hide();
+
+                  setState(() {
+                    isPressed = false;
+                  });
+                } catch (e) {
+                  context.loadingOverlay.hide();
                   setState(() {
                     _mnemonicIsValid = false;
                     isPressed = false;
                   });
                   UIUtil.showSnackbar(
-                    localizations.noKeychain,
+                    (e == ArchethicKeychainNotExistsException)
+                        ? localizations.noKeychain
+                        : e is TimeoutException
+                            ? localizations.failureTimeout
+                            : e.toString(),
                     context,
                     ref,
                     ArchethicTheme.text,
@@ -174,31 +221,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   context.go(IntroImportSeedPage.routerPage);
                   return;
                 }
-                await _accountsDialog(
-                  newSession.wallet.appKeychain.accounts,
-                );
-                context.loadingOverlay.show(
-                  title: localizations.pleaseWait,
-                );
-
-                final poolListRaw =
-                    await ref.read(DexPoolProviders.getPoolListRaw.future);
-
-                unawaited(
-                  (await ref
-                          .read(accountsNotifierProvider.notifier)
-                          .selectedAccountNotifier)
-                      ?.refreshAll(poolListRaw),
-                );
-                ref.read(
-                  RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
-                );
-                context.go(HomePage.routerPage);
-                context.loadingOverlay.hide();
-
-                setState(() {
-                  isPressed = false;
-                });
               },
               disabled: isPressed == true,
             ),

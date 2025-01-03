@@ -39,14 +39,13 @@ class HiveAppWalletDTO extends HiveObject {
   static Future<HiveAppWalletDTO> createNewAppWallet(
     String keychainAddress,
     Keychain keychain,
-    String? name,
+    String name,
   ) async {
     Account? selectedAcct;
 
     await AppWalletHiveDatasource.instance().createAppWallet(keychainAddress);
 
-    /// Default service for wallet
-    final kServiceName = 'archethic-wallet-${Uri.encodeFull(name!)}';
+    final kServiceName = Uri.encodeFull(name);
 
     final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(

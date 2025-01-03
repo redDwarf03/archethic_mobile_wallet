@@ -1,8 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -45,10 +48,6 @@ class EnvironmentChange extends ConsumerWidget {
                   .push(EnvironmentDialog.routerPage) as aedappfm.Environment?;
               if (_selectedEnvironment == null) return;
               if (_selectedEnvironment != _saveEnvironment) {
-                context.loadingOverlay.show(
-                  title: AppLocalizations.of(context)!.pleaseWaitChangeNetwork,
-                );
-
                 final seed =
                     ref.read(sessionNotifierProvider).loggedIn?.wallet.seed;
 
@@ -91,16 +90,24 @@ class EnvironmentChange extends ConsumerWidget {
                     return;
                   }
                   for (final account in accounts) {
-                    nameList.add(account.name);
+                    nameList.add(Uri.decodeFull(account.name));
                   }
 
                   try {
-                    await ref
-                        .read(createNewAppWalletCaseProvider)
-                        .run(seed, nameList);
+                    context.loadingOverlay.show(
+                      title:
+                          AppLocalizations.of(context)!.pleaseWaitChangeNetwork,
+                    );
+                    await ref.read(createNewAppWalletCaseProvider).run(
+                          seed!,
+                          archethic.ApiService(_selectedEnvironment.endpoint),
+                          nameList,
+                        );
 
                     UIUtil.showSnackbar(
-                      'création ok',
+                      localizations.walletCreatedTargetEnv(
+                        _selectedEnvironment.displayName,
+                      ),
                       context,
                       ref,
                       ArchethicTheme.text,
@@ -110,13 +117,17 @@ class EnvironmentChange extends ConsumerWidget {
                     );
                   } catch (e) {
                     UIUtil.showSnackbar(
-                      'Pb avec création + $e',
+                      '${localizations.walletNotCreatedTargetEnv(_selectedEnvironment.displayName)} ($e)',
                       context,
                       ref,
                       ArchethicTheme.text,
                       ArchethicTheme.snackBarShadow,
                       duration: const Duration(milliseconds: 5000),
                     );
+
+                    context.loadingOverlay.hide();
+                    context.pop();
+                    return;
                   }
                 }
 
@@ -126,6 +137,9 @@ class EnvironmentChange extends ConsumerWidget {
                       (settings) => settings.languageSeed,
                     ),
                   );
+                  await ref
+                      .read(SettingsProviders.settings.notifier)
+                      .setEnvironment(_selectedEnvironment);
 
                   await ref
                       .read(sessionNotifierProvider.notifier)
@@ -133,8 +147,38 @@ class EnvironmentChange extends ConsumerWidget {
                         seed: seed!,
                         languageCode: languageSeed,
                       );
+
+                  final accounts =
+                      await ref.read(accountsNotifierProvider.future);
+
+                  await ref
+                      .read(accountsNotifierProvider.notifier)
+                      .selectAccount(accounts.first);
+
+                  final poolListRaw =
+                      await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+                  unawaited(
+                    (await ref
+                            .read(accountsNotifierProvider.notifier)
+                            .selectedAccountNotifier)
+                        ?.refreshAll(poolListRaw),
+                  );
                   context.loadingOverlay.hide();
                 } catch (e) {
+                  UIUtil.showSnackbar(
+                    '${localizations.walletChangeLoadingError} ($e)',
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                    duration: const Duration(milliseconds: 5000),
+                  );
+
+                  await ref
+                      .read(SettingsProviders.settings.notifier)
+                      .setEnvironment(_saveEnvironment);
+
                   context.loadingOverlay.hide();
                   context.pop();
                 }

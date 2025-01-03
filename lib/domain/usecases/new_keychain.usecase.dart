@@ -13,19 +13,18 @@ final _logger = Logger('KeychainUtil');
 
 class CreateNewAppWalletCase with aedappfm.TransactionMixin {
   CreateNewAppWalletCase({
-    required this.apiService,
     required this.sessionNotifier,
   });
 
-  final archethic.ApiService apiService;
   final SessionNotifier sessionNotifier;
 
   Future<void> run(
-    String? seed,
+    String seed,
+    archethic.ApiService targetApiService,
     List<String> nameList,
   ) async {
     /// Get Wallet KeyPair
-    final walletKeyPair = archethic.deriveKeyPair(seed!, 0);
+    final walletKeyPair = archethic.deriveKeyPair(seed, 0);
 
     /// Generate keyChain Seed from random value
     final keychainSeed = archethic.uint8ListToHex(
@@ -38,7 +37,7 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
         archethic.Keychain(seed: archethic.hexToUint8List(keychainSeed));
     final servicesMap = <String, String>{};
     for (final name in nameList) {
-      final kServiceName = 'archethic-wallet-${Uri.encodeFull(name)}';
+      final kServiceName = Uri.encodeFull(name);
       final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
       const index = '0';
       final kDerivationPath = '$kDerivationPathWithoutIndex$index';
@@ -47,13 +46,13 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
     }
 
     final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
+      (await targetApiService.getBlockchainVersion()).version.transaction,
     );
 
-    final originPrivateKey = apiService.getOriginKey();
+    final originPrivateKey = targetApiService.getOriginKey();
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final keychainTransaction = apiService.newKeychainTransaction(
+    final keychainTransaction = targetApiService.newKeychainTransaction(
       keychainSeed,
       <String>[archethic.uint8ListToHex(walletKeyPair.publicKey!)],
       archethic.hexToUint8List(originPrivateKey),
@@ -61,10 +60,18 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
       servicesMap: servicesMap,
     );
 
+    final accessKeychainTx = targetApiService.newAccessKeychainTransaction(
+      seed,
+      archethic
+          .hexToUint8List(keychainTransaction.address!.address!.toUpperCase()),
+      archethic.hexToUint8List(originPrivateKey),
+      blockchainTxVersion,
+    );
+
     _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
     try {
       final confirmation = await archethic.ArchethicTransactionSender(
-        apiService: apiService,
+        apiService: targetApiService,
       ).send(
         transaction: keychainTransaction,
       );
@@ -74,18 +81,10 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
       throw ArchethicNewKeychainErrorException(error.messageLabel);
     }
 
-    final accessKeychainTx = apiService.newAccessKeychainTransaction(
-      seed,
-      archethic
-          .hexToUint8List(keychainTransaction.address!.address!.toUpperCase()),
-      archethic.hexToUint8List(originPrivateKey),
-      blockchainTxVersion,
-    );
-
     _logger.info('>>> Create access <<< ${accessKeychainTx.address}');
     try {
       final confirmation = await archethic.ArchethicTransactionSender(
-        apiService: apiService,
+        apiService: targetApiService,
       ).send(
         transaction: accessKeychainTx,
       );
@@ -100,7 +99,7 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
       seed: seed,
       keychainAddress: keychainTransaction.address!.address!,
       keychain: keychain,
-      // Multi ??????
+      // TODO(reddwarf03): Multi ??????
       name: nameList[0],
     );
   }

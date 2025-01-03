@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -380,9 +381,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     );
 
     try {
+      final apiService = ref.read(apiServiceProvider);
       await ref.read(createNewAppWalletCaseProvider).run(
-        widget.seed,
-        [widget.name!],
+        widget.seed!,
+        apiService,
+        ['archethic-wallet-${widget.name!}'],
       );
 
       context.loadingOverlay.hide();
