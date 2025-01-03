@@ -23,7 +23,7 @@ Future<DexToken?> _getTokenFromAddress(
   Ref ref,
   address,
 ) async {
-  final environment = ref.read(environmentProvider);
+  final environment = ref.watch(environmentProvider);
   return ref.watch(_dexTokenRepositoryProvider).getToken(address, environment);
 }
 
@@ -51,7 +51,7 @@ Future<List<DexToken>> _dexTokenBases(
   Ref ref,
 ) async {
   final repository = ref.watch(_dexTokenRepositoryProvider);
-  final environment = ref.read(environmentProvider);
+  final environment = ref.watch(environmentProvider);
   return repository.getLocalTokensDescriptions(environment);
 }
 
