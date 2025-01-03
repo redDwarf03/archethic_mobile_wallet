@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
+
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
@@ -18,6 +19,7 @@ import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'

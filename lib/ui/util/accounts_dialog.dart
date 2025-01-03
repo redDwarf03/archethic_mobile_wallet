@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:ui';
-import 'package:aewallet/application/account/account_notifier.dart';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -10,6 +10,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';

@@ -10,11 +10,11 @@ import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -282,32 +282,5 @@ class AccountNotifier extends _$AccountNotifier {
     }
 
     await AccountHiveDatasource.instance().updateAccount(account);
-  }
-}
-
-extension AccountExt on Account {
-  String get nameDisplayed {
-    var result = name;
-    if (name.startsWith('archethic-wallet-')) {
-      result = result.replaceFirst('archethic-wallet-', '');
-    }
-    if (name.startsWith('aeweb-')) {
-      result = result.replaceFirst('aeweb-', '');
-    }
-
-    return Uri.decodeFull(
-      result,
-    );
-  }
-
-  List<AccountToken> getAccountNFTFiltered() {
-    return <AccountToken>[
-      ...accountNFT ?? [],
-      // A collection of NFT has the same address for all the sub NFT, we only want to display one NFT in that case
-      ...(accountNFTCollections?.where(
-            (e) => <String>{}.add(e.tokenInformation?.address ?? ''),
-          ) ??
-          []),
-    ];
   }
 }
