@@ -1,0 +1,2 @@
+# Exclusion of safety mechanisms
+!Vault, !AppWidget, !AuthFactory, !PrivacyMask, !_lastInteractionDateNotifierProvider, !phoenix_socket, !AuthenticationGuard, !_lockDateProvider
