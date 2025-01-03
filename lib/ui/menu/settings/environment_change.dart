@@ -129,6 +129,11 @@ class EnvironmentChange extends ConsumerWidget {
                     context.pop();
                     return;
                   }
+                } else {
+                  context.loadingOverlay.show(
+                    title:
+                        AppLocalizations.of(context)!.pleaseWaitChangeNetwork,
+                  );
                 }
 
                 try {

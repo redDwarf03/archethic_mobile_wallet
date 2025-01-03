@@ -10,7 +10,7 @@ part 'verified_tokens.g.dart';
 aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
   Ref ref,
 ) {
-  final environment = ref.read(environmentProvider);
+  final environment = ref.watch(environmentProvider);
   return ref.watch(
     aedappfm.VerifiedTokensProviders.verifiedTokensRepository(environment),
   );
@@ -18,7 +18,7 @@ aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
 
 @riverpod
 Future<bool> isVerifiedToken(Ref ref, String address) async {
-  final environment = ref.read(environmentProvider);
+  final environment = ref.watch(environmentProvider);
   return ref.watch(
     aedappfm.VerifiedTokensProviders.isVerifiedToken(
       environment,
@@ -31,7 +31,7 @@ Future<bool> isVerifiedToken(Ref ref, String address) async {
 Future<List<String>> verifiedTokens(
   Ref ref,
 ) async {
-  final environment = ref.read(environmentProvider);
+  final environment = ref.watch(environmentProvider);
 
   return ref.watch(
     aedappfm.VerifiedTokensProviders.verifiedTokensByNetwork(
