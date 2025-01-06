@@ -37,3 +37,13 @@ extension PeriodicReloadExtension on Ref<Object?> {
     onDispose(timer.cancel);
   }
 }
+
+extension RefListenForChanges on Ref<Object?> {
+  void invalidateSelfOnProviderChange<T>(ProviderBase<T> provider) {
+    listen<T>(provider, (previous, next) {
+      if (previous != next) {
+        invalidateSelf();
+      }
+    });
+  }
+}
