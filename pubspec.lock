@@ -58,26 +58,26 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: d66e49e8d8b0a731221f97bb685526950a55fb869cc9830c9a593011555e09e9
+      sha256: "08d8d65ef4ff93ff911187a3afb7208c3a090d5fa711ad859ffe49145db02289"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.6-beta.4"
+    version: "3.2.6"
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: "11a7596968980856b8e5a0a6f2902eedbd8a12675d01b8ce7c9d017dd93bb879"
+      sha256: "4265dd9010122891a52f3dbdae0bc5b18e9a0fa844c985f706085269a0837e1e"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0-beta"
+    version: "7.0.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: "1df70e440b4350efd6d9c4fdfd41f3334d7a05f3f37e41f04a8b87caa8b298e1"
+      sha256: "9e3471f1b613b56bde7cf7c222a6f8ccc156611f70e8c40525ba5749a874afcc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.8-beta.2"
+    version: "2.1.8"
   archive:
     dependency: transitive
     description:
@@ -692,26 +692,26 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
-      sha256: "165164745e6afb5c0e3e3fcc72a012fb9e58496fb26ffb92cf22e16a821e85d0"
+      sha256: "1913841ac4c7bf57cd2e05b717e1fbff7841b542962feff827b16525a781b3e4"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.2"
+    version: "9.2.3"
   flutter_secure_storage_linux:
     dependency: transitive
     description:
       name: flutter_secure_storage_linux
-      sha256: "4d91bfc23047422cbcd73ac684bc169859ee766482517c22172c86596bf1464b"
+      sha256: bf7404619d7ab5c0a1151d7c4e802edad8f33535abfbeff2f9e1fe1274e2d705
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   flutter_secure_storage_macos:
     dependency: transitive
     description:
       name: flutter_secure_storage_macos
-      sha256: "1693ab11121a5f925bbea0be725abfcfbbcf36c1e29e571f84a0c0f436147a81"
+      sha256: "6c0a2795a2d1de26ae202a0d78527d163f4acbb11cde4c75c670f3a0fc064247"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.2"
+    version: "3.1.3"
   flutter_secure_storage_platform_interface:
     dependency: transitive
     description:
@@ -1158,10 +1158,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "64404f47f8e0a9d20478468e5decef867a688660bad7173adcd20418d7f892c9"
+      sha256: "89aac72d25dd49303f71b3b1e70f8374791846729365b25bebc2a2531e5b86cd"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2801.0"
+    version: "4.2801.1"
   meta:
     dependency: transitive
     description:
@@ -1675,10 +1675,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_darwin
-      sha256: "96a698e2bc82bd770a4d6aab00b42396a7c63d9e33513a56945cbccb594c2474"
+      sha256: "22adfd9a2c7d634041e96d6241e6e1c8138ca6817018afc5d443fef91dcefa9c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.1+1"
   sqflite_platform_interface:
     dependency: transitive
     description:
@@ -1987,10 +1987,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "8b338d4486ab3fbc0ba0db9f9b4f5239b6697fcee427939a40e720cbb9ee0a69"
+      sha256: "154360849a56b7b67331c21f09a386562d88903f90a1099c5987afc1912e1f29"
       url: "https://pub.dev"
     source: hosted
-    version: "5.9.0"
+    version: "5.10.0"
   win32_registry:
     dependency: transitive
     description:
