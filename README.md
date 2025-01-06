@@ -53,6 +53,52 @@ Patrol is a flutter package, you can install it using a simple `flutter pub get`
 
 Full patrol using on this project can be found [here](integration_test/README.md)
 
+
+## Integrating Deeplinks
+
+### Overview
+
+**aeWallet** supports opening DApps directly in an in-app webview using **deeplinks**. This feature enables seamless interaction between DApps and the wallet on mobile devices.
+
+To use this functionality, the URL parameters must be **encoded in base64Url** before being included in the deeplink.
+
+### URL Schema
+
+The deeplink follows this schema:
+
+`aewallet://dapps_webview?[base64Url_encoded_parameters]`
+
+
+#### Supported Parameters
+
+- **url**: The URL of the DApp to be loaded in the webview. (mandatory)
+- **name**: The name of the DApp. (mandatory)
+- **code**: A unique identifier for the DApp. (mandatory)
+- **iconUrl**: The URL of the DApp's icon.
+- **description**: A short description of the DApp.
+- **category**: The category of the DApp (e.g., info, finance, gaming, etc.).
+
+### Usage Example
+
+#### Step 1: Construct the URL with the Required Parameters
+
+Here’s an example of a URL before encoding:
+
+`aewallet://dapps_webview?code=aeWebsite&url=https://archethic.net&category=info&description=Archethic Official Website&name=Archethic Website&iconUrl=https://archethic.net/favicon.ico`
+
+
+#### Step 2: Encode the URL in base64Url
+
+All the parameters must be encoded in base64Url to ensure compatibility. After encoding, the URL looks like this:
+
+`aewallet://dapps_webview?ZGFwcFVybD1odHRwczovL2FyY2hldGhpYy5uZXQmZGFwcE5hbWU9QXJjaGV0aGljJTIwV2Vic2l0ZSZkYXBwQ29kZT1hZVdlYnNpdGUmY2F0ZWdvcnk9aW5mbyZkZXNjcmlwdGlvbj1BcmNoZXRoaWMlMjBPZmZpY2lhbCUyMFdlYnNpdGUm...`
+
+
+#### Step 3: Test the Deeplink
+
+Use the encoded URL in your application or mobile browser to verify that it correctly opens the DApp in the **aeWallet** webview.
+
+
 ## Setup this Application for developers
 
 ### Pre-requisites

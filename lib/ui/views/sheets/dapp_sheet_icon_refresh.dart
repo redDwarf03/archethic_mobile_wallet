@@ -1,4 +1,4 @@
-import 'package:aewallet/application/dapps.dart';
+import 'package:aewallet/application/dapps/dapps.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
