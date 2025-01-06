@@ -1,5 +1,5 @@
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/dapps.dart';
+import 'package:aewallet/application/dapps/dapps.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';

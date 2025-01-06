@@ -1,7 +1,9 @@
+import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_favorite.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
@@ -19,6 +21,9 @@ class DAppsBoardWebview extends ConsumerWidget
     required this.dappName,
     required this.dappCode,
     this.deeplink,
+    this.dappIconUrl,
+    this.dappDescription,
+    this.dappCategory,
     super.key,
   });
 
@@ -28,6 +33,9 @@ class DAppsBoardWebview extends ConsumerWidget
   final String dappName;
   final String dappCode;
   final bool? deeplink;
+  final String? dappIconUrl;
+  final String? dappDescription;
+  final String? dappCategory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,7 +67,21 @@ class DAppsBoardWebview extends ConsumerWidget
           context.pop();
         },
       ),
-      widgetRight: DAppSheetIconRefresh(dappKey: dappCode),
+      widgetRight: Row(
+        children: [
+          DAppSheetIconFavorite(
+            dapp: DApp(
+              code: dappCode,
+              name: dappName,
+              url: dappUrl,
+              category: dappCategory,
+              description: dappDescription,
+              iconUrl: dappIconUrl,
+            ),
+          ),
+          DAppSheetIconRefresh(dappKey: dappCode),
+        ],
+      ),
     );
   }
 

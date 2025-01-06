@@ -123,7 +123,11 @@ class RoutesPath {
         }
         if (state.uri.scheme == 'aewallet' &&
             state.uri.path + state.uri.host == DAppsBoardWebview.routerPage) {
-          final query = state.uri.query;
+          final query = utf8.decode(
+            base64Url.decode(
+              state.uri.query,
+            ),
+          );
           return '${DAppsBoardWebview.routerPage}?deeplink&$query';
         }
         return null;

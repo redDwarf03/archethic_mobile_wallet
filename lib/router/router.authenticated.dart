@@ -169,12 +169,18 @@ final _authenticatedRoutes = [
     pageBuilder: (context, state) {
       final extraData = state.extra as Map<String, dynamic>?;
       final dappUrl =
-          extraData?['dappUrl'] ?? state.uri.queryParameters['dappUrl'] ?? '';
+          extraData?['url'] ?? state.uri.queryParameters['url'] ?? '';
       final dappName =
-          extraData?['dappName'] ?? state.uri.queryParameters['dappName'] ?? '';
+          extraData?['name'] ?? state.uri.queryParameters['name'] ?? '';
       final dappCode =
-          extraData?['dappCode'] ?? state.uri.queryParameters['dappCode'] ?? '';
+          extraData?['code'] ?? state.uri.queryParameters['code'] ?? '';
       final deeplink = state.uri.queryParameters['deeplink'] != null;
+      final dappIconUrl =
+          extraData?['iconUrl'] ?? state.uri.queryParameters['iconUrl'];
+      final dappDescription =
+          extraData?['description'] ?? state.uri.queryParameters['description'];
+      final dappCategory =
+          extraData?['category'] ?? state.uri.queryParameters['category'];
 
       return NoTransitionPage<void>(
         key: state.pageKey,
@@ -183,6 +189,9 @@ final _authenticatedRoutes = [
           dappName: dappName,
           dappCode: dappCode,
           deeplink: deeplink,
+          dappIconUrl: dappIconUrl,
+          dappDescription: dappDescription,
+          dappCategory: dappCategory,
         ),
       );
     },

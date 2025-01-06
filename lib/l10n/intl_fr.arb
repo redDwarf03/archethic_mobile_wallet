@@ -685,5 +685,9 @@
     },
     "dappBoardLinkHeader": "DApps Board",
     "dappBoardLinkDesc": "Accédez aux applications décentralisées sur la Blockchain Publique Archethic",
-    "dappBoardTitle": "DApps Board"
+    "dappBoardTitle": "DApps Board",
+    "dappBoardArchethicSelectionTitle": "La sélection d'Archethic",
+    "dappBoardMySelectionTitle": "Ma sélection",
+    "dappBoardMyDAppFavoriteAdd": "La DApp a été ajoutée dans vos favoris. Retrouvez là dans le menu général, section \"DApps Board\"",
+    "dappBoardMyDAppFavoriteRemove": "La DApp a été supprimée de vos favoris."
 }
