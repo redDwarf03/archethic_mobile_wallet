@@ -44,7 +44,7 @@ class HomePage extends _$HomePage {
             await (await ref
                     .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions();
+                ?.refreshAll();
           }
           if (next == ConnectivityStatus.isDisconnected) {
             /// When network becomes offline, stops subscriptions.

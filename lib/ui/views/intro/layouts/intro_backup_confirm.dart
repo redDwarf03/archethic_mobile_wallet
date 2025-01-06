@@ -6,6 +6,7 @@ import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/usecases.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/domain/usecases/new_keychain.usecase.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -82,7 +83,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     super.initState();
     _registerBus();
 
-    // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ? (3)
     final languageSeed = ref.read(
       SettingsProviders.settings.select((settings) => settings.languageSeed),
     );
@@ -419,6 +419,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     if (e is archethic.ArchethicConnectionException) {
       return e.cause;
     } else if (e is archethic.ArchethicInvalidResponseException) {
+      return e.cause;
+    } else if (e is ArchethicNewKeychainErrorException) {
+      return e.cause;
+    } else if (e is ArchethicNewKeychainAccessErrorException) {
       return e.cause;
     }
     return e.toString();

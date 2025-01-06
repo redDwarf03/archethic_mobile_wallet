@@ -44,7 +44,7 @@ class AccountTab extends ConsumerWidget {
         await (await ref
                 .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions();
+            ?.refreshAll();
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(

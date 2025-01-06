@@ -99,7 +99,6 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
       seed: seed,
       keychainAddress: keychainTransaction.address!.address!,
       keychain: keychain,
-      // TODO(reddwarf03): Multi ??????
       name: nameList[0],
     );
   }

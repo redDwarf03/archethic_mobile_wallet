@@ -1,5 +1,4 @@
-import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -22,7 +21,6 @@ class FarmLockDetailsInfoLPDeposited extends ConsumerWidget {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     if (farmLock == null) return const SizedBox.shrink();
 
-    final apiService = ref.watch(apiServiceProvider);
     return SheetDetailCard(
       children: [
         Column(
@@ -41,27 +39,20 @@ class FarmLockDetailsInfoLPDeposited extends ConsumerWidget {
               style: AppTextStyles.bodyMedium(context),
             ),
             if (farmLock.lpTokensDeposited > 0)
-              FutureBuilder<Map<String, dynamic>?>(
-                future: PoolFactoryRepositoryImpl(
-                  farmLock.poolAddress,
-                  apiService,
-                ).getRemoveAmounts(
-                  farmLock.lpTokensDeposited,
+              FutureBuilder<({double token1, double token2})>(
+                future: ref.watch(
+                  DexTokensProviders.getRemoveAmounts(
+                    farmLock.poolAddress,
+                    farmLock.lpTokensDeposited,
+                  ).future,
                 ),
                 builder: (
                   context,
                   snapshotAmounts,
                 ) {
                   if (snapshotAmounts.hasData && snapshotAmounts.data != null) {
-                    final amountToken1 = snapshotAmounts.data!['token1'] == null
-                        ? 0.0
-                        : snapshotAmounts.data!['token1'] as double;
-                    final amountToken2 = snapshotAmounts.data!['token2'] == null
-                        ? 0.0
-                        : snapshotAmounts.data!['token2'] as double;
-
                     return SelectableText(
-                      '${AppLocalizations.of(context)!.poolDetailsInfoDepositedEquivalent} ${amountToken1.formatNumber(precision: amountToken1 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token1.symbol.reduceSymbol()} / ${amountToken2.formatNumber(precision: amountToken2 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token2.symbol.reduceSymbol()}',
+                      '${AppLocalizations.of(context)!.poolDetailsInfoDepositedEquivalent} ${snapshotAmounts.data!.token1.formatNumber(precision: snapshotAmounts.data!.token1 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token1.symbol.reduceSymbol()} / ${snapshotAmounts.data!.token2.formatNumber(precision: snapshotAmounts.data!.token2 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token2.symbol.reduceSymbol()}',
                       style: AppTextStyles.bodySmall(context),
                     );
                   }

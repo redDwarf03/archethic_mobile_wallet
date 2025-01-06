@@ -101,6 +101,13 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
               .selectedAccountNotifier)
           ?.refreshFungibleTokens(),
     );
+    unawaited(
+      (await ref
+              .read(accountsNotifierProvider.notifier)
+              .selectedAccountNotifier)
+          ?.refreshBalance(),
+    );
+
     context.loadingOverlay.hide();
     context.pop();
   }

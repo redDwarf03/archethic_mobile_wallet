@@ -7,7 +7,7 @@ part of 'verified_tokens.dart';
 // **************************************************************************
 
 String _$verifiedTokensRepositoryHash() =>
-    r'87cd08d554cb240790fefc10ca3f0352c29b4593';
+    r'3b3be328235c3baa717bd5f221e6446aabc960c1';
 
 /// See also [verifiedTokensRepository].
 @ProviderFor(verifiedTokensRepository)
@@ -26,7 +26,7 @@ final verifiedTokensRepositoryProvider =
 // ignore: unused_element
 typedef VerifiedTokensRepositoryRef
     = AutoDisposeProviderRef<aedappfm.VerifiedTokensRepositoryInterface>;
-String _$isVerifiedTokenHash() => r'118764e45f8449516bb60a2e9b698f87bc9a08a8';
+String _$isVerifiedTokenHash() => r'a3ae6119e85036bc1b070e6ff0d39bc77c3029ec';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -177,7 +177,7 @@ class _IsVerifiedTokenProviderElement
   String get address => (origin as IsVerifiedTokenProvider).address;
 }
 
-String _$verifiedTokensHash() => r'a8b89d7d28e089abbb7a5194795c143fe9a79e4e';
+String _$verifiedTokensHash() => r'8719aa80a06ba2bf438f69eca96d3d3a6d6a4ed1';
 
 /// See also [verifiedTokens].
 @ProviderFor(verifiedTokens)
