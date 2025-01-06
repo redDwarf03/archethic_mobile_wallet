@@ -4,6 +4,7 @@ import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/domain/repositories/dapps/dapps_repository.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 
 class DAppsRepositoryImpl implements DAppsRepositoryInterface {
@@ -37,7 +38,7 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
     final dapps = await getDAppsFromNetwork(network, apiService);
     if (dapps.isEmpty) return null;
 
-    return dapps.firstWhere(
+    return dapps.firstWhereOrNull(
       (element) => element.code.toUpperCase() == code.toUpperCase(),
     );
   }
