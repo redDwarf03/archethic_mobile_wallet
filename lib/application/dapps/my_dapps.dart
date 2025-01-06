@@ -15,7 +15,7 @@ MyDAppsRepositoryImpl myDAppsRepository(
 Future<List<DApp>> getMyDApps(
   Ref ref,
 ) async {
-  return ref.read(myDAppsRepositoryProvider).getMyDApps();
+  return ref.watch(myDAppsRepositoryProvider).getMyDApps();
 }
 
 @riverpod
@@ -24,5 +24,5 @@ Future<DApp?> getMyDApp(
   String url,
 ) async {
   if (Uri.tryParse(url) == null) return null;
-  return ref.read(myDAppsRepositoryProvider).getMyDApp(url);
+  return ref.watch(myDAppsRepositoryProvider).getMyDApp(url);
 }
