@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/account/selected_account.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -27,17 +28,15 @@ class TransactionsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recentTransactions = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount?.recentTransactions,
-      ),
-    );
-
     final accountSelected = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+
+    final recentTransactions =
+        ref.watch(selectedAccountRecentTransactionsProvider).valueOrNull;
+
     return Stack(
       children: [
         SingleChildScrollView(

@@ -74,11 +74,13 @@ class SingleTokenState extends State<SingleToken>
                 ..._getContent(
                   context,
                 ),
-                FormatAddressLinkCopy(
-                  address: widget.token.address,
-                  reduceAddress: true,
-                  fontSize: Theme.of(context).textTheme.titleMedium!.fontSize!,
-                ),
+                if (widget.token.isUCO == false)
+                  FormatAddressLinkCopy(
+                    address: widget.token.address,
+                    reduceAddress: true,
+                    fontSize:
+                        Theme.of(context).textTheme.titleMedium!.fontSize!,
+                  ),
               ],
             ),
           ],

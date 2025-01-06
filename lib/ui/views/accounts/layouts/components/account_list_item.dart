@@ -155,7 +155,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-    final apiService = ref.read(apiServiceProvider);
+    final apiService = ref.watch(apiServiceProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -177,7 +177,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
               .read(
                 accountNotifierProvider(widget.account.name).notifier,
               )
-              .refreshRecentTransactions();
+              .refreshAll();
 
           context.loadingOverlay.hide();
           context.pop();

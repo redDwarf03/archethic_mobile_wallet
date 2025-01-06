@@ -64,7 +64,7 @@ Future<DexFarm?> _getFarmInfos(
   );
   final now = DateTime.now().toUtc();
 
-  final priceTokenInFiat = await ref.read(
+  final priceTokenInFiat = await ref.watch(
     DexTokensProviders.estimateTokenInFiat(farmInfos.rewardToken!.address)
         .future,
   );

@@ -124,6 +124,12 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
               ?.refreshFungibleTokens(),
         );
       }
+      unawaited(
+        (await ref
+                .read(accountsNotifierProvider.notifier)
+                .selectedAccountNotifier)
+            ?.refreshBalance(),
+      );
     } finally {
       context.go(HomePage.routerPage);
       context.loadingOverlay.hide();

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:aewallet/application/account/selected_account.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
@@ -10,10 +11,8 @@ import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -56,32 +55,40 @@ class AccountNotifier extends _$AccountNotifier {
     }
   }
 
-  Future<void> refreshRecentTransactions() => _refresh([
-        (account) async {
-          _logger.fine(
-            'Start method refreshRecentTransactions for ${account.nameDisplayed}',
-          );
-          await updateRecentTransactions();
-          await updateBalance();
-          await updateFungiblesTokens();
-          await updateNFT();
-          _logger.fine(
-            'End method refreshRecentTransactions for ${account.nameDisplayed}',
-          );
-        },
-      ]);
+  Future<void> refreshRecentTransactions() async {
+    await _refresh([
+      (account) async {
+        _logger.fine(
+          'Start method refreshRecentTransactions for ${account.nameDisplayed}',
+        );
+        await updateRecentTransactions();
+        _logger.fine(
+          'End method refreshRecentTransactions for ${account.nameDisplayed}',
+        );
+      },
+    ]);
 
-  Future<void> refreshFungibleTokens() => _refresh([
-        (account) async {
-          await updateFungiblesTokens();
-          ref.invalidate(userBalanceProvider);
-        },
-      ]);
+    ref.invalidate(selectedAccountRecentTransactionsProvider);
+  }
 
-  Future<void> refreshAll(
-    List<GetPoolListResponse> poolsListRaw,
-  ) {
-    return _refresh(
+  Future<void> refreshFungibleTokens() async {
+    await _refresh([
+      (account) async {
+        await updateFungiblesTokens();
+      },
+    ]);
+  }
+
+  Future<void> refreshBalance() async {
+    await _refresh([
+      (account) async {
+        await updateBalance();
+      },
+    ]);
+  }
+
+  Future<void> refreshAll() async {
+    await _refresh(
       [
         (account) async {
           _logger.fine('RefreshAll - Start Balance refresh');

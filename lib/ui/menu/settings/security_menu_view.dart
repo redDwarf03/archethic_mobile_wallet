@@ -304,7 +304,7 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
             await (await ref
                     .read(accountsNotifierProvider.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions();
+                ?.refreshAll();
           },
         );
       },

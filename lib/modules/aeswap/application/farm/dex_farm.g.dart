@@ -24,7 +24,7 @@ final _dexFarmRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _DexFarmRepositoryRef = AutoDisposeProviderRef<DexFarmRepositoryImpl>;
-String _$getFarmInfosHash() => r'f8ffea8c7a75b88b543f8020f8b54c7b4fdabd02';
+String _$getFarmInfosHash() => r'5612548526e8aaa08eb88def9cdf7c47061b5eaf';
 
 /// Copied from Dart SDK
 class _SystemHash {

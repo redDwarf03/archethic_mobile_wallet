@@ -457,7 +457,7 @@ class _EstimateStatsProviderElement
       (origin as _EstimateStatsProvider).dexPoolAddress;
 }
 
-String _$poolHash() => r'37012e7faeb6dc6b03374b4823435e242b185a5b';
+String _$poolHash() => r'b47367961f4deaf98f5a7f9180d3b8704fefadf0';
 
 /// See also [_pool].
 @ProviderFor(_pool)

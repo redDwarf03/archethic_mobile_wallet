@@ -5,7 +5,7 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/usecases.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/domain/usecases/new_keychain.usecase.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -117,7 +117,7 @@ class EnvironmentChange extends ConsumerWidget {
                     );
                   } catch (e) {
                     UIUtil.showSnackbar(
-                      '${localizations.walletNotCreatedTargetEnv(_selectedEnvironment.displayName)} ($e)',
+                      '${localizations.walletNotCreatedTargetEnv(_selectedEnvironment.displayName)} (${_getErrorMessage(e)})',
                       context,
                       ref,
                       ArchethicTheme.text,
@@ -160,19 +160,16 @@ class EnvironmentChange extends ConsumerWidget {
                       .read(accountsNotifierProvider.notifier)
                       .selectAccount(accounts.first);
 
-                  final poolListRaw =
-                      await ref.read(DexPoolProviders.getPoolListRaw.future);
-
                   unawaited(
                     (await ref
                             .read(accountsNotifierProvider.notifier)
                             .selectedAccountNotifier)
-                        ?.refreshAll(poolListRaw),
+                        ?.refreshAll(),
                   );
                   context.loadingOverlay.hide();
                 } catch (e) {
                   UIUtil.showSnackbar(
-                    '${localizations.walletChangeLoadingError} ($e)',
+                    '${localizations.walletChangeLoadingError} (${_getErrorMessage(e)})',
                     context,
                     ref,
                     ArchethicTheme.text,
@@ -222,5 +219,18 @@ class EnvironmentChange extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  String _getErrorMessage(Object e) {
+    if (e is archethic.ArchethicConnectionException) {
+      return e.cause;
+    } else if (e is archethic.ArchethicInvalidResponseException) {
+      return e.cause;
+    } else if (e is ArchethicNewKeychainErrorException) {
+      return e.cause;
+    } else if (e is ArchethicNewKeychainAccessErrorException) {
+      return e.cause;
+    }
+    return e.toString();
   }
 }

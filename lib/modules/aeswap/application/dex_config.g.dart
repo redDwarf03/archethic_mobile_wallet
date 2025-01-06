@@ -25,7 +25,7 @@ final _dexConfigRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _DexConfigRepositoryRef = AutoDisposeProviderRef<DexConfigRepository>;
-String _$dexConfigHash() => r'840b212a206a440336fdcd3b8545674e00d7b9d5';
+String _$dexConfigHash() => r'e79e235c072d312c70a8d16ccee437fcd855628b';
 
 /// See also [_dexConfig].
 @ProviderFor(_dexConfig)
