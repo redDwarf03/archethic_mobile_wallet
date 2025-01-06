@@ -26,7 +26,7 @@ final _dexTokenRepositoryProvider =
 // ignore: unused_element
 typedef _DexTokenRepositoryRef = AutoDisposeProviderRef<DexTokenRepositoryImpl>;
 String _$getTokenFromAddressHash() =>
-    r'bba5c993a736821dabff5c9078ab5377bdb5e397';
+    r'c0a3e12f058af5673e95f9757ef86e49f6c2f9dc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -197,7 +197,7 @@ final _tokensFromAccountProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _TokensFromAccountRef = AutoDisposeFutureProviderRef<List<DexToken>>;
-String _$dexTokenBasesHash() => r'acae7f5858035ad4bf8617eaf922876a43eb98ed';
+String _$dexTokenBasesHash() => r'a6101c1513e347e46d4dd3d92f211dc6a5688156';
 
 /// See also [_dexTokenBases].
 @ProviderFor(_dexTokenBases)
@@ -609,7 +609,7 @@ class _EstimateTokenInFiatProviderElement
       (origin as _EstimateTokenInFiatProvider).tokenAddress;
 }
 
-String _$getRemoveAmountsHash() => r'5ef17a0246ccf402c8cfa2334909514bb491625f';
+String _$getRemoveAmountsHash() => r'05886d22d5eb8f62ceb53fb7c2f363147b9ee936';
 
 /// This provider is used to cache request result
 /// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
