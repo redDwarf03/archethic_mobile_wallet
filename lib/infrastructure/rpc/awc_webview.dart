@@ -180,8 +180,10 @@ class _AWCWebviewState extends State<AWCWebview> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      unawaited(_restoreMessageChannelRPC(_controller!));
-      _maintainWebviewFocus(_controller!);
+      if (_controller != null) {
+        unawaited(_restoreMessageChannelRPC(_controller!));
+        _maintainWebviewFocus(_controller!);
+      }
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
     super.didChangeAppLifecycleState(state);

@@ -54,6 +54,7 @@ class DAppsBoardWebview extends ConsumerWidget
         onPressed: () {
           if (deeplink != null) {
             context.go(HomePage.routerPage);
+            return;
           }
           context.pop();
         },
