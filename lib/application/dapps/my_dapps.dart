@@ -26,3 +26,10 @@ Future<DApp?> getMyDApp(
   if (Uri.tryParse(url) == null) return null;
   return ref.watch(myDAppsRepositoryProvider).getMyDApp(url);
 }
+
+@riverpod
+Future<void> clearMyDApps(
+  Ref ref,
+) async {
+  await ref.watch(myDAppsRepositoryProvider).clearMyDApps();
+}

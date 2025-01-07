@@ -189,5 +189,22 @@ class _GetMyDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
   @override
   String get url => (origin as GetMyDAppProvider).url;
 }
+
+String _$clearMyDAppsHash() => r'ebdc9ea499dbe61e470695787eb719c1c2f13a3e';
+
+/// See also [clearMyDApps].
+@ProviderFor(clearMyDApps)
+final clearMyDAppsProvider = AutoDisposeFutureProvider<void>.internal(
+  clearMyDApps,
+  name: r'clearMyDAppsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$clearMyDAppsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ClearMyDAppsRef = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

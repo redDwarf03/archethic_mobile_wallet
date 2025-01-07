@@ -8,4 +8,6 @@ abstract class MyDAppsRepositoryInterface {
   Future<void> addMyDApp(DApp myDApp);
 
   Future<void> removeMyDApp(String url);
+
+  Future<void> clearMyDApps();
 }
