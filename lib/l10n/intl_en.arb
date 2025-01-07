@@ -703,6 +703,8 @@
     "dappBoardMySelectionTitle": "My Selection",
     "dappBoardMyDAppFavoriteAdd": "The DApp has been added to your favorites. You'll find it in the \"DApps Board\" section of the general menu.",
     "dappBoardMyDAppFavoriteRemove": "The DApp has been removed from your favorites.",
+    "dappBoardDisclaimer": "Diclaimer: By accessing third-party decentralized applications (DApps) via aeWallet, you agree to the terms of our Terms of Use. (See About menu)",
+    "dappBoardDisclaimerTitle": "Diclaimer",
     "networkChangeHeader": "Network change",
     "networkChangeKeychainNotExists": "Your wallet doesn't yet exist in the {envName} environment. You can create it automatically.\nPlease select the accounts you wish to duplicate in this environment. You can add or remove accounts from your {envName} wallet at any time.\n\nImportant:\n- There is no automatic synchronization between environments.\n- Funds, tokens, NFTs, and UCO cannot be transferred or duplicated between environments. Accounts created in Testnet will be empty.",
     "@networkChangeKeychainNotExists": {
