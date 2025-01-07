@@ -29,6 +29,21 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
 
+      - name: Check if Beta Version
+        id: check_beta
+        run: |
+          if [[ "${{ github.event.release.tag_name }}" == *"beta"* ]]; then
+            echo "is_beta=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_beta=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Modify Manifest for Beta
+        if: steps.check_beta.outputs.is_beta == 'true'
+        run: |
+          jq '.name += " (Beta)"' manifest.json > manifest_tmp.json
+          mv manifest_tmp.json manifest.json
+
       - name: Build Chrome Extension
         run: bash ./scripts/build_chrome_extension.sh
 
