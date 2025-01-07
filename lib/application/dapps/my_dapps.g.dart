@@ -24,7 +24,7 @@ final myDAppsRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MyDAppsRepositoryRef = AutoDisposeProviderRef<MyDAppsRepositoryImpl>;
-String _$getMyDAppsHash() => r'295d58b9d3bdee819fea3cec48492e80d3b8711d';
+String _$getMyDAppsHash() => r'f4a095e9d71445ec350ab627dd297e3c4cdf121e';
 
 /// See also [getMyDApps].
 @ProviderFor(getMyDApps)
@@ -40,7 +40,7 @@ final getMyDAppsProvider = AutoDisposeFutureProvider<List<DApp>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetMyDAppsRef = AutoDisposeFutureProviderRef<List<DApp>>;
-String _$getMyDAppHash() => r'b47da3a723be525cb89c49c04aa6c20d8bd36689';
+String _$getMyDAppHash() => r'f8a4270ddf026c25abc3280b8618aff34fdaf7cf';
 
 /// Copied from Dart SDK
 class _SystemHash {
