@@ -17,7 +17,7 @@ mixin AuthenticationWithLock {
   static int get maxFailedAttempts => 5;
 
   Duration lockDuration(int attempts) {
-    if (attempts == 20) {
+    if (attempts >= 20) {
       return const Duration(hours: 24);
     }
 

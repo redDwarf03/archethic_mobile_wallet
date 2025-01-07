@@ -80,19 +80,51 @@ class _CountdownLockScreen extends ConsumerWidget
             )
             .valueOrNull ??
         '';
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AppButtonTiny(
-          AppButtonTinyType.primary,
-          isLocked ? countDownString : localizations.unlock,
-          Dimens.buttonBottomDimens,
-          key: const Key('unlock'),
-          onPressed: () {
-            if (isLocked) return;
-            CountdownLockOverlay.instance().hide();
-          },
-          disabled: isLocked,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AppButtonTiny(
+              AppButtonTinyType.primary,
+              isLocked ? countDownString : localizations.unlock,
+              Dimens.buttonTopDimens,
+              key: const Key('unlock'),
+              onPressed: () {
+                if (isLocked) return;
+                CountdownLockOverlay.instance().hide();
+              },
+              disabled: isLocked,
+            ),
+          ],
+        ),
+        Container(
+          height: 50,
+          margin: Dimens.buttonBottomDimens.edgeInsetsDirectional,
+          child: FilledButton(
+            onPressed: () {
+              RemoveWalletDialogOverlay.showOverlay(
+                context,
+                ref,
+              );
+            },
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor:
+                  ArchethicThemeStyles.textStyleSize16W400MainButtonLabel.color,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.removeWalletBtn,
+                  style:
+                      ArchethicThemeStyles.textStyleSize16W400MainButtonLabel,
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -121,5 +153,154 @@ class _CountdownLockScreen extends ConsumerWidget
         textAlign: TextAlign.center,
       ),
     );
+  }
+}
+
+class RemoveWalletDialogOverlay {
+  static void showOverlay(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final localizations = AppLocalizations.of(context)!;
+
+    OverlayEntry? overlayEntry;
+
+    overlayEntry = OverlayEntry(
+      builder: (BuildContext overlayContext) {
+        return Positioned(
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Material(
+            color: Colors.black.withOpacity(0.8),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: aedappfm.PopupTemplate(
+                  displayCloseButton: false,
+                  popupTitle: localizations.warning,
+                  popupContent: Column(
+                    children: [
+                      Text(
+                        localizations.removeWalletDetail,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppButton(
+                            key: const Key('cancelButton'),
+                            labelBtn: AppLocalizations.of(
+                              context,
+                            )!
+                                .no,
+                            onPressed: () {
+                              overlayEntry?.remove();
+                            },
+                          ),
+                          AppButton(
+                            key: const Key('yesButton'),
+                            labelBtn: localizations.yes,
+                            onPressed: () async {
+                              overlayEntry?.remove();
+                              Overlay.of(context).insert(
+                                _createConfirmOverlay(
+                                  context,
+                                  ref,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    Overlay.of(context).insert(overlayEntry);
+  }
+
+  static OverlayEntry _createConfirmOverlay(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final localizations = AppLocalizations.of(context)!;
+
+    OverlayEntry? overlayEntry;
+
+    // ignore: join_return_with_assignment
+    overlayEntry = OverlayEntry(
+      builder: (BuildContext overlayContext) {
+        return Positioned(
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Material(
+            color: Colors.black.withOpacity(0.8),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: aedappfm.PopupTemplate(
+                  displayCloseButton: false,
+                  popupTitle: localizations.areYouSure,
+                  popupContent: Column(
+                    children: [
+                      Text(
+                        localizations.removeWalletReassurance,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppButton(
+                            key: const Key('cancelButton'),
+                            labelBtn: AppLocalizations.of(
+                              context,
+                            )!
+                                .no,
+                            onPressed: () {
+                              overlayEntry?.remove();
+                            },
+                          ),
+                          AppButton(
+                            key: const Key('yesButton'),
+                            labelBtn: AppLocalizations.of(
+                              context,
+                            )!
+                                .yes,
+                            onPressed: () async {
+                              overlayEntry?.remove();
+
+                              CountdownLockOverlay.instance().hide();
+                              context.go(LoggingOutScreen.routerPage);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    return overlayEntry;
   }
 }

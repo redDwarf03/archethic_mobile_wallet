@@ -60,6 +60,7 @@
     "language": "Language",
     "languageDefaultSettings": "System language",
     "removeWallet": "Remove Wallet from this device",
+    "removeWalletBtn": "Remove Wallet",
     "removeWalletDescription": "You can find it at any time with your secret phrase",
     "resyncWallet": "Resynchronize Wallet",
     "resyncWalletAreYouSure": "Are you sure you want to clear your cache and reload the information from the blockchain?\n\nThis action takes a few seconds and is safe because it only reloads your recent transactions.",
