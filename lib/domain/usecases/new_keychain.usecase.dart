@@ -21,13 +21,14 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
   Future<void> run(
     String seed,
     archethic.ApiService targetApiService,
-    List<String> nameList,
-  ) async {
+    List<String> nameList, {
+    String? keychainSeed,
+  }) async {
     /// Get Wallet KeyPair
     final walletKeyPair = archethic.deriveKeyPair(seed, 0);
 
-    /// Generate keyChain Seed from random value
-    final keychainSeed = archethic.uint8ListToHex(
+    /// If null, generate keyChain Seed from random value
+    keychainSeed ??= archethic.uint8ListToHex(
       Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
       ),
