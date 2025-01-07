@@ -35,4 +35,9 @@ class MyDAppsRepositoryImpl implements MyDAppsRepositoryInterface {
     final myDAppsHiveDatasource = await MyDAppsHiveDatasource.getInstance();
     return myDAppsHiveDatasource.removeMydApp(url);
   }
+
+  @override
+  Future<void> clearMyDApps() async {
+    await MyDAppsHiveDatasource.clear();
+  }
 }

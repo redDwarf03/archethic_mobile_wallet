@@ -4,6 +4,7 @@ import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/dapps/my_dapps.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
