@@ -41,8 +41,9 @@ jobs:
       - name: Modify Manifest for Beta
         if: steps.check_beta.outputs.is_beta == 'true'
         run: |
-          jq '.name += " (Beta)"' manifest.json > manifest_tmp.json
-          mv manifest_tmp.json manifest.json
+          jq '.name += " (Beta)"' web_chrome_extension/public/manifest.json > web_chrome_extension/public/manifest_tmp.json
+          mv web_chrome_extension/public/manifest_tmp.json web_chrome_extension/public/manifest.json
+  
 
       - name: Build Chrome Extension
         run: bash ./scripts/build_chrome_extension.sh
