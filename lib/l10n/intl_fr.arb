@@ -695,6 +695,8 @@
     "dappBoardMySelectionTitle": "Ma sélection",
     "dappBoardMyDAppFavoriteAdd": "La DApp a été ajoutée dans vos favoris. Retrouvez là dans le menu général, section \"DApps Board\"",
     "dappBoardMyDAppFavoriteRemove": "La DApp a été supprimée de vos favoris.",
+    "dappBoardDisclaimer": "Attention : En accédant à des applications décentralisées (DApps) tierces via aeWallet, vous acceptez les termes de nos Conditions d'Utilisation. (Cf menu A Propos)",
+    "dappBoardDisclaimerTitle": "Avis de non-responsabilité",
     "networkChangeHeader": "Changement d'env.",
     "networkChangeKeychainNotExists": "Votre wallet n'existe pas encore dans l'environnement {envName}. Nous vous proposons de le créer automatiquement.\nVeuillez sélectionner les comptes que vous souhaitez dupliquer dans cet environnement. Vous pourrez à tout moment ajouter ou retirer des comptes sur votre wallet {envName}.\n\nImportant :\n- Il n'existe aucune synchronisation automatique entre les environnements.\n- Les fonds, tokens, NFT et UCO ne peuvent pas être transférés ou dupliqués entre les environnements. Les comptes créés dans Testnet seront donc vides.",
     "@networkChangeKeychainNotExists": {

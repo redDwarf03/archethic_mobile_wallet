@@ -30,7 +30,11 @@ class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return const SizedBox();
+    final localizations = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Text(localizations.dappBoardDisclaimer),
+    );
   }
 
   @override
@@ -89,6 +93,9 @@ class DAppsBoardSheet extends ConsumerWidget implements SheetSkeletonInterface {
               },
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => const SizedBox(),
+            ),
+            const SizedBox(
+              height: 100,
             ),
           ],
         ),

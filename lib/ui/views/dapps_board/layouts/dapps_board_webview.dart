@@ -90,25 +90,39 @@ class DAppsBoardWebview extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
 
     return SafeArea(
-      child: FutureBuilder<bool>(
-        future: AWCWebview.isAWCSupported,
-        builder: (context, snapshot) {
-          final isAWCSupported = snapshot.data;
-          if (isAWCSupported == null) {
-            return const Center(child: LoadingListHeader());
-          }
+      child: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder<bool>(
+              future: AWCWebview.isAWCSupported,
+              builder: (context, snapshot) {
+                final isAWCSupported = snapshot.data;
+                if (isAWCSupported == null) {
+                  return const Center(child: LoadingListHeader());
+                }
 
-          if (!isAWCSupported) {
-            return UnavailableFeatureWarning(
-              title: localizations.webChannelIncompatibilityWarning,
-              description: localizations.webChannelIncompatibilityWarningDesc,
-            );
-          }
+                if (!isAWCSupported) {
+                  return UnavailableFeatureWarning(
+                    title: localizations.webChannelIncompatibilityWarning,
+                    description:
+                        localizations.webChannelIncompatibilityWarningDesc,
+                  );
+                }
 
-          return AWCWebview(
-            uri: Uri.parse(dappUrl),
-          );
-        },
+                return AWCWebview(
+                  uri: Uri.parse(dappUrl),
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(AppLocalizations.of(context)!.dappBoardDisclaimer),
+            ),
+          ),
+        ],
       ),
     );
   }
