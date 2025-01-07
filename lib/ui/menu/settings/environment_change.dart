@@ -52,6 +52,7 @@ class EnvironmentChange extends ConsumerWidget {
                     ref.read(sessionNotifierProvider).loggedIn?.wallet.seed;
 
                 var keychainNetworkExists = false;
+
                 try {
                   await archethic.ApiService(
                     _selectedEnvironment.endpoint,
@@ -98,10 +99,16 @@ class EnvironmentChange extends ConsumerWidget {
                       title:
                           AppLocalizations.of(context)!.pleaseWaitChangeNetwork,
                     );
+                    final originKeychain = await archethic.ApiService(
+                      _saveEnvironment.endpoint,
+                    ).getKeychain(seed!);
                     await ref.read(createNewAppWalletCaseProvider).run(
-                          seed!,
+                          seed,
                           archethic.ApiService(_selectedEnvironment.endpoint),
                           nameList,
+                          keychainSeed: originKeychain.seed == null
+                              ? null
+                              : archethic.uint8ListToHex(originKeychain.seed!),
                         );
 
                     UIUtil.showSnackbar(
