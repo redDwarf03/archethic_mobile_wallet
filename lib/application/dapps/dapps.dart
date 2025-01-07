@@ -1,7 +1,6 @@
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/repositories/dapps/dapps_repository.dart';
-import 'package:aewallet/infrastructure/repositories/dapps_repository.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
