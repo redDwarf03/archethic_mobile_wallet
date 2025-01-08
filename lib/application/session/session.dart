@@ -11,6 +11,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
+import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';

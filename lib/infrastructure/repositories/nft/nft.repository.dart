@@ -129,14 +129,6 @@ class NFTRepositoryImpl implements NFTRepository {
       tokenAddressList.toSet().toList(),
     );
 
-    // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-
-    final secretMap = await apiService.getTransaction(
-      tokenAddressList.toSet().toList(),
-      request:
-          'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
-    );
-
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
 
@@ -146,13 +138,13 @@ class NFTRepositoryImpl implements NFTRepository {
 
       final newProperties = {...token.properties};
 
-      if (secretMap[tokenBalance.address] != null &&
-          secretMap[tokenBalance.address]!.data != null &&
-          secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
+      if (tokenMap[tokenBalance.address] != null &&
+          tokenMap[tokenBalance.address]!.ownerships != null &&
+          tokenMap[tokenBalance.address]!.ownerships!.isNotEmpty) {
         newProperties.addAll(
           _tokenPropertiesDecryptedSecret(
             keypair: keychainSecuredInfos.services[nameAccount]!.keyPair!,
-            ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
+            ownerships: tokenMap[tokenBalance.address]!.ownerships!,
           ),
         );
       }
