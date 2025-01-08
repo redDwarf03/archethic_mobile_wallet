@@ -25,6 +25,7 @@ class HomePage extends _$HomePage {
   @override
   Future<void> build() async {
     ref
+      ..watch(environmentProvider)
       ..watch(DexPoolProviders.getPoolList)
       ..watch(DexPoolProviders.getPoolListRaw)
       ..watch(DexTokensProviders.tokensCommonBases)

@@ -7,7 +7,6 @@ Future<List<DexPool>> _getPoolList(
 ) async {
   final environment = ref.watch(environmentProvider);
   log('environment ${environment.endpoint}', name: '_getPoolList');
-  final aeETHUCOPoolAddress = environment.aeETHUCOPoolAddress;
 
   final dexConf = await ref.watch(DexConfigProviders.dexConfig.future);
 
@@ -41,10 +40,10 @@ Future<List<DexPool>> _getPoolList(
       }).toList()
         ..sort((a, b) {
           if (a.poolAddress.toUpperCase() ==
-              aeETHUCOPoolAddress.toUpperCase()) {
+              environment.aeETHUCOPoolAddress.toUpperCase()) {
             return -1;
           } else if (b.poolAddress.toUpperCase() ==
-              aeETHUCOPoolAddress.toUpperCase()) {
+              environment.aeETHUCOPoolAddress.toUpperCase()) {
             return 1;
           } else {
             return 0;
