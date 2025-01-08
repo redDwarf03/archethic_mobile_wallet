@@ -1,11 +1,9 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_token.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
-import 'package:aewallet/modules/aeswap/util/riverpod.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:collection/collection.dart';
@@ -108,14 +106,6 @@ Future<({double token1, double token2})> _getRemoveAmounts(
   String poolAddress,
   double lpTokenAmount,
 ) async {
-  ref.periodicReload(
-    const Duration(minutes: 1),
-    shouldReload: () {
-      return ref.read(connectivityStatusProviders) ==
-          ConnectivityStatus.isConnected;
-    },
-  );
-
   final apiService = ref.watch(apiServiceProvider);
   final amounts = await PoolFactoryRepositoryImpl(poolAddress, apiService)
       .getRemoveAmounts(lpTokenAmount);
