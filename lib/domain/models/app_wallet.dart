@@ -8,7 +8,6 @@ part 'app_wallet.freezed.dart';
 class AppWallet with _$AppWallet {
   const factory AppWallet({
     required String seed,
-    // TODO(redddwarf03): Mutualize keychain infos
     required AppKeychain appKeychain,
     required KeychainSecuredInfos keychainSecuredInfos,
   }) = _AppWallet;
