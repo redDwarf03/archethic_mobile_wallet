@@ -4,64 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 
-/// Input formatter that ensures text starts with @
-class ContactInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (newValue.selection.baseOffset == 0) {
-      return newValue;
-    }
-
-    var workingText = newValue.text;
-    if (!workingText.startsWith('@')) {
-      workingText = '@$workingText';
-    }
-
-    final splitStr = workingText.split('@');
-    // If this string contains more than 1 @, remove all but the first one
-    if (splitStr.length > 2) {
-      workingText = '@${workingText.replaceAll('@', '')}';
-    }
-
-    // If nothing changed, return original
-    if (workingText == newValue.text) {
-      return newValue;
-    }
-
-    return newValue.copyWith(
-      text: workingText,
-      selection: TextSelection.collapsed(offset: workingText.length),
-    );
-  }
-}
-
-/// Input formatter that ensures only one space between words
-class SingleSpaceInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (newValue.selection.baseOffset == 0) {
-      return newValue;
-    }
-
-    // Don't allow first character to be a space
-    if (newValue.text.length < oldValue.text.length) {
-      return newValue;
-    } else if (oldValue.text.isEmpty && newValue.text == ' ') {
-      return oldValue;
-    } else if (oldValue.text.endsWith(' ') && newValue.text.endsWith('  ')) {
-      return oldValue;
-    }
-
-    return newValue;
-  }
-}
-
 /// Ensures input is always uppercase
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override

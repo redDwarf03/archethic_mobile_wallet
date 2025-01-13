@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -16,31 +15,27 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AccountsDialog {
   static Future<Account?> selectSingleAccount({
     required BuildContext context,
-    required WidgetRef ref,
     required List<Account> accounts,
     String? dialogTitle,
     Widget? header,
     bool? isModal = false,
+    double? heightFactor = 1,
   }) async {
-    final selection = await _showAccountsDialog(
+    return await _showAccountsDialog(
       context: context,
       accounts: accounts,
       multipleSelectionsAllowed: false,
       dialogTitle: dialogTitle,
       header: header,
       isModal: isModal,
+      heightFactor: heightFactor,
     ) as Account?;
-    if (selection != null) {
-      await ref
-          .read(accountsNotifierProvider.notifier)
-          .selectAccount(selection);
-    }
-    return selection;
   }
 
   static Future<List<Account>?> selectMultipleAccounts({
@@ -50,6 +45,7 @@ class AccountsDialog {
     String? dialogTitle,
     Widget? header,
     bool? isModal = false,
+    double? heightFactor = 1,
   }) async {
     return await _showAccountsDialog(
       context: context,
@@ -59,6 +55,7 @@ class AccountsDialog {
       dialogTitle: dialogTitle,
       header: header,
       isModal: isModal,
+      heightFactor: heightFactor,
     ) as List<Account>?;
   }
 
@@ -70,6 +67,7 @@ class AccountsDialog {
     String? dialogTitle,
     Widget? header,
     bool? isModal = false,
+    double? heightFactor = 1,
   }) async {
     final pickerItemsList = <PickerItem<Account>>[];
 
@@ -116,7 +114,7 @@ class AccountsDialog {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: 1,
+          heightFactor: heightFactor,
           child: Scaffold(
             backgroundColor:
                 aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
@@ -204,7 +202,7 @@ class AccountsDialogContentState extends ConsumerState<AccountsDialogContent> {
                         scrollable: true,
                         onSelected: (pickerItem) {
                           if (!widget.multipleSelectionsAllowed) {
-                            Navigator.of(context).pop(pickerItem.value);
+                            context.pop(pickerItem.value);
                           }
                         },
                         onUnselected: (selectedIndexes) {
@@ -255,8 +253,7 @@ class AccountsDialogContentState extends ConsumerState<AccountsDialogContent> {
                           final _accountsList = pickerItemsListSelected
                               .map((item) => item.value)
                               .toList();
-
-                          Navigator.of(context).pop(_accountsList);
+                          context.pop(_accountsList);
                         },
                         disabled: pickerItemsListSelected.isEmpty,
                       ),
@@ -268,7 +265,7 @@ class AccountsDialogContentState extends ConsumerState<AccountsDialogContent> {
                         localizations.cancel,
                         Dimens.buttonBottomDimens,
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          context.pop();
                         },
                       ),
                     ],

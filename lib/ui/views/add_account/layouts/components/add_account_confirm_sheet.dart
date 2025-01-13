@@ -67,7 +67,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       icon: Symbols.info,
     );
     context.loadingOverlay.hide();
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _showSendSucceed(

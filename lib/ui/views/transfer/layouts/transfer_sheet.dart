@@ -8,6 +8,7 @@ import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/accounts_dialog.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -18,7 +19,6 @@ import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_shee
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_token_selection.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/ui/widgets/dialogs/accounts_dialog.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/account_formatters.dart';
 import 'package:aewallet/util/currency_util.dart';

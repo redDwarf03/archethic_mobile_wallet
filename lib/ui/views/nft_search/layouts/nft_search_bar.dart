@@ -55,13 +55,9 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
   @override
   Widget build(BuildContext context) {
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final localizations = AppLocalizations.of(context)!;
     final nftSearchBar = ref.watch(
       NftSearchBarFormProvider.nftSearchBar,
-    );
-    final nftSearchBarNotifier = ref.watch(
-      NftSearchBarFormProvider.nftSearchBar.notifier,
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     ref.listen<NftSearchBarFormState>(
@@ -83,7 +79,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             },
           );
 
-          nftSearchBarNotifier.reset();
+          ref
+              .read(
+                NftSearchBarFormProvider.nftSearchBar.notifier,
+              )
+              .reset();
           return;
         }
 
@@ -98,7 +98,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
           duration: const Duration(seconds: 5),
         );
 
-        nftSearchBarNotifier.setError('');
+        ref
+            .read(
+              NftSearchBarFormProvider.nftSearchBar.notifier,
+            )
+            .setError('');
       },
     );
 
@@ -151,7 +155,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                               return;
                             } else {
                               final address = Address(address: scanResult);
-                              nftSearchBarNotifier
+                              ref
+                                  .read(
+                                    NftSearchBarFormProvider
+                                        .nftSearchBar.notifier,
+                                  )
                                   .setSearchCriteria(address.address!);
                               _updateAdressTextController();
                             }
@@ -167,7 +175,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                         ),
                   suffixIcon: PasteIcon(
                     onPaste: (String value) {
-                      nftSearchBarNotifier.setSearchCriteria(value);
+                      ref
+                          .read(
+                            NftSearchBarFormProvider.nftSearchBar.notifier,
+                          )
+                          .setSearchCriteria(value);
                       _updateAdressTextController();
                     },
                   ),
@@ -205,15 +217,25 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                                 ConnectivityStatus.isConnected
                         ? null
                         : () async {
+                            final session =
+                                ref.read(sessionNotifierProvider).loggedIn!;
                             final selectedAccount = await session
                                 .wallet.appKeychain
                                 .getAccountSelected();
-                            await nftSearchBarNotifier.searchNFT(
-                              searchController.text,
-                              context,
-                              session.wallet.keychainSecuredInfos
-                                  .services[selectedAccount!.name]!.keyPair!,
-                            );
+                            await ref
+                                .read(
+                                  NftSearchBarFormProvider
+                                      .nftSearchBar.notifier,
+                                )
+                                .searchNFT(
+                                  searchController.text,
+                                  context,
+                                  session
+                                      .wallet
+                                      .keychainSecuredInfos
+                                      .services[selectedAccount!.name]!
+                                      .keyPair!,
+                                );
                           },
                     child: Container(
                       height: 30,
