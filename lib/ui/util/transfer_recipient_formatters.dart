@@ -10,6 +10,6 @@ extension TransferRecipientFormatters on TransferRecipient {
             ? localizations.burnAddressLbl
             : AddressFormatters(address.address!).getShortString(),
         account: (account) => account.format,
-        unknownContact: (name) => name.replaceFirst('@', ''),
+        unknownContact: (name) => name,
       );
 }

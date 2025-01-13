@@ -41,11 +41,15 @@ class _TransferTextFieldAddressState
 
   void _updateAdressTextController() {
     final recipient = ref.read(TransferFormProvider.transferForm).recipient;
-    sendAddressController.text = recipient.when(
+    final newText = recipient.when(
       address: (address) => address.address!,
-      account: (account) => account.format,
+      account: (account) => account.nameDisplayed,
       unknownContact: (name) => name,
     );
+
+    if (sendAddressController.text != newText) {
+      sendAddressController.text = newText;
+    }
   }
 
   @override
@@ -53,10 +57,9 @@ class _TransferTextFieldAddressState
     BuildContext context,
   ) {
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final transferNotifier =
-        ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final apiService = ref.watch(apiServiceProvider);
+
+    final localizations = AppLocalizations.of(context)!;
 
     if (sendAddressController.text.isNotEmpty) {
       _updateAdressTextController();
@@ -114,12 +117,17 @@ class _TransferTextFieldAddressState
                                     autocorrect: false,
                                     controller: sendAddressController,
                                     onChanged: (text) async {
-                                      await transferNotifier
+                                      await ref
+                                          .read(
+                                            TransferFormProvider
+                                                .transferForm.notifier,
+                                          )
                                           .setRecipientNameOrAddress(
-                                        context: context,
-                                        text: text,
-                                        apiService: apiService,
-                                      );
+                                            context: context,
+                                            text: text,
+                                            apiService:
+                                                ref.read(apiServiceProvider),
+                                          );
                                     },
                                     focusNode: sendAddressFocusNode,
                                     textInputAction: TextInputAction.next,
@@ -177,11 +185,13 @@ class _TransferTextFieldAddressState
                         } else {
                           // Is a URI
                           final address = Address(address: scanResult);
-                          await transferNotifier.setContactAddress(
-                            context: context,
-                            address: address,
-                            apiService: apiService,
-                          );
+                          await ref
+                              .read(TransferFormProvider.transferForm.notifier)
+                              .setContactAddress(
+                                context: context,
+                                address: address,
+                                apiService: ref.read(apiServiceProvider),
+                              );
                           _updateAdressTextController();
                         }
                       },
@@ -189,26 +199,47 @@ class _TransferTextFieldAddressState
                   PasteIcon(
                     onPaste: (String value) {
                       sendAddressController.text = value;
-                      transferNotifier.setRecipientNameOrAddress(
-                        context: context,
-                        text: value,
-                        apiService: apiService,
-                      );
+                      ref
+                          .read(TransferFormProvider.transferForm.notifier)
+                          .setRecipientNameOrAddress(
+                            context: context,
+                            text: value,
+                            apiService: ref.read(apiServiceProvider),
+                          );
                     },
                   ),
                   TextFieldButton(
                     icon: Symbols.contacts,
                     onPressed: () async {
-                      final account =
-                          await AccountsDialog.getDialog(context, ref);
-                      if (account == null) return;
+                      final accounts =
+                          await ref.read(accountsNotifierProvider.future);
+                      final accountSelected = await ref
+                          .read(accountsNotifierProvider.future)
+                          .selectedAccount;
+                      final filteredAccounts = accounts
+                        ..removeWhere(
+                          (element) =>
+                              element.format.toUpperCase() ==
+                              accountSelected?.format.toUpperCase(),
+                        );
 
-                      transferNotifier.setRecipient(
+                      final account = await AccountsDialog.selectSingleAccount(
                         context: context,
-                        contact: TransferRecipient.account(account: account),
+                        accounts: filteredAccounts,
+                        dialogTitle: localizations.accountsHeader,
+                        isModal: true,
+                        heightFactor: 0.5,
                       );
 
-                      _updateAdressTextController();
+                      if (account == null) return;
+                      sendAddressController.text = account.nameDisplayed;
+                      ref
+                          .read(TransferFormProvider.transferForm.notifier)
+                          .setRecipient(
+                            context: context,
+                            contact:
+                                TransferRecipient.account(account: account),
+                          );
                     },
                   ),
                 ],

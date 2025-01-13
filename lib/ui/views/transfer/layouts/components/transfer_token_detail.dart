@@ -10,7 +10,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class TransferTokenDetail extends ConsumerStatefulWidget {
@@ -45,7 +45,7 @@ class _TransferTokenDetailState extends ConsumerState<TransferTokenDetail> {
       padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         onTap: () async {
-          Navigator.pop(context, widget.aeToken);
+          context.pop(widget.aeToken);
         },
         child: aedappfm.BlockInfo(
           width: MediaQuery.of(context).size.width,

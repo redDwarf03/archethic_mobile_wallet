@@ -203,18 +203,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required String text,
     required archethic.ApiService apiService,
   }) async {
-    if (!text.startsWith('@')) {
-      if (!archethic.Address(address: text).isValid()) {
-        _setRecipient(
-          recipient: TransferRecipient.unknownContact(
-            name: text,
-          ),
-        );
-        return;
-      }
-
-      final account =
-          await ref.read(accountWithGenesisAddressProvider(text).future);
+    if (archethic.Address(address: text).isValid()) {
+      final account = await ref.read(
+        accountWithGenesisAddressProvider(text).future,
+      );
       if (account != null) {
         _setRecipient(
           recipient: TransferRecipient.account(
@@ -227,34 +219,29 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             address: archethic.Address(address: text),
           ),
         );
+        await _checkAddressType(context);
       }
-
-      if (await _checkAddressType(context) == false) {
-        return;
+    } else {
+      final account = await ref.read(
+        accountWithNameProvider(text).future,
+      );
+      if (account != null) {
+        _setRecipient(
+          recipient: TransferRecipient.account(
+            account: account,
+          ),
+        );
+      } else {
+        _setRecipient(
+          recipient: TransferRecipient.unknownContact(
+            name: text,
+          ),
+        );
       }
-      unawaited(_updateFees(context));
-      return;
     }
 
-    try {
-      final account = await ref.read(accountWithNameProvider(text).future);
-
-      _setRecipient(
-        recipient: TransferRecipient.account(
-          account: account!,
-        ),
-      );
-    } catch (e) {
-      _setRecipient(
-        recipient: TransferRecipient.unknownContact(
-          name: text,
-        ),
-      );
-    }
-    if (await _checkAddressType(context) == false) {
-      return;
-    }
     unawaited(_updateFees(context));
+    return;
   }
 
   void setRecipient({

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
 class TokenSelectionCommonBases extends ConsumerWidget {
@@ -76,7 +77,7 @@ class _TokenSelector extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pop(context, token);
+          context.pop(token);
         },
         child: Row(
           children: [

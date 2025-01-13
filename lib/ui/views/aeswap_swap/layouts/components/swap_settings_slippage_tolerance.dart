@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SwapSettingsSlippageTolerance extends ConsumerStatefulWidget {
   const SwapSettingsSlippageTolerance({
@@ -155,7 +156,7 @@ class SwapSettingsSlippageToleranceState
             );
 
             if (!context.mounted) return;
-            Navigator.of(context).pop();
+            context.pop();
           },
           isConnected: true,
           displayWalletConnectOnPressed: () {},

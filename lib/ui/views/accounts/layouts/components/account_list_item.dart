@@ -165,7 +165,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
 
           if (widget.selectedAccount?.nameDisplayed ==
               widget.account.nameDisplayed) {
-            Navigator.of(context).pop();
+            context.pop();
             return;
           }
           context.loadingOverlay.show();
