@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppWallet {
-  String get seed =>
-      throw _privateConstructorUsedError; // TODO(redddwarf03): Mutualize keychain infos
+  String get seed => throw _privateConstructorUsedError;
   AppKeychain get appKeychain => throw _privateConstructorUsedError;
   KeychainSecuredInfos get keychainSecuredInfos =>
       throw _privateConstructorUsedError;
@@ -151,7 +150,6 @@ class _$AppWalletImpl extends _AppWallet {
 
   @override
   final String seed;
-// TODO(redddwarf03): Mutualize keychain infos
   @override
   final AppKeychain appKeychain;
   @override
@@ -196,7 +194,7 @@ abstract class _AppWallet extends AppWallet {
   const _AppWallet._() : super._();
 
   @override
-  String get seed; // TODO(redddwarf03): Mutualize keychain infos
+  String get seed;
   @override
   AppKeychain get appKeychain;
   @override

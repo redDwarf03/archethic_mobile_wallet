@@ -50,7 +50,7 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
             .read(verifiedTokensRepositoryProvider)
             .getVerifiedTokens();
         final environment = ref.read(environmentProvider);
-        final tokensRepositoryImpl = ref.read(tokensRepositoryImplProvider);
+        final tokensRepositoryImpl = ref.read(tokensRepositoryProvider);
         final defTokensRepositoryImpl =
             ref.read(aedappfm.defTokensRepositoryImplProvider);
 

@@ -9,10 +9,19 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class TokensRepositoryImpl with TokenParser implements TokensRepository {
+  TokensRepositoryImpl({
+    required this.defTokensRepository,
+    required this.apiService,
+    required this.verifiedTokensRepository,
+  });
+
+  final aedappfm.DefTokensRepositoryInterface defTokensRepository;
+  final archethic.ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryImpl verifiedTokensRepository;
+
   @override
   Future<Map<String, archethic.Token>> getTokensFromAddresses(
     List<String> addresses,
-    archethic.ApiService apiService,
   ) async {
     final tokenMap = <String, archethic.Token>{};
 
@@ -62,11 +71,8 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
   Future<List<aedappfm.AEToken>> getTokensFromUserBalance(
     String userGenesisAddress,
     List<String> userTokenLocalAddresses,
-    archethic.ApiService apiService,
     List<GetPoolListResponse> poolsListRaw,
-    aedappfm.Environment environment,
-    aedappfm.DefTokensRepositoryImpl defTokensRepositoryImpl,
-    TokensRepositoryImpl tokensRepositoryImpl, {
+    aedappfm.Environment environment, {
     bool withUCO = true,
     bool withVerified = true,
     bool withLPToken = true,
@@ -80,7 +86,7 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     }
     if (withUCO) {
       final defUCOToken =
-          await defTokensRepositoryImpl.getDefToken(environment, kUCOAddress);
+          await defTokensRepository.getDefToken(environment, kUCOAddress);
       tokensList.add(
         aedappfm.ucoToken.copyWith(
           name: defUCOToken?.name ?? '',
@@ -109,13 +115,9 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     if (tokenAddressList.isNotEmpty) {
       final tokenMap = await getTokensFromAddresses(
         tokenAddressList.toSet().toList(),
-        apiService,
       );
 
-      final verifiedTokens = await aedappfm.VerifiedTokensRepositoryImpl(
-        apiService: apiService,
-        environment: environment,
-      ).getVerifiedTokens();
+      final verifiedTokens = await verifiedTokensRepository.getVerifiedTokens();
 
       final tokenBalances = balanceMap[userGenesisAddress]!.token;
 
@@ -130,8 +132,8 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
             poolsListRaw,
             environment,
             apiService,
-            defTokensRepositoryImpl,
-            tokensRepositoryImpl,
+            defTokensRepository,
+            this,
           );
 
           final matchingBalances = tokenBalances.where(
