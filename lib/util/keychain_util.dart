@@ -18,6 +18,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
 
+const blockchainTxVersion = 3;
 mixin KeychainServiceMixin {
   final kMainDerivation = "m/650'/";
 
@@ -48,9 +49,6 @@ mixin KeychainServiceMixin {
   ) async {
     final _logger = Logger('createKeyChainAccess');
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
     final originPrivateKey = apiService.getOriginKey();
 
     /// Create Keychain Access for wallet

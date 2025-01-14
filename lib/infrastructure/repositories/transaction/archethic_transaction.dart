@@ -15,6 +15,8 @@ import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
+const blockchainTxVersion = 3;
+
 class ArchethicTransactionRepository
     implements TransactionRemoteRepositoryInterface {
   ArchethicTransactionRepository({
@@ -70,10 +72,6 @@ class ArchethicTransactionRepository
     );
 
     final index = indexMap[transfer.genesisAddress] ?? 0;
-
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     var tokenTransferList = <archethic.TokenTransfer>[];
     var ucoTransferList = <archethic.UCOTransfer>[];
@@ -133,10 +131,6 @@ class ArchethicTransactionRepository
     );
 
     final index = indexMap[token.genesisAddress] ?? 0;
-
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     return AddTokenTransactionBuilder.build(
       tokenName: token.name,
