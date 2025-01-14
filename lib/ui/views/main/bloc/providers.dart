@@ -32,10 +32,10 @@ class HomePage extends _$HomePage {
       ..watch(verifiedTokensProvider)
       ..watch(DexTokensProviders.tokensFromAccount)
       ..watch(farmLockFormFarmLockProvider)
-      // ..watch(
-      //   aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
-      // )
-      // ..watch(aedappfm.CoinPriceProviders.coinPrices)
+      ..watch(
+        aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
+      )
+      ..watch(aedappfm.CoinPriceProviders.coinPrices)
       ..listen(
         connectivityStatusProviders,
         (previous, next) async {
@@ -60,17 +60,17 @@ class HomePage extends _$HomePage {
   }
 
   Future<void> startSubscriptions() async {
-    // await ref
-    //     .read(
-    //       aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-    //     )
-    //     .startSubscription();
+    await ref
+        .read(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+        )
+        .startSubscription();
 
-    // await ref
-    //     .read(
-    //       aedappfm.CoinPriceProviders.coinPrices.notifier,
-    //     )
-    //     .startTimer();
+    await ref
+        .read(
+          aedappfm.CoinPriceProviders.coinPrices.notifier,
+        )
+        .startTimer();
   }
 
   Future<void> stopSubscriptions() async {
