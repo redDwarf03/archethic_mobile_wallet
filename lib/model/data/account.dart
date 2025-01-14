@@ -6,6 +6,7 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
+part 'account.freezed.dart';
 part 'account.g.dart';
 
 class AccountConverter implements JsonConverter<Account, Map<String, dynamic>> {
@@ -28,109 +29,57 @@ class AccountConverter implements JsonConverter<Account, Map<String, dynamic>> {
   }
 }
 
-@HiveType(typeId: HiveTypeIds.account)
-
 /// Next field available : 16
-class Account extends HiveObject {
-  Account({
-    required this.name,
-    required this.genesisAddress,
-    this.lastLoadingTransactionInputs,
-    this.selected = false,
-    this.balance,
-    this.recentTransactions,
-    this.accountTokens,
-    this.accountNFT,
-    this.accountNFTCollections,
-    this.serviceType,
-    this.customTokenAddressList,
-  });
+@freezed
+class Account extends HiveObject with _$Account {
+  @HiveType(typeId: HiveTypeIds.account)
+  factory Account({
+    /// Account name - Primary Key
+    @HiveField(0) required String name,
 
-  Account copyWith({
-    String? name,
-    String? genesisAddress,
-    int? lastLoadingTransactionInputs,
-    bool? selected,
+    /// Genesis Address
+    @HiveField(1) required String genesisAddress,
+
+    /// Last loading of transaction inputs
+    @HiveField(2) int? lastLoadingTransactionInputs,
+
+    /// Whether this is the currently selected account
+    @HiveField(3) bool? selected,
+
+    /// Last address
+
+    @HiveField(4)
+    @Deprecated(
+      'Genesis address should be preferred instead of last address after AEIP21',
+    )
     String? lastAddress,
-    String? serviceType,
-    AccountBalance? balance,
-    List<RecentTransaction>? recentTransactions,
-    List<AccountToken>? accountTokens,
-    List<AccountToken>? accountNFT,
-    List<AccountToken>? accountNFTCollections,
-    List<String>? customTokenAddressList,
-  }) =>
-      Account(
-        name: name ?? this.name,
-        genesisAddress: genesisAddress ?? this.genesisAddress,
-        lastLoadingTransactionInputs:
-            lastLoadingTransactionInputs ?? this.lastLoadingTransactionInputs,
-        selected: selected ?? this.selected,
-        serviceType: serviceType ?? this.serviceType,
-        balance: balance ?? this.balance,
-        recentTransactions: recentTransactions ?? this.recentTransactions,
-        accountTokens: accountTokens ?? this.accountTokens,
-        accountNFT: accountNFT ?? this.accountNFT,
-        accountNFTCollections:
-            accountNFTCollections ?? this.accountNFTCollections,
-        customTokenAddressList:
-            customTokenAddressList ?? this.customTokenAddressList,
-      );
 
-  /// Account name - Primary Key
-  @HiveField(0)
-  final String name;
+    /// Balance
+    @HiveField(5) AccountBalance? balance,
 
-  /// Genesis Address
-  @HiveField(1)
-  final String genesisAddress;
+    /// Recent transactions
+    @HiveField(6) List<RecentTransaction>? recentTransactions,
 
-  /// Last loading of transaction inputs
-  @HiveField(2)
-  int? lastLoadingTransactionInputs;
+    /// Tokens
+    @HiveField(7) List<AccountToken>? accountTokens,
 
-  /// Whether this is the currently selected account
-  @HiveField(3)
-  bool? selected;
+    /// NFT
+    @HiveField(8) List<AccountToken>? accountNFT,
 
-  /// Last address
+    /// NFT Info Off Chain
+    @Deprecated('Thanks to hive, we should keep this unused property...')
+    @HiveField(10)
+    List<NftInfosOffChain>? nftInfosOffChainList,
 
-  @HiveField(4)
-  @Deprecated(
-    'Genesis address should be preferred instead of last address after AEIP21',
-  )
-  String? lastAddress;
+    /// Service Type
+    @HiveField(13) String? serviceType,
 
-  /// Balance
-  @HiveField(5)
-  AccountBalance? balance;
+    /// NFT Collections
+    @HiveField(14) List<AccountToken>? accountNFTCollections,
 
-  /// Recent transactions
-  @HiveField(6)
-  List<RecentTransaction>? recentTransactions;
+    /// Custom Token Addresses
+    @HiveField(15) List<String>? customTokenAddressList,
+  }) = _Account;
 
-  /// Tokens
-  @HiveField(7)
-  List<AccountToken>? accountTokens;
-
-  /// NFT
-  @HiveField(8)
-  List<AccountToken>? accountNFT;
-
-  /// NFT Info Off Chain
-  @Deprecated('Thanks to hive, we should keep this unused property...')
-  @HiveField(10)
-  List<NftInfosOffChain>? nftInfosOffChainList;
-
-  /// Service Type
-  @HiveField(13)
-  String? serviceType;
-
-  /// NFT Collections
-  @HiveField(14)
-  List<AccountToken>? accountNFTCollections;
-
-  /// Custom Token Addresses
-  @HiveField(15)
-  List<String>? customTokenAddressList;
+  Account._();
 }

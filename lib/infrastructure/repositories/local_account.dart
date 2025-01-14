@@ -37,6 +37,6 @@ class AccountLocalRepository implements AccountLocalRepositoryInterface {
 
   @override
   Future<void> selectAccount(String name) async {
-    await _accountDatasource.changeAccount(name);
+    await _accountDatasource.selectAccount(name);
   }
 }

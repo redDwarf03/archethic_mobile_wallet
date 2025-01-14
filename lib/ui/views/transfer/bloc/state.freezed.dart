@@ -795,6 +795,8 @@ abstract class _$$TransferDestinationContactImplCopyWith<$Res> {
       __$$TransferDestinationContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({@AccountConverter() Account account});
+
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -820,6 +822,16 @@ class __$$TransferDestinationContactImplCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
     ));
+  }
+
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 

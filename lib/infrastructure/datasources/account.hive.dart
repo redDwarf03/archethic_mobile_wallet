@@ -1,5 +1,4 @@
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:hive/hive.dart';
 
@@ -47,44 +46,23 @@ class AccountHiveDatasource {
     return _writeAppWallet(appWallet);
   }
 
-  Future<HiveAppWalletDTO> clearAccount() async {
-    final appWallet = await _readAppWallet();
-    appWallet.appKeychain.accounts.clear();
-    return _writeAppWallet(appWallet);
-  }
-
-  Future<HiveAppWalletDTO> changeAccount(String accountName) async {
+  Future<HiveAppWalletDTO> selectAccount(String accountName) async {
     final appWallet = await _readAppWallet();
     for (var i = 0; i < appWallet.appKeychain.accounts.length; i++) {
-      if (appWallet.appKeychain.accounts[i].name == accountName) {
-        appWallet.appKeychain.accounts[i].selected = true;
-      } else {
-        appWallet.appKeychain.accounts[i].selected = false;
-      }
+      final account = appWallet.appKeychain.accounts[i];
+      final updatedAccount = account.copyWith(
+        selected: account.name == accountName,
+      );
+      appWallet.appKeychain.accounts[i] = updatedAccount;
     }
     return _writeAppWallet(appWallet);
   }
 
-  Future<void> updateAccountBalance(
-    Account selectedAccount,
-    AccountBalance balance,
-  ) async {
-    final appWallet = await _readAppWallet();
-    final accounts = appWallet.appKeychain.accounts;
-    for (final account in accounts) {
-      if (selectedAccount.name == account.name) {
-        account.balance = balance;
-        await _writeAppWallet(appWallet);
-        return;
-      }
-    }
-  }
-
-  Future<void> updateAccount(Account selectedAccount) async {
+  Future<void> updateAccount(Account updatedAccount) async {
     final appWallet = await _readAppWallet();
     appWallet.appKeychain.accounts = appWallet.appKeychain.accounts.map(
       (account) {
-        if (account.name == selectedAccount.name) return selectedAccount;
+        if (account.name == updatedAccount.name) return updatedAccount;
         return account;
       },
     ).toList();

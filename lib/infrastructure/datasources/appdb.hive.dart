@@ -54,7 +54,7 @@ class DBHelper {
       ..registerAdapter(ContactAdapter())
       ..registerAdapter(HiveAppWalletDTOAdapter())
       ..registerAdapter(AccountBalanceAdapter())
-      ..registerAdapter(AccountAdapter())
+      ..registerAdapter(AccountImplAdapter())
       ..registerAdapter(AppKeychainAdapter())
       ..registerAdapter(RecentTransactionAdapter())
       ..registerAdapter(AccountTokenAdapter())

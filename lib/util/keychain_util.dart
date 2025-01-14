@@ -166,6 +166,11 @@ mixin KeychainServiceMixin {
         genesisAddressAccountList.add(
           uint8ListToHex(genesisAddress),
         );
+
+        final isSelected = selectedAccount != null &&
+            selectedAccount.name == name &&
+            serviceType == 'archethicWallet';
+
         final account = Account(
           lastLoadingTransactionInputs: DateTime.now().millisecondsSinceEpoch ~/
               Duration.millisecondsPerSecond,
@@ -175,16 +180,10 @@ mixin KeychainServiceMixin {
             nativeTokenName: 'UCO',
             nativeTokenValue: 0,
           ),
-          recentTransactions: [],
+          recentTransactions: const [],
           serviceType: serviceType,
+          selected: isSelected,
         );
-        if (selectedAccount != null &&
-            selectedAccount.name == name &&
-            serviceType == 'archethicWallet') {
-          account.selected = true;
-        } else {
-          account.selected = false;
-        }
 
         accounts.add(account);
       });
@@ -237,7 +236,7 @@ mixin KeychainServiceMixin {
             }
           }
 
-          accounts[i].balance = accountBalance;
+          accounts[i] = accounts[i].copyWith(balance: accountBalance);
         }
       }
 

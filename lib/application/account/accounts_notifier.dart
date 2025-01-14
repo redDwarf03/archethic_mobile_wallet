@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/util/account_formatters.dart';
@@ -16,7 +15,7 @@ part 'accounts_notifier.g.dart';
 @riverpod
 class AccountsNotifier extends _$AccountsNotifier {
   @override
-  FutureOr<List<Account>> build() async {
+  FutureOr<Iterable<Account>> build() async {
     final session = ref.watch(sessionNotifierProvider);
     if (session.isLoggedOut) {
       return [];
@@ -55,16 +54,18 @@ class AccountsNotifier extends _$AccountsNotifier {
     return ref.read(accountNotifierProvider(accountName).notifier);
   }
 
+  // TODO(Chralu): check if this works
   Future<void> clearRecentTransactionsFromCache() async {
     final accounts = await future;
     for (final account in accounts) {
-      account.recentTransactions = [];
-      await AccountHiveDatasource.instance().updateAccount(account);
+      await ref
+          .read(accountNotifierProvider(account.name).notifier)
+          .clearRecentTransactionsFromCache();
     }
   }
 }
 
-extension AccountsExt on List<Account> {
+extension AccountsExt on Iterable<Account> {
   Account? get selectedAccount {
     for (final account in this) {
       if (account.selected == true) return account;
@@ -91,7 +92,7 @@ extension AccountsExt on List<Account> {
   }
 }
 
-extension FutureAccountsExt on Future<List<Account>> {
+extension FutureAccountsExt on Future<Iterable<Account>> {
   Future<Account?> get selectedAccount async {
     return (await this).selectedAccount;
   }
