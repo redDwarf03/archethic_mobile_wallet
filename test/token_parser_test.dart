@@ -1,6 +1,7 @@
 import 'dart:io';
+
 import 'package:aewallet/domain/models/token_parser.dart';
-import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
+import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -12,9 +13,9 @@ import 'package:mockito/mockito.dart';
 
 @GenerateNiceMocks(
   [
-    MockSpec<aedappfm.DefTokensRepositoryImpl>(),
+    MockSpec<aedappfm.DefTokensRepositoryInterface>(),
     MockSpec<archethic.ApiService>(),
-    MockSpec<TokensRepositoryImpl>(),
+    MockSpec<TokensRepository>(),
   ],
 )
 import 'token_parser_test.mocks.dart';
@@ -26,8 +27,8 @@ void main() {
 
   group('TokenParser - tokenModelToAETokenModel', () {
     late TokenParser tokenParser;
-    late MockTokensRepositoryImpl mockTokensRepository;
-    late MockDefTokensRepositoryImpl mockDefTokensRepository;
+    late MockTokensRepository mockTokensRepository;
+    late MockDefTokensRepositoryInterface mockDefTokensRepository;
     late MockApiService mockApiService;
     late aedappfm.Environment environment;
     late List<String> verifiedTokens;
@@ -35,8 +36,8 @@ void main() {
 
     setUp(() {
       Hive.init('${Directory.current.path}/test/tmp_data');
-      mockTokensRepository = MockTokensRepositoryImpl();
-      mockDefTokensRepository = MockDefTokensRepositoryImpl();
+      mockTokensRepository = MockTokensRepository();
+      mockDefTokensRepository = MockDefTokensRepositoryInterface();
       mockApiService = MockApiService();
       environment = aedappfm.Environment.testnet;
       tokenParser = _TokenParserImpl();
@@ -179,7 +180,6 @@ void main() {
               '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
             ]),
           ),
-          any,
         ),
       ).thenAnswer(
         (_) async => {

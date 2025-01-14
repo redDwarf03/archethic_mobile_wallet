@@ -6,27 +6,25 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensRepositoryImplHash() =>
-    r'6d0639fff11793ccb691c0bdb8aa86b99078ee47';
+String _$tokensRepositoryHash() => r'6c84cd42aedf92b5acc058616f6cdb4e4052ffb7';
 
-/// See also [tokensRepositoryImpl].
-@ProviderFor(tokensRepositoryImpl)
-final tokensRepositoryImplProvider =
-    AutoDisposeProvider<TokensRepositoryImpl>.internal(
-  tokensRepositoryImpl,
-  name: r'tokensRepositoryImplProvider',
+/// See also [tokensRepository].
+@ProviderFor(tokensRepository)
+final tokensRepositoryProvider = AutoDisposeProvider<TokensRepository>.internal(
+  tokensRepository,
+  name: r'tokensRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$tokensRepositoryImplHash,
+      : _$tokensRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef TokensRepositoryImplRef = AutoDisposeProviderRef<TokensRepositoryImpl>;
+typedef TokensRepositoryRef = AutoDisposeProviderRef<TokensRepository>;
 String _$tokensFromAddressesHash() =>
-    r'3eb854cf86092bf7599a28a546924b3a2eb3bf14';
+    r'7fc14a5559b66673be8758e145c675aaab127f00';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -186,7 +184,7 @@ class _TokensFromAddressesProviderElement
 }
 
 String _$tokensFromUserBalanceHash() =>
-    r'254d8d9be48aae28c96b9dcc1e1cbc98999ac8a6';
+    r'c04c5f3beac60be756c1d1ed1773f96928deb5e5';
 
 /// See also [tokensFromUserBalance].
 @ProviderFor(tokensFromUserBalance)

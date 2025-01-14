@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -16,27 +17,33 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'tokens.g.dart';
 
 @riverpod
-TokensRepositoryImpl tokensRepositoryImpl(
+TokensRepository tokensRepository(
   Ref ref,
-) =>
-    TokensRepositoryImpl();
+) {
+  final apiService = ref.watch(apiServiceProvider);
+  final environment = ref.watch(environmentProvider);
+  return TokensRepositoryImpl(
+    apiService: apiService,
+    defTokensRepository: aedappfm.DefTokensRepositoryImpl(),
+    verifiedTokensRepository: aedappfm.VerifiedTokensRepositoryImpl(
+      apiService: apiService,
+      environment: environment,
+    ),
+  );
+}
 
 @riverpod
 Future<Map<String, archethic.Token>> tokensFromAddresses(
   Ref ref,
   List<String> addresses,
-) async {
-  final apiService = ref.watch(apiServiceProvider);
-
-  return ref
-      .watch(
-        tokensRepositoryImplProvider,
-      )
-      .getTokensFromAddresses(
-        addresses,
-        apiService,
-      );
-}
+) =>
+    ref
+        .watch(
+          tokensRepositoryProvider,
+        )
+        .getTokensFromAddresses(
+          addresses,
+        );
 
 @riverpod
 Future<List<aedappfm.AEToken>> tokensFromUserBalance(
@@ -47,8 +54,6 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
   bool withNotVerified = true,
   bool withCustomToken = true,
 }) async {
-  final apiService = ref.watch(apiServiceProvider);
-
   final environment = ref.watch(environmentProvider);
   final poolListRaw = await ref.watch(DexPoolProviders.getPoolListRaw.future);
   final selectedAccount =
@@ -56,18 +61,13 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
 
   if (selectedAccount == null) return [];
 
-  final tokensRepository = ref.watch(tokensRepositoryImplProvider);
-  final defTokensRepository =
-      ref.watch(aedappfm.defTokensRepositoryImplProvider);
-
   return ref
       .watch(
-        tokensRepositoryImplProvider,
+        tokensRepositoryProvider,
       )
       .getTokensFromUserBalance(
         selectedAccount.genesisAddress,
         selectedAccount.customTokenAddressList ?? [],
-        apiService,
         poolListRaw,
         environment,
         withUCO: withUCO,
@@ -75,8 +75,6 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
         withLPToken: withLPToken,
         withNotVerified: withNotVerified,
         withCustomToken: withCustomToken,
-        defTokensRepository,
-        tokensRepository,
       );
 }
 

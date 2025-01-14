@@ -1,4 +1,4 @@
-import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
+import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -13,8 +13,8 @@ mixin TokenParser {
     List<GetPoolListResponse> poolsListRaw,
     aedappfm.Environment environment,
     archethic.ApiService apiService,
-    aedappfm.DefTokensRepositoryImpl defTokensRepository,
-    TokensRepositoryImpl tokensRepository,
+    aedappfm.DefTokensRepositoryInterface defTokensRepository,
+    TokensRepository tokensRepository,
   ) async {
     String? pairSymbolToken1;
     String? pairSymbolToken2;
@@ -46,7 +46,6 @@ mixin TokenParser {
 
         final tokensSymbolMap = await tokensRepository.getTokensFromAddresses(
           tokenSymbolSearch,
-          apiService,
         );
         pairSymbolToken1 = token1Address != kUCOAddress
             ? tokensSymbolMap[token1Address]!.symbol
