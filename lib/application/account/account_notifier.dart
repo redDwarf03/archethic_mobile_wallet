@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/account/selected_account.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
@@ -13,7 +12,6 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -58,23 +56,23 @@ class AccountNotifier extends _$AccountNotifier {
   Future<void> refreshRecentTransactions() async {
     await _refresh([
       (account) async {
-        _logger.fine(
-          'Start method refreshRecentTransactions for ${account.nameDisplayed}',
-        );
         await updateRecentTransactions();
-        _logger.fine(
-          'End method refreshRecentTransactions for ${account.nameDisplayed}',
-        );
       },
     ]);
-
-    ref.invalidate(selectedAccountRecentTransactionsProvider);
   }
 
   Future<void> refreshFungibleTokens() async {
     await _refresh([
       (account) async {
         await updateFungiblesTokens();
+      },
+    ]);
+  }
+
+  Future<void> refreshNFT() async {
+    await _refresh([
+      (account) async {
+        await updateNFT();
       },
     ]);
   }
@@ -91,30 +89,23 @@ class AccountNotifier extends _$AccountNotifier {
     await _refresh(
       [
         (account) async {
-          _logger.fine('RefreshAll - Start Balance refresh');
           await updateBalance();
-          _logger.fine('RefreshAll - End Balance refresh');
         },
         (account) async {
-          _logger.fine('RefreshAll - Start recent transactions refresh');
           await updateRecentTransactions();
-          _logger.fine('RefreshAll - End recent transactions refresh');
         },
         (account) async {
-          _logger.fine('RefreshAll - Start Fungible Tokens refresh');
           await updateFungiblesTokens();
-          _logger.fine('RefreshAll - End Fungible Tokens refresh');
         },
         (account) async {
-          _logger.fine('RefreshAll - Start NFT refresh');
           await updateNFT();
-          _logger.fine('RefreshAll - End NFT refresh');
         },
       ],
     );
   }
 
   Future<void> updateBalance() async {
+    _logger.fine('RefreshAll - Start Balance refresh');
     await _update((account) async {
       var totalUSD = 0.0;
 
@@ -179,9 +170,11 @@ class AccountNotifier extends _$AccountNotifier {
 
       return account.copyWith(balance: accountBalance);
     });
+    _logger.fine('RefreshAll - End Balance refresh');
   }
 
   Future<void> updateFungiblesTokens() async {
+    _logger.fine('RefreshAll - Start Fungible Tokens refresh');
     await _update((account) async {
       final appService = ref.read(appServiceProvider);
       final poolsListRaw =
@@ -194,9 +187,11 @@ class AccountNotifier extends _$AccountNotifier {
         ),
       );
     });
+    _logger.fine('RefreshAll - End Fungible Tokens refresh');
   }
 
   Future<void> updateRecentTransactions() async {
+    _logger.fine('RefreshAll - Start recent transactions refresh');
     await _update((account) async {
       final session = ref.read(sessionNotifierProvider).loggedIn!;
       final appService = ref.read(appServiceProvider);
@@ -212,6 +207,7 @@ class AccountNotifier extends _$AccountNotifier {
             Duration.millisecondsPerSecond,
       );
     });
+    _logger.fine('RefreshAll - End recent transactions refresh');
   }
 
   Future<void> addCustomTokenAddress(String tokenAddress) async {
@@ -254,6 +250,7 @@ class AccountNotifier extends _$AccountNotifier {
   }
 
   Future<void> updateNFT() async {
+    _logger.fine('RefreshAll - Start NFT refresh');
     await _update(
       (account) async {
         final session = ref.read(sessionNotifierProvider).loggedIn!;
@@ -271,6 +268,7 @@ class AccountNotifier extends _$AccountNotifier {
         );
       },
     );
+    _logger.fine('RefreshAll - End NFT refresh');
   }
 
   Future<void> clearRecentTransactionsFromCache() async {

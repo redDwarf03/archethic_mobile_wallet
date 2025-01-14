@@ -1,9 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/account/selected_account.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
-import 'package:aewallet/util/account_formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,15 +23,7 @@ class _NFTListState extends ConsumerState<NFTList>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
-    if (accountSelected == null) return const _EmptyNFTList();
-
-    final accountTokenList = accountSelected.getAccountNFTFiltered();
+    final accountTokenList = ref.watch(selectedAccountNFTFilteredProvider);
     if (accountTokenList.isEmpty) {
       return const _EmptyNFTList();
     }
