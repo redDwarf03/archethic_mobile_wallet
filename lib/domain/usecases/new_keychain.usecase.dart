@@ -11,6 +11,8 @@ import 'package:logging/logging.dart';
 
 final _logger = Logger('KeychainUtil');
 
+const blockchainTxVersion = 3;
+
 class CreateNewAppWalletCase with aedappfm.TransactionMixin {
   CreateNewAppWalletCase({
     required this.sessionNotifier,
@@ -45,10 +47,6 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
       keychain = keychain.copyWithService(kServiceName, kDerivationPath);
       servicesMap[kServiceName] = kDerivationPath;
     }
-
-    final blockchainTxVersion = int.parse(
-      (await targetApiService.getBlockchainVersion()).version.transaction,
-    );
 
     final originPrivateKey = targetApiService.getOriginKey();
 

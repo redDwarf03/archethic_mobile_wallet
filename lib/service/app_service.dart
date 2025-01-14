@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -23,6 +25,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+
+const blockchainTxVersion = 3;
 
 class AppService {
   AppService({
@@ -347,13 +351,16 @@ class AppService {
       '>> START getRecentTransactions : ${DateTime.now()}',
     );
 
+    final _localRecentTransactionList =
+        List<RecentTransaction>.from(localRecentTransactionList);
+
     // get the most recent movement in cache
     var mostRecentTimestamp = 0;
-    if (localRecentTransactionList.isNotEmpty) {
-      localRecentTransactionList.sort(
+    if (_localRecentTransactionList.isNotEmpty) {
+      _localRecentTransactionList.sort(
         (a, b) => b.timestamp!.compareTo(a.timestamp!),
       );
-      mostRecentTimestamp = localRecentTransactionList.first.timestamp ?? 0;
+      mostRecentTimestamp = _localRecentTransactionList.first.timestamp ?? 0;
     }
     var recentTransactions = <RecentTransaction>[];
 
@@ -366,7 +373,7 @@ class AppService {
     var index = lastIndex[genesisAddress] ?? 0;
     String addressToSearch;
     var iterMax = 10;
-    recentTransactions.addAll(localRecentTransactionList);
+    recentTransactions.addAll(_localRecentTransactionList);
 
     while (index > 0 && iterMax > 0) {
       addressToSearch = uint8ListToHex(
@@ -376,7 +383,7 @@ class AppService {
         ),
       );
       _logger.info('addressToSearch : $addressToSearch');
-      if (localRecentTransactionList.any(
+      if (_localRecentTransactionList.any(
         (element) =>
             element.address!.toUpperCase() == addressToSearch.toUpperCase(),
       )) {
@@ -951,9 +958,6 @@ class AppService {
   ) async {
     final lastTransactionMap =
         await apiService.getLastTransaction([address], request: 'chainLength');
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     final transaction = Transaction(
       type: 'transfer',
