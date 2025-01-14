@@ -217,11 +217,12 @@ class _TransferTextFieldAddressState
                           .read(accountsNotifierProvider.future)
                           .selectedAccount;
                       final filteredAccounts = accounts
-                        ..removeWhere(
-                          (element) =>
-                              element.format.toUpperCase() ==
-                              accountSelected?.format.toUpperCase(),
-                        );
+                          .where(
+                            (element) =>
+                                element.format.toUpperCase() !=
+                                accountSelected?.format.toUpperCase(),
+                          )
+                          .toList();
 
                       final account = await AccountsDialog.selectSingleAccount(
                         context: context,

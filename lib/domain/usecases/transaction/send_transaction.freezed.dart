@@ -42,6 +42,7 @@ abstract class $SendTransactionCommandCopyWith<$Res> {
   @useResult
   $Res call({Account senderAccount, Data data, String type, int version});
 
+  $AccountCopyWith<$Res> get senderAccount;
   $DataCopyWith<$Res> get data;
 }
 
@@ -90,6 +91,16 @@ class _$SendTransactionCommandCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get senderAccount {
+    return $AccountCopyWith<$Res>(_value.senderAccount, (value) {
+      return _then(_value.copyWith(senderAccount: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $DataCopyWith<$Res> get data {
     return $DataCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value) as $Val);
@@ -108,6 +119,8 @@ abstract class _$$SendTransactionCommandImplCopyWith<$Res>
   @useResult
   $Res call({Account senderAccount, Data data, String type, int version});
 
+  @override
+  $AccountCopyWith<$Res> get senderAccount;
   @override
   $DataCopyWith<$Res> get data;
 }

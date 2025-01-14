@@ -34,7 +34,7 @@ class AppKeychain extends HiveObject {
     // To manage the migration of https://github.com/archethic-foundation/archethic-wallet/pull/759
     for (final account in accounts) {
       if (account.serviceType == 'archethicWallet') {
-        await AccountHiveDatasource.instance().changeAccount(account.name);
+        await AccountHiveDatasource.instance().selectAccount(account.name);
         return account;
       }
     }

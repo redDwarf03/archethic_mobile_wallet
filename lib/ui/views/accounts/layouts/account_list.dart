@@ -31,7 +31,8 @@ class AccountsListState extends ConsumerState<AccountsList>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-    final accountsList = ref.watch(accountsNotifierProvider).valueOrNull ?? [];
+    final accountsList =
+        (ref.watch(accountsNotifierProvider).valueOrNull ?? []).toList();
     if (accountsList.isNotEmpty) {
       accountsList.sort(
         (a, b) => a.nameDisplayed.compareTo(b.nameDisplayed),
