@@ -126,7 +126,14 @@ class _TransactionsList extends ConsumerWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        const MenuWidgetWallet(),
+                        MenuWidgetWallet(
+                          refreshFunction: () async {
+                            await (await ref
+                                    .read(accountsNotifierProvider.notifier)
+                                    .selectedAccountNotifier)
+                                ?.refreshRecentTransactions();
+                          },
+                        ),
                         if (recentTransactions.isEmpty)
                           Padding(
                             padding: const EdgeInsets.only(top: 20),

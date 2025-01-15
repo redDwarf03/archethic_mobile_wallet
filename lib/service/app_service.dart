@@ -388,11 +388,6 @@ class AppService {
             element.address!.toUpperCase() == addressToSearch.toUpperCase(),
       )) {
         _logger.info('addressToSearch exists in local -> break');
-        recentTransactions = await _buildRecentTransactionFromTransaction(
-          recentTransactions,
-          addressToSearch,
-          mostRecentTimestamp,
-        );
         break;
       }
 
@@ -452,6 +447,7 @@ class AppService {
     for (final recentTransaction in recentTransactions) {
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty &&
+          recentTransaction.tokenInformation == null &&
           recentTransaction.timestamp! >= mostRecentTimestamp) {
         tokensAddresses.add(recentTransaction.tokenAddress!);
       }
@@ -469,16 +465,19 @@ class AppService {
       // Get token Information
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty &&
+          recentTransaction.tokenInformation == null &&
           recentTransaction.timestamp! >= mostRecentTimestamp) {
         final token = tokensAddressMap[recentTransaction.tokenAddress];
         if (token != null) {
-          recentTransaction.tokenInformation = TokenInformation(
-            address: token.address,
-            name: token.name,
-            supply: fromBigInt(token.supply).toDouble(),
-            symbol: token.symbol,
-            type: token.type,
-          );
+          recentTransaction
+            ..tokenAddress = token.address
+            ..tokenInformation = TokenInformation(
+              address: token.address,
+              name: token.name,
+              supply: fromBigInt(token.supply).toDouble(),
+              symbol: token.symbol,
+              type: token.type,
+            );
         }
       }
 
@@ -486,7 +485,7 @@ class AppService {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
-            if (recentTransaction.timestamp! >= mostRecentTimestamp) {
+            if (recentTransaction.timestamp! > mostRecentTimestamp) {
               ownershipsAddresses.add(recentTransaction.from!);
             }
             recentTransactionLastAddresses.add(recentTransaction.from!);
@@ -494,7 +493,7 @@ class AppService {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.from != null) {
-            if (recentTransaction.timestamp! >= mostRecentTimestamp) {
+            if (recentTransaction.timestamp! > mostRecentTimestamp) {
               ownershipsAddresses.add(recentTransaction.from!);
             }
             recentTransactionLastAddresses.add(recentTransaction.from!);
@@ -530,7 +529,7 @@ class AppService {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null &&
-              recentTransaction.timestamp! >= mostRecentTimestamp) {
+              recentTransaction.timestamp! > mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.from!] ?? [],
@@ -540,7 +539,7 @@ class AppService {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.address != null &&
-              recentTransaction.timestamp! >= mostRecentTimestamp) {
+              recentTransaction.timestamp! > mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.address!] ?? [],
@@ -548,45 +547,6 @@ class AppService {
             );
           }
           break;
-      }
-    }
-
-    // Get last transactions for all tx and contacts
-    final lastTransactionAddressesToSearch = [
-      ...recentTransactionLastAddresses,
-    ];
-
-    final lastAddressesMap = <String, Transaction>{};
-
-    final getLastTransactions = await lastTransactionAddressesToSearch
-        .toSet()
-        .map(
-          (lastTransactionAddressToSearch) => Task(
-            name:
-                'GetAccountRecentTransactions - lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
-            logger: _logger,
-            action: () => apiService.getLastTransaction(
-              [lastTransactionAddressToSearch],
-              request: 'address',
-            ),
-          ),
-        )
-        .autoRetry()
-        .batch();
-    for (final getLastTransaction in getLastTransactions) {
-      lastAddressesMap.addAll(getLastTransaction);
-    }
-
-    // We complete map with last address not found because no tx in the chain
-    for (final lastTransactionAddressToSearch
-        in lastTransactionAddressesToSearch) {
-      if (lastAddressesMap[lastTransactionAddressToSearch] == null) {
-        lastAddressesMap[lastTransactionAddressToSearch] = Transaction(
-          type: '',
-          data: Transaction.initData(),
-          address:
-              Address(address: lastTransactionAddressToSearch.toUpperCase()),
-        );
       }
     }
 
@@ -602,10 +562,10 @@ class AppService {
     required List<Ownership> ownerships,
     required RecentTransaction recentTransaction,
   }) {
-    recentTransaction.decryptedSecret = List<String>.empty(growable: true);
     if (ownerships.isEmpty) {
       return recentTransaction;
     }
+    recentTransaction.decryptedSecret = <String>[];
     for (final ownership in ownerships) {
       final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
         (AuthorizedKey authKey) =>
