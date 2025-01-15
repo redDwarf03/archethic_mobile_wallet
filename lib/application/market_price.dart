@@ -40,8 +40,10 @@ Future<MarketPrice> _currencyMarketPrice(
 Future<MarketPrice> _selectedCurrencyMarketPrice(
   Ref ref,
 ) async {
-  final archethicOracleUCO =
-      ref.watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
+  final archethicOracleUCO = await ref.watch(
+    aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future,
+  );
+
   return MarketPrice(
     amount: archethicOracleUCO.usd,
     lastLoading: archethicOracleUCO.timestamp,

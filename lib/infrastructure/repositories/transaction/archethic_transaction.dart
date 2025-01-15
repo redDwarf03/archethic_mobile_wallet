@@ -18,6 +18,8 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
+const blockchainTxVersion = 3;
+
 class ArchethicTransactionRepository
     implements TransactionRemoteRepositoryInterface {
   ArchethicTransactionRepository({
@@ -115,10 +117,6 @@ class ArchethicTransactionRepository
 
     final index = indexMap[transfer.transactionLastAddress] ?? 0;
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
     var tokenTransferList = <archethic.TokenTransfer>[];
     var ucoTransferList = <archethic.UCOTransfer>[];
 
@@ -177,10 +175,6 @@ class ArchethicTransactionRepository
     );
 
     final index = indexMap[token.transactionLastAddress] ?? 0;
-
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     return AddTokenTransactionBuilder.build(
       tokenName: token.name,
@@ -278,8 +272,6 @@ class ArchethicTransactionRepository
     required TransactionErrorHandler onError,
   }) async {
     final transactionSender = archethic.ArchethicTransactionSender(
-      phoenixHttpEndpoint: phoenixHttpEndpoint,
-      websocketEndpoint: websocketEndpoint,
       apiService: apiService,
     );
 
@@ -289,10 +281,6 @@ class ArchethicTransactionRepository
       onConfirmation: (transactionConfirmation) => onConfirmation(
         transactionSender,
         transactionConfirmation,
-      ),
-      onError: (error) => onError(
-        transactionSender,
-        error,
       ),
     );
   }
@@ -305,8 +293,6 @@ class ArchethicTransactionRepository
     required TransactionErrorHandler onError,
   }) async {
     final transactionSender = archethic.ArchethicTransactionSender(
-      phoenixHttpEndpoint: phoenixHttpEndpoint,
-      websocketEndpoint: websocketEndpoint,
       apiService: apiService,
     );
 
@@ -316,10 +302,6 @@ class ArchethicTransactionRepository
       onConfirmation: (transactionConfirmation) => onConfirmation(
         transactionSender,
         transactionConfirmation,
-      ),
-      onError: (error) => onError(
-        transactionSender,
-        error,
       ),
     );
   }

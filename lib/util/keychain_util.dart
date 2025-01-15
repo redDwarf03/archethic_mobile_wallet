@@ -22,6 +22,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
 
+const blockchainTxVersion = 3;
+
 class KeychainUtil with KeychainServiceMixin {
   final appWalletDatasource = AppWalletHiveDatasource.instance();
 
@@ -35,10 +37,6 @@ class KeychainUtil with KeychainServiceMixin {
     Keychain keychain,
     ApiService apiService,
   ) async {
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
     /// Create Keychain Access for wallet
     final accessKeychainTx = apiService.newAccessKeychainTransaction(
       seed!,
@@ -49,8 +47,6 @@ class KeychainUtil with KeychainServiceMixin {
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
       apiService: apiService,
     );
 
@@ -74,13 +70,6 @@ class KeychainUtil with KeychainServiceMixin {
             },
           );
         }
-      },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychainAccess,
-        );
       },
     );
   }
@@ -111,24 +100,17 @@ class KeychainUtil with KeychainServiceMixin {
     final keychain = Keychain(seed: hexToUint8List(keychainSeed))
         .copyWithService(kServiceName, kDerivationPath);
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
     final keychainTransaction = apiService.newKeychainTransaction(
       keychainSeed,
       <String>[uint8ListToHex(walletKeyPair.publicKey!)],
       hexToUint8List(originPrivateKey),
       blockchainTxVersion,
-      serviceName: kServiceName,
-      derivationPath: kDerivationPath,
+      servicesMap: {kServiceName: kDerivationPath},
     );
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
       apiService: apiService,
     );
 
@@ -155,13 +137,6 @@ class KeychainUtil with KeychainServiceMixin {
           );
         }
       },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychain,
-        );
-      },
     );
   }
 
@@ -182,8 +157,6 @@ class KeychainUtil with KeychainServiceMixin {
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
       apiService: apiService,
     );
 
@@ -207,13 +180,6 @@ class KeychainUtil with KeychainServiceMixin {
             },
           );
         }
-      },
-      onError: (error) async {
-        onError(
-          error,
-          transactionSender,
-          TransactionSendEventType.keychain,
-        );
       },
     );
   }

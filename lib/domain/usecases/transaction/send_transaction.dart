@@ -112,28 +112,12 @@ class SendTransactionUseCase
   final AppWallet wallet;
   final ApiService apiService;
   final NetworksSetting networkSettings;
-
   @override
   Future<Result<TransactionConfirmation, TransactionError>> run(
     SendTransactionCommand command, {
     UseCaseProgressListener? onProgress,
   }) async {
     final _logger = Logger('SendTransactionUseCase');
-
-    final operationCompleter =
-        Completer<Result<TransactionConfirmation, TransactionError>>();
-
-    void _fail(TransactionError error) {
-      operationCompleter.complete(
-        Result.failure(error),
-      );
-    }
-
-    final transactionSender = ArchethicTransactionSender(
-      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-      websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: apiService,
-    );
 
     final transaction = await command.toArchethicTransaction(
       wallet: wallet,
@@ -147,8 +131,9 @@ class SendTransactionUseCase
     }
 
     try {
-      // ignore: cascade_invocations
-      await transactionSender.send(
+      final confirmation = await ArchethicTransactionSender(
+        apiService: apiService,
+      ).send(
         transaction: transaction,
         onConfirmation: (confirmation) async {
           onProgress?.call(
@@ -157,25 +142,22 @@ class SendTransactionUseCase
               progress: confirmation.nbConfirmations,
             ),
           );
-          if (confirmation.isFullyConfirmed) {
-            _logger.info('Final confirmation received : $confirmation');
-            operationCompleter.complete(
-              Result.success(confirmation),
-            );
-            return;
-          }
 
           _logger.info('Confirmation received : $confirmation');
         },
-        onError: (error) async {
-          _logger.severe('Transaction error received', error);
-          _fail(error);
-        },
       );
-    } catch (e) {
-      _fail(const TransactionError.other());
-    }
+      if (confirmation == null) {
+        return const Result.failure(TransactionError.userRejected());
+      }
 
-    return operationCompleter.future;
+      _logger.info('Final confirmation received : $confirmation');
+      return Result.success(confirmation);
+    } on TransactionError catch (error) {
+      _logger.severe('Transaction error received', error);
+      return Result.failure(error);
+    } catch (e) {
+      _logger.severe('Transaction error received', e);
+      return const Result.failure(TransactionError.other());
+    }
   }
 }

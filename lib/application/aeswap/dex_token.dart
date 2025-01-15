@@ -83,10 +83,10 @@ Future<double> _estimateTokenInFiat(
   String tokenAddress,
 ) async {
   if (tokenAddress.isUCO) {
-    return ref.watch(
-      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO
-          .select((value) => value.usd),
-    );
+    return (await ref.watch(
+      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future,
+    ))
+        .usd;
   } else {
     final environment = ref.watch(environmentProvider);
     return await ref.watch(

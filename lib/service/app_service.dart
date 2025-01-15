@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -25,6 +27,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+
+const blockchainTxVersion = 3;
 
 class AppService {
   AppService({
@@ -251,7 +255,7 @@ class AppService {
           nbTrf++;
         }
         if (nbTrf == 0) {
-          for (final contractRecipient in transaction.data!.actionRecipients) {
+          for (final contractRecipient in transaction.data!.recipients) {
             final recentTransaction = RecentTransaction()
               ..address = transaction.address!.address
               ..typeTx = RecentTransaction.transferOutput
@@ -1048,9 +1052,6 @@ class AppService {
   ) async {
     final lastTransactionMap =
         await apiService.getLastTransaction([address], request: 'chainLength');
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     final transaction = Transaction(
       type: 'transfer',

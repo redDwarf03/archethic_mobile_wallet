@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
@@ -12,6 +14,8 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
+
+const blockchainTxVersion = 3;
 
 class ArchethicContract with aedappfm.TransactionMixin {
   const ArchethicContract({
@@ -99,9 +103,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
         publicKey: storageNoncePublicKey,
       );
 
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
       final originPrivateKey = apiService.getOriginKey();
 
       final transactionPool = archethic.Transaction(
@@ -134,9 +135,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
       final feesToken = await calculateFees(
         transactionPool,
         apiService,
-      );
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
       );
 
       final transactionTransfer = archethic.Transaction(
@@ -191,10 +189,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
           Decimal.parse('$token1AmountSorted') * slippagePourcent.toDecimal();
       final token2minAmount =
           Decimal.parse('$token2AmountSorted') * slippagePourcent.toDecimal();
-
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
 
       final transactionAdd = archethic.Transaction(
         type: 'transfer',
@@ -308,10 +302,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
       final token2minAmount =
           Decimal.parse('$token2AmountSorted') * slippagePourcent.toDecimal();
 
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transactionLiquidity = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -363,9 +353,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     return aedappfm.Result.guard(() async {
       const burnAddress =
           '00000000000000000000000000000000000000000000000000000000000000000000';
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
 
       final transactionLiquidity = archethic.Transaction(
         type: 'transfer',
@@ -423,10 +410,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double outputAmount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final minToReceive = (Decimal.parse(outputAmount.toString()) *
               (Decimal.parse('100') - Decimal.parse(slippage.toString())) /
               Decimal.parse('100'))
@@ -468,10 +451,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double amount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -498,10 +477,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double amount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -525,10 +500,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String level,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -566,10 +537,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String level,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -597,10 +564,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String farmGenesisAddress,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -622,10 +585,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String depositId,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,
@@ -649,10 +608,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String depositId,
   ) async {
     return aedappfm.Result.guard(() async {
-      final blockchainTxVersion = int.parse(
-        (await apiService.getBlockchainVersion()).version.transaction,
-      );
-
       final transaction = archethic.Transaction(
         type: 'transfer',
         version: blockchainTxVersion,

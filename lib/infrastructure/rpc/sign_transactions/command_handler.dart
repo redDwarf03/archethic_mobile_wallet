@@ -7,7 +7,6 @@ import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
     awc.SignTransactionRequest, awc.SignTransactionsResult> {
   RPCSignTransactionsCommandHandler() : super();
-
   @override
   RPCCommand<awc.SignTransactionRequest> commandToModel(
     awc.Request dto,
@@ -16,7 +15,7 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
         <awc.SignTransactionRequestData>[];
     final transactions = dto.payload['transactions'];
     for (final Map<String, dynamic> transaction in transactions) {
-      final tx = archethic.Transaction.fromJson(transaction);
+      final tx = archethic.Transaction.fromNodeRPC(transaction);
       final rpcSignTransactionCommandData = awc.SignTransactionRequestData(
         data: tx.data!,
         version: tx.version,
@@ -24,7 +23,6 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
       );
       rpcSignTransactionCommandDataList.add(rpcSignTransactionCommandData);
     }
-
     return RPCCommand(
       origin: dto.origin.toModel,
       data: awc.SignTransactionRequest(

@@ -58,8 +58,8 @@ Future<List<DexPoolTx>> _getPoolTxList(
 
       if (transactionAction != null &&
           transactionAction.data != null &&
-          transactionAction.data!.actionRecipients.isNotEmpty &&
-          transactionAction.data!.actionRecipients[0].action != null) {
+          transactionAction.data!.recipients.isNotEmpty &&
+          transactionAction.data!.recipients[0].action != null) {
         var token1Amount = 0.0;
         var token2Amount = 0.0;
         double? totalValue;
@@ -68,7 +68,7 @@ Future<List<DexPoolTx>> _getPoolTxList(
         DexToken? token1;
         DexToken? token2;
         DexActionType? typeTx;
-        switch (transactionAction.data!.actionRecipients[0].action) {
+        switch (transactionAction.data!.recipients[0].action) {
           case 'swap':
             for (final transactionMovement in transactionAction
                 .validationStamp!.ledgerOperations!.transactionMovements) {

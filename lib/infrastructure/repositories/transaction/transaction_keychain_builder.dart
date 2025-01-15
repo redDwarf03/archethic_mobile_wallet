@@ -1,8 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:convert';
 import 'dart:math';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
+
+const blockchainTxVersion = 3;
 
 extension KeychainTransactionBuilder on archethic.Transaction {
   /// Builds a creation of keychain Transaction
@@ -24,10 +28,6 @@ extension KeychainTransactionBuilder on archethic.Transaction {
       Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
       ),
-    );
-
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     final keychainTransaction = archethic.Transaction(
