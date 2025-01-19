@@ -23,7 +23,6 @@ class AccountImplAdapter extends TypeAdapter<_$AccountImpl> {
       selected: fields[3] as bool?,
       lastAddress: fields[4] as String?,
       balance: fields[5] as AccountBalance?,
-      recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
       accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
       nftInfosOffChainList: (fields[10] as List?)?.cast<NftInfosOffChain>(),
@@ -36,7 +35,7 @@ class AccountImplAdapter extends TypeAdapter<_$AccountImpl> {
   @override
   void write(BinaryWriter writer, _$AccountImpl obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -51,8 +50,6 @@ class AccountImplAdapter extends TypeAdapter<_$AccountImpl> {
       ..write(obj.balance)
       ..writeByte(13)
       ..write(obj.serviceType)
-      ..writeByte(6)
-      ..write(obj.recentTransactions)
       ..writeByte(7)
       ..write(obj.accountTokens)
       ..writeByte(8)

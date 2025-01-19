@@ -1,13 +1,8 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/transactions/components/template/transaction_ledger_mvts.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_information.dart';
-import 'package:aewallet/ui/views/transactions/components/transfer_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,8 +16,6 @@ class TransactionInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
-
     return TransactionTemplate(
       transaction: transaction,
       borderColor: ArchethicTheme.backgroundRecentTxListCardTransferInput,
@@ -30,17 +23,7 @@ class TransactionInput extends ConsumerWidget {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          TransfertBalance(
-            transaction: transaction,
-            isCurrencyNative: primaryCurrency.primaryCurrency ==
-                AvailablePrimaryCurrencyEnum.native,
-            child: TransferTransaction(
-              transaction: transaction,
-              isCurrencyNative: primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native,
-              isInput: true,
-            ),
-          ),
+          TransactionLedgerMvts(transaction: transaction),
         ],
       ),
       information: TransactionInputInformation(

@@ -178,7 +178,6 @@ mixin KeychainServiceMixin {
             nativeTokenName: 'UCO',
             nativeTokenValue: 0,
           ),
-          recentTransactions: const [],
           serviceType: serviceType,
           selected: isSelected,
         );

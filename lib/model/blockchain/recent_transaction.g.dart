@@ -19,31 +19,32 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
     return RecentTransaction(
       address: fields[0] as String?,
       typeTx: fields[1] as int?,
-      amount: fields[2] as double?,
-      recipient: fields[3] as String?,
-      from: fields[6] as String?,
-      fee: fields[5] as double?,
-      content: fields[9] as String?,
       timestamp: fields[4] as int?,
+      fee: fields[5] as double?,
+      from: fields[6] as String?,
+      content: fields[9] as String?,
       type: fields[10] as String?,
+      contactInformation: fields[12] as Contact?,
       decryptedSecret: (fields[14] as List?)?.cast<String>(),
-    )
-      ..tokenInformation = fields[11] as TokenInformation?
-      ..contactInformation = fields[12] as Contact?;
+      action: fields[15] as String?,
+      ledgerOperationMvtInfo: (fields[16] as List?)?.cast<
+          ({
+            double amount,
+            String to,
+            TokenInformation tokenInformation,
+            String type
+          })>(),
+    );
   }
 
   @override
   void write(BinaryWriter writer, RecentTransaction obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
       ..write(obj.typeTx)
-      ..writeByte(2)
-      ..write(obj.amount)
-      ..writeByte(3)
-      ..write(obj.recipient)
       ..writeByte(4)
       ..write(obj.timestamp)
       ..writeByte(5)
@@ -54,12 +55,14 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       ..write(obj.content)
       ..writeByte(10)
       ..write(obj.type)
-      ..writeByte(11)
-      ..write(obj.tokenInformation)
       ..writeByte(12)
       ..write(obj.contactInformation)
       ..writeByte(14)
-      ..write(obj.decryptedSecret);
+      ..write(obj.decryptedSecret)
+      ..writeByte(15)
+      ..write(obj.action)
+      ..writeByte(16)
+      ..write(obj.ledgerOperationMvtInfo);
   }
 
   @override

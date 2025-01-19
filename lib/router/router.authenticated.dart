@@ -54,15 +54,6 @@ final _authenticatedRoutes = [
     },
   ),
   GoRoute(
-    path: TransactionInfosSheet.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: TransactionInfosSheet(
-        state.extra! as String,
-      ),
-    ),
-  ),
-  GoRoute(
     path: TransferSheet.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,

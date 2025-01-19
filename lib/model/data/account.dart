@@ -1,5 +1,4 @@
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
-import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
@@ -58,7 +57,7 @@ class Account extends HiveObject with _$Account {
     @HiveField(5) AccountBalance? balance,
 
     /// Recent transactions
-    @HiveField(6) List<RecentTransaction>? recentTransactions,
+    //@HiveField(6) List<RecentTransaction>? recentTransactions,
 
     /// Tokens
     @HiveField(7) List<AccountToken>? accountTokens,

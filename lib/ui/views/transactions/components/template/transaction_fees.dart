@@ -41,7 +41,27 @@ class TransactionFees extends ConsumerWidget {
 
     return Row(
       children: <Widget>[
-        if (transaction.indexInLedger > 0)
+        if (settings.showBalances == true)
+          Row(
+            children: [
+              Text(
+                '${localizations.txListFees} ',
+                style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+              ),
+              if (primaryCurrency.primaryCurrency ==
+                  AvailablePrimaryCurrencyEnum.native)
+                Text(
+                  '${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                )
+              else
+                Text(
+                  '$amountConverted (${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel})',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                ),
+            ],
+          )
+        else
           Row(
             children: [
               Text(
@@ -49,44 +69,11 @@ class TransactionFees extends ConsumerWidget {
                 style: ArchethicThemeStyles.textStyleSize12W100Primary60,
               ),
               Text(
-                localizations.txListFeesIncluded,
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                '···········',
+                style: ArchethicThemeStyles.textStyleSize12W100Primary60,
               ),
             ],
-          )
-        else
-          settings.showBalances == true
-              ? Row(
-                  children: [
-                    Text(
-                      '${localizations.txListFees} ',
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary60,
-                    ),
-                    if (primaryCurrency.primaryCurrency ==
-                        AvailablePrimaryCurrencyEnum.native)
-                      Text(
-                        '${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      )
-                    else
-                      Text(
-                        '$amountConverted (${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel})',
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    Text(
-                      '${localizations.txListFees} ',
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary60,
-                    ),
-                    Text(
-                      '···········',
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary60,
-                    ),
-                  ],
-                ),
+          ),
       ],
     );
   }

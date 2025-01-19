@@ -159,13 +159,16 @@ class TokenDetailSheet extends ConsumerWidget
                         await (await ref
                                 .read(accountsNotifierProvider.notifier)
                                 .selectedAccountNotifier)
-                            ?.removeCustomTokenAddress(aeToken.address!);
+                            ?.removeCustomTokenAddress(
+                          accountSelected,
+                          aeToken.address!,
+                        );
 
                         unawaited(
                           (await ref
                                   .read(accountsNotifierProvider.notifier)
                                   .selectedAccountNotifier)
-                              ?.updateBalance(),
+                              ?.updateBalance(accountSelected),
                         );
                         unawaited(
                           (await ref

@@ -53,16 +53,6 @@ class AccountsNotifier extends _$AccountsNotifier {
 
     return ref.read(accountNotifierProvider(accountName).notifier);
   }
-
-  // TODO(Chralu): check if this works
-  Future<void> clearRecentTransactionsFromCache() async {
-    final accounts = await future;
-    for (final account in accounts) {
-      await ref
-          .read(accountNotifierProvider(account.name).notifier)
-          .clearRecentTransactionsFromCache();
-    }
-  }
 }
 
 extension AccountsExt on Iterable<Account> {

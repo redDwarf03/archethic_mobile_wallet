@@ -6,26 +6,6 @@ part of 'selected_account.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedAccountRecentTransactionsHash() =>
-    r'f747c960536720308b38ecb91ea5089f943957c9';
-
-/// See also [selectedAccountRecentTransactions].
-@ProviderFor(selectedAccountRecentTransactions)
-final selectedAccountRecentTransactionsProvider =
-    AutoDisposeFutureProvider<List<RecentTransaction>?>.internal(
-  selectedAccountRecentTransactions,
-  name: r'selectedAccountRecentTransactionsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$selectedAccountRecentTransactionsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef SelectedAccountRecentTransactionsRef
-    = AutoDisposeFutureProviderRef<List<RecentTransaction>?>;
 String _$selectedAccountNFTFilteredHash() =>
     r'5bab7f1eab6363f522fe9ee7b4f59dff7bb09acc';
 

@@ -57,10 +57,11 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
     final getTokens = await Future.wait(futures);
     for (final Map<String, archethic.Token> getToken in getTokens) {
       getToken.forEach((key, value) async {
+        value = value.copyWith(address: key);
         if (value.type == tokenFungibleType) {
-          value = value.copyWith(address: key);
           await tokensListDatasource.setToken(value.toHive());
         }
+        tokenMap[key] = value;
       });
     }
 

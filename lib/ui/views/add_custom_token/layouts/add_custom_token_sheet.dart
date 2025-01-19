@@ -130,11 +130,17 @@ class AddCustomTokenSheet extends ConsumerWidget {
 
                     if (!result) return;
 
+                    final accountSelected = ref.read(
+                      accountsNotifierProvider.select(
+                        (accounts) => accounts.valueOrNull?.selectedAccount,
+                      ),
+                    );
+
                     unawaited(
                       (await ref
                               .read(accountsNotifierProvider.notifier)
                               .selectedAccountNotifier)
-                          ?.updateBalance(),
+                          ?.updateBalance(accountSelected!),
                     );
                     unawaited(
                       (await ref

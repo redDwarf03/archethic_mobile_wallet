@@ -15,10 +15,17 @@ class TokenCreationInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    if (transaction.ledgerOperationMvtInfo == null ||
+        transaction.ledgerOperationMvtInfo!.isEmpty ||
+        transaction.ledgerOperationMvtInfo!.first.tokenInformation == null) {
+      return const SizedBox.shrink();
+    }
+    final tokenInformation =
+        transaction.ledgerOperationMvtInfo!.first.tokenInformation;
 
     return Row(
       children: [
-        if (transaction.tokenInformation!.type == 'fungible')
+        if (tokenInformation!.type == 'fungible')
           Expanded(
             child: Row(
               children: [
@@ -27,7 +34,7 @@ class TokenCreationInformation extends ConsumerWidget {
                   style: ArchethicThemeStyles.textStyleSize12W100Primary60,
                 ),
                 AutoSizeText(
-                  transaction.tokenInformation!.name!,
+                  tokenInformation.name!,
                   style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
               ],
@@ -42,7 +49,7 @@ class TokenCreationInformation extends ConsumerWidget {
                   style: ArchethicThemeStyles.textStyleSize12W100Primary60,
                 ),
                 AutoSizeText(
-                  transaction.tokenInformation!.name!,
+                  tokenInformation.name!,
                   style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
               ],

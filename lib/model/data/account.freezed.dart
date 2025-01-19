@@ -43,10 +43,7 @@ mixin _$Account {
   AccountBalance? get balance => throw _privateConstructorUsedError;
 
   /// Recent transactions
-  @HiveField(6)
-  List<RecentTransaction>? get recentTransactions =>
-      throw _privateConstructorUsedError;
-
+//@HiveField(6) List<RecentTransaction>? recentTransactions,
   /// Tokens
   @HiveField(7)
   List<AccountToken>? get accountTokens => throw _privateConstructorUsedError;
@@ -96,7 +93,6 @@ abstract class $AccountCopyWith<$Res> {
           'Genesis address should be preferred instead of last address after AEIP21')
       String? lastAddress,
       @HiveField(5) AccountBalance? balance,
-      @HiveField(6) List<RecentTransaction>? recentTransactions,
       @HiveField(7) List<AccountToken>? accountTokens,
       @HiveField(8) List<AccountToken>? accountNFT,
       @Deprecated('Thanks to hive, we should keep this unused property...')
@@ -128,7 +124,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? selected = freezed,
     Object? lastAddress = freezed,
     Object? balance = freezed,
-    Object? recentTransactions = freezed,
     Object? accountTokens = freezed,
     Object? accountNFT = freezed,
     Object? nftInfosOffChainList = freezed,
@@ -161,10 +156,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as AccountBalance?,
-      recentTransactions: freezed == recentTransactions
-          ? _value.recentTransactions
-          : recentTransactions // ignore: cast_nullable_to_non_nullable
-              as List<RecentTransaction>?,
       accountTokens: freezed == accountTokens
           ? _value.accountTokens
           : accountTokens // ignore: cast_nullable_to_non_nullable
@@ -210,7 +201,6 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
           'Genesis address should be preferred instead of last address after AEIP21')
       String? lastAddress,
       @HiveField(5) AccountBalance? balance,
-      @HiveField(6) List<RecentTransaction>? recentTransactions,
       @HiveField(7) List<AccountToken>? accountTokens,
       @HiveField(8) List<AccountToken>? accountNFT,
       @Deprecated('Thanks to hive, we should keep this unused property...')
@@ -240,7 +230,6 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? selected = freezed,
     Object? lastAddress = freezed,
     Object? balance = freezed,
-    Object? recentTransactions = freezed,
     Object? accountTokens = freezed,
     Object? accountNFT = freezed,
     Object? nftInfosOffChainList = freezed,
@@ -273,10 +262,6 @@ class __$$AccountImplCopyWithImpl<$Res>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as AccountBalance?,
-      recentTransactions: freezed == recentTransactions
-          ? _value._recentTransactions
-          : recentTransactions // ignore: cast_nullable_to_non_nullable
-              as List<RecentTransaction>?,
       accountTokens: freezed == accountTokens
           ? _value._accountTokens
           : accountTokens // ignore: cast_nullable_to_non_nullable
@@ -319,7 +304,6 @@ class _$AccountImpl extends _Account {
           'Genesis address should be preferred instead of last address after AEIP21')
       this.lastAddress,
       @HiveField(5) this.balance,
-      @HiveField(6) final List<RecentTransaction>? recentTransactions,
       @HiveField(7) final List<AccountToken>? accountTokens,
       @HiveField(8) final List<AccountToken>? accountNFT,
       @Deprecated('Thanks to hive, we should keep this unused property...')
@@ -328,8 +312,7 @@ class _$AccountImpl extends _Account {
       @HiveField(13) this.serviceType,
       @HiveField(14) final List<AccountToken>? accountNFTCollections,
       @HiveField(15) final List<String>? customTokenAddressList})
-      : _recentTransactions = recentTransactions,
-        _accountTokens = accountTokens,
+      : _accountTokens = accountTokens,
         _accountNFT = accountNFT,
         _nftInfosOffChainList = nftInfosOffChainList,
         _accountNFTCollections = accountNFTCollections,
@@ -369,23 +352,12 @@ class _$AccountImpl extends _Account {
   final AccountBalance? balance;
 
   /// Recent transactions
-  final List<RecentTransaction>? _recentTransactions;
-
-  /// Recent transactions
-  @override
-  @HiveField(6)
-  List<RecentTransaction>? get recentTransactions {
-    final value = _recentTransactions;
-    if (value == null) return null;
-    if (_recentTransactions is EqualUnmodifiableListView)
-      return _recentTransactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+//@HiveField(6) List<RecentTransaction>? recentTransactions,
   /// Tokens
   final List<AccountToken>? _accountTokens;
 
+  /// Recent transactions
+//@HiveField(6) List<RecentTransaction>? recentTransactions,
   /// Tokens
   @override
   @HiveField(7)
@@ -464,7 +436,7 @@ class _$AccountImpl extends _Account {
 
   @override
   String toString() {
-    return 'Account(name: $name, genesisAddress: $genesisAddress, lastLoadingTransactionInputs: $lastLoadingTransactionInputs, selected: $selected, lastAddress: $lastAddress, balance: $balance, recentTransactions: $recentTransactions, accountTokens: $accountTokens, accountNFT: $accountNFT, nftInfosOffChainList: $nftInfosOffChainList, serviceType: $serviceType, accountNFTCollections: $accountNFTCollections, customTokenAddressList: $customTokenAddressList)';
+    return 'Account(name: $name, genesisAddress: $genesisAddress, lastLoadingTransactionInputs: $lastLoadingTransactionInputs, selected: $selected, lastAddress: $lastAddress, balance: $balance, accountTokens: $accountTokens, accountNFT: $accountNFT, nftInfosOffChainList: $nftInfosOffChainList, serviceType: $serviceType, accountNFTCollections: $accountNFTCollections, customTokenAddressList: $customTokenAddressList)';
   }
 
   @override
@@ -484,8 +456,6 @@ class _$AccountImpl extends _Account {
             (identical(other.lastAddress, lastAddress) ||
                 other.lastAddress == lastAddress) &&
             (identical(other.balance, balance) || other.balance == balance) &&
-            const DeepCollectionEquality()
-                .equals(other._recentTransactions, _recentTransactions) &&
             const DeepCollectionEquality()
                 .equals(other._accountTokens, _accountTokens) &&
             const DeepCollectionEquality()
@@ -509,7 +479,6 @@ class _$AccountImpl extends _Account {
       selected,
       lastAddress,
       balance,
-      const DeepCollectionEquality().hash(_recentTransactions),
       const DeepCollectionEquality().hash(_accountTokens),
       const DeepCollectionEquality().hash(_accountNFT),
       const DeepCollectionEquality().hash(_nftInfosOffChainList),
@@ -537,7 +506,6 @@ abstract class _Account extends Account {
           'Genesis address should be preferred instead of last address after AEIP21')
       final String? lastAddress,
       @HiveField(5) final AccountBalance? balance,
-      @HiveField(6) final List<RecentTransaction>? recentTransactions,
       @HiveField(7) final List<AccountToken>? accountTokens,
       @HiveField(8) final List<AccountToken>? accountNFT,
       @Deprecated('Thanks to hive, we should keep this unused property...')
@@ -582,10 +550,7 @@ abstract class _Account extends Account {
   AccountBalance? get balance;
 
   /// Recent transactions
-  @override
-  @HiveField(6)
-  List<RecentTransaction>? get recentTransactions;
-
+//@HiveField(6) List<RecentTransaction>? recentTransactions,
   /// Tokens
   @override
   @HiveField(7)

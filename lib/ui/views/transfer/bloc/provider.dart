@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/app_service.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/transaction_repository.dart';
@@ -179,9 +179,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return true;
     }
 
-    final appService = ref.read(appServiceProvider);
-    final transactionTypeMap = await appService
-        .getTransaction([state.recipient.address!.address!], request: 'type');
+    final apiService = ref.read(apiServiceProvider);
+    final transactionTypeMap = await apiService.getTransaction(
+      {state.recipient.address!.address!}.toList(),
+      request: 'type',
+    );
     if (transactionTypeMap[state.recipient.address!.address] == null) {
       return true;
     }
