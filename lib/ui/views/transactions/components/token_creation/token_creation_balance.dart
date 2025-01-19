@@ -17,33 +17,41 @@ class TokenCreationBalance extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
-
-    var currency = '';
-    if (transaction.tokenInformation != null &&
-        transaction.tokenInformation!.type == 'fungible') {
-      currency = NumberUtil.formatThousandsStr(
-        transaction.tokenInformation!.supply!.formatNumber(),
-      );
-    } else {
-      currency = NumberUtil.formatThousandsStr(
-        transaction.tokenInformation!.supply!.toString(),
-      );
+    if (transaction.ledgerOperationMvtInfo == null ||
+        transaction.ledgerOperationMvtInfo!.isEmpty ||
+        transaction.ledgerOperationMvtInfo!.first.tokenInformation == null) {
+      return const SizedBox.shrink();
     }
 
-    final symbol = transaction.tokenInformation!.symbol! == ''
-        ? 'NFT'
-        : transaction.tokenInformation!.symbol!;
+    final settings = ref.watch(SettingsProviders.settings);
+    final tokenInformation =
+        transaction.ledgerOperationMvtInfo!.first.tokenInformation;
+
+    var currency = '';
+    if (tokenInformation != null && tokenInformation.supply != null) {
+      if (tokenInformation.type == 'fungible') {
+        currency = NumberUtil.formatThousandsStr(
+          tokenInformation.supply!.formatNumber(),
+        );
+      } else {
+        currency = NumberUtil.formatThousandsStr(
+          tokenInformation.supply!.toString(),
+        );
+      }
+    }
+
+    final symbol =
+        tokenInformation?.symbol! == '' ? 'NFT' : tokenInformation?.symbol!;
 
     return Row(
       children: [
+        AutoSizeText(
+          '${AppLocalizations.of(context)!.tokenInitialSupply} ',
+          style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+        ),
         if (settings.showBalances)
           Row(
             children: [
-              AutoSizeText(
-                '${AppLocalizations.of(context)!.tokenInitialSupply} ',
-                style: ArchethicThemeStyles.textStyleSize12W100Primary60,
-              ),
               AutoSizeText(
                 ' $currency $symbol',
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

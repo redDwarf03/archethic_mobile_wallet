@@ -127,11 +127,15 @@ class AddCustomTokenFormNotifier extends _$AddCustomTokenFormNotifier
     if (await control(ref, appLocalizations) == false) {
       return false;
     }
-
+    final accountSelected = ref.read(
+      accountsNotifierProvider.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     await (await ref
             .read(accountsNotifierProvider.notifier)
             .selectedAccountNotifier)
-        ?.addCustomTokenAddress(state.tokenAddress);
+        ?.addCustomTokenAddress(accountSelected!, state.tokenAddress);
 
     return true;
   }

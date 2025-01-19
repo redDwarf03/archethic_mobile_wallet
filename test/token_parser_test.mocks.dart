@@ -7,9 +7,9 @@ import 'dart:async' as _i9;
 import 'dart:typed_data' as _i16;
 
 import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart'
-    as _i21;
-import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart'
     as _i22;
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart'
+    as _i23;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as _i8;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as _i10;
@@ -27,6 +27,7 @@ import 'package:archethic_lib_dart/src/model/transaction.dart' as _i4;
 import 'package:archethic_lib_dart/src/model/transaction_fee.dart' as _i3;
 import 'package:archethic_lib_dart/src/model/transaction_input.dart' as _i14;
 import 'package:archethic_lib_dart/src/model/transaction_status.dart' as _i2;
+import 'package:archethic_lib_dart/src/model/unspent_outputs.dart' as _i21;
 import 'package:graphql/client.dart' as _i20;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i11;
@@ -721,6 +722,30 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
       );
 
   @override
+  _i9.Future<Map<String, List<_i21.UnspentOutputs>>> chainUnspentOutputs(
+    List<String>? genesisAddresses, {
+    String? request = r'  amount, from, timestamp, tokenAddress, tokenId, type',
+    int? limit = 0,
+    String? pagingOffset = r'',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #chainUnspentOutputs,
+          [genesisAddresses],
+          {
+            #request: request,
+            #limit: limit,
+            #pagingOffset: pagingOffset,
+          },
+        ),
+        returnValue: _i9.Future<Map<String, List<_i21.UnspentOutputs>>>.value(
+            <String, List<_i21.UnspentOutputs>>{}),
+        returnValueForMissingStub:
+            _i9.Future<Map<String, List<_i21.UnspentOutputs>>>.value(
+                <String, List<_i21.UnspentOutputs>>{}),
+      ) as _i9.Future<Map<String, List<_i21.UnspentOutputs>>>);
+
+  @override
   String setJsonRPCRequest(
     String? method,
     Object? params, {
@@ -794,7 +819,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
 /// A class which mocks [TokensRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTokensRepository extends _i1.Mock implements _i21.TokensRepository {
+class MockTokensRepository extends _i1.Mock implements _i22.TokensRepository {
   @override
   _i9.Future<Map<String, _i17.Token>> getTokensFromAddresses(
           List<String>? addresses) =>
@@ -813,7 +838,7 @@ class MockTokensRepository extends _i1.Mock implements _i21.TokensRepository {
   _i9.Future<List<_i8.AEToken>> getTokensFromUserBalance(
     String? userGenesisAddress,
     List<String>? userTokenLocalAddresses,
-    List<_i22.GetPoolListResponse>? poolsListRaw,
+    List<_i23.GetPoolListResponse>? poolsListRaw,
     _i8.Environment? environment, {
     bool? withUCO = true,
     bool? withVerified = true,

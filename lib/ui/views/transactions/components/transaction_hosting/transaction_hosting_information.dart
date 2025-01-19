@@ -16,7 +16,6 @@ class TransactionHostingInformation extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return TransactionInformation(
-      isEmpty: false,
       message: localizations.aewebHosting,
     );
   }

@@ -10,17 +10,21 @@ class VerifiedTokenIcon extends ConsumerWidget {
   const VerifiedTokenIcon({
     required this.address,
     this.iconSize = 14,
+    this.paddingBottom = 3,
+    this.paddingTop = 0,
     super.key,
   });
 
   final String address;
   final double iconSize;
+  final double paddingBottom;
+  final double paddingTop;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (address.isUCO) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 3),
+        padding: EdgeInsets.only(bottom: paddingBottom, top: paddingTop),
         child: Tooltip(
           message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
           child: Icon(
@@ -44,7 +48,7 @@ class VerifiedTokenIcon extends ConsumerWidget {
     if (isVerifiedToken == false) return const SizedBox();
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 3),
+      padding: EdgeInsets.only(bottom: paddingBottom, top: paddingTop),
       child: Tooltip(
         message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
         child: Icon(

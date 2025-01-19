@@ -293,9 +293,6 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
           localizations.resyncWalletAreYouSure,
           localizations.yes,
           () async {
-            await ref
-                .read(accountsNotifierProvider.notifier)
-                .clearRecentTransactionsFromCache();
             final cache = await Hive.openBox<CacheItemHive>(
               CacheManagerHive.cacheManagerHiveTable,
             );

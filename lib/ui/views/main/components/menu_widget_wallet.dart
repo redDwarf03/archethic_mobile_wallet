@@ -20,9 +20,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuWidgetWallet extends ConsumerWidget {
-  const MenuWidgetWallet({super.key, this.refreshFunction});
-
-  final Function()? refreshFunction;
+  const MenuWidgetWallet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -131,14 +129,10 @@ class MenuWidgetWallet extends ConsumerWidget {
                     return;
                   }
 
-                  if (refreshFunction == null) {
-                    await (await ref
-                            .read(accountsNotifierProvider.notifier)
-                            .selectedAccountNotifier)
-                        ?.refreshAll();
-                  } else {
-                    refreshFunction!();
-                  }
+                  await (await ref
+                          .read(accountsNotifierProvider.notifier)
+                          .selectedAccountNotifier)
+                      ?.refreshAll();
                 },
               )
                   .animate()

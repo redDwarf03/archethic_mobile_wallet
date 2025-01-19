@@ -58,7 +58,6 @@ class HiveAppWalletDTO extends HiveObject {
       ),
       selected: true,
       serviceType: 'archethicWallet',
-      recentTransactions: [],
     );
     return AccountHiveDatasource.instance().addAccount(selectedAcct);
   }

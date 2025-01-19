@@ -13,7 +13,7 @@ dependencies:
   # Retrieve version and url for local app update against store app Android and iOS
   app_version_update: ^5.0.2
 
-  archethic_dapp_framework_flutter: ^3.2.7
+  archethic_dapp_framework_flutter: ^3.2.8
   #archethic_dapp_framework_flutter: ^3.2.6-beta.3
   #archethic_dapp_framework_flutter:
   #  git:
@@ -23,7 +23,7 @@ dependencies:
   #  path: ../archethic-dapp-framework-flutter
 
   # AWC
-  archethic_wallet_client: ^2.1.9
+  archethic_wallet_client: ^2.1.10
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git

@@ -26,4 +26,11 @@ extension EnvironmentAddressesExt on Environment {
         Environment.devnet =>
           '00007338a899446b8d211bb82b653dfd134cc351dd4060bb926d7d9c7028cf0273bf',
       };
+
+  String get nodeRewardsChain => switch (this) {
+        Environment.mainnet =>
+          '000088CCDFB1DAC2B12C0BBD41A7AC0308693AF9DA0DE045FD2A11E3CE0BA9A49CA2',
+        Environment.testnet => 'none',
+        Environment.devnet => 'none',
+      };
 }

@@ -7,7 +7,7 @@ part of 'accounts.dart';
 // **************************************************************************
 
 String _$accountWithGenesisAddressHash() =>
-    r'8db23b0bcb13925deb221daa6ec7637b05803f51';
+    r'52ee31c2665b1e4690f91f8ae06beef075023f64';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -41,10 +41,12 @@ class AccountWithGenesisAddressFamily extends Family<AsyncValue<Account?>> {
 
   /// See also [accountWithGenesisAddress].
   AccountWithGenesisAddressProvider call(
-    String genesisAddress,
-  ) {
+    String address, {
+    bool searchGenesisAddress = false,
+  }) {
     return AccountWithGenesisAddressProvider(
-      genesisAddress,
+      address,
+      searchGenesisAddress: searchGenesisAddress,
     );
   }
 
@@ -53,7 +55,8 @@ class AccountWithGenesisAddressFamily extends Family<AsyncValue<Account?>> {
     covariant AccountWithGenesisAddressProvider provider,
   ) {
     return call(
-      provider.genesisAddress,
+      provider.address,
+      searchGenesisAddress: provider.searchGenesisAddress,
     );
   }
 
@@ -77,11 +80,13 @@ class AccountWithGenesisAddressProvider
     extends AutoDisposeFutureProvider<Account?> {
   /// See also [accountWithGenesisAddress].
   AccountWithGenesisAddressProvider(
-    String genesisAddress,
-  ) : this._internal(
+    String address, {
+    bool searchGenesisAddress = false,
+  }) : this._internal(
           (ref) => accountWithGenesisAddress(
             ref as AccountWithGenesisAddressRef,
-            genesisAddress,
+            address,
+            searchGenesisAddress: searchGenesisAddress,
           ),
           from: accountWithGenesisAddressProvider,
           name: r'accountWithGenesisAddressProvider',
@@ -92,7 +97,8 @@ class AccountWithGenesisAddressProvider
           dependencies: AccountWithGenesisAddressFamily._dependencies,
           allTransitiveDependencies:
               AccountWithGenesisAddressFamily._allTransitiveDependencies,
-          genesisAddress: genesisAddress,
+          address: address,
+          searchGenesisAddress: searchGenesisAddress,
         );
 
   AccountWithGenesisAddressProvider._internal(
@@ -102,10 +108,12 @@ class AccountWithGenesisAddressProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.genesisAddress,
+    required this.address,
+    required this.searchGenesisAddress,
   }) : super.internal();
 
-  final String genesisAddress;
+  final String address;
+  final bool searchGenesisAddress;
 
   @override
   Override overrideWith(
@@ -120,7 +128,8 @@ class AccountWithGenesisAddressProvider
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        genesisAddress: genesisAddress,
+        address: address,
+        searchGenesisAddress: searchGenesisAddress,
       ),
     );
   }
@@ -133,13 +142,15 @@ class AccountWithGenesisAddressProvider
   @override
   bool operator ==(Object other) {
     return other is AccountWithGenesisAddressProvider &&
-        other.genesisAddress == genesisAddress;
+        other.address == address &&
+        other.searchGenesisAddress == searchGenesisAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, genesisAddress.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+    hash = _SystemHash.combine(hash, searchGenesisAddress.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -148,8 +159,11 @@ class AccountWithGenesisAddressProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin AccountWithGenesisAddressRef on AutoDisposeFutureProviderRef<Account?> {
-  /// The parameter `genesisAddress` of this provider.
-  String get genesisAddress;
+  /// The parameter `address` of this provider.
+  String get address;
+
+  /// The parameter `searchGenesisAddress` of this provider.
+  bool get searchGenesisAddress;
 }
 
 class _AccountWithGenesisAddressProviderElement
@@ -158,8 +172,10 @@ class _AccountWithGenesisAddressProviderElement
   _AccountWithGenesisAddressProviderElement(super.provider);
 
   @override
-  String get genesisAddress =>
-      (origin as AccountWithGenesisAddressProvider).genesisAddress;
+  String get address => (origin as AccountWithGenesisAddressProvider).address;
+  @override
+  bool get searchGenesisAddress =>
+      (origin as AccountWithGenesisAddressProvider).searchGenesisAddress;
 }
 
 String _$accountWithNameHash() => r'4cddbfdc930ca6db516b0f16e45758305c853224';

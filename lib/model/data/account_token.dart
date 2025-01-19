@@ -2,7 +2,6 @@
 
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
-// Project imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -15,8 +14,11 @@ class AccountTokenConverter
   @override
   AccountToken fromJson(Map<String, dynamic> json) {
     return AccountToken(
-      tokenInformation:
-          const TokenInformationConverter().fromJson(json['tokenInformation']),
+      tokenInformation: json['tokenInformation'] != null
+          ? TokenInformation.fromJson(
+              json['tokenInformation'] as Map<String, dynamic>,
+            )
+          : null,
       amount: json['amount'] as double,
     );
   }
@@ -24,8 +26,7 @@ class AccountTokenConverter
   @override
   Map<String, dynamic> toJson(AccountToken accountToken) {
     return {
-      'tokenInformation': const TokenInformationConverter()
-          .toJson(accountToken.tokenInformation!),
+      'tokenInformation': accountToken.tokenInformation?.toJson(),
       'amount': accountToken.amount,
     };
   }
@@ -33,7 +34,6 @@ class AccountTokenConverter
 
 /// Next field available : 9
 @HiveType(typeId: HiveTypeIds.accountToken)
-@TokenInformationConverter()
 class AccountToken extends HiveObject {
   AccountToken({
     this.tokenInformation,

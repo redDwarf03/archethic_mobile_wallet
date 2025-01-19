@@ -3,12 +3,8 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/account/selected_account.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/transactions/transactions_list.dart';
@@ -20,7 +16,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TransactionsTab extends ConsumerWidget {
@@ -34,20 +29,9 @@ class TransactionsTab extends ConsumerWidget {
       ),
     );
 
-    final recentTransactions =
-        ref.watch(selectedAccountRecentTransactionsProvider).valueOrNull;
-
     return Stack(
       children: [
-        SingleChildScrollView(
-          child: Column(
-            key: const Key('recentTransactions'),
-            children: [
-              if (recentTransactions != null)
-                _TransactionsList(recentTransactions: recentTransactions),
-            ],
-          ),
-        ),
+        const _TransactionsList(),
         if (accountSelected != null)
           Align(
             alignment: Alignment.bottomCenter,
@@ -80,11 +64,7 @@ class TransactionsTab extends ConsumerWidget {
 }
 
 class _TransactionsList extends ConsumerWidget {
-  const _TransactionsList({
-    required this.recentTransactions,
-  });
-
-  final List<RecentTransaction> recentTransactions;
+  const _TransactionsList();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -99,7 +79,7 @@ class _TransactionsList extends ConsumerWidget {
         await (await ref
                 .read(accountsNotifierProvider.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions();
+            ?.refreshAll();
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
@@ -120,63 +100,14 @@ class _TransactionsList extends ConsumerWidget {
                       top: MediaQuery.of(context).padding.top + 10,
                       bottom: 160,
                     ),
-                    child: Column(
+                    child: const Column(
                       children: <Widget>[
-                        const BalanceInfos(),
-                        const SizedBox(
+                        BalanceInfos(),
+                        SizedBox(
                           height: 10,
                         ),
-                        MenuWidgetWallet(
-                          refreshFunction: () async {
-                            await (await ref
-                                    .read(accountsNotifierProvider.notifier)
-                                    .selectedAccountNotifier)
-                                ?.refreshRecentTransactions();
-                          },
-                        ),
-                        if (recentTransactions.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  color: ArchethicTheme
-                                      .backgroundFungiblesTokensListCard,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 0,
-                              color: ArchethicTheme
-                                  .backgroundFungiblesTokensListCard,
-                              child: Container(
-                                padding: const EdgeInsets.all(9.5),
-                                width: MediaQuery.of(context).size.width,
-                                alignment: Alignment.center,
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Symbols.info,
-                                      size: 18,
-                                      weight: IconSize.weightM,
-                                      opticalSize: IconSize.opticalSizeM,
-                                      grade: IconSize.gradeM,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .recentTransactionsNoTransactionYet,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        else
-                          TransactionsList(
-                            transactionsList: recentTransactions,
-                          ),
+                        MenuWidgetWallet(),
+                        TransactionsList(),
                       ],
                     ),
                   ),

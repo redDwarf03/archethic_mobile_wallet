@@ -1,29 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'address_service.dart';
+part of 'formated_name.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addressServiceHash() => r'bc17692213a3b9a5576f80ab845926a9cb458f2b';
-
-/// See also [addressService].
-@ProviderFor(addressService)
-final addressServiceProvider = AutoDisposeProvider<AddressService>.internal(
-  addressService,
-  name: r'addressServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$addressServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AddressServiceRef = AutoDisposeProviderRef<AddressService>;
-String _$genesisAddressHash() => r'a1192fe19625715ac2ff80318fadd121e9c9365d';
+String _$formatedNameFromAddressHash() =>
+    r'd31d7d49e32302612dc334e5e9e06d79bc609e63';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -46,29 +30,32 @@ class _SystemHash {
   }
 }
 
-/// See also [genesisAddress].
-@ProviderFor(genesisAddress)
-const genesisAddressProvider = GenesisAddressFamily();
+/// See also [formatedNameFromAddress].
+@ProviderFor(formatedNameFromAddress)
+const formatedNameFromAddressProvider = FormatedNameFromAddressFamily();
 
-/// See also [genesisAddress].
-class GenesisAddressFamily extends Family<AsyncValue<String>> {
-  /// See also [genesisAddress].
-  const GenesisAddressFamily();
+/// See also [formatedNameFromAddress].
+class FormatedNameFromAddressFamily extends Family<AsyncValue<String>> {
+  /// See also [formatedNameFromAddress].
+  const FormatedNameFromAddressFamily();
 
-  /// See also [genesisAddress].
-  GenesisAddressProvider call(
+  /// See also [formatedNameFromAddress].
+  FormatedNameFromAddressProvider call(
+    BuildContext context,
     String address,
   ) {
-    return GenesisAddressProvider(
+    return FormatedNameFromAddressProvider(
+      context,
       address,
     );
   }
 
   @override
-  GenesisAddressProvider getProviderOverride(
-    covariant GenesisAddressProvider provider,
+  FormatedNameFromAddressProvider getProviderOverride(
+    covariant FormatedNameFromAddressProvider provider,
   ) {
     return call(
+      provider.context,
       provider.address,
     );
   }
@@ -85,56 +72,63 @@ class GenesisAddressFamily extends Family<AsyncValue<String>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'genesisAddressProvider';
+  String? get name => r'formatedNameFromAddressProvider';
 }
 
-/// See also [genesisAddress].
-class GenesisAddressProvider extends AutoDisposeFutureProvider<String> {
-  /// See also [genesisAddress].
-  GenesisAddressProvider(
+/// See also [formatedNameFromAddress].
+class FormatedNameFromAddressProvider
+    extends AutoDisposeFutureProvider<String> {
+  /// See also [formatedNameFromAddress].
+  FormatedNameFromAddressProvider(
+    BuildContext context,
     String address,
   ) : this._internal(
-          (ref) => genesisAddress(
-            ref as GenesisAddressRef,
+          (ref) => formatedNameFromAddress(
+            ref as FormatedNameFromAddressRef,
+            context,
             address,
           ),
-          from: genesisAddressProvider,
-          name: r'genesisAddressProvider',
+          from: formatedNameFromAddressProvider,
+          name: r'formatedNameFromAddressProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$genesisAddressHash,
-          dependencies: GenesisAddressFamily._dependencies,
+                  : _$formatedNameFromAddressHash,
+          dependencies: FormatedNameFromAddressFamily._dependencies,
           allTransitiveDependencies:
-              GenesisAddressFamily._allTransitiveDependencies,
+              FormatedNameFromAddressFamily._allTransitiveDependencies,
+          context: context,
           address: address,
         );
 
-  GenesisAddressProvider._internal(
+  FormatedNameFromAddressProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
+    required this.context,
     required this.address,
   }) : super.internal();
 
+  final BuildContext context;
   final String address;
 
   @override
   Override overrideWith(
-    FutureOr<String> Function(GenesisAddressRef provider) create,
+    FutureOr<String> Function(FormatedNameFromAddressRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GenesisAddressProvider._internal(
-        (ref) => create(ref as GenesisAddressRef),
+      override: FormatedNameFromAddressProvider._internal(
+        (ref) => create(ref as FormatedNameFromAddressRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
+        context: context,
         address: address,
       ),
     );
@@ -142,17 +136,20 @@ class GenesisAddressProvider extends AutoDisposeFutureProvider<String> {
 
   @override
   AutoDisposeFutureProviderElement<String> createElement() {
-    return _GenesisAddressProviderElement(this);
+    return _FormatedNameFromAddressProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GenesisAddressProvider && other.address == address;
+    return other is FormatedNameFromAddressProvider &&
+        other.context == context &&
+        other.address == address;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, context.hashCode);
     hash = _SystemHash.combine(hash, address.hashCode);
 
     return _SystemHash.finish(hash);
@@ -161,17 +158,24 @@ class GenesisAddressProvider extends AutoDisposeFutureProvider<String> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GenesisAddressRef on AutoDisposeFutureProviderRef<String> {
+mixin FormatedNameFromAddressRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+
   /// The parameter `address` of this provider.
   String get address;
 }
 
-class _GenesisAddressProviderElement
-    extends AutoDisposeFutureProviderElement<String> with GenesisAddressRef {
-  _GenesisAddressProviderElement(super.provider);
+class _FormatedNameFromAddressProviderElement
+    extends AutoDisposeFutureProviderElement<String>
+    with FormatedNameFromAddressRef {
+  _FormatedNameFromAddressProviderElement(super.provider);
 
   @override
-  String get address => (origin as GenesisAddressProvider).address;
+  BuildContext get context =>
+      (origin as FormatedNameFromAddressProvider).context;
+  @override
+  String get address => (origin as FormatedNameFromAddressProvider).address;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
